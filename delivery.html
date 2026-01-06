@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка и оплата - Fashion Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit;"><h1>Fashion Store</h1></a>
+                </div>
+                <nav class="nav-menu">
+                    <a href="index.html">Главная</a>
+                    <a href="catalog.html">Каталог</a>
+                    <a href="about.html">О нас</a>
+                    <a href="contact.html">Контакты</a>
+                </nav>
+                <div class="header-icons">
+                    <a href="#" class="icon-link"><i class="fas fa-search"></i></a>
+                    <div class="language-switcher">
+                        <button class="language-btn" id="languageBtn">
+                            <i class="fas fa-globe"></i>
+                            <span class="current-lang">RU</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="language-dropdown" id="languageDropdown">
+                            <a href="#" class="lang-option" data-lang="ru">Русский</a>
+                            <a href="#" class="lang-option" data-lang="en">English</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Доставка и оплата</h1>
+            <nav class="breadcrumbs">
+                <a href="index.html">Главная</a> / <span>Доставка и оплата</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Delivery Content -->
+    <section class="delivery-section">
+        <div class="container">
+            <div class="delivery-content">
+                <h2>Способы доставки</h2>
+                
+                <div class="delivery-method">
+                    <div class="delivery-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="delivery-info">
+                        <h3>Курьерская доставка по Москве</h3>
+                        <p><strong>Стоимость:</strong> 300 ₽ (бесплатно при заказе от 3000 ₽)</p>
+                        <p><strong>Срок доставки:</strong> 1-2 рабочих дня</p>
+                        <p><strong>Время доставки:</strong> с 10:00 до 22:00</p>
+                        <p>Доставка осуществляется курьером по указанному адресу. Вы можете выбрать удобное время доставки при оформлении заказа.</p>
+                    </div>
+                </div>
+
+                <div class="delivery-method">
+                    <div class="delivery-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="delivery-info">
+                        <h3>Доставка по России</h3>
+                        <p><strong>Стоимость:</strong> от 350 ₽ (бесплатно при заказе от 5000 ₽)</p>
+                        <p><strong>Срок доставки:</strong> 3-7 рабочих дней</p>
+                        <p><strong>Службы доставки:</strong> СДЭК, Почта России, Boxberry</p>
+                        <p>Доставка осуществляется в пункты выдачи заказов или почтовые отделения. Вы получите трек-номер для отслеживания посылки.</p>
+                    </div>
+                </div>
+
+                <div class="delivery-method">
+                    <div class="delivery-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="delivery-info">
+                        <h3>Самовывоз</h3>
+                        <p><strong>Стоимость:</strong> Бесплатно</p>
+                        <p><strong>Срок готовности:</strong> 1-2 рабочих дня</p>
+                        <p><strong>Адрес:</strong> Москва, ул. Примерная, д. 1, БЦ "Fashion Plaza", офис 205</p>
+                        <p>Вы можете забрать заказ самостоятельно из нашего офиса. При получении необходимо предъявить документ, удостоверяющий личность.</p>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 3rem;">Способы оплаты</h2>
+
+                <div class="payment-methods">
+                    <div class="payment-method">
+                        <div class="payment-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <h3>Банковской картой онлайн</h3>
+                        <p>Оплата картами Visa, MasterCard, МИР через защищенный платежный шлюз. Безопасная оплата в один клик.</p>
+                    </div>
+
+                    <div class="payment-method">
+                        <div class="payment-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <h3>Наличными при получении</h3>
+                        <p>Оплата наличными курьеру при доставке или в пункте самовывоза. Доступно для заказов до 50 000 ₽.</p>
+                    </div>
+
+                    <div class="payment-method">
+                        <div class="payment-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Электронные кошельки</h3>
+                        <p>Оплата через Яндекс.Кассу: Яндекс.Деньги, WebMoney, QIWI и другие электронные платежные системы.</p>
+                    </div>
+
+                    <div class="payment-method">
+                        <div class="payment-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3>Банковский перевод</h3>
+                        <p>Оплата по реквизитам для юридических лиц. Счет выставляется после подтверждения заказа.</p>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 3rem;">Условия доставки</h2>
+                <div class="delivery-terms">
+                    <div class="term-item">
+                        <i class="fas fa-check"></i>
+                        <p>Минимальная сумма заказа — 500 ₽</p>
+                    </div>
+                    <div class="term-item">
+                        <i class="fas fa-check"></i>
+                        <p>Бесплатная доставка при заказе от 3000 ₽ (по Москве) и от 5000 ₽ (по России)</p>
+                    </div>
+                    <div class="term-item">
+                        <i class="fas fa-check"></i>
+                        <p>Возможность примерки перед оплатой (при курьерской доставке)</p>
+                    </div>
+                    <div class="term-item">
+                        <i class="fas fa-check"></i>
+                        <p>Отслеживание статуса заказа в личном кабинете</p>
+                    </div>
+                    <div class="term-item">
+                        <i class="fas fa-check"></i>
+                        <p>Уведомления о статусе заказа по SMS и email</p>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 3rem;">Возврат товара</h2>
+                <div class="return-info">
+                    <p>Вы можете вернуть товар в течение 14 дней с момента получения, если:</p>
+                    <ul>
+                        <li>Товар не был в употреблении</li>
+                        <li>Сохранены товарный вид, потребительские свойства, пломбы, фабричные ярлыки</li>
+                        <li>Имеются документы, подтверждающие покупку</li>
+                    </ul>
+                    <p>Возврат товара надлежащего качества возможен только при условии, что сохранены его товарный вид, потребительские свойства, а также документ, подтверждающий факт и условия покупки указанного товара.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Fashion Store</h3>
+                    <p>Ваш надежный партнер в мире моды. Качественная одежда по доступным ценам.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Покупателям</h4>
+                    <ul>
+                        <li><a href="delivery.html">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                        <li><a href="#">Размерная сетка</a></li>
+                        <li><a href="#">Частые вопросы</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>О компании</h4>
+                    <ul>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
+                        <li><a href="#">Партнеры</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +7 (800) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@fashionstore.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Примерная, 1</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Fashion Store. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

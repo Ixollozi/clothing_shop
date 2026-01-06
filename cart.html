@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина - Fashion Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit;"><h1>Fashion Store</h1></a>
+                </div>
+                <nav class="nav-menu">
+                    <a href="index.html">Главная</a>
+                    <a href="catalog.html">Каталог</a>
+                    <a href="about.html">О нас</a>
+                    <a href="contact.html">Контакты</a>
+                </nav>
+                <div class="header-icons">
+                    <a href="#" class="icon-link"><i class="fas fa-search"></i></a>
+                    <div class="language-switcher">
+                        <button class="language-btn" id="languageBtn">
+                            <i class="fas fa-globe"></i>
+                            <span class="current-lang">RU</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="language-dropdown" id="languageDropdown">
+                            <a href="#" class="lang-option" data-lang="ru">Русский</a>
+                            <a href="#" class="lang-option" data-lang="en">English</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Корзина</h1>
+            <nav class="breadcrumbs">
+                <a href="index.html">Главная</a> / <span>Корзина</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Cart Content -->
+    <section class="cart-section">
+        <div class="container">
+            <div class="cart-layout">
+                <!-- Cart Items -->
+                <div class="cart-items">
+                    <div class="cart-item">
+                        <div class="cart-item-image">
+                            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200" alt="Классическая футболка">
+                        </div>
+                        <div class="cart-item-info">
+                            <h3>Классическая футболка</h3>
+                            <p class="cart-item-details">Размер: M, Цвет: Черный</p>
+                            <p class="cart-item-price">1 999 ₽</p>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="qty-btn" onclick="updateQuantity(this, -1)">-</button>
+                            <input type="number" value="2" min="1" class="qty-input">
+                            <button class="qty-btn" onclick="updateQuantity(this, 1)">+</button>
+                        </div>
+                        <div class="cart-item-total">
+                            <span class="item-total-price">3 998 ₽</span>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeItem(this)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="cart-item">
+                        <div class="cart-item-image">
+                            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=200" alt="Джинсы">
+                        </div>
+                        <div class="cart-item-info">
+                            <h3>Джинсы классические</h3>
+                            <p class="cart-item-details">Размер: L, Цвет: Синий</p>
+                            <p class="cart-item-price">3 499 ₽</p>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="qty-btn" onclick="updateQuantity(this, -1)">-</button>
+                            <input type="number" value="1" min="1" class="qty-input">
+                            <button class="qty-btn" onclick="updateQuantity(this, 1)">+</button>
+                        </div>
+                        <div class="cart-item-total">
+                            <span class="item-total-price">3 499 ₽</span>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeItem(this)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="cart-item">
+                        <div class="cart-item-image">
+                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200" alt="Рубашка">
+                        </div>
+                        <div class="cart-item-info">
+                            <h3>Рубашка офисная</h3>
+                            <p class="cart-item-details">Размер: M, Цвет: Белый</p>
+                            <p class="cart-item-price">2 499 ₽</p>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="qty-btn" onclick="updateQuantity(this, -1)">-</button>
+                            <input type="number" value="1" min="1" class="qty-input">
+                            <button class="qty-btn" onclick="updateQuantity(this, 1)">+</button>
+                        </div>
+                        <div class="cart-item-total">
+                            <span class="item-total-price">2 499 ₽</span>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeItem(this)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <h2>Итого</h2>
+                    <div class="summary-row">
+                        <span>Товары (4 шт.)</span>
+                        <span id="subtotal">9 996 ₽</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Доставка</span>
+                        <span id="delivery">Бесплатно</span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span>К оплате</span>
+                        <span id="total">9 996 ₽</span>
+                    </div>
+                    <button class="btn btn-primary btn-large" style="width: 100%; margin-top: 1rem;">
+                        Оформить заказ
+                    </button>
+                    <a href="catalog.html" class="continue-shopping">
+                        <i class="fas fa-arrow-left"></i> Продолжить покупки
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Fashion Store</h3>
+                    <p>Ваш надежный партнер в мире моды. Качественная одежда по доступным ценам.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Покупателям</h4>
+                    <ul>
+                        <li><a href="delivery.html">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                        <li><a href="#">Размерная сетка</a></li>
+                        <li><a href="#">Частые вопросы</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>О компании</h4>
+                    <ul>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
+                        <li><a href="#">Партнеры</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +7 (800) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@fashionstore.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Примерная, 1</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Fashion Store. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function updateQuantity(btn, change) {
+            const qtyInput = btn.parentElement.querySelector('.qty-input');
+            const currentValue = parseInt(qtyInput.value);
+            const newValue = Math.max(1, currentValue + change);
+            qtyInput.value = newValue;
+            updateItemTotal(btn.closest('.cart-item'));
+            updateCartTotal();
+        }
+
+        function updateItemTotal(item) {
+            const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace(/\s/g, '').replace('₽', ''));
+            const quantity = parseInt(item.querySelector('.qty-input').value);
+            const total = price * quantity;
+            item.querySelector('.item-total-price').textContent = total.toLocaleString('ru-RU') + ' ₽';
+        }
+
+        function removeItem(btn) {
+            if (confirm('Удалить товар из корзины?')) {
+                btn.closest('.cart-item').remove();
+                updateCartTotal();
+            }
+        }
+
+        function updateCartTotal() {
+            const items = document.querySelectorAll('.cart-item');
+            let subtotal = 0;
+            items.forEach(item => {
+                const totalText = item.querySelector('.item-total-price').textContent;
+                subtotal += parseFloat(totalText.replace(/\s/g, '').replace('₽', ''));
+            });
+            
+            document.getElementById('subtotal').textContent = subtotal.toLocaleString('ru-RU') + ' ₽';
+            document.getElementById('total').textContent = subtotal.toLocaleString('ru-RU') + ' ₽';
+        }
+    </script>
+</body>
+</html>
+
