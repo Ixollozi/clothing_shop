@@ -1,0 +1,161 @@
+{% extends "admin/index.html" %}
+{% load static %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-wrapper">
+        <!-- Скрываем стандартный заголовок Django и принудительно показываем sidebar -->
+        <style>
+            #content > h1 { display: none; }
+            .dashboard-container .module { display: none; }
+            
+            /* Принудительно показываем sidebar на главной странице */
+            #nav-sidebar {
+                display: block !important;
+                visibility: visible !important;
+            }
+            
+            #nav-sidebar.collapsed {
+                display: none !important;
+            }
+            
+            body.sticky-enabled #content,
+            body.dashboard-page #content {
+                margin-left: 280px !important;
+            }
+        </style>
+        
+        <!-- Кнопки быстрых действий -->
+        <div class="quick-actions-row">
+            <a href="{% url 'admin:store_product_add' %}" class="quick-action-btn-blue">Добавить товар</a>
+            <a href="{% url 'admin:store_category_add' %}" class="quick-action-btn-blue">Добавить категорию</a>
+            <a href="{% url 'admin:store_order_changelist' %}" class="quick-action-btn-blue">Просмотр заказов</a>
+        </div>
+
+        <!-- Карточки статистики -->
+        <div class="stats-cards-row">
+            <div class="stat-card-photo">
+                <div class="stat-card-header-photo">
+                    <span class="stat-card-title-photo">Товары</span>
+                </div>
+                <div class="stat-card-body-photo">
+                    <div class="stat-value-photo">{{ total_products|default:0 }}</div>
+                    <a href="{% url 'admin:store_product_changelist' %}" class="stat-card-button-photo">ОТКРЫТЬ</a>
+                </div>
+            </div>
+            
+            <div class="stat-card-photo">
+                <div class="stat-card-header-photo">
+                    <span class="stat-card-title-photo">Заказы</span>
+                </div>
+                <div class="stat-card-body-photo">
+                    <div class="stat-value-photo">{{ total_orders|default:0 }}</div>
+                    <a href="{% url 'admin:store_order_changelist' %}" class="stat-card-button-photo">ОТКРЫТЬ</a>
+                </div>
+            </div>
+            
+            <div class="stat-card-photo">
+                <div class="stat-card-header-photo">
+                    <span class="stat-card-title-photo">Категории</span>
+                </div>
+                <div class="stat-card-body-photo">
+                    <div class="stat-value-photo">{{ total_categories|default:0 }}</div>
+                    <a href="{% url 'admin:store_category_changelist' %}" class="stat-card-button-photo">ОТКРЫТЬ</a>
+                </div>
+            </div>
+            
+            <div class="stat-card-photo">
+                <div class="stat-card-header-photo">
+                    <span class="stat-card-title-photo">Корзины</span>
+                </div>
+                <div class="stat-card-body-photo">
+                    <div class="stat-value-photo">{{ total_carts|default:0 }}</div>
+                    <a href="{% url 'admin:store_cart_changelist' %}" class="stat-card-button-photo">ОТКРЫТЬ</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Карточки последних элементов -->
+        <div class="latest-cards-row">
+            <div class="latest-card-photo">
+                <div class="latest-card-header-photo">
+                    <span class="latest-card-title-photo">Последние заказы</span>
+                </div>
+                <div class="latest-card-body-photo">
+                    <ul class="latest-list-photo">
+                        {% for order in latest_orders %}
+                        <li class="latest-list-item-photo">
+                            <a href="{% url 'admin:store_order_change' order.id %}">
+                                Заказ #{{ order.id }} - {{ order.first_name }} {{ order.last_name }} ({{ order.get_status_display }})
+                            </a>
+                        </li>
+                        {% empty %}
+                        <li class="latest-empty-photo">Нет заказов</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="latest-card-photo">
+                <div class="latest-card-header-photo">
+                    <span class="latest-card-title-photo">Последние товары</span>
+                </div>
+                <div class="latest-card-body-photo">
+                    <ul class="latest-list-photo">
+                        {% for product in latest_products %}
+                        <li class="latest-list-item-photo">
+                            <a href="{% url 'admin:store_product_change' product.id %}">
+                                {{ product.name }} - ${{ product.price }}
+                            </a>
+                        </li>
+                        {% empty %}
+                        <li class="latest-empty-photo">Нет товаров</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Информационные карточки -->
+        <div class="info-cards-row">
+            <div class="info-card-photo">
+                <div class="info-card-header-photo">
+                    <span class="info-card-title-photo">Статусы заказов</span>
+                </div>
+                <div class="info-card-body-photo">
+                    <div class="info-stats-list">
+                        <div class="info-stat-item pending">
+                            <span class="info-stat-label">Ожидают обработки</span>
+                            <span class="info-stat-value">{{ pending_orders|default:0 }}</span>
+                        </div>
+                        <div class="info-stat-item processing">
+                            <span class="info-stat-label">В обработке</span>
+                            <span class="info-stat-value">{{ processing_orders|default:0 }}</span>
+                        </div>
+                        <div class="info-stat-item delivered">
+                            <span class="info-stat-label">Доставлены</span>
+                            <span class="info-stat-value">{{ delivered_orders|default:0 }}</span>
+                        </div>
+                        <div class="info-stat-item cancelled">
+                            <span class="info-stat-label">Отменены</span>
+                            <span class="info-stat-value">{{ cancelled_orders|default:0 }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-card-photo">
+                <div class="info-card-header-photo">
+                    <span class="info-card-title-photo">Общая выручка</span>
+                </div>
+                <div class="info-card-body-photo">
+                    <div class="revenue-display-photo">
+                        <span class="revenue-value-photo">{{ total_revenue|default:0 }}</span>
+                        <span class="revenue-currency-photo">$</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

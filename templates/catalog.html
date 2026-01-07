@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Catalog" %} - Fashion Store{% endblock %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>{% trans "Product Catalog" %}</h1>
+            <nav class="breadcrumbs">
+                <a href="{% url 'index' %}">{% trans "Home" %}</a> / <span>{% trans "Catalog" %}</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Filters and Products -->
+    <section class="catalog-section">
+        <div class="container">
+            <div class="catalog-layout">
+                <!-- Sidebar Filters -->
+                <aside class="filters-sidebar">
+                    <h3>{% trans "Filters" %}</h3>
+                    
+                    <div class="filter-group">
+                        <h4>{% trans "Category" %}</h4>
+                        <label class="filter-checkbox">
+                            <input type="checkbox"> {% trans "Men's Clothing" %}
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox"> {% trans "Women's Clothing" %}
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox"> {% trans "Kids' Clothing" %}
+                        </label>
+                        <label class="filter-checkbox">
+                            <input type="checkbox"> {% trans "Accessories" %}
+                        </label>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>{% trans "Price" %}</h4>
+                        <div class="price-range">
+                            <input type="range" min="0" max="100" value="50" class="price-slider" id="priceSlider">
+                            <div class="price-values">
+                                <span>0 $</span>
+                                <span id="priceValue">50 $</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>{% trans "Size" %}</h4>
+                        <div class="size-buttons">
+                            <button class="size-btn">XS</button>
+                            <button class="size-btn">S</button>
+                            <button class="size-btn">M</button>
+                            <button class="size-btn">L</button>
+                            <button class="size-btn">XL</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>{% trans "Color" %}</h4>
+                        <div class="color-options">
+                            <span class="color-option" style="background: #000;"></span>
+                            <span class="color-option" style="background: #fff; border: 1px solid #ddd;"></span>
+                            <span class="color-option" style="background: #e74c3c;"></span>
+                            <span class="color-option" style="background: #3498db;"></span>
+                            <span class="color-option" style="background: #2ecc71;"></span>
+                            <span class="color-option" style="background: #f39c12;"></span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">{% trans "Apply Filters" %}</button>
+                    <button class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;">{% trans "Reset" %}</button>
+                </aside>
+
+                <!-- Products Grid -->
+                <div class="products-container">
+                    <div class="catalog-toolbar">
+                        <p>{% trans "Products found" %}: <strong>24</strong></p>
+                        <div class="sort-options">
+                            <label>{% trans "Sort by" %}:</label>
+                            <select class="sort-select">
+                                <option>{% trans "By popularity" %}</option>
+                                <option>{% trans "Price: low to high" %}</option>
+                                <option>{% trans "Price: high to low" %}</option>
+                                <option>{% trans "By newest" %}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="products-grid">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400" alt="{% trans 'T-shirt' %}"></a>
+                                <div class="product-overlay">
+                                    <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Classic T-shirt" %}</h3></a>
+                                <p class="product-price">20 $</p>
+                                <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
+                            </div>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image">
+                                <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400" alt="{% trans 'Jeans' %}"></a>
+                                <div class="product-overlay">
+                                    <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Classic Jeans" %}</h3></a>
+                                <p class="product-price">35 $</p>
+                                <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
+                            </div>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image">
+                                <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400" alt="{% trans 'Dress' %}"></a>
+                                <div class="product-overlay">
+                                    <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Elegant Dress" %}</h3></a>
+                                <p class="product-price">50 $</p>
+                                <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
+                            </div>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image">
+                                <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400" alt="{% trans 'Jacket' %}"></a>
+                                <div class="product-overlay">
+                                    <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Demiseason Jacket" %}</h3></a>
+                                <p class="product-price">60 $</p>
+                                <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
+                            </div>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image">
+                                <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" alt="{% trans 'Shirt' %}"></a>
+                                <div class="product-overlay">
+                                    <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Office Shirt" %}</h3></a>
+                                <p class="product-price">25 $</p>
+                                <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
+                            </div>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image">
+                                <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400" alt="{% trans 'Sweatshirt' %}"></a>
+                                <div class="product-overlay">
+                                    <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Cozy Sweatshirt" %}</h3></a>
+                                <p class="product-price">40 $</p>
+                                <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
+                            </div>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image">
+                                <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400" alt="{% trans 'Skirt' %}"></a>
+                                <div class="product-overlay">
+                                    <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Midi Skirt" %}</h3></a>
+                                <p class="product-price">28 $</p>
+                                <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
+                            </div>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image">
+                                <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400" alt="{% trans 'Pants' %}"></a>
+                                <div class="product-overlay">
+                                    <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Classic Pants" %}</h3></a>
+                                <p class="product-price">33 $</p>
+                                <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <a href="#" class="page-link"><i class="fas fa-chevron-left"></i></a>
+                        <a href="#" class="page-link active">1</a>
+                        <a href="#" class="page-link">2</a>
+                        <a href="#" class="page-link">3</a>
+                        <a href="#" class="page-link"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Price slider
+    const priceSlider = document.getElementById('priceSlider');
+    const priceValue = document.getElementById('priceValue');
+    if (priceSlider && priceValue) {
+        priceSlider.addEventListener('input', function() {
+            priceValue.textContent = parseInt(this.value) + ' $';
+        });
+    }
+</script>
+{% endblock %}

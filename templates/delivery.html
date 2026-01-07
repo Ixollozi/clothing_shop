@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Доставка и оплата - Fashion Store</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -13,13 +14,13 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <a href="index.html" style="text-decoration: none; color: inherit;"><h1>Fashion Store</h1></a>
+                    <a href="/" style="text-decoration: none; color: inherit;"><h1>Fashion Store</h1></a>
                 </div>
                 <nav class="nav-menu">
-                    <a href="index.html">Главная</a>
-                    <a href="catalog.html">Каталог</a>
-                    <a href="about.html">О нас</a>
-                    <a href="contact.html">Контакты</a>
+                    <a href="/">Главная</a>
+                    <a href="/catalog/">Каталог</a>
+                    <a href="/about/">О нас</a>
+                    <a href="/contact/">Контакты</a>
                 </nav>
                 <div class="header-icons">
                     <a href="#" class="icon-link"><i class="fas fa-search"></i></a>
@@ -44,7 +45,7 @@
         <div class="container">
             <h1>Доставка и оплата</h1>
             <nav class="breadcrumbs">
-                <a href="index.html">Главная</a> / <span>Доставка и оплата</span>
+                <a href="/">Главная</a> / <span>Доставка и оплата</span>
             </nav>
         </div>
     </section>
@@ -60,8 +61,8 @@
                         <i class="fas fa-truck"></i>
                     </div>
                     <div class="delivery-info">
-                        <h3>Курьерская доставка по Москве</h3>
-                        <p><strong>Стоимость:</strong> 300 ₽ (бесплатно при заказе от 3000 ₽)</p>
+                        <h3>Курьерская доставка по Ташкенту</h3>
+                        <p><strong>Стоимость:</strong> 3 $ (бесплатно при заказе от 30 $)</p>
                         <p><strong>Срок доставки:</strong> 1-2 рабочих дня</p>
                         <p><strong>Время доставки:</strong> с 10:00 до 22:00</p>
                         <p>Доставка осуществляется курьером по указанному адресу. Вы можете выбрать удобное время доставки при оформлении заказа.</p>
@@ -73,10 +74,10 @@
                         <i class="fas fa-box"></i>
                     </div>
                     <div class="delivery-info">
-                        <h3>Доставка по России</h3>
-                        <p><strong>Стоимость:</strong> от 350 ₽ (бесплатно при заказе от 5000 ₽)</p>
+                        <h3>Доставка по Узбекистану</h3>
+                        <p><strong>Стоимость:</strong> от 4 $ (бесплатно при заказе от 50 $)</p>
                         <p><strong>Срок доставки:</strong> 3-7 рабочих дней</p>
-                        <p><strong>Службы доставки:</strong> СДЭК, Почта России, Boxberry</p>
+                        <p><strong>Службы доставки:</strong> СДЭК, Почта Узбекистана, Boxberry</p>
                         <p>Доставка осуществляется в пункты выдачи заказов или почтовые отделения. Вы получите трек-номер для отслеживания посылки.</p>
                     </div>
                 </div>
@@ -89,7 +90,7 @@
                         <h3>Самовывоз</h3>
                         <p><strong>Стоимость:</strong> Бесплатно</p>
                         <p><strong>Срок готовности:</strong> 1-2 рабочих дня</p>
-                        <p><strong>Адрес:</strong> Москва, ул. Примерная, д. 1, БЦ "Fashion Plaza", офис 205</p>
+                        <p><strong>Адрес:</strong> Ташкент, ул. Примерная, д. 1, БЦ "Fashion Plaza", офис 205</p>
                         <p>Вы можете забрать заказ самостоятельно из нашего офиса. При получении необходимо предъявить документ, удостоверяющий личность.</p>
                     </div>
                 </div>
@@ -110,7 +111,7 @@
                             <i class="fas fa-wallet"></i>
                         </div>
                         <h3>Наличными при получении</h3>
-                        <p>Оплата наличными курьеру при доставке или в пункте самовывоза. Доступно для заказов до 50 000 ₽.</p>
+                        <p>Оплата наличными курьеру при доставке или в пункте самовывоза. Доступно для заказов до 500 $.</p>
                     </div>
 
                     <div class="payment-method">
@@ -134,11 +135,11 @@
                 <div class="delivery-terms">
                     <div class="term-item">
                         <i class="fas fa-check"></i>
-                        <p>Минимальная сумма заказа — 500 ₽</p>
+                        <p>Минимальная сумма заказа — 5 $</p>
                     </div>
                     <div class="term-item">
                         <i class="fas fa-check"></i>
-                        <p>Бесплатная доставка при заказе от 3000 ₽ (по Москве) и от 5000 ₽ (по России)</p>
+                        <p>Бесплатная доставка при заказе от 30 $ (по Ташкенту) и от 50 $ (по Узбекистану)</p>
                     </div>
                     <div class="term-item">
                         <i class="fas fa-check"></i>
@@ -185,7 +186,7 @@
                 <div class="footer-section">
                     <h4>Покупателям</h4>
                     <ul>
-                        <li><a href="delivery.html">Доставка и оплата</a></li>
+                        <li><a href="/delivery/">Доставка и оплата</a></li>
                         <li><a href="#">Возврат товара</a></li>
                         <li><a href="#">Размерная сетка</a></li>
                         <li><a href="#">Частые вопросы</a></li>
@@ -194,9 +195,9 @@
                 <div class="footer-section">
                     <h4>О компании</h4>
                     <ul>
-                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="/about/">О нас</a></li>
                         <li><a href="#">Вакансии</a></li>
-                        <li><a href="contact.html">Контакты</a></li>
+                        <li><a href="/contact/">Контакты</a></li>
                         <li><a href="#">Партнеры</a></li>
                     </ul>
                 </div>
@@ -205,7 +206,7 @@
                     <ul>
                         <li><i class="fas fa-phone"></i> +7 (800) 123-45-67</li>
                         <li><i class="fas fa-envelope"></i> info@fashionstore.ru</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Примерная, 1</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Ташкент, ул. Примерная, 1</li>
                     </ul>
                 </div>
             </div>
@@ -215,7 +216,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="{% static 'script.js' %}"></script>
 </body>
 </html>
 

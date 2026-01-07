@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Классическая футболка - Fashion Store</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -13,13 +14,13 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <a href="index.html" style="text-decoration: none; color: inherit;"><h1>Fashion Store</h1></a>
+                    <a href="/" style="text-decoration: none; color: inherit;"><h1>Fashion Store</h1></a>
                 </div>
                 <nav class="nav-menu">
-                    <a href="index.html">Главная</a>
-                    <a href="catalog.html">Каталог</a>
-                    <a href="about.html">О нас</a>
-                    <a href="contact.html">Контакты</a>
+                    <a href="/">Главная</a>
+                    <a href="/catalog/">Каталог</a>
+                    <a href="/about/">О нас</a>
+                    <a href="/contact/">Контакты</a>
                 </nav>
                 <div class="header-icons">
                     <a href="#" class="icon-link"><i class="fas fa-search"></i></a>
@@ -43,7 +44,7 @@
     <section class="page-header">
         <div class="container">
             <nav class="breadcrumbs">
-                <a href="index.html">Главная</a> / <a href="catalog.html">Каталог</a> / <span>Классическая футболка</span>
+                <a href="/">Главная</a> / <a href="/catalog/">Каталог</a> / <span>Классическая футболка</span>
             </nav>
         </div>
     </section>
@@ -80,8 +81,8 @@
                     </div>
                     
                     <div class="product-price-large">
-                        <span class="current-price">1 999 ₽</span>
-                        <span class="old-price">2 499 ₽</span>
+                        <span class="current-price">20 $</span>
+                        <span class="old-price">25 $</span>
                         <span class="discount">-20%</span>
                     </div>
 
@@ -124,7 +125,7 @@
 
                     <!-- Action Buttons -->
                     <div class="product-actions">
-                        <a href="cart.html" class="btn btn-primary btn-large">Добавить в корзину</a>
+                        <a href="/cart/" class="btn btn-primary btn-large">Добавить в корзину</a>
                         <button class="btn btn-secondary btn-large"><i class="far fa-heart"></i> В избранное</button>
                     </div>
 
@@ -132,7 +133,7 @@
                     <div class="product-features">
                         <div class="feature-item-small">
                             <i class="fas fa-shipping-fast"></i>
-                            <span>Бесплатная доставка от 3000 ₽</span>
+                            <span>Бесплатная доставка от 30 $</span>
                         </div>
                         <div class="feature-item-small">
                             <i class="fas fa-undo"></i>
@@ -176,7 +177,7 @@
                         </tr>
                         <tr>
                             <td>Страна производства</td>
-                            <td>Россия</td>
+                            <td>Узбекистан</td>
                         </tr>
                         <tr>
                             <td>Состав</td>
@@ -239,54 +240,54 @@
             <div class="products-grid">
                 <div class="product-card">
                     <div class="product-image">
-                        <a href="product.html"><img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400" alt="Джинсы"></a>
+                        <a href="/catalog/"><img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400" alt="Джинсы"></a>
                         <div class="product-overlay">
-                            <a href="product.html" class="btn btn-small">Быстрый просмотр</a>
+                            <a href="/catalog/" class="btn btn-small">Быстрый просмотр</a>
                         </div>
                     </div>
                     <div class="product-info">
-                        <a href="product.html" style="text-decoration: none; color: inherit;"><h3 class="product-name">Джинсы классические</h3></a>
-                        <p class="product-price">3 499 ₽</p>
-                        <a href="cart.html" class="btn btn-add-cart">В корзину</a>
+                        <a href="/catalog/" style="text-decoration: none; color: inherit;"><h3 class="product-name">Джинсы классические</h3></a>
+                        <p class="product-price">35 $</p>
+                        <a href="/cart/" class="btn btn-add-cart">В корзину</a>
                     </div>
                 </div>
                 <div class="product-card">
                     <div class="product-image">
-                        <a href="product.html"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" alt="Рубашка"></a>
+                        <a href="/catalog/"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" alt="Рубашка"></a>
                         <div class="product-overlay">
-                            <a href="product.html" class="btn btn-small">Быстрый просмотр</a>
+                            <a href="/catalog/" class="btn btn-small">Быстрый просмотр</a>
                         </div>
                     </div>
                     <div class="product-info">
-                        <a href="product.html" style="text-decoration: none; color: inherit;"><h3 class="product-name">Рубашка офисная</h3></a>
-                        <p class="product-price">2 499 ₽</p>
-                        <a href="cart.html" class="btn btn-add-cart">В корзину</a>
+                        <a href="/catalog/" style="text-decoration: none; color: inherit;"><h3 class="product-name">Рубашка офисная</h3></a>
+                        <p class="product-price">25 $</p>
+                        <a href="/cart/" class="btn btn-add-cart">В корзину</a>
                     </div>
                 </div>
                 <div class="product-card">
                     <div class="product-image">
-                        <a href="product.html"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400" alt="Свитшот"></a>
+                        <a href="/catalog/"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400" alt="Свитшот"></a>
                         <div class="product-overlay">
-                            <a href="product.html" class="btn btn-small">Быстрый просмотр</a>
+                            <a href="/catalog/" class="btn btn-small">Быстрый просмотр</a>
                         </div>
                     </div>
                     <div class="product-info">
-                        <a href="product.html" style="text-decoration: none; color: inherit;"><h3 class="product-name">Свитшот уютный</h3></a>
-                        <p class="product-price">3 999 ₽</p>
-                        <a href="cart.html" class="btn btn-add-cart">В корзину</a>
+                        <a href="/catalog/" style="text-decoration: none; color: inherit;"><h3 class="product-name">Свитшот уютный</h3></a>
+                        <p class="product-price">40 $</p>
+                        <a href="/cart/" class="btn btn-add-cart">В корзину</a>
                     </div>
                 </div>
                 <div class="product-card">
                     <div class="product-image">
-                        <a href="product.html"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400" alt="Брюки"></a>
+                        <a href="/catalog/"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400" alt="Брюки"></a>
                         <div class="product-overlay">
-                            <a href="product.html" class="btn btn-small">Быстрый просмотр</a>
+                            <a href="/catalog/" class="btn btn-small">Быстрый просмотр</a>
                         </div>
                     </div>
                     <div class="product-info">
-                        <a href="product.html" style="text-decoration: none; color: inherit;"><h3 class="product-name">Брюки классические</h3></a>
-                        <p class="product-price">3 299 ₽</p>
-                        <a href="cart.html" class="btn btn-add-cart">В корзину</a>
+                        <a href="/catalog/" style="text-decoration: none; color: inherit;"><h3 class="product-name">Брюки классические</h3></a>
+                        <p class="product-price">33 $</p>
+                        <a href="/cart/" class="btn btn-add-cart">В корзину</a>
                     </div>
                 </div>
             </div>
@@ -310,7 +311,7 @@
                 <div class="footer-section">
                     <h4>Покупателям</h4>
                     <ul>
-                        <li><a href="delivery.html">Доставка и оплата</a></li>
+                        <li><a href="/delivery/">Доставка и оплата</a></li>
                         <li><a href="#">Возврат товара</a></li>
                         <li><a href="#">Размерная сетка</a></li>
                         <li><a href="#">Частые вопросы</a></li>
@@ -319,9 +320,9 @@
                 <div class="footer-section">
                     <h4>О компании</h4>
                     <ul>
-                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="/about/">О нас</a></li>
                         <li><a href="#">Вакансии</a></li>
-                        <li><a href="contact.html">Контакты</a></li>
+                        <li><a href="/contact/">Контакты</a></li>
                         <li><a href="#">Партнеры</a></li>
                     </ul>
                 </div>
@@ -330,7 +331,7 @@
                     <ul>
                         <li><i class="fas fa-phone"></i> +7 (800) 123-45-67</li>
                         <li><i class="fas fa-envelope"></i> info@fashionstore.ru</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Примерная, 1</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Ташкент, ул. Примерная, 1</li>
                     </ul>
                 </div>
             </div>
@@ -340,7 +341,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="{% static 'script.js' %}"></script>
     <script>
         // Thumbnail images
         const thumbnails = document.querySelectorAll('.thumbnail');

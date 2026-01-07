@@ -1,0 +1,233 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-08 01:33+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Django site admin"
+msgstr ""
+
+msgid "Fashion Store - Online Clothing Store"
+msgstr "Fashion Store - Online Clothing Store"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Catalog"
+msgstr "Catalog"
+
+msgid "About"
+msgstr "About"
+
+msgid "Contacts"
+msgstr "Contacts"
+
+msgid ""
+"Your reliable partner in the world of fashion. Quality clothing at "
+"affordable prices."
+msgstr ""
+
+msgid "For Customers"
+msgstr "For Customers"
+
+msgid "Delivery and Payment"
+msgstr "Delivery and Payment"
+
+msgid "Product Return"
+msgstr "Product Return"
+
+msgid "Size Chart"
+msgstr "Size Chart"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "About Company"
+msgstr "About Company"
+
+msgid "About Us"
+msgstr "About Us"
+
+msgid "Careers"
+msgstr "Careers"
+
+msgid "Partners"
+msgstr "Partners"
+
+msgid "Tashkent, Example Street, 1"
+msgstr "Tashkent, Example Street, 1"
+
+msgid "Product Catalog"
+msgstr "Product Catalog"
+
+msgid "Filters"
+msgstr "Filters"
+
+msgid "Category"
+msgstr "Category"
+
+msgid "Men's Clothing"
+msgstr "Men's Clothing"
+
+msgid "Women's Clothing"
+msgstr "Women's Clothing"
+
+msgid "Kids' Clothing"
+msgstr "Kids' Clothing"
+
+msgid "Accessories"
+msgstr "Accessories"
+
+msgid "Price"
+msgstr "Price"
+
+msgid "Size"
+msgstr "Size"
+
+msgid "Color"
+msgstr "Color"
+
+msgid "Apply Filters"
+msgstr "Apply Filters"
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Products found"
+msgstr "Products found"
+
+msgid "Sort by"
+msgstr "Sort by"
+
+msgid "By popularity"
+msgstr "By popularity"
+
+msgid "Price: low to high"
+msgstr "Price: low to high"
+
+msgid "Price: high to low"
+msgstr "Price: high to low"
+
+msgid "By newest"
+msgstr "By newest"
+
+msgid "T-shirt"
+msgstr "T-shirt"
+
+msgid "Quick View"
+msgstr "Quick View"
+
+msgid "Classic T-shirt"
+msgstr "Classic T-shirt"
+
+msgid "Add to Cart"
+msgstr "Add to Cart"
+
+msgid "Jeans"
+msgstr "Jeans"
+
+msgid "Classic Jeans"
+msgstr "Classic Jeans"
+
+msgid "Dress"
+msgstr "Dress"
+
+msgid "Elegant Dress"
+msgstr "Elegant Dress"
+
+msgid "Jacket"
+msgstr "Jacket"
+
+msgid "Demiseason Jacket"
+msgstr "Demiseason Jacket"
+
+msgid "Shirt"
+msgstr "Shirt"
+
+msgid "Office Shirt"
+msgstr "Office Shirt"
+
+msgid "Sweatshirt"
+msgstr "Sweatshirt"
+
+msgid "Cozy Sweatshirt"
+msgstr "Cozy Sweatshirt"
+
+msgid "Skirt"
+msgstr "Skirt"
+
+msgid "Midi Skirt"
+msgstr "Midi Skirt"
+
+msgid "Pants"
+msgstr "Pants"
+
+msgid "Classic Pants"
+msgstr "Classic Pants"
+
+msgid "New Collection"
+msgstr "New Collection"
+
+msgid "Discover style and comfort"
+msgstr "Discover style and comfort"
+
+msgid "View Catalog"
+msgstr "View Catalog"
+
+msgid "Categories"
+msgstr "Categories"
+
+msgid "Men\\"
+msgstr ""
+
+msgid "Women\\"
+msgstr ""
+
+msgid "Kids\\"
+msgstr ""
+
+msgid "Popular Products"
+msgstr "Popular Products"
+
+msgid "Fast Delivery"
+msgstr "Fast Delivery"
+
+msgid "Delivery throughout Uzbekistan in 2-5 days"
+msgstr "Delivery throughout Uzbekistan in 2-5 days"
+
+msgid "Easy Returns"
+msgstr "Easy Returns"
+
+msgid "Product return within 14 days"
+msgstr "Product return within 14 days"
+
+msgid "Quality Guarantee"
+msgstr "Quality Guarantee"
+
+msgid "Only original products"
+msgstr "Only original products"
+
+msgid "24/7 Support"
+msgstr "24/7 Support"
+
+msgid "Our support service is always available"
+msgstr "Our support service is always available"
+
+msgid "Our Partners"
+msgstr "Our Partners"
+
+msgid "We cooperate with leading brands and suppliers"
+msgstr "We cooperate with leading brands and suppliers"

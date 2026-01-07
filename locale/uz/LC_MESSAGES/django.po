@@ -1,0 +1,233 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-08 01:33+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Django site admin"
+msgstr ""
+
+msgid "Fashion Store - Online Clothing Store"
+msgstr "Fashion Store - Onlayn kiyim do'koni"
+
+msgid "Home"
+msgstr "Bosh sahifa"
+
+msgid "Catalog"
+msgstr "Katalog"
+
+msgid "About"
+msgstr "Biz haqimizda"
+
+msgid "Contacts"
+msgstr "Kontaktlar"
+
+msgid ""
+"Your reliable partner in the world of fashion. Quality clothing at "
+"affordable prices."
+msgstr ""
+
+msgid "For Customers"
+msgstr "Mijozlar uchun"
+
+msgid "Delivery and Payment"
+msgstr "Yetkazib berish va to'lov"
+
+msgid "Product Return"
+msgstr "Mahsulotni qaytarish"
+
+msgid "Size Chart"
+msgstr "O'lchamlar jadvali"
+
+msgid "FAQ"
+msgstr "Ko'p beriladigan savollar"
+
+msgid "About Company"
+msgstr "Kompaniya haqida"
+
+msgid "About Us"
+msgstr "Biz haqimizda"
+
+msgid "Careers"
+msgstr "Vakansiyalar"
+
+msgid "Partners"
+msgstr "Hamkorlar"
+
+msgid "Tashkent, Example Street, 1"
+msgstr "Toshkent, Namuna ko'chasi, 1"
+
+msgid "Product Catalog"
+msgstr "Mahsulotlar katalogi"
+
+msgid "Filters"
+msgstr "Filtrlar"
+
+msgid "Category"
+msgstr "Kategoriya"
+
+msgid "Men's Clothing"
+msgstr "Erkaklar kiyimi"
+
+msgid "Women's Clothing"
+msgstr "Ayollar kiyimi"
+
+msgid "Kids' Clothing"
+msgstr "Bolalar kiyimi"
+
+msgid "Accessories"
+msgstr "Aksessuarlar"
+
+msgid "Price"
+msgstr "Narx"
+
+msgid "Size"
+msgstr "O'lcham"
+
+msgid "Color"
+msgstr "Rang"
+
+msgid "Apply Filters"
+msgstr "Filtrlarni qo'llash"
+
+msgid "Reset"
+msgstr "Tozalash"
+
+msgid "Products found"
+msgstr "Topilgan mahsulotlar"
+
+msgid "Sort by"
+msgstr "Saralash"
+
+msgid "By popularity"
+msgstr "Mashhurligi bo'yicha"
+
+msgid "Price: low to high"
+msgstr "Narx: pastdan yuqoriga"
+
+msgid "Price: high to low"
+msgstr "Narx: yuqoridan pastga"
+
+msgid "By newest"
+msgstr "Yangi bo'yicha"
+
+msgid "T-shirt"
+msgstr "Futbolka"
+
+msgid "Quick View"
+msgstr "Tezkor ko'rish"
+
+msgid "Classic T-shirt"
+msgstr "Klassik futbolka"
+
+msgid "Add to Cart"
+msgstr "Savatchaga qo'shish"
+
+msgid "Jeans"
+msgstr "Jinsi"
+
+msgid "Classic Jeans"
+msgstr "Klassik jinsi"
+
+msgid "Dress"
+msgstr "Ko'ylak"
+
+msgid "Elegant Dress"
+msgstr "Zarif ko'ylak"
+
+msgid "Jacket"
+msgstr "Kurtka"
+
+msgid "Demiseason Jacket"
+msgstr "Mavsumlararo kurtka"
+
+msgid "Shirt"
+msgstr "Ko'ylak"
+
+msgid "Office Shirt"
+msgstr "Ofis ko'ylagi"
+
+msgid "Sweatshirt"
+msgstr "Svitshot"
+
+msgid "Cozy Sweatshirt"
+msgstr "Qulay svitshot"
+
+msgid "Skirt"
+msgstr "Yubka"
+
+msgid "Midi Skirt"
+msgstr "Midi yubka"
+
+msgid "Pants"
+msgstr "Shim"
+
+msgid "Classic Pants"
+msgstr "Klassik shim"
+
+msgid "New Collection"
+msgstr "Yangi kolleksiya"
+
+msgid "Discover style and comfort"
+msgstr "Uslub va qulaylikni kashf eting"
+
+msgid "View Catalog"
+msgstr "Katalogni ko'rish"
+
+msgid "Categories"
+msgstr "Kategoriyalar"
+
+msgid "Men\\"
+msgstr ""
+
+msgid "Women\\"
+msgstr ""
+
+msgid "Kids\\"
+msgstr ""
+
+msgid "Popular Products"
+msgstr "Mashhur mahsulotlar"
+
+msgid "Fast Delivery"
+msgstr "Tezkor yetkazib berish"
+
+msgid "Delivery throughout Uzbekistan in 2-5 days"
+msgstr "O'zbekiston bo'ylab 2-5 kun ichida yetkazib berish"
+
+msgid "Easy Returns"
+msgstr "Oson qaytarish"
+
+msgid "Product return within 14 days"
+msgstr "14 kun ichida mahsulotni qaytarish"
+
+msgid "Quality Guarantee"
+msgstr "Sifat kafolati"
+
+msgid "Only original products"
+msgstr "Faqat original mahsulotlar"
+
+msgid "24/7 Support"
+msgstr "24/7 qo'llab-quvvatlash"
+
+msgid "Our support service is always available"
+msgstr "Bizning qo'llab-quvvatlash xizmatingiz doim mavjud"
+
+msgid "Our Partners"
+msgstr "Bizning hamkorlarimiz"
+
+msgid "We cooperate with leading brands and suppliers"
+msgstr "Biz etakchi brendlar va yetkazib beruvchilar bilan hamkorlik qilamiz"
