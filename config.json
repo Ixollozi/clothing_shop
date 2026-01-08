@@ -144,12 +144,7 @@
       "allow_all_origins": true,
       "allow_credentials": true
     },
-    "csrf_trusted_origins": [
-      "http://localhost:8000",
-      "http://127.0.0.1:8000",
-      "http://localhost:5500",
-      "http://127.0.0.1:5500"
-    ],
+    "csrf_trusted_origins": ["*"],
     "rest_framework": {
       "page_size": 12
     },

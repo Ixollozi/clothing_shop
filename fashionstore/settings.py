@@ -220,12 +220,7 @@ CORS_ALLOW_CREDENTIALS = cors_config.get('allow_credentials', True)
 
 # CSRF settings
 # Можно переопределить через config.json
-CSRF_TRUSTED_ORIGINS = DJANGO_CONFIG.get('csrf_trusted_origins', [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://localhost:5500",
-    "http://127.0.0.1:5500",
-])
+CSRF_TRUSTED_ORIGINS = DJANGO_CONFIG.get('csrf_trusted_origins', ["*"])
 
 # Email settings
 # Можно переопределить через config.json
