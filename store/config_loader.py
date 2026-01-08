@@ -4,14 +4,16 @@
 import json
 import os
 from pathlib import Path
-from django.conf import settings
+
+# Используем BASE_DIR напрямую, чтобы избежать циклических импортов
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 def load_config():
     """
     Загружает конфигурацию из config.json
     """
-    config_path = Path(settings.BASE_DIR) / 'config.json'
+    config_path = BASE_DIR / 'config.json'
     
     if not config_path.exists():
         # Возвращаем конфигурацию по умолчанию
@@ -57,6 +59,15 @@ def get_default_config():
             "title": "About Us",
             "description": "We are a modern fashion store.",
         },
+        "django": {
+            "debug": True,
+            "allowed_hosts": ["*"],
+            "secret_key": "django-insecure-your-secret-key-change-in-production",
+            "time_zone": "Asia/Tashkent",
+            "language_code": "ru",
+            "languages": ["ru", "en", "uz"],
+            "default_language": "ru",
+        },
     }
 
 
@@ -81,4 +92,12 @@ def reload_config():
     global _config_cache
     _config_cache = None
     return get_config()
+
+
+def get_django_config():
+    """
+    Получает настройки Django из config.json
+    """
+    config = get_config()
+    return config.get('django', {})
 

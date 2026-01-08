@@ -103,6 +103,60 @@
     "secondary_color": "#ffa726",
     "text_color": "#333",
     "background_color": "#fff"
+  },
+  "django": {
+    "debug": true,
+    "allowed_hosts": ["*"],
+    "secret_key": "django-insecure-your-secret-key-change-in-production",
+    "time_zone": "Asia/Tashkent",
+    "language_code": "ru",
+    "languages": ["ru", "en", "uz"],
+    "default_language": "ru",
+    "database": {
+      "engine": "django.db.backends.sqlite3",
+      "name": "db.sqlite3",
+      "user": "",
+      "password": "",
+      "host": "",
+      "port": ""
+    },
+    "static": {
+      "url": "/static/",
+      "root": "staticfiles"
+    },
+    "media": {
+      "url": "/media/",
+      "root": "media"
+    },
+    "session": {
+      "cookie_age": 86400,
+      "cookie_httponly": true,
+      "cookie_secure": false,
+      "save_every_request": true
+    },
+    "cors": {
+      "allowed_origins": [
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "http://localhost:5500",
+        "http://127.0.0.1:5500"
+      ],
+      "allow_all_origins": true,
+      "allow_credentials": true
+    },
+    "rest_framework": {
+      "page_size": 12
+    },
+    "email": {
+      "backend": "django.core.mail.backends.console.EmailBackend",
+      "host": "",
+      "port": 587,
+      "use_tls": true,
+      "use_ssl": false,
+      "username": "",
+      "password": "",
+      "from_email": "noreply@fashionstore.ru"
+    }
   }
 }
 
