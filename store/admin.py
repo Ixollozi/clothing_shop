@@ -1,11 +1,19 @@
 from django.contrib import admin
-from django.utils.html import format_html
+from django.utils.html import format_html, mark_safe
 from django.urls import reverse
-from .models import Category, Product, ProductImage, Cart, CartItem, Order, OrderItem
+from modeltranslation.admin import TabbedTranslationAdmin
+from modeltranslation.translator import translator
+from .models import Category, Product, ProductImage, Cart, CartItem, Order, OrderItem, Partner
+
+# Импортируем переводы перед регистрацией админки
+try:
+    from . import translation
+except ImportError:
+    pass
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(TabbedTranslationAdmin):
     list_display = ['name', 'slug', 'image_preview', 'products_count', 'created_at']
     list_filter = ['created_at', 'updated_at']
     search_fields = ['name', 'description']
@@ -16,7 +24,7 @@ class CategoryAdmin(admin.ModelAdmin):
             'fields': ('name', 'slug', 'description')
         }),
         ('Изображение', {
-            'fields': ('image', 'image_preview')
+            'fields': ('image', 'image_url', 'image_preview')
         }),
         ('Даты', {
             'fields': ('created_at', 'updated_at'),
@@ -27,6 +35,8 @@ class CategoryAdmin(admin.ModelAdmin):
     def image_preview(self, obj):
         if obj.image:
             return format_html('<img src="{}" style="max-width: 100px; max-height: 100px;" />', obj.image.url)
+        elif obj.image_url:
+            return format_html('<img src="{}" style="max-width: 100px; max-height: 100px;" />', obj.image_url)
         return "Нет изображения"
     image_preview.short_description = 'Превью'
 
@@ -51,12 +61,12 @@ class ProductImageInline(admin.TabularInline):
 
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(TabbedTranslationAdmin):
     list_display = ['name', 'category', 'price_display', 'old_price_display', 'stock', 'is_active', 'image_preview', 'created_at']
     list_filter = ['category', 'is_active', 'created_at', 'rating']
     search_fields = ['name', 'description', 'available_colors']
     prepopulated_fields = {'slug': ('name',)}
-    readonly_fields = ['created_at', 'updated_at', 'image_preview', 'image_url_preview', 'discount_percent']
+    readonly_fields = ['created_at', 'updated_at', 'image_preview', 'image_url_preview', 'discount_percent', 'colors_help']
     inlines = [ProductImageInline]
     list_editable = ['is_active', 'stock']
     fieldsets = (
@@ -70,7 +80,8 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('image', 'image_preview', 'image_url', 'image_url_preview')
         }),
         ('Характеристики', {
-            'fields': ('available_sizes', 'available_colors', 'stock', 'is_active')
+            'fields': ('available_sizes', 'available_colors', 'colors_help', 'stock', 'is_active'),
+            'description': 'Укажите доступные размеры и цвета для товара'
         }),
         ('Рейтинг', {
             'fields': ('rating', 'reviews_count')
@@ -80,6 +91,34 @@ class ProductAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
+
+    def colors_help(self, obj):
+        """Подсказка о доступных цветах"""
+        colors_list = [
+            ('Черный', '#000000'),
+            ('Белый', '#FFFFFF'),
+            ('Синий', '#2196F3'),
+            ('Красный', '#F44336'),
+            ('Зеленый', '#4CAF50'),
+            ('Желтый', '#FFEB3B'),
+            ('Серый', '#9E9E9E'),
+        ]
+        html = '<div style="margin-top: 10px; padding: 10px; background: #f5f5f5; border-radius: 4px;">'
+        html += '<strong>Доступные цвета:</strong><br>'
+        html += '<div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 10px;">'
+        for color_name, color_code in colors_list:
+            html += f'''
+            <div style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background: white; border-radius: 4px; border: 1px solid #ddd;">
+                <span style="display: inline-block; width: 20px; height: 20px; border-radius: 50%; background-color: {color_code}; border: 1px solid #ccc;"></span>
+                <span>{color_name}</span>
+            </div>
+            '''
+        html += '</div>'
+        html += '<p style="margin-top: 10px; margin-bottom: 0; color: #666; font-size: 0.9em;">'
+        html += '💡 <strong>Подсказка:</strong> Указывайте цвета через запятую, например: "Черный, Белый, Синий"'
+        html += '</p></div>'
+        return mark_safe(html)
+    colors_help.short_description = 'Подсказка по цветам'
 
     def price_display(self, obj):
         return f"${obj.price}"
@@ -169,12 +208,14 @@ class CartItemAdmin(admin.ModelAdmin):
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
-    readonly_fields = ['product', 'quantity', 'price', 'size', 'color', 'total_display']
+    readonly_fields = ['total_display']
     fields = ('product', 'quantity', 'price', 'size', 'color', 'total_display')
     can_delete = False
 
     def total_display(self, obj):
-        return f"${obj.total}"
+        if obj and obj.pk:
+            return f"${obj.total:.2f}"
+        return "-"
     total_display.short_description = 'Итого'
 
 
@@ -241,7 +282,9 @@ class OrderItemAdmin(admin.ModelAdmin):
     readonly_fields = ['total_display']
 
     def total_display(self, obj):
-        return f"${obj.total}"
+        if obj and obj.pk:
+            return f"${obj.total:.2f}"
+        return "-"
     total_display.short_description = 'Итого'
 
 
@@ -250,3 +293,30 @@ admin.site.site_header = "Fashion Store - Администрирование"
 admin.site.site_title = "Fashion Store Admin"
 admin.site.index_title = "Панель управления"
 admin.site.index_template = 'admin/index.html'
+
+
+@admin.register(Partner)
+class PartnerAdmin(TabbedTranslationAdmin):
+    list_display = ['name', 'icon', 'logo_preview', 'is_active', 'order', 'created_at']
+    list_filter = ['is_active', 'created_at']
+    search_fields = ['name', 'description']
+    list_editable = ['is_active', 'order']
+    readonly_fields = ['created_at', 'updated_at', 'logo_preview']
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('name', 'icon', 'url', 'description', 'is_active', 'order')
+        }),
+        ('Логотип', {
+            'fields': ('logo', 'logo_preview')
+        }),
+        ('Даты', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def logo_preview(self, obj):
+        if obj.logo:
+            return format_html('<img src="{}" style="max-width: 100px; max-height: 100px;" />', obj.logo.url)
+        return "Нет логотипа"
+    logo_preview.short_description = 'Превью логотипа'

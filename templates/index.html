@@ -7,174 +7,106 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h2 class="hero-title">{% trans "New Collection" %}</h2>
-            <p class="hero-subtitle">{% trans "Discover style and comfort" %}</p>
-            <a href="{% url 'catalog' %}" class="btn btn-primary">{% trans "View Catalog" %}</a>
+            <h2 class="hero-title">{% if hero_config.title %}{{ hero_config.title }}{% else %}{% trans "New Collection" %}{% endif %}</h2>
+            <p class="hero-subtitle">{% if hero_config.subtitle %}{{ hero_config.subtitle }}{% else %}{% trans "Discover style and comfort" %}{% endif %}</p>
+            <a href="{% url 'catalog' %}" class="btn btn-primary">{% if hero_config.button_text %}{{ hero_config.button_text }}{% else %}{% trans "View Catalog" %}{% endif %}</a>
         </div>
     </section>
 
     <!-- Categories -->
+    {% if categories %}
     <section class="categories">
         <div class="container">
             <h2 class="section-title">{% trans "Categories" %}</h2>
             <div class="categories-grid">
-                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;">
+                {% for category in categories %}
+                <a href="{% url 'catalog' %}{% if category.slug %}?category={{ category.slug }}{% endif %}" style="text-decoration: none; color: inherit;">
                     <div class="category-card">
                         <div class="category-image">
-                            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400" alt="{% trans 'Men\'s Clothing' %}">
+                            {% if category.image %}
+                                <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                            {% elif category.image_url %}
+                                <img src="{{ category.image_url }}" alt="{{ category.name }}">
+                            {% else %}
+                                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400" alt="{{ category.name }}">
+                            {% endif %}
                         </div>
-                        <h3>{% trans "Men's Clothing" %}</h3>
+                        <h3>{{ category.name }}</h3>
                     </div>
                 </a>
-                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;">
-                    <div class="category-card">
-                        <div class="category-image">
-                            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400" alt="{% trans 'Women\'s Clothing' %}">
-                        </div>
-                        <h3>{% trans "Women's Clothing" %}</h3>
-                    </div>
-                </a>
-                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;">
-                    <div class="category-card">
-                        <div class="category-image">
-                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" alt="{% trans 'Kids\' Clothing' %}">
-                        </div>
-                        <h3>{% trans "Kids' Clothing" %}</h3>
-                    </div>
-                </a>
-                <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;">
-                    <div class="category-card">
-                        <div class="category-image">
-                            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400" alt="{% trans 'Accessories' %}">
-                        </div>
-                        <h3>{% trans "Accessories" %}</h3>
-                    </div>
-                </a>
+                {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- Products Section -->
+    {% if products %}
     <section class="products" id="products">
         <div class="container">
             <h2 class="section-title">{% trans "Popular Products" %}</h2>
             <div class="products-grid">
+                {% for product in products %}
                 <div class="product-card">
                     <div class="product-image">
-                        <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400" alt="{% trans 'T-shirt' %}"></a>
+                        {% if product.slug %}
+                            <a href="{% url 'product' product.slug %}">
+                        {% else %}
+                            <a href="{% url 'catalog' %}">
+                        {% endif %}
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% elif product.image_url %}
+                                <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                            {% else %}
+                                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400" alt="{{ product.name }}">
+                            {% endif %}
+                        </a>
                         <div class="product-overlay">
-                            <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
+                            {% if product.slug %}
+                                <a href="{% url 'product' product.slug %}" class="btn btn-small">{% trans "Quick View" %}</a>
+                            {% else %}
+                                <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="product-info">
-                        <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Classic T-shirt" %}</h3></a>
-                        <p class="product-price">20 $</p>
+                        {% if product.slug %}
+                            <a href="{% url 'product' product.slug %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{{ product.name }}</h3></a>
+                        {% else %}
+                            <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{{ product.name }}</h3></a>
+                        {% endif %}
+                        <p class="product-price">
+                            ${{ product.price }}
+                            {% if product.old_price and product.old_price > product.price %}
+                                <span style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-left: 10px;">${{ product.old_price }}</span>
+                            {% endif %}
+                        </p>
                         <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
                     </div>
                 </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400" alt="{% trans 'Jeans' %}"></a>
-                        <div class="product-overlay">
-                            <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Classic Jeans" %}</h3></a>
-                        <p class="product-price">35 $</p>
-                        <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400" alt="{% trans 'Dress' %}"></a>
-                        <div class="product-overlay">
-                            <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Elegant Dress" %}</h3></a>
-                        <p class="product-price">50 $</p>
-                        <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400" alt="{% trans 'Jacket' %}"></a>
-                        <div class="product-overlay">
-                            <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Demiseason Jacket" %}</h3></a>
-                        <p class="product-price">60 $</p>
-                        <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" alt="{% trans 'Shirt' %}"></a>
-                        <div class="product-overlay">
-                            <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Office Shirt" %}</h3></a>
-                        <p class="product-price">25 $</p>
-                        <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400" alt="{% trans 'Sweatshirt' %}"></a>
-                        <div class="product-overlay">
-                            <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Cozy Sweatshirt" %}</h3></a>
-                        <p class="product-price">40 $</p>
-                        <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400" alt="{% trans 'Skirt' %}"></a>
-                        <div class="product-overlay">
-                            <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Midi Skirt" %}</h3></a>
-                        <p class="product-price">28 $</p>
-                        <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <a href="{% url 'catalog' %}"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400" alt="{% trans 'Pants' %}"></a>
-                        <div class="product-overlay">
-                            <a href="{% url 'catalog' %}" class="btn btn-small">{% trans "Quick View" %}</a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{% trans "Classic Pants" %}</h3></a>
-                        <p class="product-price">33 $</p>
-                        <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- Features Section -->
+    {% if features %}
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                {% for feature in features %}
+                <div class="feature-item">
+                    <i class="{{ feature.icon }}"></i>
+                    <h3>{{ feature.title }}</h3>
+                    <p>{{ feature.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% else %}
     <section class="features">
         <div class="container">
             <div class="features-grid">
@@ -201,50 +133,38 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- Partners Section -->
+    {% if partners %}
     <section class="partners">
         <div class="container">
             <h2 class="section-title">{% trans "Our Partners" %}</h2>
             <p class="partners-subtitle">{% trans "We cooperate with leading brands and suppliers" %}</p>
             <div class="partners-grid">
+                {% for partner in partners %}
                 <div class="partner-item">
+                    {% if partner.url %}
+                        <a href="{{ partner.url }}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block;">
+                    {% endif %}
                     <div class="partner-logo">
-                        <i class="fas fa-tshirt"></i>
-                        <h4>Brand Fashion</h4>
+                        {% if partner.logo %}
+                            <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" style="max-width: 100px; max-height: 100px;">
+                        {% else %}
+                            <i class="{{ partner.icon }}"></i>
+                        {% endif %}
+                        <h4>{{ partner.name }}</h4>
+                        {% if partner.description %}
+                            <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">{{ partner.description }}</p>
+                        {% endif %}
                     </div>
+                    {% if partner.url %}
+                        </a>
+                    {% endif %}
                 </div>
-                <div class="partner-item">
-                    <div class="partner-logo">
-                        <i class="fas fa-gem"></i>
-                        <h4>Luxury Style</h4>
-                    </div>
-                </div>
-                <div class="partner-item">
-                    <div class="partner-logo">
-                        <i class="fas fa-star"></i>
-                        <h4>Premium Wear</h4>
-                    </div>
-                </div>
-                <div class="partner-item">
-                    <div class="partner-logo">
-                        <i class="fas fa-crown"></i>
-                        <h4>Elite Brands</h4>
-                    </div>
-                </div>
-                <div class="partner-item">
-                    <div class="partner-logo">
-                        <i class="fas fa-heart"></i>
-                        <h4>Fashion House</h4>
-                    </div>
-                </div>
-                <div class="partner-item">
-                    <div class="partner-logo">
-                        <i class="fas fa-fire"></i>
-                        <h4>Trend Setter</h4>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
 {% endblock %}

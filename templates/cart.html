@@ -1,51 +1,15 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Корзина - Fashion Store</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <a href="/" style="text-decoration: none; color: inherit;"><h1>Fashion Store</h1></a>
-                </div>
-                <nav class="nav-menu">
-                    <a href="/">Главная</a>
-                    <a href="/catalog/">Каталог</a>
-                    <a href="/about/">О нас</a>
-                    <a href="/contact/">Контакты</a>
-                </nav>
-                <div class="header-icons">
-                    <a href="#" class="icon-link"><i class="fas fa-search"></i></a>
-                    <div class="language-switcher">
-                        <button class="language-btn" id="languageBtn">
-                            <i class="fas fa-globe"></i>
-                            <span class="current-lang">RU</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="language-dropdown" id="languageDropdown">
-                            <a href="#" class="lang-option" data-lang="ru">Русский</a>
-                            <a href="#" class="lang-option" data-lang="en">English</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+{% extends "base.html" %}
+{% load i18n %}
 
+{% block title %}{% trans "Shopping Cart" %} - {{ store_name }}{% endblock %}
+
+{% block content %}
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <h1>Корзина</h1>
+            <h1>{% trans "Shopping Cart" %}</h1>
             <nav class="breadcrumbs">
-                <a href="/">Главная</a> / <span>Корзина</span>
+                <a href="{% url 'index' %}">{% trans "Home" %}</a> / <span>{% trans "Shopping Cart" %}</span>
             </nav>
         </div>
     </section>
@@ -58,11 +22,11 @@
                 <div class="cart-items">
                     <div class="cart-item">
                         <div class="cart-item-image">
-                            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200" alt="Классическая футболка">
+                            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200" alt="{% trans 'Classic T-shirt' %}">
                         </div>
                         <div class="cart-item-info">
-                            <h3>Классическая футболка</h3>
-                            <p class="cart-item-details">Размер: M, Цвет: Черный</p>
+                            <h3>{% trans "Classic T-shirt" %}</h3>
+                            <p class="cart-item-details">{% trans "Size" %}: M, {% trans "Color" %}: {% trans "Black" %}</p>
                             <p class="cart-item-price">20 $</p>
                         </div>
                         <div class="cart-item-quantity">
@@ -80,11 +44,11 @@
 
                     <div class="cart-item">
                         <div class="cart-item-image">
-                            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=200" alt="Джинсы">
+                            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=200" alt="{% trans 'Jeans' %}">
                         </div>
                         <div class="cart-item-info">
-                            <h3>Джинсы классические</h3>
-                            <p class="cart-item-details">Размер: L, Цвет: Синий</p>
+                            <h3>{% trans "Classic Jeans" %}</h3>
+                            <p class="cart-item-details">{% trans "Size" %}: L, {% trans "Color" %}: {% trans "Blue" %}</p>
                             <p class="cart-item-price">35 $</p>
                         </div>
                         <div class="cart-item-quantity">
@@ -102,11 +66,11 @@
 
                     <div class="cart-item">
                         <div class="cart-item-image">
-                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200" alt="Рубашка">
+                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200" alt="{% trans 'Shirt' %}">
                         </div>
                         <div class="cart-item-info">
-                            <h3>Рубашка офисная</h3>
-                            <p class="cart-item-details">Размер: M, Цвет: Белый</p>
+                            <h3>{% trans "Office Shirt" %}</h3>
+                            <p class="cart-item-details">{% trans "Size" %}: M, {% trans "Color" %}: {% trans "White" %}</p>
                             <p class="cart-item-price">25 $</p>
                         </div>
                         <div class="cart-item-quantity">
@@ -125,114 +89,66 @@
 
                 <!-- Cart Summary -->
                 <div class="cart-summary">
-                    <h2>Итого</h2>
+                    <h2>{% trans "Total" %}</h2>
                     <div class="summary-row">
-                        <span>Товары (4 шт.)</span>
+                        <span>{% trans "Products" %} (4 {% trans "pcs" %}.)</span>
                         <span id="subtotal">100 $</span>
                     </div>
                     <div class="summary-row">
-                        <span>Доставка</span>
-                        <span id="delivery">Бесплатно</span>
+                        <span>{% trans "Delivery" %}</span>
+                        <span id="delivery">{% trans "Free" %}</span>
                     </div>
                     <div class="summary-row total-row">
-                        <span>К оплате</span>
+                        <span>{% trans "To pay" %}</span>
                         <span id="total">100 $</span>
                     </div>
                     <button class="btn btn-primary btn-large" style="width: 100%; margin-top: 1rem;">
-                        Оформить заказ
+                        {% trans "Place Order" %}
                     </button>
-                    <a href="/catalog/" class="continue-shopping">
-                        <i class="fas fa-arrow-left"></i> Продолжить покупки
+                    <a href="{% url 'catalog' %}" class="continue-shopping">
+                        <i class="fas fa-arrow-left"></i> {% trans "Continue Shopping" %}
                     </a>
                 </div>
             </div>
         </div>
     </section>
+{% endblock %}
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Fashion Store</h3>
-                    <p>Ваш надежный партнер в мире моды. Качественная одежда по доступным ценам.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>Покупателям</h4>
-                    <ul>
-                        <li><a href="/delivery/">Доставка и оплата</a></li>
-                        <li><a href="#">Возврат товара</a></li>
-                        <li><a href="#">Размерная сетка</a></li>
-                        <li><a href="#">Частые вопросы</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>О компании</h4>
-                    <ul>
-                        <li><a href="/about/">О нас</a></li>
-                        <li><a href="#">Вакансии</a></li>
-                        <li><a href="/contact/">Контакты</a></li>
-                        <li><a href="#">Партнеры</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Контакты</h4>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> +7 (800) 123-45-67</li>
-                        <li><i class="fas fa-envelope"></i> info@fashionstore.ru</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Ташкент, ул. Примерная, 1</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Fashion Store. Все права защищены.</p>
-            </div>
-        </div>
-    </footer>
+{% block extra_js %}
+<script>
+    function updateQuantity(btn, change) {
+        const qtyInput = btn.parentElement.querySelector('.qty-input');
+        const currentValue = parseInt(qtyInput.value);
+        const newValue = Math.max(1, currentValue + change);
+        qtyInput.value = newValue;
+        updateItemTotal(btn.closest('.cart-item'));
+        updateCartTotal();
+    }
 
-    <script src="{% static 'script.js' %}"></script>
-    <script>
-        function updateQuantity(btn, change) {
-            const qtyInput = btn.parentElement.querySelector('.qty-input');
-            const currentValue = parseInt(qtyInput.value);
-            const newValue = Math.max(1, currentValue + change);
-            qtyInput.value = newValue;
-            updateItemTotal(btn.closest('.cart-item'));
+    function updateItemTotal(item) {
+        const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace(/\s/g, '').replace('$', ''));
+        const quantity = parseInt(item.querySelector('.qty-input').value);
+        const total = price * quantity;
+        item.querySelector('.item-total-price').textContent = total.toLocaleString() + ' $';
+    }
+
+    function removeItem(btn) {
+        if (confirm('{% trans "Remove item from cart?" %}')) {
+            btn.closest('.cart-item').remove();
             updateCartTotal();
         }
+    }
 
-        function updateItemTotal(item) {
-            const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace(/\s/g, '').replace('$', ''));
-            const quantity = parseInt(item.querySelector('.qty-input').value);
-            const total = price * quantity;
-            item.querySelector('.item-total-price').textContent = total.toLocaleString('ru-RU') + ' $';
-        }
-
-        function removeItem(btn) {
-            if (confirm('Удалить товар из корзины?')) {
-                btn.closest('.cart-item').remove();
-                updateCartTotal();
-            }
-        }
-
-        function updateCartTotal() {
-            const items = document.querySelectorAll('.cart-item');
-            let subtotal = 0;
-            items.forEach(item => {
-                const totalText = item.querySelector('.item-total-price').textContent;
-                subtotal += parseFloat(totalText.replace(/\s/g, '').replace('$', ''));
-            });
-            
-            document.getElementById('subtotal').textContent = subtotal.toLocaleString('ru-RU') + ' $';
-            document.getElementById('total').textContent = subtotal.toLocaleString('ru-RU') + ' $';
-        }
-    </script>
-</body>
-</html>
-
+    function updateCartTotal() {
+        const items = document.querySelectorAll('.cart-item');
+        let subtotal = 0;
+        items.forEach(item => {
+            const totalText = item.querySelector('.item-total-price').textContent;
+            subtotal += parseFloat(totalText.replace(/\s/g, '').replace('$', ''));
+        });
+        
+        document.getElementById('subtotal').textContent = subtotal.toLocaleString() + ' $';
+        document.getElementById('total').textContent = subtotal.toLocaleString() + ' $';
+    }
+</script>
+{% endblock %}

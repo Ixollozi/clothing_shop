@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'modeltranslation',  # Должен быть перед 'store'
     'store',
 ]
 
@@ -39,7 +40,8 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',  # Добавляем для i18n
+    'django.middleware.locale.LocaleMiddleware',  # Должен быть после SessionMiddleware
+    'store.middleware.LanguageSessionMiddleware',  # Сохранение языка в сессии
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -61,6 +63,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',  # Для i18n
+                'store.context_processors.store_config',  # Конфигурация магазина
             ],
         },
     },
@@ -120,6 +123,17 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Session settings для сохранения языка
+SESSION_COOKIE_AGE = 86400  # 24 часа
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = False  # True для HTTPS в продакшене
+SESSION_SAVE_EVERY_REQUEST = True  # Сохранять сессию при каждом запросе
+
+# Modeltranslation settings
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
+MODELTRANSLATION_LANGUAGES = ('ru', 'en', 'uz')
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('ru', 'en', 'uz')
 
 
 # Static files (CSS, JavaScript, Images)

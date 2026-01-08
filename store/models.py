@@ -6,6 +6,7 @@ class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название')
     slug = models.SlugField(unique=True, verbose_name='URL')
     image = models.ImageField(upload_to='categories/', blank=True, null=True, verbose_name='Изображение')
+    image_url = models.URLField(blank=True, null=True, verbose_name='URL изображения')
     description = models.TextField(blank=True, verbose_name='Описание')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
@@ -48,7 +49,11 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name='Основное изображение')
     image_url = models.URLField(blank=True, null=True, verbose_name='URL изображения')
     available_sizes = models.CharField(max_length=50, choices=SIZE_CHOICES, default='M', verbose_name='Доступные размеры')
-    available_colors = models.CharField(max_length=200, verbose_name='Доступные цвета')
+    available_colors = models.CharField(
+        max_length=200, 
+        verbose_name='Доступные цвета',
+        help_text='Доступные цвета: Черный, Белый, Синий, Красный, Зеленый, Желтый, Серый. Указывайте через запятую, например: "Черный, Белый, Синий"'
+    )
     stock = models.PositiveIntegerField(default=0, verbose_name='Остаток')
     is_active = models.BooleanField(default=True, verbose_name='Активен')
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=0, verbose_name='Рейтинг')
@@ -178,5 +183,27 @@ class OrderItem(models.Model):
 
     @property
     def total(self):
+        if self.price is None or self.quantity is None:
+            return 0
         return self.price * self.quantity
+
+
+class Partner(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Название')
+    icon = models.CharField(max_length=100, default='fas fa-star', verbose_name='Иконка (Font Awesome класс)')
+    url = models.URLField(blank=True, null=True, verbose_name='Ссылка на сайт')
+    logo = models.ImageField(upload_to='partners/', blank=True, null=True, verbose_name='Логотип')
+    description = models.TextField(blank=True, verbose_name='Описание')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+    order = models.PositiveIntegerField(default=0, verbose_name='Порядок сортировки')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Партнер'
+        verbose_name_plural = 'Партнеры'
+        ordering = ['order', 'name']
+
+    def __str__(self):
+        return self.name
 

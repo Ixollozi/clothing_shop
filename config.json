@@ -1,0 +1,108 @@
+{
+  "store": {
+    "name": "Fashion Store",
+    "title": "Fashion Store - Online Clothing Store",
+    "description": "Your reliable partner in the world of fashion. Quality clothing at affordable prices.",
+    "logo": "",
+    "favicon": ""
+  },
+  "contact": {
+    "phone": "+7 (800) 111111111111",
+    "email": "info@fashionstore.ru",
+    "address": {
+      "city": "Tashkent",
+      "street": "Example Street, 1",
+      "full": "Tashkent, Example Street, 1"
+    },
+    "working_hours": {
+      "weekdays": "9:00 - 20:00",
+      "weekend": "10:00 - 18:00"
+    }
+  },
+  "social": {
+    "instagram": "#",
+    "facebook": "#",
+    "twitter": "#",
+    "vk": "#",
+    "telegram": "#",
+    "whatsapp": "#"
+  },
+  "hero": {
+    "title": "New Collection",
+    "subtitle": "Discover style and comfort",
+    "button_text": "View Catalog",
+    "background_image": ""
+  },
+  "partners": [
+    {
+      "name": "Brand Fashion",
+      "icon": "fas fa-tshirt"
+    },
+    {
+      "name": "Luxury Style",
+      "icon": "fas fa-gem"
+    },
+    {
+      "name": "Premium Wear",
+      "icon": "fas fa-star"
+    },
+    {
+      "name": "Elite Brands",
+      "icon": "fas fa-crown"
+    },
+    {
+      "name": "Fashion House",
+      "icon": "fas fa-heart"
+    },
+    {
+      "name": "Trend Setter",
+      "icon": "fas fa-fire"
+    }
+  ],
+  "features": [
+    {
+      "icon": "fas fa-shipping-fast",
+      "title": "Free Delivery",
+      "description": "Free delivery on orders over $50"
+    },
+    {
+      "icon": "fas fa-undo",
+      "title": "Easy Returns",
+      "description": "30 days return policy"
+    },
+    {
+      "icon": "fas fa-shield-alt",
+      "title": "Secure Payment",
+      "description": "100% secure payment"
+    },
+    {
+      "icon": "fas fa-headset",
+      "title": "24/7 Support",
+      "description": "Dedicated support"
+    }
+  ],
+  "about": {
+    "title": "About Us",
+    "description": "We are a modern fashion store offering quality clothing for the whole family. Our mission is to make fashion accessible to everyone.",
+    "mission": "To provide high-quality fashion items at affordable prices",
+    "vision": "To become the leading fashion retailer in the region",
+    "values": [
+      "Quality",
+      "Customer Service",
+      "Innovation",
+      "Sustainability"
+    ]
+  },
+  "seo": {
+    "meta_title": "Fashion Store - Online Clothing Store",
+    "meta_description": "Buy quality clothing online. Wide selection of men's, women's and children's clothing.",
+    "meta_keywords": "clothing, fashion, online store, clothes"
+  },
+  "theme": {
+    "primary_color": "#1976d2",
+    "secondary_color": "#ffa726",
+    "text_color": "#333",
+    "background_color": "#fff"
+  }
+}
+

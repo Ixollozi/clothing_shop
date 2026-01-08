@@ -29,6 +29,7 @@
         <div class="quick-actions-row">
             <a href="{% url 'admin:store_product_add' %}" class="quick-action-btn-blue">Добавить товар</a>
             <a href="{% url 'admin:store_category_add' %}" class="quick-action-btn-blue">Добавить категорию</a>
+            <a href="{% url 'admin:store_partner_add' %}" class="quick-action-btn-blue">Добавить партнера</a>
             <a href="{% url 'admin:store_order_changelist' %}" class="quick-action-btn-blue">Просмотр заказов</a>
         </div>
 
@@ -73,6 +74,17 @@
                     <a href="{% url 'admin:store_cart_changelist' %}" class="stat-card-button-photo">ОТКРЫТЬ</a>
                 </div>
             </div>
+            
+            <div class="stat-card-photo">
+                <div class="stat-card-header-photo">
+                    <span class="stat-card-title-photo">Партнеры</span>
+                </div>
+                <div class="stat-card-body-photo">
+                    <div class="stat-value-photo">{{ total_partners|default:0 }}</div>
+                    <div style="font-size: 0.85em; color: #666; margin-top: 5px;">Активных: {{ active_partners|default:0 }}</div>
+                    <a href="{% url 'admin:store_partner_changelist' %}" class="stat-card-button-photo">ОТКРЫТЬ</a>
+                </div>
+            </div>
         </div>
 
         <!-- Карточки последних элементов -->
@@ -110,6 +122,30 @@
                         </li>
                         {% empty %}
                         <li class="latest-empty-photo">Нет товаров</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="latest-card-photo">
+                <div class="latest-card-header-photo">
+                    <span class="latest-card-title-photo">Последние партнеры</span>
+                </div>
+                <div class="latest-card-body-photo">
+                    <ul class="latest-list-photo">
+                        {% for partner in latest_partners %}
+                        <li class="latest-list-item-photo">
+                            <a href="{% url 'admin:store_partner_change' partner.id %}">
+                                {{ partner.name }}
+                                {% if partner.is_active %}
+                                    <span style="color: #4caf50; font-size: 0.9em;">● Активен</span>
+                                {% else %}
+                                    <span style="color: #999; font-size: 0.9em;">● Неактивен</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        {% empty %}
+                        <li class="latest-empty-photo">Нет партнеров</li>
                         {% endfor %}
                     </ul>
                 </div>

@@ -1,50 +1,19 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Классическая футболка - Fashion Store</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <a href="/" style="text-decoration: none; color: inherit;"><h1>Fashion Store</h1></a>
-                </div>
-                <nav class="nav-menu">
-                    <a href="/">Главная</a>
-                    <a href="/catalog/">Каталог</a>
-                    <a href="/about/">О нас</a>
-                    <a href="/contact/">Контакты</a>
-                </nav>
-                <div class="header-icons">
-                    <a href="#" class="icon-link"><i class="fas fa-search"></i></a>
-                    <div class="language-switcher">
-                        <button class="language-btn" id="languageBtn">
-                            <i class="fas fa-globe"></i>
-                            <span class="current-lang">RU</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="language-dropdown" id="languageDropdown">
-                            <a href="#" class="lang-option" data-lang="ru">Русский</a>
-                            <a href="#" class="lang-option" data-lang="en">English</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
 
+{% block title %}{% if product %}{{ product.name }}{% else %}{% trans "Product" %}{% endif %} - {{ store_name }}{% endblock %}
+
+{% block content %}
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
+            <h1>{% if product %}{{ product.name }}{% else %}{% trans "Product" %}{% endif %}</h1>
             <nav class="breadcrumbs">
-                <a href="/">Главная</a> / <a href="/catalog/">Каталог</a> / <span>Классическая футболка</span>
+                <a href="{% url 'index' %}">{% trans "Home" %}</a> / 
+                <a href="{% url 'catalog' %}">{% trans "Catalog" %}</a> / 
+                {% if product.category %}<a href="{% url 'catalog' %}">{{ product.category.name }}</a> / {% endif %}
+                <span>{% if product %}{{ product.name }}{% else %}{% trans "Product" %}{% endif %}</span>
             </nav>
         </div>
     </section>
@@ -52,96 +21,129 @@
     <!-- Product Details -->
     <section class="product-details">
         <div class="container">
+            {% if product %}
             <div class="product-detail-layout">
                 <!-- Product Images -->
                 <div class="product-images">
                     <div class="main-image">
-                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600" alt="Классическая футболка" id="mainImage">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" id="mainImage">
+                        {% elif product.image_url %}
+                            <img src="{{ product.image_url }}" alt="{{ product.name }}" id="mainImage">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600" alt="{{ product.name }}" id="mainImage">
+                        {% endif %}
                     </div>
                     <div class="thumbnail-images">
-                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600" alt="Вид 1" class="thumbnail active">
-                        <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600" alt="Вид 2" class="thumbnail">
-                        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600" alt="Вид 3" class="thumbnail">
-                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600" alt="Вид 4" class="thumbnail">
+                        {% if product.images.all %}
+                            {% for img in product.images.all %}
+                                <img src="{{ img.image.url }}" alt="{{ product.name }} - {% trans 'View' %} {{ forloop.counter }}" class="thumbnail {% if forloop.first %}active{% endif %}">
+                            {% endfor %}
+                        {% else %}
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="thumbnail active">
+                            {% elif product.image_url %}
+                                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="thumbnail active">
+                            {% else %}
+                                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600" alt="{{ product.name }}" class="thumbnail active">
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
 
                 <!-- Product Info -->
                 <div class="product-info-detail">
-                    <h1>Классическая футболка</h1>
+                    <h1>{{ product.name }}</h1>
                     <div class="product-rating">
                         <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
+                            {% with rating=product.rating|floatformat:0 %}
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= rating|add:"0" %}
+                                        <i class="fas fa-star"></i>
+                                    {% else %}
+                                        <i class="far fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endwith %}
                         </div>
-                        <span class="rating-text">(4.0) 12 отзывов</span>
+                        <span class="rating-text">({{ product.rating }}) {{ product.reviews_count }} {% trans "reviews" %}</span>
                     </div>
                     
                     <div class="product-price-large">
-                        <span class="current-price">20 $</span>
-                        <span class="old-price">25 $</span>
-                        <span class="discount">-20%</span>
+                        <span class="current-price">{{ product.price }} $</span>
+                        {% if product.old_price %}
+                            <span class="old-price">{{ product.old_price }} $</span>
+                            {% if discount %}
+                                <span class="discount">-{{ discount }}%</span>
+                            {% endif %}
+                        {% endif %}
                     </div>
 
                     <div class="product-description">
-                        <p>Классическая футболка из высококачественного хлопка. Идеально подходит для повседневной носки. Мягкая и приятная на ощупь ткань обеспечивает комфорт в течение всего дня.</p>
+                        <p>{{ product.description|linebreaks }}</p>
                     </div>
 
                     <!-- Size Selection -->
+                    {% if sizes %}
                     <div class="product-options">
-                        <h3>Размер</h3>
+                        <h3>{% trans "Size" %}</h3>
                         <div class="size-selector">
-                            <button class="size-option active">S</button>
-                            <button class="size-option">M</button>
-                            <button class="size-option">L</button>
-                            <button class="size-option">XL</button>
+                            {% for size in sizes %}
+                                <button class="size-option {% if forloop.first %}active{% endif %}" data-size="{{ size }}">{{ size }}</button>
+                            {% endfor %}
                         </div>
-                        <a href="#" class="size-guide-link">Таблица размеров</a>
+                        <a href="#" class="size-guide-link">{% trans "Size Chart" %}</a>
                     </div>
+                    {% endif %}
 
                     <!-- Color Selection -->
+                    {% if colors %}
                     <div class="product-options">
-                        <h3>Цвет</h3>
+                        <h3>{% trans "Color" %}</h3>
                         <div class="color-selector">
-                            <span class="color-option-large active" style="background: #000;" data-color="black"></span>
-                            <span class="color-option-large" style="background: #fff; border: 2px solid #ddd;" data-color="white"></span>
-                            <span class="color-option-large" style="background: #3498db;" data-color="blue"></span>
-                            <span class="color-option-large" style="background: #e74c3c;" data-color="red"></span>
+                            {% for color in colors %}
+                                <span class="color-option-large {% if forloop.first %}active{% endif %}" 
+                                      style="background: {{ color.code }}; {% if color.code == '#ffffff' %}border: 2px solid #ddd;{% endif %}" 
+                                      data-color="{{ color.name|lower }}"></span>
+                            {% endfor %}
                         </div>
                     </div>
+                    {% endif %}
 
                     <!-- Quantity -->
                     <div class="product-options">
-                        <h3>Количество</h3>
+                        <h3>{% trans "Quantity" %}</h3>
                         <div class="quantity-selector">
                             <button class="qty-btn" id="decreaseQty">-</button>
-                            <input type="number" value="1" min="1" max="10" id="quantity" class="qty-input">
+                            <input type="number" value="1" min="1" max="{% if product.stock %}{{ product.stock }}{% else %}10{% endif %}" id="quantity" class="qty-input">
                             <button class="qty-btn" id="increaseQty">+</button>
                         </div>
+                        {% if product.stock %}
+                            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                                {% trans "In stock" %}: {{ product.stock }} {% trans "pcs" %}.
+                            </p>
+                        {% endif %}
                     </div>
 
                     <!-- Action Buttons -->
                     <div class="product-actions">
-                        <a href="/cart/" class="btn btn-primary btn-large">Добавить в корзину</a>
-                        <button class="btn btn-secondary btn-large"><i class="far fa-heart"></i> В избранное</button>
+                        <a href="{% url 'cart' %}" class="btn btn-primary btn-large">{% trans "Add to Cart" %}</a>
+                        <button class="btn btn-secondary btn-large"><i class="far fa-heart"></i> {% trans "Add to Wishlist" %}</button>
                     </div>
 
                     <!-- Product Features -->
                     <div class="product-features">
                         <div class="feature-item-small">
                             <i class="fas fa-shipping-fast"></i>
-                            <span>Бесплатная доставка от 30 $</span>
+                            <span>{% trans "Free delivery from 30 $" %}</span>
                         </div>
                         <div class="feature-item-small">
                             <i class="fas fa-undo"></i>
-                            <span>Возврат в течение 14 дней</span>
+                            <span>{% trans "Return within 14 days" %}</span>
                         </div>
                         <div class="feature-item-small">
                             <i class="fas fa-shield-alt"></i>
-                            <span>Гарантия качества</span>
+                            <span>{% trans "Quality guarantee" %}</span>
                         </div>
                     </div>
                 </div>
@@ -150,203 +152,115 @@
             <!-- Product Tabs -->
             <div class="product-tabs">
                 <div class="tab-buttons">
-                    <button class="tab-btn active" data-tab="description">Описание</button>
-                    <button class="tab-btn" data-tab="specifications">Характеристики</button>
-                    <button class="tab-btn" data-tab="reviews">Отзывы (12)</button>
+                    <button class="tab-btn active" data-tab="description">{% trans "Description" %}</button>
+                    <button class="tab-btn" data-tab="specifications">{% trans "Specifications" %}</button>
+                    <button class="tab-btn" data-tab="reviews">{% trans "Reviews" %} ({{ product.reviews_count }})</button>
                 </div>
 
                 <div class="tab-content active" id="description">
-                    <h3>Описание товара</h3>
-                    <p>Классическая футболка из 100% хлопка премиум качества. Изделие выполнено из мягкой, дышащей ткани, которая обеспечивает комфорт в любое время года. Футболка имеет классический крой, который подходит для любого типа фигуры.</p>
-                    <p>Материал отлично пропускает воздух, не вызывает раздражения и сохраняет форму даже после множества стирок. Идеальный выбор для повседневной носки, спорта или отдыха.</p>
-                    <ul>
-                        <li>100% хлопок</li>
-                        <li>Мягкая и дышащая ткань</li>
-                        <li>Классический крой</li>
-                        <li>Устойчивость к усадке</li>
-                        <li>Легкий уход</li>
-                    </ul>
+                    <h3>{% trans "Product Description" %}</h3>
+                    <p>{{ product.description|linebreaks }}</p>
                 </div>
 
                 <div class="tab-content" id="specifications">
-                    <h3>Характеристики</h3>
+                    <h3>{% trans "Specifications" %}</h3>
                     <table class="specs-table">
+                        {% if product.category %}
                         <tr>
-                            <td>Материал</td>
-                            <td>100% хлопок</td>
+                            <td>{% trans "Category" %}</td>
+                            <td>{{ product.category.name }}</td>
                         </tr>
+                        {% endif %}
+                        {% if product.available_colors %}
                         <tr>
-                            <td>Страна производства</td>
-                            <td>Узбекистан</td>
+                            <td>{% trans "Available Colors" %}</td>
+                            <td>{{ product.available_colors }}</td>
                         </tr>
+                        {% endif %}
+                        {% if sizes %}
                         <tr>
-                            <td>Состав</td>
-                            <td>Хлопок 100%</td>
+                            <td>{% trans "Available Sizes" %}</td>
+                            <td>{{ sizes|join:", " }}</td>
                         </tr>
+                        {% endif %}
+                        {% if product.stock %}
                         <tr>
-                            <td>Уход</td>
-                            <td>Машинная стирка при 30°C</td>
+                            <td>{% trans "Stock" %}</td>
+                            <td>{{ product.stock }} {% trans "pcs" %}.</td>
                         </tr>
-                        <tr>
-                            <td>Вес</td>
-                            <td>180 г</td>
-                        </tr>
+                        {% endif %}
                     </table>
                 </div>
 
                 <div class="tab-content" id="reviews">
-                    <h3>Отзывы покупателей</h3>
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div class="review-author">
-                                <strong>Анна Петрова</strong>
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </div>
-                            <span class="review-date">15.01.2024</span>
-                        </div>
-                        <p>Отличная футболка! Очень качественная, приятная на ощупь. Размер соответствует. Рекомендую!</p>
-                    </div>
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div class="review-author">
-                                <strong>Иван Сидоров</strong>
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </div>
-                            <span class="review-date">10.01.2024</span>
-                        </div>
-                        <p>Хорошее качество за свою цену. Немного села после первой стирки, но в целом доволен.</p>
-                    </div>
+                    <h3>{% trans "Customer Reviews" %}</h3>
+                    {% if product.reviews_count > 0 %}
+                        <p>{% trans "Average rating" %}: {{ product.rating }} / 5.0 ({{ product.reviews_count }} {% trans "reviews" %})</p>
+                        <!-- Здесь можно добавить реальные отзывы, когда будет модель Review -->
+                    {% else %}
+                        <p>{% trans "No reviews yet. Be the first to review this product!" %}</p>
+                    {% endif %}
                 </div>
             </div>
+            {% else %}
+                <div class="container" style="text-align: center; padding: 3rem 0;">
+                    <h2>{% trans "Product not found" %}</h2>
+                    <p>{% trans "The product you are looking for does not exist or has been removed." %}</p>
+                    <a href="{% url 'catalog' %}" class="btn btn-primary">{% trans "Back to Catalog" %}</a>
+                </div>
+            {% endif %}
         </div>
     </section>
 
     <!-- Related Products -->
+    {% if related_products %}
     <section class="related-products">
         <div class="container">
-            <h2 class="section-title">Похожие товары</h2>
+            <h2 class="section-title">{% trans "Similar Products" %}</h2>
             <div class="products-grid">
+                {% for related_product in related_products %}
                 <div class="product-card">
                     <div class="product-image">
-                        <a href="/catalog/"><img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400" alt="Джинсы"></a>
+                        <a href="{% url 'product' related_product.slug %}">
+                            {% if related_product.image %}
+                                <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}">
+                            {% elif related_product.image_url %}
+                                <img src="{{ related_product.image_url }}" alt="{{ related_product.name }}">
+                            {% else %}
+                                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400" alt="{{ related_product.name }}">
+                            {% endif %}
+                        </a>
                         <div class="product-overlay">
-                            <a href="/catalog/" class="btn btn-small">Быстрый просмотр</a>
+                            <a href="{% url 'product' related_product.slug %}" class="btn btn-small">{% trans "Quick View" %}</a>
                         </div>
                     </div>
                     <div class="product-info">
-                        <a href="/catalog/" style="text-decoration: none; color: inherit;"><h3 class="product-name">Джинсы классические</h3></a>
-                        <p class="product-price">35 $</p>
-                        <a href="/cart/" class="btn btn-add-cart">В корзину</a>
+                        <a href="{% url 'product' related_product.slug %}" style="text-decoration: none; color: inherit;">
+                            <h3 class="product-name">{{ related_product.name }}</h3>
+                        </a>
+                        <p class="product-price">
+                            {{ related_product.price }} $
+                            {% if related_product.old_price %}
+                                <span style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-left: 0.5rem;">{{ related_product.old_price }} $</span>
+                            {% endif %}
+                        </p>
+                        <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
                     </div>
                 </div>
-                <div class="product-card">
-                    <div class="product-image">
-                        <a href="/catalog/"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" alt="Рубашка"></a>
-                        <div class="product-overlay">
-                            <a href="/catalog/" class="btn btn-small">Быстрый просмотр</a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <a href="/catalog/" style="text-decoration: none; color: inherit;"><h3 class="product-name">Рубашка офисная</h3></a>
-                        <p class="product-price">25 $</p>
-                        <a href="/cart/" class="btn btn-add-cart">В корзину</a>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">
-                        <a href="/catalog/"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400" alt="Свитшот"></a>
-                        <div class="product-overlay">
-                            <a href="/catalog/" class="btn btn-small">Быстрый просмотр</a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <a href="/catalog/" style="text-decoration: none; color: inherit;"><h3 class="product-name">Свитшот уютный</h3></a>
-                        <p class="product-price">40 $</p>
-                        <a href="/cart/" class="btn btn-add-cart">В корзину</a>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">
-                        <a href="/catalog/"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400" alt="Брюки"></a>
-                        <div class="product-overlay">
-                            <a href="/catalog/" class="btn btn-small">Быстрый просмотр</a>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <a href="/catalog/" style="text-decoration: none; color: inherit;"><h3 class="product-name">Брюки классические</h3></a>
-                        <p class="product-price">33 $</p>
-                        <a href="/cart/" class="btn btn-add-cart">В корзину</a>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
+{% endblock %}
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Fashion Store</h3>
-                    <p>Ваш надежный партнер в мире моды. Качественная одежда по доступным ценам.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>Покупателям</h4>
-                    <ul>
-                        <li><a href="/delivery/">Доставка и оплата</a></li>
-                        <li><a href="#">Возврат товара</a></li>
-                        <li><a href="#">Размерная сетка</a></li>
-                        <li><a href="#">Частые вопросы</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>О компании</h4>
-                    <ul>
-                        <li><a href="/about/">О нас</a></li>
-                        <li><a href="#">Вакансии</a></li>
-                        <li><a href="/contact/">Контакты</a></li>
-                        <li><a href="#">Партнеры</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Контакты</h4>
-                    <ul>
-                        <li><i class="fas fa-phone"></i> +7 (800) 123-45-67</li>
-                        <li><i class="fas fa-envelope"></i> info@fashionstore.ru</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Ташкент, ул. Примерная, 1</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Fashion Store. Все права защищены.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="{% static 'script.js' %}"></script>
-    <script>
-        // Thumbnail images
-        const thumbnails = document.querySelectorAll('.thumbnail');
-        const mainImage = document.getElementById('mainImage');
-        
+{% block extra_js %}
+<script>
+    // Thumbnail images
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const mainImage = document.getElementById('mainImage');
+    
+    if (thumbnails.length > 0 && mainImage) {
         thumbnails.forEach(thumb => {
             thumb.addEventListener('click', function() {
                 thumbnails.forEach(t => t.classList.remove('active'));
@@ -354,12 +268,14 @@
                 mainImage.src = this.src;
             });
         });
+    }
 
-        // Quantity selector
-        const decreaseBtn = document.getElementById('decreaseQty');
-        const increaseBtn = document.getElementById('increaseQty');
-        const quantityInput = document.getElementById('quantity');
+    // Quantity selector
+    const decreaseBtn = document.getElementById('decreaseQty');
+    const increaseBtn = document.getElementById('increaseQty');
+    const quantityInput = document.getElementById('quantity');
 
+    if (decreaseBtn && increaseBtn && quantityInput) {
         decreaseBtn.addEventListener('click', () => {
             if (quantityInput.value > 1) {
                 quantityInput.value = parseInt(quantityInput.value) - 1;
@@ -367,45 +283,48 @@
         });
 
         increaseBtn.addEventListener('click', () => {
-            if (quantityInput.value < 10) {
+            const max = parseInt(quantityInput.getAttribute('max'));
+            if (quantityInput.value < max) {
                 quantityInput.value = parseInt(quantityInput.value) + 1;
             }
         });
+    }
 
-        // Size selector
-        const sizeOptions = document.querySelectorAll('.size-option');
-        sizeOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                sizeOptions.forEach(o => o.classList.remove('active'));
-                this.classList.add('active');
-            });
+    // Size selector
+    const sizeOptions = document.querySelectorAll('.size-option');
+    sizeOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            sizeOptions.forEach(o => o.classList.remove('active'));
+            this.classList.add('active');
         });
+    });
 
-        // Color selector
-        const colorOptions = document.querySelectorAll('.color-option-large');
-        colorOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                colorOptions.forEach(o => o.classList.remove('active'));
-                this.classList.add('active');
-            });
+    // Color selector
+    const colorOptions = document.querySelectorAll('.color-option-large');
+    colorOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            colorOptions.forEach(o => o.classList.remove('active'));
+            this.classList.add('active');
         });
+    });
 
-        // Tabs
-        const tabButtons = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
+    // Tabs
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
 
-        tabButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const tabId = this.getAttribute('data-tab');
-                
-                tabButtons.forEach(b => b.classList.remove('active'));
-                tabContents.forEach(c => c.classList.remove('active'));
-                
-                this.classList.add('active');
-                document.getElementById(tabId).classList.add('active');
-            });
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
+            
+            tabButtons.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            
+            this.classList.add('active');
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
         });
-    </script>
-</body>
-</html>
-
+    });
+</script>
+{% endblock %}

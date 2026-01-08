@@ -19,3 +19,4 @@ def get_available_languages():
     from django.conf import settings
     return settings.LANGUAGES
 
+
