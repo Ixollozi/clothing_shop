@@ -19,3 +19,4 @@ class ProductTranslationOptions(TranslationOptions):
 class PartnerTranslationOptions(TranslationOptions):
     fields = ('name', 'description')
 
+
