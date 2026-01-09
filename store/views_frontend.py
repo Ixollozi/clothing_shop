@@ -6,67 +6,67 @@ def get_dummy_products():
     """Возвращает заглушки товаров"""
     return [
         {
-            'name': 'Classic T-shirt',
-            'slug': 'dummy-tshirt',
-            'price': 20,
+            'name': 'Деревянный обеденный стол',
+            'slug': 'dummy-wooden-table',
+            'price': 450,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400',
+            'image_url': 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop',
             'image': None,
         },
         {
-            'name': 'Classic Jeans',
-            'slug': 'dummy-jeans',
-            'price': 35,
+            'name': 'Металлическая стеллажная система',
+            'slug': 'dummy-metal-shelf',
+            'price': 320,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
+            'image_url': 'https://images.unsplash.com/photo-1551292831-023188e34287?w=400&h=400&fit=crop',
             'image': None,
         },
         {
-            'name': 'Elegant Dress',
-            'slug': 'dummy-dress',
-            'price': 50,
+            'name': 'Деревянный шкаф',
+            'slug': 'dummy-wooden-cabinet',
+            'price': 680,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
+            'image_url': 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop',
             'image': None,
         },
         {
-            'name': 'Demiseason Jacket',
-            'slug': 'dummy-jacket',
-            'price': 60,
+            'name': 'Металлическая кровать',
+            'slug': 'dummy-metal-bed',
+            'price': 550,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
+            'image_url': 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&h=400&fit=crop',
             'image': None,
         },
         {
-            'name': 'Office Shirt',
-            'slug': 'dummy-shirt',
-            'price': 25,
+            'name': 'Деревянное кресло',
+            'slug': 'dummy-wooden-chair',
+            'price': 280,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
+            'image_url': 'https://images.unsplash.com/photo-1506439773649-6c5e9a6d8b12?w=400&h=400&fit=crop',
             'image': None,
         },
         {
-            'name': 'Cozy Sweatshirt',
-            'slug': 'dummy-sweatshirt',
-            'price': 40,
+            'name': 'Металлическая полка',
+            'slug': 'dummy-metal-rack',
+            'price': 190,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
+            'image_url': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop',
             'image': None,
         },
         {
-            'name': 'Midi Skirt',
-            'slug': 'dummy-skirt',
-            'price': 28,
+            'name': 'Деревянный комод',
+            'slug': 'dummy-wooden-dresser',
+            'price': 520,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400',
+            'image_url': 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=400&fit=crop',
             'image': None,
         },
         {
-            'name': 'Classic Pants',
-            'slug': 'dummy-pants',
-            'price': 33,
+            'name': 'Металлическая конструкция',
+            'slug': 'dummy-metal-structure',
+            'price': 380,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
+            'image_url': 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=400&fit=crop',
             'image': None,
         },
     ]
@@ -76,27 +76,27 @@ def get_dummy_categories():
     """Возвращает заглушки категорий"""
     return [
         {
-            'name': "Men's Clothing",
-            'slug': 'mens-clothing',
-            'image_url': 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
+            'name': "Деревянная мебель",
+            'slug': 'wooden-furniture',
+            'image_url': 'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?w=400&h=400&fit=crop',
             'image': None,
         },
         {
-            'name': "Women's Clothing",
-            'slug': 'womens-clothing',
-            'image_url': 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400',
+            'name': "Металлические изделия",
+            'slug': 'metal-products',
+            'image_url': 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=400&fit=crop',
             'image': None,
         },
         {
-            'name': "Kids' Clothing",
-            'slug': 'kids-clothing',
-            'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
+            'name': "Столы и стулья",
+            'slug': 'tables-chairs',
+            'image_url': 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=400&h=400&fit=crop',
             'image': None,
         },
         {
-            'name': 'Accessories',
-            'slug': 'accessories',
-            'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
+            'name': 'Шкафы и комоды',
+            'slug': 'cabinets-dressers',
+            'image_url': 'https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?w=400&h=400&fit=crop',
             'image': None,
         },
     ]
@@ -165,7 +165,7 @@ def product_detail(request, slug=None):
                     self.slug = data.get('slug', '')
                     self.price = data.get('price', 0)
                     self.old_price = data.get('old_price')
-                    self.description = 'Classic product description'
+                    self.description = 'Качественное изделие из дерева или металла. Прочная конструкция и долговечность.'
                     self.image_url = data.get('image_url')
                     self.image = None
                     self.available_sizes = 'S,M,L,XL'
