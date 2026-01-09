@@ -1,8 +1,8 @@
 {
   "store": {
-    "name": "Fashion Store",
-    "title": "Fashion Store - Online Clothing Store",
-    "description": "Your reliable partner in the world of fashion. Quality clothing at affordable prices.",
+    "name": "Мебель и Металл",
+    "title": "Мебель и Металл - Магазин мебели и металлических изделий",
+    "description": "Ваш надежный партнер в мире качественной мебели и металлических изделий. Широкий ассортимент по доступным ценам.",
     "logo": "",
     "favicon": ""
   },
@@ -28,35 +28,35 @@
     "whatsapp": "#"
   },
   "hero": {
-    "title": "New Collection",
-    "subtitle": "Discover style and comfort",
-    "button_text": "View Catalog",
+    "title": "Мебель и Металл",
+    "subtitle": "Качественная мебель и металлические изделия для вашего дома",
+    "button_text": "Смотреть каталог",
     "background_image": ""
   },
   "partners": [
     {
-      "name": "Brand Fashion",
-      "icon": "fas fa-tshirt"
+      "name": "Дерево и Металл",
+      "icon": "fas fa-hammer"
     },
     {
-      "name": "Luxury Style",
-      "icon": "fas fa-gem"
+      "name": "Премиум Мебель",
+      "icon": "fas fa-couch"
     },
     {
-      "name": "Premium Wear",
-      "icon": "fas fa-star"
+      "name": "Металл Про",
+      "icon": "fas fa-industry"
     },
     {
-      "name": "Elite Brands",
-      "icon": "fas fa-crown"
+      "name": "Мебельный Дом",
+      "icon": "fas fa-home"
     },
     {
-      "name": "Fashion House",
-      "icon": "fas fa-heart"
+      "name": "Сталь и Дерево",
+      "icon": "fas fa-tools"
     },
     {
-      "name": "Trend Setter",
-      "icon": "fas fa-fire"
+      "name": "Качественная Мебель",
+      "icon": "fas fa-chair"
     }
   ],
   "features": [
@@ -82,27 +82,27 @@
     }
   ],
   "about": {
-    "title": "About Us",
-    "description": "We are a modern fashion store offering quality clothing for the whole family. Our mission is to make fashion accessible to everyone.",
-    "mission": "To provide high-quality fashion items at affordable prices",
-    "vision": "To become the leading fashion retailer in the region",
+    "title": "О нас",
+    "description": "Мы специализируемся на продаже качественной мебели и металлических изделий. Наша миссия - сделать качественную мебель и металл доступными для каждого.",
+    "mission": "Предоставлять высококачественную мебель и металлические изделия по доступным ценам",
+    "vision": "Стать ведущим магазином мебели и металла в регионе",
     "values": [
-      "Quality",
-      "Customer Service",
-      "Innovation",
-      "Sustainability"
+      "Качество",
+      "Надежность",
+      "Долговечность",
+      "Профессионализм"
     ]
   },
   "seo": {
-    "meta_title": "Fashion Store - Online Clothing Store",
-    "meta_description": "Buy quality clothing online. Wide selection of men's, women's and children's clothing.",
-    "meta_keywords": "clothing, fashion, online store, clothes"
+    "meta_title": "Мебель и Металл - Магазин мебели и металлических изделий",
+    "meta_description": "Купить качественную мебель и металлические изделия. Широкий ассортимент мебели и металла по доступным ценам.",
+    "meta_keywords": "мебель, металл, металлические изделия, купить мебель, купить металл, качественная мебель"
   },
   "theme": {
-    "primary_color": "#1976d2",
-    "secondary_color": "#ffa726",
-    "text_color": "#333",
-    "background_color": "#fff"
+    "primary_color": "#3d2817",
+    "secondary_color": "#8b6f47",
+    "text_color": "#2c2416",
+    "background_color": "#f5f1eb"
   },
   "django": {
     "debug": true,
@@ -144,7 +144,12 @@
       "allow_all_origins": true,
       "allow_credentials": true
     },
-    "csrf_trusted_origins": ["*"],
+    "csrf_trusted_origins": [
+      "http://localhost:8000",
+      "http://127.0.0.1:8000",
+      "http://localhost:5500",
+      "http://127.0.0.1:5500"
+    ],
     "rest_framework": {
       "page_size": 12
     },

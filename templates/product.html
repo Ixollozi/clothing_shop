@@ -27,25 +27,25 @@
                 <div class="product-images">
                     <div class="main-image">
                         {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}" id="mainImage">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" id="mainImage" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
                         {% elif product.image_url %}
-                            <img src="{{ product.image_url }}" alt="{{ product.name }}" id="mainImage">
+                            <img src="{{ product.image_url }}" alt="{{ product.name }}" id="mainImage" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
                         {% else %}
-                            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600" alt="{{ product.name }}" id="mainImage">
+                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=600&fit=crop" alt="{{ product.name }}" id="mainImage" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
                         {% endif %}
                     </div>
                     <div class="thumbnail-images">
                         {% if product.images.all %}
                             {% for img in product.images.all %}
-                                <img src="{{ img.image.url }}" alt="{{ product.name }} - {% trans 'View' %} {{ forloop.counter }}" class="thumbnail {% if forloop.first %}active{% endif %}">
+                                <img src="{{ img.image.url }}" alt="{{ product.name }} - {% trans 'View' %} {{ forloop.counter }}" class="thumbnail {% if forloop.first %}active{% endif %}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
                             {% endfor %}
                         {% else %}
                             {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="thumbnail active">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="thumbnail active" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
                             {% elif product.image_url %}
-                                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="thumbnail active">
+                                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="thumbnail active" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
                             {% else %}
-                                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600" alt="{{ product.name }}" class="thumbnail active">
+                                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=600&fit=crop" alt="{{ product.name }}" class="thumbnail active" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
                             {% endif %}
                         {% endif %}
                     </div>
@@ -92,7 +92,7 @@
                                 <button class="size-option {% if forloop.first %}active{% endif %}" data-size="{{ size }}">{{ size }}</button>
                             {% endfor %}
                         </div>
-                        <a href="#" class="size-guide-link">{% trans "Size Chart" %}</a>
+                        {% comment %} Size guide link - only show if relevant for product type {% endcomment %}
                     </div>
                     {% endif %}
 
@@ -223,11 +223,11 @@
                     <div class="product-image">
                         <a href="{% url 'product' related_product.slug %}">
                             {% if related_product.image %}
-                                <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}">
+                                <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
                             {% elif related_product.image_url %}
-                                <img src="{{ related_product.image_url }}" alt="{{ related_product.name }}">
+                                <img src="{{ related_product.image_url }}" alt="{{ related_product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
                             {% else %}
-                                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400" alt="{{ related_product.name }}">
+                                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop" alt="{{ related_product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
                             {% endif %}
                         </a>
                         <div class="product-overlay">

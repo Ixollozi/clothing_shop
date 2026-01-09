@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Catalog" %} - Fashion Store{% endblock %}
+{% block title %}{% trans "Catalog" %} - {{ store_name }}{% endblock %}
 
 {% block content %}
     <!-- Page Header -->
@@ -31,18 +31,7 @@
                             </label>
                             {% endfor %}
                         {% else %}
-                            <label class="filter-checkbox">
-                                <input type="checkbox"> {% trans "Men's Clothing" %}
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox"> {% trans "Women's Clothing" %}
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox"> {% trans "Kids' Clothing" %}
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox"> {% trans "Accessories" %}
-                            </label>
+                            <p>{% trans "No categories available" %}</p>
                         {% endif %}
                     </div>
 
@@ -57,6 +46,8 @@
                         </div>
                     </div>
 
+                    {% comment %} Size filter - only show if relevant for product type {% endcomment %}
+                    {% if False %}
                     <div class="filter-group">
                         <h4>{% trans "Size" %}</h4>
                         <div class="size-buttons">
@@ -67,6 +58,7 @@
                             <button class="size-btn">XL</button>
                         </div>
                     </div>
+                    {% endif %}
 
                     <div class="filter-group">
                         <h4>{% trans "Color" %}</h4>
@@ -110,11 +102,11 @@
                                         <a href="{% url 'catalog' %}">
                                     {% endif %}
                                         {% if product.image %}
-                                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                                            <img src="{{ product.image.url }}" alt="{{ product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
                                         {% elif product.image_url %}
-                                            <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                                            <img src="{{ product.image_url }}" alt="{{ product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
                                         {% else %}
-                                            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400" alt="{{ product.name }}">
+                                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop" alt="{{ product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
                                         {% endif %}
                                     </a>
                                     <div class="product-overlay">

@@ -6,7 +6,7 @@
 {% block branding %}
 <h1 id="site-name">
     <a href="{% url 'admin:index' %}">
-        <span style="color: #fff;">Fashion Store</span>
+        <span style="color: #fff;">{% if site_header %}{{ site_header }}{% else %}Universal Shop{% endif %}</span>
         <span style="color: #ffa726; font-size: 0.8em; margin-left: 5px;">Admin</span>
     </a>
 </h1>
