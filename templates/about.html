@@ -19,7 +19,7 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-intro">
-                    <h2>{% trans "Welcome to" %} {{ store_name }}</h2>
+                    <h2>{% if about_info.title %}{{ about_info.title }}{% else %}{% trans "Welcome to" %} {{ store_name }}{% endif %}</h2>
                     {% if about_info.description %}
                         <p>{{ about_info.description }}</p>
                     {% else %}
@@ -75,13 +75,26 @@
                     <p>{% trans "Our store was founded with a simple idea - to make quality products accessible to everyone. Starting with a small store, we have grown into a large online store serving customers throughout the country." %}</p>
                     <p>{% trans "Over the years, we have accumulated vast experience, expanded our range and improved our service. Today" %} {{ store_name }} {% trans "is a team of professionals who love their work and care about every customer." %}</p>
 
+                    {% if about_info.vision %}
+                    <h3>{% trans "Our Vision" %}</h3>
+                    <p>{{ about_info.vision }}</p>
+                    {% endif %}
+
                     <h3>{% trans "Our Values" %}</h3>
+                    {% if about_info.values %}
+                    <ul class="values-list">
+                        {% for value in about_info.values %}
+                        <li><strong>{{ value }}</strong></li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
                     <ul class="values-list">
                         <li><strong>{% trans "Quality" %}</strong> — {% trans "we guarantee high quality of all products" %}</li>
                         <li><strong>{% trans "Honesty" %}</strong> — {% trans "transparent prices and honest conditions" %}</li>
                         <li><strong>{% trans "Customer Care" %}</strong> — {% trans "we are always ready to help and answer questions" %}</li>
                         <li><strong>{% trans "Innovation" %}</strong> — {% trans "we constantly improve service and expand capabilities" %}</li>
                     </ul>
+                    {% endif %}
                 </div>
 
                 <div class="stats-section">
