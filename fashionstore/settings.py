@@ -220,7 +220,14 @@ CORS_ALLOW_CREDENTIALS = cors_config.get('allow_credentials', True)
 
 # CSRF settings
 # Можно переопределить через config.json
-CSRF_TRUSTED_ORIGINS = DJANGO_CONFIG.get('csrf_trusted_origins', ["*"])
+csrf_origins = DJANGO_CONFIG.get('csrf_trusted_origins', [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500"
+])
+# Фильтруем "*" так как Django 4.0+ требует полные URL с протоколом
+CSRF_TRUSTED_ORIGINS = [origin for origin in csrf_origins if origin != "*"]
 
 # Email settings
 # Можно переопределить через config.json

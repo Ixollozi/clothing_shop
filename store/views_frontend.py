@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from .models import Product, Category
 
 
@@ -123,10 +125,67 @@ def index(request):
 
 def catalog(request):
     """Страница каталога"""
-    # Получаем товары из БД, если есть - иначе заглушки
-    products = list(Product.objects.filter(is_active=True).order_by('-created_at'))
-    if not products:
-        products = get_dummy_products()
+    # Получаем товары из БД
+    products_queryset = Product.objects.filter(is_active=True)
+    
+    # Фильтрация по категории
+    category_slug = request.GET.get('category', None)
+    if category_slug:
+        products_queryset = products_queryset.filter(category__slug=category_slug)
+    
+    # Фильтрация по цене
+    min_price = request.GET.get('min_price', None)
+    max_price = request.GET.get('max_price', None)
+    if min_price:
+        try:
+            products_queryset = products_queryset.filter(price__gte=float(min_price))
+        except (ValueError, TypeError):
+            pass
+    if max_price:
+        try:
+            products_queryset = products_queryset.filter(price__lte=float(max_price))
+        except (ValueError, TypeError):
+            pass
+    
+    # Поиск
+    search_query = request.GET.get('search', None)
+    if search_query:
+        products_queryset = products_queryset.filter(
+            Q(name__icontains=search_query) | Q(description__icontains=search_query)
+        )
+    
+    # Сортировка
+    sort_by = request.GET.get('sort', '-created_at')
+    valid_sorts = {
+        'popularity': '-rating',
+        'price_low': 'price',
+        'price_high': '-price',
+        'newest': '-created_at',
+    }
+    sort_order = valid_sorts.get(sort_by, '-created_at')
+    products_queryset = products_queryset.order_by(sort_order)
+    
+    # Если нет товаров в БД, используем заглушки
+    use_dummy = False
+    if not products_queryset.exists():
+        products_queryset = None
+        use_dummy = True
+    
+    # Пагинация
+    if use_dummy:
+        # Для заглушек создаем простой список
+        dummy_products = get_dummy_products()
+        paginator = Paginator(dummy_products, 12)  # 12 товаров на страницу
+    else:
+        paginator = Paginator(products_queryset, 12)  # 12 товаров на страницу
+    
+    page = request.GET.get('page', 1)
+    try:
+        products_page = paginator.page(page)
+    except PageNotAnInteger:
+        products_page = paginator.page(1)
+    except EmptyPage:
+        products_page = paginator.page(paginator.num_pages)
     
     # Получаем категории из БД
     categories = list(Category.objects.all().order_by('name'))
@@ -134,8 +193,13 @@ def catalog(request):
         categories = get_dummy_categories()
     
     context = {
-        'products': products,
+        'products': products_page,
         'categories': categories,
+        'current_category': category_slug,
+        'current_sort': sort_by,
+        'current_search': search_query,
+        'min_price': min_price,
+        'max_price': max_price,
     }
     return render(request, 'catalog.html', context)
 

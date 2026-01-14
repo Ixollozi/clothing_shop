@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import json
 
 
 class Category(models.Model):
@@ -206,4 +207,248 @@ class Partner(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Config(models.Model):
+    """
+    Модель для хранения конфигурации сайта.
+    Позволяет редактировать config.json через админ панель.
+    """
+    key = models.CharField(max_length=100, unique=True, default='main', verbose_name='Ключ конфигурации')
+    config_data = models.JSONField(default=dict, verbose_name='Данные конфигурации')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    description = models.TextField(blank=True, verbose_name='Описание')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Конфигурация'
+        verbose_name_plural = 'Конфигурации'
+        ordering = ['-updated_at']
+
+    def __str__(self):
+        return f"Конфигурация: {self.key}"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Синхронизируем с config.json при сохранении
+        if self.is_active:
+            self.sync_to_file()
+
+    def sync_to_file(self):
+        """
+        Синхронизирует конфигурацию с файлом config.json
+        """
+        try:
+            from pathlib import Path
+            import json
+            
+            BASE_DIR = Path(__file__).resolve().parent.parent
+            config_path = BASE_DIR / 'config.json'
+            
+            with open(config_path, 'w', encoding='utf-8') as f:
+                json.dump(self.config_data, f, ensure_ascii=False, indent=2)
+            
+            # Перезагружаем кэш конфигурации
+            from .config_loader import reload_config
+            reload_config()
+        except Exception as e:
+            print(f"Ошибка синхронизации конфигурации с файлом: {e}")
+
+    @classmethod
+    def get_active_config(cls):
+        """
+        Получает активную конфигурацию из базы данных
+        """
+        try:
+            config = cls.objects.filter(is_active=True).first()
+            if config:
+                return config.config_data
+        except Exception:
+            pass
+        return None
+
+
+class StoreConfig(models.Model):
+    """Конфигурация магазина"""
+    name = models.CharField(max_length=200, default='Fashion Store', verbose_name='Название магазина')
+    title = models.CharField(max_length=200, default='Fashion Store - Online Clothing Store', verbose_name='Заголовок')
+    description = models.TextField(default='Your reliable partner in the world of fashion. Quality clothing at affordable prices.', verbose_name='Описание')
+    logo = models.ImageField(upload_to='config/', blank=True, null=True, verbose_name='Логотип')
+    favicon = models.ImageField(upload_to='config/', blank=True, null=True, verbose_name='Иконка сайта (favicon)')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Настройки магазина'
+        verbose_name_plural = 'Настройки магазина'
+
+    def __str__(self):
+        return f"Настройки магазина: {self.name}"
+
+    def save(self, *args, **kwargs):
+        # Обеспечиваем, что только одна запись активна
+        if self.is_active:
+            StoreConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
+
+
+class ContactConfig(models.Model):
+    """Конфигурация контактов"""
+    phone = models.CharField(max_length=50, default='+7 (800) 111111111111', verbose_name='Телефон')
+    email = models.EmailField(default='info@fashionstore.ru', verbose_name='Email')
+    address_city = models.CharField(max_length=100, default='Tashkent', verbose_name='Город')
+    address_street = models.CharField(max_length=200, default='Example Street, 1', verbose_name='Улица')
+    address_full = models.CharField(max_length=300, default='Tashkent, Example Street, 1', verbose_name='Полный адрес')
+    working_hours_weekdays = models.CharField(max_length=50, default='9:00 - 20:00', verbose_name='Рабочие часы (будни)')
+    working_hours_weekend = models.CharField(max_length=50, default='10:00 - 18:00', verbose_name='Рабочие часы (выходные)')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Контактная информация'
+        verbose_name_plural = 'Контактная информация'
+
+    def __str__(self):
+        return f"Контакты: {self.phone}"
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            ContactConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
+
+
+class SocialConfig(models.Model):
+    """Конфигурация социальных сетей"""
+    instagram = models.URLField(default='#', blank=True, verbose_name='Instagram')
+    facebook = models.URLField(default='#', blank=True, verbose_name='Facebook')
+    twitter = models.URLField(default='#', blank=True, verbose_name='Twitter')
+    vk = models.URLField(default='#', blank=True, verbose_name='VK')
+    telegram = models.URLField(default='#', blank=True, verbose_name='Telegram')
+    whatsapp = models.URLField(default='#', blank=True, verbose_name='WhatsApp')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Социальные сети'
+        verbose_name_plural = 'Социальные сети'
+
+    def __str__(self):
+        return "Социальные сети"
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            SocialConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
+
+
+class HeroConfig(models.Model):
+    """Конфигурация главного баннера (Hero)"""
+    title = models.CharField(max_length=200, default='New Collection', verbose_name='Заголовок')
+    subtitle = models.CharField(max_length=200, default='Discover style and comfort', verbose_name='Подзаголовок')
+    button_text = models.CharField(max_length=100, default='View Catalog', verbose_name='Текст кнопки')
+    background_image = models.ImageField(upload_to='config/', blank=True, null=True, verbose_name='Фоновое изображение')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Главный баннер'
+        verbose_name_plural = 'Главный баннер'
+
+    def __str__(self):
+        return f"Hero: {self.title}"
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            HeroConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
+
+
+class Feature(models.Model):
+    """Особенности/преимущества магазина"""
+    icon = models.CharField(max_length=100, default='fas fa-star', verbose_name='Иконка (Font Awesome класс)', help_text='Например: fas fa-shipping-fast')
+    title = models.CharField(max_length=200, verbose_name='Заголовок')
+    description = models.TextField(verbose_name='Описание')
+    order = models.PositiveIntegerField(default=0, verbose_name='Порядок сортировки')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Особенность'
+        verbose_name_plural = 'Особенности'
+        ordering = ['order', 'title']
+
+    def __str__(self):
+        return self.title
+
+
+class AboutConfig(models.Model):
+    """Конфигурация страницы "О нас" """
+    title = models.CharField(max_length=200, default='About Us', verbose_name='Заголовок')
+    description = models.TextField(default='We are a modern fashion store offering quality clothing for the whole family. Our mission is to make fashion accessible to everyone.', verbose_name='Описание')
+    mission = models.TextField(default='To provide high-quality fashion items at affordable prices', verbose_name='Миссия')
+    vision = models.TextField(default='To become the leading fashion retailer in the region', verbose_name='Видение')
+    values = models.TextField(default='Quality\nCustomer Service\nInnovation\nSustainability', verbose_name='Ценности', help_text='Указывайте каждое значение с новой строки')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'О нас'
+        verbose_name_plural = 'О нас'
+
+    def __str__(self):
+        return f"О нас: {self.title}"
+
+    def get_values_list(self):
+        """Возвращает список ценностей"""
+        return [v.strip() for v in self.values.split('\n') if v.strip()]
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            AboutConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
+
+
+class SEOConfig(models.Model):
+    """SEO настройки"""
+    meta_title = models.CharField(max_length=200, default='Fashion Store - Online Clothing Store', verbose_name='Meta заголовок')
+    meta_description = models.TextField(default='Buy quality clothing online. Wide selection of men\'s, women\'s and children\'s clothing.', verbose_name='Meta описание')
+    meta_keywords = models.CharField(max_length=500, default='clothing, fashion, online store, clothes', verbose_name='Meta ключевые слова')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'SEO настройки'
+        verbose_name_plural = 'SEO настройки'
+
+    def __str__(self):
+        return f"SEO: {self.meta_title}"
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            SEOConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
+
+
+class ThemeConfig(models.Model):
+    """Настройки темы (цвета)"""
+    primary_color = models.CharField(max_length=7, default='#1976d2', verbose_name='Основной цвет', help_text='HEX цвет, например: #1976d2')
+    secondary_color = models.CharField(max_length=7, default='#ffa726', verbose_name='Вторичный цвет', help_text='HEX цвет, например: #ffa726')
+    text_color = models.CharField(max_length=7, default='#333', verbose_name='Цвет текста', help_text='HEX цвет, например: #333')
+    background_color = models.CharField(max_length=7, default='#fff', verbose_name='Цвет фона', help_text='HEX цвет, например: #fff')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Настройки темы'
+        verbose_name_plural = 'Настройки темы'
+
+    def __str__(self):
+        return f"Тема: {self.primary_color}"
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            ThemeConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
 

@@ -79,14 +79,14 @@
                 <!-- Products Grid -->
                 <div class="products-container">
                     <div class="catalog-toolbar">
-                        <p>{% trans "Products found" %}: <strong>{% if products %}{{ products|length }}{% else %}0{% endif %}</strong></p>
+                        <p>{% trans "Products found" %}: <strong>{% if products %}{{ products.paginator.count }}{% else %}0{% endif %}</strong></p>
                         <div class="sort-options">
                             <label>{% trans "Sort by" %}:</label>
-                            <select class="sort-select">
-                                <option>{% trans "By popularity" %}</option>
-                                <option>{% trans "Price: low to high" %}</option>
-                                <option>{% trans "Price: high to low" %}</option>
-                                <option>{% trans "By newest" %}</option>
+                            <select class="sort-select" id="sortSelect">
+                                <option value="popularity" {% if current_sort == 'popularity' %}selected{% endif %}>{% trans "By popularity" %}</option>
+                                <option value="price_low" {% if current_sort == 'price_low' %}selected{% endif %}>{% trans "Price: low to high" %}</option>
+                                <option value="price_high" {% if current_sort == 'price_high' %}selected{% endif %}>{% trans "Price: high to low" %}</option>
+                                <option value="newest" {% if current_sort == 'newest' or not current_sort %}selected{% endif %}>{% trans "By newest" %}</option>
                             </select>
                         </div>
                     </div>
@@ -139,13 +139,33 @@
                     </div>
 
                     <!-- Pagination -->
+                    {% if products and products.paginator.num_pages > 1 %}
                     <div class="pagination">
-                        <a href="#" class="page-link"><i class="fas fa-chevron-left"></i></a>
-                        <a href="#" class="page-link active">1</a>
-                        <a href="#" class="page-link">2</a>
-                        <a href="#" class="page-link">3</a>
-                        <a href="#" class="page-link"><i class="fas fa-chevron-right"></i></a>
+                        {% if products.has_previous %}
+                            <a href="?page={{ products.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}" class="page-link">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        {% else %}
+                            <span class="page-link disabled"><i class="fas fa-chevron-left"></i></span>
+                        {% endif %}
+                        
+                        {% for num in products.paginator.page_range %}
+                            {% if products.number == num %}
+                                <span class="page-link active">{{ num }}</span>
+                            {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+                                <a href="?page={{ num }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}" class="page-link">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if products.has_next %}
+                            <a href="?page={{ products.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}" class="page-link">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        {% else %}
+                            <span class="page-link disabled"><i class="fas fa-chevron-right"></i></span>
+                        {% endif %}
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -160,6 +180,17 @@
     if (priceSlider && priceValue) {
         priceSlider.addEventListener('input', function() {
             priceValue.textContent = parseInt(this.value) + ' $';
+        });
+    }
+    
+    // Sort select change handler
+    const sortSelect = document.getElementById('sortSelect');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+            const url = new URL(window.location.href);
+            url.searchParams.set('sort', this.value);
+            url.searchParams.set('page', '1'); // Reset to first page when sorting changes
+            window.location.href = url.toString();
         });
     }
 </script>
