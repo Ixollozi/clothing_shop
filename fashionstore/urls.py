@@ -9,6 +9,7 @@ from store.admin_context import get_admin_index_context
 from store.views_frontend import (
     index, catalog, product_detail, cart, about, contact, delivery
 )
+from store.admin_config import unified_config_view
 
 
 # Кастомный индекс админки - сохраняем оригинальный метод
@@ -24,6 +25,7 @@ admin.site.index = admin_index_view
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
+    path('admin/config/', admin.site.admin_view(unified_config_view), name='admin_unified_config'),
     path('admin/', admin.site.urls),
     path('api/', include('store.urls')),  # API endpoints
     # Frontend pages

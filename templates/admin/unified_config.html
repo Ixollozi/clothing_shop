@@ -1,0 +1,832 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block title %}Конфигурация сайта - Все настройки в одном месте{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    /* Используем CSS переменные из custom_admin.css */
+    .config-container {
+        background: var(--admin-bg);
+        min-height: 100vh;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .config-wrapper {
+        padding: 30px 40px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    
+    /* Заголовок в стиле админки */
+    .config-header {
+        background: var(--admin-content-bg);
+        border: 1px solid var(--admin-border);
+        border-radius: 10px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: var(--admin-card-shadow);
+    }
+    
+    .config-header h1 {
+        color: var(--admin-text);
+        font-size: 2em;
+        font-weight: 600;
+        margin: 0 0 10px 0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .config-header-icon {
+        font-size: 1.2em;
+    }
+    
+    .config-header p {
+        color: var(--admin-text-secondary);
+        margin: 0;
+        font-size: 1em;
+    }
+    
+    /* Вкладки в стиле админки */
+    .config-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        background: var(--admin-content-bg);
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid var(--admin-border);
+        box-shadow: var(--admin-card-shadow);
+    }
+    
+    .config-tab {
+        padding: 12px 24px;
+        background: var(--admin-bg);
+        border: 1px solid var(--admin-border);
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--admin-text);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .config-tab:hover {
+        background: var(--admin-content-bg);
+        border-color: var(--admin-link);
+        color: var(--admin-link);
+        transform: translateY(-2px);
+        box-shadow: var(--admin-card-shadow);
+    }
+    
+    .config-tab.active {
+        background: var(--admin-header-bg);
+        color: var(--admin-header-color);
+        border-color: var(--admin-header-bg);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    
+    /* Контент вкладок */
+    .config-tab-content {
+        display: none;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    .config-tab-content.active {
+        display: block;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Карточки конфигурации в стиле stat-card-photo */
+    .config-card {
+        background: var(--admin-content-bg);
+        border: 1px solid var(--admin-border);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--admin-card-shadow);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin-bottom: 25px;
+    }
+    
+    .config-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--admin-card-hover-shadow);
+    }
+    
+    .config-card-header {
+        background: var(--admin-header-bg);
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--admin-border);
+    }
+    
+    .config-card-title {
+        color: var(--admin-header-color);
+        font-weight: 600;
+        font-size: 1em;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0;
+    }
+    
+    .config-card-body {
+        padding: 25px;
+    }
+    
+    /* Элементы конфигурации */
+    .config-item {
+        padding: 15px;
+        margin-bottom: 15px;
+        background: var(--admin-bg);
+        border-radius: 6px;
+        border-left: 4px solid var(--admin-link);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 20px;
+        align-items: center;
+        transition: background 0.2s ease;
+    }
+    
+    .config-item:hover {
+        background: var(--admin-content-bg);
+    }
+    
+    .config-item-content {
+        flex: 1;
+    }
+    
+    .config-item label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--admin-text);
+        font-size: 0.9em;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .config-item .value {
+        color: var(--admin-text-secondary);
+        font-size: 1em;
+        line-height: 1.6;
+    }
+    
+    .config-item .value a {
+        color: var(--admin-link);
+        text-decoration: none;
+    }
+    
+    .config-item .value a:hover {
+        color: var(--admin-link-hover);
+        text-decoration: underline;
+    }
+    
+    /* Кнопки редактирования в стиле stat-card-button-photo */
+    .config-edit-btn {
+        padding: 10px 20px;
+        background: var(--admin-button-bg);
+        color: var(--admin-button-color);
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 0.9em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        border: 1px solid var(--admin-button-bg);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        white-space: nowrap;
+    }
+    
+    .config-edit-btn:hover {
+        background: var(--admin-button-hover);
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        color: var(--admin-button-color);
+        text-decoration: none;
+    }
+    
+    /* Большая кнопка редактирования всех настроек */
+    .config-edit-all-btn {
+        display: inline-block;
+        padding: 14px 28px;
+        background: var(--admin-button-bg);
+        color: var(--admin-button-color);
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        border: 1px solid var(--admin-button-bg);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        margin-top: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .config-edit-all-btn:hover {
+        background: var(--admin-button-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        color: var(--admin-button-color);
+        text-decoration: none;
+    }
+    
+    /* Статус в стиле info-stat-item */
+    .config-status {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.85em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .config-status.active {
+        background: rgba(76, 175, 80, 0.1);
+        border-left: 4px solid var(--admin-success);
+        color: var(--admin-success);
+    }
+    
+    .config-status.inactive {
+        background: rgba(244, 67, 54, 0.1);
+        border-left: 4px solid var(--admin-error);
+        color: var(--admin-error);
+    }
+    
+    /* Список особенностей в стиле latest-list-photo */
+    .features-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .features-list li {
+        padding: 15px;
+        margin-bottom: 10px;
+        background: var(--admin-bg);
+        border: 1px solid var(--admin-border);
+        border-radius: 6px;
+        border-left: 4px solid var(--admin-info);
+        transition: all 0.2s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .features-list li:hover {
+        background: var(--admin-content-bg);
+        transform: translateX(5px);
+        box-shadow: var(--admin-card-shadow);
+    }
+    
+    .features-list li strong {
+        color: var(--admin-text);
+        font-size: 1em;
+    }
+    
+    .features-list li .feature-desc {
+        color: var(--admin-text-secondary);
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+    
+    /* Превью цветов */
+    .color-preview {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 6px;
+        border: 2px solid var(--admin-border);
+        vertical-align: middle;
+        margin-right: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    /* Разделитель */
+    .config-divider {
+        margin: 25px 0;
+        padding-top: 25px;
+        border-top: 2px solid var(--admin-border);
+    }
+    
+    /* Пустое состояние */
+    .config-empty {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--admin-text-secondary);
+    }
+    
+    .config-empty a {
+        color: var(--admin-link);
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .config-empty a:hover {
+        color: var(--admin-link-hover);
+        text-decoration: underline;
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .config-wrapper {
+            padding: 20px;
+        }
+        
+        .config-tabs {
+            flex-direction: column;
+        }
+        
+        .config-tab {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .config-item {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .config-edit-btn {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .features-list li {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="config-container">
+    <div class="config-wrapper">
+        <!-- Заголовок -->
+        <div class="config-header">
+            <h1>
+                <span class="config-header-icon">⚙️</span>
+                Конфигурация сайта
+            </h1>
+            <p>Все настройки сайта в одном удобном месте. Выберите раздел для просмотра и редактирования.</p>
+        </div>
+        
+        <!-- Вкладки -->
+        <div class="config-tabs">
+            <button class="config-tab active" onclick="showTab('store')">🏪 Магазин</button>
+            <button class="config-tab" onclick="showTab('contact')">📞 Контакты</button>
+            <button class="config-tab" onclick="showTab('social')">📱 Соц. сети</button>
+            <button class="config-tab" onclick="showTab('hero')">🎯 Главный баннер</button>
+            <button class="config-tab" onclick="showTab('features')">⭐ Особенности</button>
+            <button class="config-tab" onclick="showTab('about')">ℹ️ О нас</button>
+            <button class="config-tab" onclick="showTab('seo')">🔍 SEO</button>
+            <button class="config-tab" onclick="showTab('theme')">🎨 Тема</button>
+        </div>
+        
+        <!-- Вкладка: Магазин -->
+        <div id="tab-store" class="config-tab-content active">
+            {% if store_config %}
+            <div class="config-card">
+                <div class="config-card-header">
+                    <h3 class="config-card-title">Настройки магазина</h3>
+                </div>
+                <div class="config-card-body">
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Название магазина</label>
+                            <div class="value">{{ store_config.name }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_storeconfig_change' store_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Заголовок</label>
+                            <div class="value">{{ store_config.title }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_storeconfig_change' store_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Описание</label>
+                            <div class="value">{{ store_config.description|truncatewords:30 }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_storeconfig_change' store_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Статус</label>
+                            <div class="value">
+                                {% if store_config.is_active %}
+                                    <span class="config-status active">✓ Активна</span>
+                                {% else %}
+                                    <span class="config-status inactive">✗ Неактивна</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="config-divider">
+                        <a href="{% url 'admin:store_storeconfig_change' store_config.id %}" class="config-edit-all-btn">📝 Редактировать все настройки магазина</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="config-card">
+                <div class="config-card-body">
+                    <div class="config-empty">
+                        <p>Конфигурация магазина не найдена.</p>
+                        <a href="{% url 'admin:store_storeconfig_add' %}">Создать конфигурацию</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Вкладка: Контакты -->
+        <div id="tab-contact" class="config-tab-content">
+            {% if contact_config %}
+            <div class="config-card">
+                <div class="config-card-header">
+                    <h3 class="config-card-title">Контактная информация</h3>
+                </div>
+                <div class="config-card-body">
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Телефон</label>
+                            <div class="value">{{ contact_config.phone }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_contactconfig_change' contact_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Email</label>
+                            <div class="value">{{ contact_config.email }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_contactconfig_change' contact_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Адрес</label>
+                            <div class="value">{{ contact_config.address_full }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_contactconfig_change' contact_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Рабочие часы (будни)</label>
+                            <div class="value">{{ contact_config.working_hours_weekdays }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_contactconfig_change' contact_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Рабочие часы (выходные)</label>
+                            <div class="value">{{ contact_config.working_hours_weekend }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_contactconfig_change' contact_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-divider">
+                        <a href="{% url 'admin:store_contactconfig_change' contact_config.id %}" class="config-edit-all-btn">📝 Редактировать все контакты</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="config-card">
+                <div class="config-card-body">
+                    <div class="config-empty">
+                        <p>Конфигурация контактов не найдена.</p>
+                        <a href="{% url 'admin:store_contactconfig_add' %}">Создать конфигурацию</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Вкладка: Соц. сети -->
+        <div id="tab-social" class="config-tab-content">
+            {% if social_config %}
+            <div class="config-card">
+                <div class="config-card-header">
+                    <h3 class="config-card-title">Социальные сети</h3>
+                </div>
+                <div class="config-card-body">
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Instagram</label>
+                            <div class="value"><a href="{{ social_config.instagram }}" target="_blank">{{ social_config.instagram }}</a></div>
+                        </div>
+                        <a href="{% url 'admin:store_socialconfig_change' social_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Facebook</label>
+                            <div class="value"><a href="{{ social_config.facebook }}" target="_blank">{{ social_config.facebook }}</a></div>
+                        </div>
+                        <a href="{% url 'admin:store_socialconfig_change' social_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Telegram</label>
+                            <div class="value"><a href="{{ social_config.telegram }}" target="_blank">{{ social_config.telegram }}</a></div>
+                        </div>
+                        <a href="{% url 'admin:store_socialconfig_change' social_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-divider">
+                        <a href="{% url 'admin:store_socialconfig_change' social_config.id %}" class="config-edit-all-btn">📝 Редактировать все соц. сети</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="config-card">
+                <div class="config-card-body">
+                    <div class="config-empty">
+                        <p>Конфигурация социальных сетей не найдена.</p>
+                        <a href="{% url 'admin:store_socialconfig_add' %}">Создать конфигурацию</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Вкладка: Главный баннер -->
+        <div id="tab-hero" class="config-tab-content">
+            {% if hero_config %}
+            <div class="config-card">
+                <div class="config-card-header">
+                    <h3 class="config-card-title">Главный баннер</h3>
+                </div>
+                <div class="config-card-body">
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Заголовок</label>
+                            <div class="value">{{ hero_config.title }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_heroconfig_change' hero_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Подзаголовок</label>
+                            <div class="value">{{ hero_config.subtitle }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_heroconfig_change' hero_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Текст кнопки</label>
+                            <div class="value">{{ hero_config.button_text }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_heroconfig_change' hero_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-divider">
+                        <a href="{% url 'admin:store_heroconfig_change' hero_config.id %}" class="config-edit-all-btn">📝 Редактировать главный баннер</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="config-card">
+                <div class="config-card-body">
+                    <div class="config-empty">
+                        <p>Конфигурация главного баннера не найдена.</p>
+                        <a href="{% url 'admin:store_heroconfig_add' %}">Создать конфигурацию</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Вкладка: Особенности -->
+        <div id="tab-features" class="config-tab-content">
+            <div class="config-card">
+                <div class="config-card-header">
+                    <h3 class="config-card-title">Особенности магазина</h3>
+                </div>
+                <div class="config-card-body">
+                    {% if features %}
+                    <ul class="features-list">
+                        {% for feature in features %}
+                        <li>
+                            <div>
+                                <strong>{{ feature.title }}</strong>
+                                <div class="feature-desc">{{ feature.description|truncatewords:15 }}</div>
+                            </div>
+                            <a href="{% url 'admin:store_feature_change' feature.id %}" class="config-edit-btn">Редактировать</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="config-divider">
+                        <a href="{% url 'admin:store_feature_add' %}" class="config-edit-all-btn">➕ Добавить новую особенность</a>
+                    </div>
+                    {% else %}
+                    <div class="config-empty">
+                        <p>Особенности не добавлены.</p>
+                        <a href="{% url 'admin:store_feature_add' %}">Добавить первую особенность</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Вкладка: О нас -->
+        <div id="tab-about" class="config-tab-content">
+            {% if about_config %}
+            <div class="config-card">
+                <div class="config-card-header">
+                    <h3 class="config-card-title">О нас</h3>
+                </div>
+                <div class="config-card-body">
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Заголовок</label>
+                            <div class="value">{{ about_config.title }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_aboutconfig_change' about_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Описание</label>
+                            <div class="value">{{ about_config.description|truncatewords:30 }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_aboutconfig_change' about_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Миссия</label>
+                            <div class="value">{{ about_config.mission|truncatewords:20 }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_aboutconfig_change' about_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Видение</label>
+                            <div class="value">{{ about_config.vision|truncatewords:20 }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_aboutconfig_change' about_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-divider">
+                        <a href="{% url 'admin:store_aboutconfig_change' about_config.id %}" class="config-edit-all-btn">📝 Редактировать все настройки "О нас"</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="config-card">
+                <div class="config-card-body">
+                    <div class="config-empty">
+                        <p>Конфигурация "О нас" не найдена.</p>
+                        <a href="{% url 'admin:store_aboutconfig_add' %}">Создать конфигурацию</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Вкладка: SEO -->
+        <div id="tab-seo" class="config-tab-content">
+            {% if seo_config %}
+            <div class="config-card">
+                <div class="config-card-header">
+                    <h3 class="config-card-title">SEO настройки</h3>
+                </div>
+                <div class="config-card-body">
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Meta заголовок</label>
+                            <div class="value">{{ seo_config.meta_title }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_seoconfig_change' seo_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Meta описание</label>
+                            <div class="value">{{ seo_config.meta_description|truncatewords:30 }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_seoconfig_change' seo_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Meta ключевые слова</label>
+                            <div class="value">{{ seo_config.meta_keywords }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_seoconfig_change' seo_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-divider">
+                        <a href="{% url 'admin:store_seoconfig_change' seo_config.id %}" class="config-edit-all-btn">📝 Редактировать все SEO настройки</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="config-card">
+                <div class="config-card-body">
+                    <div class="config-empty">
+                        <p>SEO конфигурация не найдена.</p>
+                        <a href="{% url 'admin:store_seoconfig_add' %}">Создать конфигурацию</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Вкладка: Тема -->
+        <div id="tab-theme" class="config-tab-content">
+            {% if theme_config %}
+            <div class="config-card">
+                <div class="config-card-header">
+                    <h3 class="config-card-title">Настройки темы</h3>
+                </div>
+                <div class="config-card-body">
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Основной цвет</label>
+                            <div class="value">
+                                <span class="color-preview" style="background: {{ theme_config.primary_color }};"></span>
+                                {{ theme_config.primary_color }}
+                            </div>
+                        </div>
+                        <a href="{% url 'admin:store_themeconfig_change' theme_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Вторичный цвет</label>
+                            <div class="value">
+                                <span class="color-preview" style="background: {{ theme_config.secondary_color }};"></span>
+                                {{ theme_config.secondary_color }}
+                            </div>
+                        </div>
+                        <a href="{% url 'admin:store_themeconfig_change' theme_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Цвет текста</label>
+                            <div class="value">
+                                <span class="color-preview" style="background: {{ theme_config.text_color }};"></span>
+                                {{ theme_config.text_color }}
+                            </div>
+                        </div>
+                        <a href="{% url 'admin:store_themeconfig_change' theme_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
+                            <label>Цвет фона</label>
+                            <div class="value">
+                                <span class="color-preview" style="background: {{ theme_config.background_color }};"></span>
+                                {{ theme_config.background_color }}
+                            </div>
+                        </div>
+                        <a href="{% url 'admin:store_themeconfig_change' theme_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-divider">
+                        <a href="{% url 'admin:store_themeconfig_change' theme_config.id %}" class="config-edit-all-btn">📝 Редактировать все цвета темы</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="config-card">
+                <div class="config-card-body">
+                    <div class="config-empty">
+                        <p>Конфигурация темы не найдена.</p>
+                        <a href="{% url 'admin:store_themeconfig_add' %}">Создать конфигурацию</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+function showTab(tabName) {
+    // Скрываем все вкладки
+    document.querySelectorAll('.config-tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Убираем активный класс у всех кнопок
+    document.querySelectorAll('.config-tab').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Показываем выбранную вкладку
+    document.getElementById('tab-' + tabName).classList.add('active');
+    
+    // Добавляем активный класс к кнопке
+    event.target.classList.add('active');
+}
+</script>
+{% endblock %}

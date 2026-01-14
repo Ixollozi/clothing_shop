@@ -19,7 +19,12 @@
                 <div class="logo">
                     <a href="{% url 'index' %}" style="text-decoration: none; color: inherit;"><h1>{{ store_name }}</h1></a>
                 </div>
-                <nav class="nav-menu">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="nav-menu" id="navMenu">
                     <a href="{% url 'index' %}">{% trans "Home" %}</a>
                     <a href="{% url 'catalog' %}">{% trans "Catalog" %}</a>
                     <a href="{% url 'about' %}">{% trans "About" %}</a>

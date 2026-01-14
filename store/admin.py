@@ -1,9 +1,13 @@
 from django.contrib import admin
 from django.utils.html import format_html, mark_safe
 from django.urls import reverse
+from django import forms
 from modeltranslation.admin import TabbedTranslationAdmin
 from modeltranslation.translator import translator
-from .models import Category, Product, ProductImage, Cart, CartItem, Order, OrderItem, Partner
+from .models import (
+    Category, Product, ProductImage, Cart, CartItem, Order, OrderItem, Partner, Config,
+    StoreConfig, ContactConfig, SocialConfig, HeroConfig, Feature, AboutConfig, SEOConfig, ThemeConfig
+)
 
 # Импортируем переводы перед регистрацией админки
 try:
@@ -320,3 +324,275 @@ class PartnerAdmin(TabbedTranslationAdmin):
             return format_html('<img src="{}" style="max-width: 100px; max-height: 100px;" />', obj.logo.url)
         return "Нет логотипа"
     logo_preview.short_description = 'Превью логотипа'
+
+
+class ConfigAdminForm(forms.ModelForm):
+    """
+    Форма для редактирования конфигурации с валидацией JSON
+    """
+    class Meta:
+        model = Config
+        fields = '__all__'
+        widgets = {
+            'config_data': forms.Textarea(attrs={
+                'rows': 30,
+                'style': 'font-family: monospace; font-size: 12px;',
+                'placeholder': 'Введите валидный JSON...'
+            }),
+        }
+
+    def clean_config_data(self):
+        config_data = self.cleaned_data.get('config_data')
+        if isinstance(config_data, str):
+            import json
+            try:
+                config_data = json.loads(config_data)
+            except json.JSONDecodeError as e:
+                raise forms.ValidationError(f'Невалидный JSON: {e}')
+        return config_data
+
+
+@admin.register(Config)
+class ConfigAdmin(admin.ModelAdmin):
+    form = ConfigAdminForm
+    list_display = ['key', 'is_active', 'config_preview', 'updated_at']
+    list_filter = ['is_active', 'created_at', 'updated_at']
+    search_fields = ['key', 'description']
+    readonly_fields = ['created_at', 'updated_at', 'config_info']
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('key', 'is_active', 'description')
+        }),
+        ('Конфигурация', {
+            'fields': ('config_data', 'config_info'),
+            'description': 'Введите конфигурацию в формате JSON. При сохранении она будет синхронизирована с config.json'
+        }),
+        ('Даты', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def config_preview(self, obj):
+        """Показывает краткую информацию о конфигурации"""
+        if obj.config_data:
+            sections = list(obj.config_data.keys())[:5]
+            sections_str = ', '.join(sections)
+            if len(obj.config_data) > 5:
+                sections_str += f' ... (+{len(obj.config_data) - 5} секций)'
+            return format_html('<span style="font-family: monospace;">{}</span>', sections_str)
+        return "Пустая конфигурация"
+    config_preview.short_description = 'Секции конфигурации'
+
+    def config_info(self, obj):
+        """Показывает информацию о структуре конфигурации"""
+        if not obj.config_data:
+            return "Конфигурация пуста"
+        
+        import json
+        try:
+            config_str = json.dumps(obj.config_data, ensure_ascii=False, indent=2)
+            size = len(config_str)
+            sections = list(obj.config_data.keys())
+            
+            info = f"""
+            <div style="background: #f5f5f5; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                <strong>Информация о конфигурации:</strong><br>
+                • Секций: {len(sections)}<br>
+                • Размер: {size} символов<br>
+                • Секции: {', '.join(sections[:10])}{'...' if len(sections) > 10 else ''}
+            </div>
+            """
+            return mark_safe(info)
+        except Exception as e:
+            return format_html('<span style="color: red;">Ошибка: {}</span>', str(e))
+    config_info.short_description = 'Информация'
+
+    def save_model(self, request, obj, form, change):
+        """Переопределяем сохранение для синхронизации с файлом"""
+        super().save_model(request, obj, form, change)
+        if obj.is_active:
+            obj.sync_to_file()
+            self.message_user(request, 'Конфигурация сохранена и синхронизирована с config.json')
+
+
+@admin.register(StoreConfig)
+class StoreConfigAdmin(TabbedTranslationAdmin):
+    def has_module_permission(self, request):
+        """Скрываем из списка админки, но оставляем доступ к редактированию"""
+        return False
+    list_display = ['name', 'is_active', 'updated_at']
+    readonly_fields = ['updated_at']
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('name', 'title', 'description', 'is_active')
+        }),
+        ('Изображения', {
+            'fields': ('logo', 'favicon')
+        }),
+        ('Даты', {
+            'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(ContactConfig)
+class ContactConfigAdmin(TabbedTranslationAdmin):
+    def has_module_permission(self, request):
+        """Скрываем из списка админки, но оставляем доступ к редактированию"""
+        return False
+    list_display = ['phone', 'email', 'is_active', 'updated_at']
+    readonly_fields = ['updated_at']
+    fieldsets = (
+        ('Контактная информация', {
+            'fields': ('phone', 'email', 'is_active')
+        }),
+        ('Адрес', {
+            'fields': ('address_city', 'address_street', 'address_full')
+        }),
+        ('Рабочие часы', {
+            'fields': ('working_hours_weekdays', 'working_hours_weekend')
+        }),
+        ('Даты', {
+            'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(SocialConfig)
+class SocialConfigAdmin(admin.ModelAdmin):
+    def has_module_permission(self, request):
+        """Скрываем из списка админки, но оставляем доступ к редактированию"""
+        return False
+    list_display = ['instagram', 'facebook', 'telegram', 'is_active', 'updated_at']
+    readonly_fields = ['updated_at']
+    fieldsets = (
+        ('Социальные сети', {
+            'fields': ('instagram', 'facebook', 'twitter', 'vk', 'telegram', 'whatsapp', 'is_active')
+        }),
+        ('Даты', {
+            'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(HeroConfig)
+class HeroConfigAdmin(TabbedTranslationAdmin):
+    def has_module_permission(self, request):
+        """Скрываем из списка админки, но оставляем доступ к редактированию"""
+        return False
+    list_display = ['title', 'subtitle', 'is_active', 'updated_at']
+    readonly_fields = ['updated_at']
+    fieldsets = (
+        ('Содержимое', {
+            'fields': ('title', 'subtitle', 'button_text', 'is_active')
+        }),
+        ('Изображение', {
+            'fields': ('background_image',)
+        }),
+        ('Даты', {
+            'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(Feature)
+class FeatureAdmin(TabbedTranslationAdmin):
+    def has_module_permission(self, request):
+        """Скрываем из списка админки, но оставляем доступ к редактированию"""
+        return False
+    list_display = ['title', 'icon', 'order', 'is_active', 'created_at']
+    list_filter = ['is_active', 'created_at']
+    search_fields = ['title', 'description']
+    list_editable = ['order', 'is_active']
+    readonly_fields = ['created_at', 'updated_at']
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('title', 'description', 'icon', 'order', 'is_active')
+        }),
+        ('Даты', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(AboutConfig)
+class AboutConfigAdmin(TabbedTranslationAdmin):
+    def has_module_permission(self, request):
+        """Скрываем из списка админки, но оставляем доступ к редактированию"""
+        return False
+    list_display = ['title', 'is_active', 'updated_at']
+    readonly_fields = ['updated_at']
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('title', 'description', 'is_active')
+        }),
+        ('Миссия и видение', {
+            'fields': ('mission', 'vision')
+        }),
+        ('Ценности', {
+            'fields': ('values',),
+            'description': 'Указывайте каждое значение с новой строки'
+        }),
+        ('Даты', {
+            'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(SEOConfig)
+class SEOConfigAdmin(TabbedTranslationAdmin):
+    def has_module_permission(self, request):
+        """Скрываем из списка админки, но оставляем доступ к редактированию"""
+        return False
+    list_display = ['meta_title', 'is_active', 'updated_at']
+    readonly_fields = ['updated_at']
+    fieldsets = (
+        ('SEO настройки', {
+            'fields': ('meta_title', 'meta_description', 'meta_keywords', 'is_active')
+        }),
+        ('Даты', {
+            'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(ThemeConfig)
+class ThemeConfigAdmin(admin.ModelAdmin):
+    def has_module_permission(self, request):
+        """Скрываем из списка админки, но оставляем доступ к редактированию"""
+        return False
+    list_display = ['primary_color', 'secondary_color', 'is_active', 'updated_at']
+    readonly_fields = ['updated_at', 'color_preview']
+    fieldsets = (
+        ('Цвета темы', {
+            'fields': ('primary_color', 'secondary_color', 'text_color', 'background_color', 'is_active', 'color_preview')
+        }),
+        ('Даты', {
+            'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def color_preview(self, obj):
+        """Показывает превью цветов"""
+        if obj.pk:
+            html = f"""
+            <div style="display: flex; gap: 10px; margin: 10px 0;">
+                <div style="width: 50px; height: 50px; background: {obj.primary_color}; border: 1px solid #ddd; border-radius: 5px;"></div>
+                <div style="width: 50px; height: 50px; background: {obj.secondary_color}; border: 1px solid #ddd; border-radius: 5px;"></div>
+                <div style="width: 50px; height: 50px; background: {obj.text_color}; border: 1px solid #ddd; border-radius: 5px;"></div>
+                <div style="width: 50px; height: 50px; background: {obj.background_color}; border: 1px solid #ddd; border-radius: 5px;"></div>
+            </div>
+            <p><small>Основной | Вторичный | Текст | Фон</small></p>
+            """
+            return mark_safe(html)
+        return "Сохраните для предпросмотра"
+    color_preview.short_description = 'Превью цветов'

@@ -28,6 +28,28 @@ body {
     padding: 0 20px;
 }
 
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    /* Для хедера убираем правый отступ, чтобы гамбургер был прижат к правой границе */
+    .header .container {
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    /* Для хедера убираем правый отступ, чтобы гамбургер был прижат к правой границе */
+    .header .container {
+        padding-right: 0;
+    }
+}
+
 /* Header */
 .header {
     background: var(--white);
@@ -42,17 +64,68 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .logo h1 {
     color: var(--primary-color);
     font-size: 1.8rem;
     font-weight: 700;
+    margin: 0;
+}
+
+/* Мобильная кнопка меню (гамбургер) */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+    position: relative;
+    margin-left: auto;
+}
+
+.mobile-menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+    display: block;
+    position: relative;
+}
+
+/* Для ровного крестика: используем точное позиционирование */
+/* Центр кнопки на 12px (24px / 2 = 12px) */
+.mobile-menu-toggle.active span:nth-child(1) {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%) rotate(-45deg);
 }
 
 .nav-menu {
     display: flex;
     gap: 2rem;
+    align-items: center;
 }
 
 .nav-menu a {
@@ -61,6 +134,7 @@ body {
     font-weight: 500;
     transition: color 0.3s;
     position: relative;
+    white-space: nowrap;
 }
 
 .nav-menu a:hover {
@@ -638,15 +712,131 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        gap: 1rem;
+    .header {
+        padding: 0.75rem 0;
     }
-
-    .nav-menu {
-        flex-direction: column;
+    
+    .header-content {
+        flex-wrap: nowrap;
         gap: 1rem;
-        text-align: center;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        order: 1;
+        flex: 0 0 auto;
+    }
+    
+    .logo h1 {
+        font-size: 1.4rem;
+    }
+    
+    /* Иконки в хедере - перед гамбургером, с отступом справа для гамбургера */
+    .header-icons {
+        order: 2;
+        flex: 0 0 auto;
+        margin-left: auto;
+        gap: 1rem;
+        margin-right: 50px; /* Отступ для гамбургера (30px ширина + 20px зазор) */
+    }
+    
+    /* Показываем кнопку гамбургера - четко справа с небольшим отступом, не перекрывая иконки */
+    .mobile-menu-toggle {
+        display: flex;
+        order: 3;
+        margin-left: 0;
+        margin-right: 0;
+        flex-shrink: 0;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+    }
+    
+    /* Убираем правый отступ контейнера для прижатия гамбургера к краю */
+    .header .container {
+        padding-right: 0;
+        position: relative;
+    }
+    
+    /* Убеждаемся, что иконки не перекрываются гамбургером */
+    .header-content {
+        position: relative;
+    }
+    
+    /* Скрываем меню по умолчанию на мобильных */
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        flex-direction: column;
+        gap: 0;
+        padding: 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid #eee;
+        margin-top: 1rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    
+    /* Показываем меню когда активно */
+    .nav-menu.active {
+        display: flex;
+        max-height: 500px;
+        padding: 1rem 0;
+    }
+    
+    .nav-menu a {
+        padding: 1rem 20px;
+        border-bottom: 1px solid #f0f0f0;
+        width: 100%;
+        text-align: left;
+    }
+    
+    .nav-menu a:last-child {
+        border-bottom: none;
+    }
+    
+    .nav-menu a::after {
+        display: none;
+    }
+    
+    .nav-menu a:hover {
+        background: var(--light-bg);
+        color: var(--secondary-color);
+    }
+    
+    /* Иконки в хедере */
+    .header-icons {
+        order: 3;
+        gap: 1rem;
+        margin-left: auto;
+    }
+    
+    .icon-link {
+        font-size: 1.1rem;
+    }
+    
+    .language-btn {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+    
+    .language-btn .current-lang {
+        min-width: 25px;
+        font-size: 0.8rem;
+    }
+    
+    .language-dropdown {
+        right: 0;
+        left: auto;
+        top: calc(100% + 5px);
     }
 
     .hero-title {
@@ -683,6 +873,55 @@ body {
 }
 
 @media (max-width: 480px) {
+    .header {
+        padding: 0.5rem 0;
+    }
+    
+    .logo h1 {
+        font-size: 1.2rem;
+    }
+    
+    .header-icons {
+        gap: 0.75rem;
+        margin-right: 45px; /* Отступ для гамбургера на маленьких экранах */
+    }
+    
+    .icon-link {
+        font-size: 1rem;
+    }
+    
+    .language-btn {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+        gap: 5px;
+    }
+    
+    .language-btn i {
+        font-size: 0.8rem;
+    }
+    
+    .language-btn .current-lang {
+        min-width: 20px;
+        font-size: 0.7rem;
+    }
+    
+    .mobile-menu-toggle {
+        width: 28px;
+        height: 22px;
+        right: 10px;
+    }
+    
+    .mobile-menu-toggle span {
+        height: 2.5px;
+    }
+    
+    /* Анимация крестика остается ровной благодаря абсолютному позиционированию */
+    
+    .nav-menu a {
+        padding: 0.875rem 15px;
+        font-size: 0.95rem;
+    }
+
     .hero {
         height: 400px;
     }
@@ -733,6 +972,7 @@ body {
     display: grid;
     grid-template-columns: 250px 1fr;
     gap: 2rem;
+    align-items: start;
 }
 
 .filters-sidebar {
@@ -881,6 +1121,12 @@ body {
     background: var(--secondary-color);
     color: var(--white);
     border-color: var(--secondary-color);
+}
+
+.page-link.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 /* Product Detail Page */
@@ -1682,10 +1928,16 @@ body {
 @media (max-width: 768px) {
     .catalog-layout {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .filters-sidebar {
         position: static;
+        order: 2;
+    }
+    
+    .products-container {
+        order: 1;
     }
 
     .product-detail-layout {
