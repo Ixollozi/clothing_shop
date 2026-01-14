@@ -293,8 +293,8 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 
 # Настройка админ-сайта
-admin.site.site_header = "Fashion Store - Администрирование"
-admin.site.site_title = "Fashion Store Admin"
+admin.site.site_header = "Администрирование"
+admin.site.site_title = "Admin"
 admin.site.index_title = "Панель управления"
 admin.site.index_template = 'admin/index.html'
 
