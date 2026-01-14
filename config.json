@@ -1,13 +1,13 @@
 {
   "store": {
-    "name": "Fashion Store",
-    "title": "Fashion Store - Online Clothing Store",
+    "name": "",
+    "title": "",
     "description": "Your reliable partner in the world of fashion. Quality clothing at affordable prices.",
     "logo": "",
     "favicon": ""
   },
   "contact": {
-    "phone": "+7 (800) 111111111111",
+    "phone": "",
     "email": "info@fashionstore.ru",
     "address": {
       "city": "Tashkent",
