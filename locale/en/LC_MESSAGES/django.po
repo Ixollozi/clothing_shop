@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-08 01:33+0500\n"
+"POT-Creation-Date: 2026-01-17 23:56+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,217 +17,826 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Django site admin"
-msgstr ""
-
-msgid "Fashion Store - Online Clothing Store"
-msgstr "Fashion Store - Online Clothing Store"
-
-msgid "Home"
-msgstr "Home"
-
-msgid "Catalog"
-msgstr "Catalog"
-
-msgid "About"
-msgstr "About"
-
-msgid "Contacts"
-msgstr "Contacts"
-
-msgid ""
-"Your reliable partner in the world of fashion. Quality clothing at "
-"affordable prices."
-msgstr ""
-
-msgid "For Customers"
-msgstr "For Customers"
-
-msgid "Delivery and Payment"
-msgstr "Delivery and Payment"
-
-msgid "Product Return"
-msgstr "Product Return"
-
-msgid "Size Chart"
-msgstr "Size Chart"
-
-msgid "FAQ"
-msgstr "FAQ"
-
-msgid "About Company"
-msgstr "About Company"
-
+#: .\templates\about.html:4 .\templates\about.html:10 .\templates\about.html:12
+#: .\templates\about.html:27 .\templates\base.html:102
 msgid "About Us"
 msgstr "About Us"
 
+#: .\templates\about.html:12 .\templates\base.html:29 .\templates\cart.html:14
+#: .\templates\catalog.html:14 .\templates\contact.html:13
+#: .\templates\delivery.html:12 .\templates\product.html:15
+msgid "Home"
+msgstr "Home"
+
+#: .\templates\about.html:22
+msgid "Welcome to Fashion Store"
+msgstr ""
+
+#: .\templates\about.html:23
+msgid ""
+"Fashion Store is a modern online clothing store that offers a wide range of "
+"quality and stylish clothing for the whole family. We have been in the "
+"market for over 10 years and during this time we have gained the trust of "
+"thousands of customers throughout Uzbekistan."
+msgstr ""
+
+#: .\templates\about.html:31
+msgid "Our Mission"
+msgstr ""
+
+#: .\templates\about.html:32
+msgid ""
+"We strive to make quality and fashionable clothing accessible to everyone. "
+"Our goal is to help you look stylish and feel confident by offering the best "
+"products at fair prices."
+msgstr ""
+
+#: .\templates\about.html:35
+msgid "Our Vision"
+msgstr ""
+
+#: .\templates\about.html:36
+msgid ""
+"Fashion Store was founded in 2014 with a simple idea - to make quality "
+"clothing accessible to everyone. Starting with a small store, we have grown "
+"into a large online store serving customers throughout the country."
+msgstr ""
+
+#: .\templates\about.html:38
+#, fuzzy
+#| msgid "Our Partners"
+msgid "Our Values"
+msgstr "Our Partners"
+
+#: .\templates\about.html:47
+msgid "Quality"
+msgstr ""
+
+#: .\templates\about.html:47
+msgid "we guarantee high quality of all products"
+msgstr ""
+
+#: .\templates\about.html:48
+msgid "Honesty"
+msgstr ""
+
+#: .\templates\about.html:48
+msgid "transparent prices and honest conditions"
+msgstr ""
+
+#: .\templates\about.html:49
+#, fuzzy
+#| msgid "For Customers"
+msgid "Customer Care"
+msgstr "For Customers"
+
+#: .\templates\about.html:49
+msgid "we are always ready to help and answer questions"
+msgstr ""
+
+#: .\templates\about.html:50
+msgid "Innovation"
+msgstr ""
+
+#: .\templates\about.html:50
+msgid "we constantly improve service and expand capabilities"
+msgstr ""
+
+#: .\templates\about.html:58
+msgid "Years in the market"
+msgstr ""
+
+#: .\templates\about.html:62
+#, fuzzy
+#| msgid "Product Catalog"
+msgid "Products in catalog"
+msgstr "Product Catalog"
+
+#: .\templates\about.html:66
+msgid "Satisfied customers"
+msgstr ""
+
+#: .\templates\about.html:70
+#, fuzzy
+#| msgid "For Customers"
+msgid "Customer support"
+msgstr "For Customers"
+
+#: .\templates\admin\base_site.html:4
+msgid "Django site admin"
+msgstr ""
+
+#: .\templates\base.html:30 .\templates\catalog.html:6
+#: .\templates\catalog.html:14 .\templates\product.html:16
+msgid "Catalog"
+msgstr "Catalog"
+
+#: .\templates\base.html:31
+msgid "About"
+msgstr "About"
+
+#: .\templates\base.html:32 .\templates\base.html:104 .\templates\base.html:109
+#: .\templates\contact.html:5 .\templates\contact.html:11
+#: .\templates\contact.html:13
+msgid "Contacts"
+msgstr "Contacts"
+
+#: .\templates\base.html:91
+msgid "For Customers"
+msgstr "For Customers"
+
+#: .\templates\base.html:93 .\templates\delivery.html:4
+#: .\templates\delivery.html:10 .\templates\delivery.html:12
+msgid "Delivery and Payment"
+msgstr "Delivery and Payment"
+
+#: .\templates\base.html:94 .\templates\delivery.html:122
+msgid "Product Return"
+msgstr "Product Return"
+
+#: .\templates\base.html:95 .\templates\product.html:97
+msgid "Size Chart"
+msgstr "Size Chart"
+
+#: .\templates\base.html:96
+msgid "FAQ"
+msgstr "FAQ"
+
+#: .\templates\base.html:100
+msgid "About Company"
+msgstr "About Company"
+
+#: .\templates\base.html:103
 msgid "Careers"
 msgstr "Careers"
 
+#: .\templates\base.html:105
 msgid "Partners"
 msgstr "Partners"
 
-msgid "Tashkent, Example Street, 1"
-msgstr "Tashkent, Example Street, 1"
+#: .\templates\cart.html:6 .\templates\cart.html:12 .\templates\cart.html:14
+msgid "Shopping Cart"
+msgstr "Shopping Cart"
 
-msgid "Product Catalog"
-msgstr "Product Catalog"
-
-msgid "Filters"
-msgstr "Filters"
-
-msgid "Category"
-msgstr "Category"
-
-msgid "Men's Clothing"
-msgstr "Men's Clothing"
-
-msgid "Women's Clothing"
-msgstr "Women's Clothing"
-
-msgid "Kids' Clothing"
-msgstr "Kids' Clothing"
-
-msgid "Accessories"
-msgstr "Accessories"
-
-msgid "Price"
-msgstr "Price"
-
+#: .\templates\cart.html:40 .\templates\catalog.html:62
+#: .\templates\product.html:91
 msgid "Size"
 msgstr "Size"
 
+#: .\templates\cart.html:42 .\templates\catalog.html:73
+#: .\templates\product.html:104
 msgid "Color"
 msgstr "Color"
 
+#: .\templates\cart.html:61
+msgid "Your cart is empty"
+msgstr "Your cart is empty"
+
+#: .\templates\cart.html:62 .\templates\cart.html:88
+msgid "Continue Shopping"
+msgstr "Continue Shopping"
+
+#: .\templates\cart.html:69
+msgid "Total"
+msgstr "Total"
+
+#: .\templates\cart.html:71
+msgid "Products"
+msgstr "Products"
+
+#: .\templates\cart.html:71 .\templates\product.html:125
+#: .\templates\product.html:190
+msgid "pcs"
+msgstr "pcs"
+
+#: .\templates\cart.html:75 .\templates\contact.html:105
+msgid "Delivery"
+msgstr "Delivery"
+
+#: .\templates\cart.html:76 .\templates\delivery.html:55
+msgid "Free"
+msgstr "Free"
+
+#: .\templates\cart.html:79
+msgid "To pay"
+msgstr "To pay"
+
+#: .\templates\cart.html:84
+msgid "Place Order"
+msgstr "Place Order"
+
+#: .\templates\cart.html:156 .\templates\cart.html:160
+msgid "Error updating quantity"
+msgstr "Error updating quantity"
+
+#: .\templates\cart.html:180
+msgid "Remove item from cart?"
+msgstr "Remove item from cart?"
+
+#: .\templates\cart.html:206 .\templates\cart.html:210
+msgid "Error removing item"
+msgstr "Error removing item"
+
+#: .\templates\cart.html:255
+msgid "Order placement functionality will be implemented"
+msgstr "Order placement functionality will be implemented"
+
+#: .\templates\catalog.html:12
+msgid "Product Catalog"
+msgstr "Product Catalog"
+
+#: .\templates\catalog.html:25
+msgid "Filters"
+msgstr "Filters"
+
+#: .\templates\catalog.html:28 .\templates\product.html:171
+msgid "Category"
+msgstr "Category"
+
+#: .\templates\catalog.html:37
+msgid "Men's Clothing"
+msgstr "Men's Clothing"
+
+#: .\templates\catalog.html:40
+msgid "Women's Clothing"
+msgstr "Women's Clothing"
+
+#: .\templates\catalog.html:43
+msgid "Kids' Clothing"
+msgstr "Kids' Clothing"
+
+#: .\templates\catalog.html:46
+msgid "Accessories"
+msgstr "Accessories"
+
+#: .\templates\catalog.html:52
+msgid "Price"
+msgstr "Price"
+
+#: .\templates\catalog.html:84
 msgid "Apply Filters"
 msgstr "Apply Filters"
 
+#: .\templates\catalog.html:85
 msgid "Reset"
 msgstr "Reset"
 
+#: .\templates\catalog.html:91
 msgid "Products found"
 msgstr "Products found"
 
+#: .\templates\catalog.html:93
 msgid "Sort by"
 msgstr "Sort by"
 
+#: .\templates\catalog.html:95
 msgid "By popularity"
 msgstr "By popularity"
 
+#: .\templates\catalog.html:96
 msgid "Price: low to high"
 msgstr "Price: low to high"
 
+#: .\templates\catalog.html:97
 msgid "Price: high to low"
 msgstr "Price: high to low"
 
+#: .\templates\catalog.html:98
 msgid "By newest"
 msgstr "By newest"
 
-msgid "T-shirt"
-msgstr "T-shirt"
-
+#: .\templates\catalog.html:123 .\templates\catalog.html:125
+#: .\templates\index.html:69 .\templates\index.html:71
+#: .\templates\product.html:235
 msgid "Quick View"
 msgstr "Quick View"
 
-msgid "Classic T-shirt"
-msgstr "Classic T-shirt"
-
+#: .\templates\catalog.html:142 .\templates\catalog.html:144
+#: .\templates\index.html:88 .\templates\index.html:90
+#: .\templates\product.html:133 .\templates\product.html:135
+#: .\templates\product.html:249 .\templates\product.html:251
 msgid "Add to Cart"
 msgstr "Add to Cart"
 
-msgid "Jeans"
-msgstr "Jeans"
+#: .\templates\catalog.html:150
+#, fuzzy
+#| msgid "Products found"
+msgid "No products found"
+msgstr "Products found"
 
-msgid "Classic Jeans"
-msgstr "Classic Jeans"
+#: .\templates\contact.html:24
+#, fuzzy
+#| msgid "Contacts"
+msgid "Contact Us"
+msgstr "Contacts"
 
-msgid "Dress"
+#: .\templates\contact.html:25
+msgid ""
+"We are always happy to answer your questions and help you choose products. "
+"Contact us in any convenient way."
+msgstr ""
+
+#: .\templates\contact.html:32 .\templates\contact.html:96
+msgid "Phone"
+msgstr ""
+
+#: .\templates\contact.html:34
+msgid "Mon-Sun: 9:00 - 21:00"
+msgstr ""
+
+#: .\templates\contact.html:45
+msgid "We will respond within 24 hours"
+msgstr ""
+
+#: .\templates\contact.html:54 .\templates\delivery.html:57
+#, fuzzy
+#| msgid "Dress"
+msgid "Address"
 msgstr "Dress"
 
-msgid "Elegant Dress"
-msgstr "Elegant Dress"
+#: .\templates\contact.html:55 .\templates\contact.html:137
+#: .\templates\delivery.html:57
+msgid "Tashkent, Example Street, 1"
+msgstr "Tashkent, Example Street, 1"
 
-msgid "Jacket"
-msgstr "Jacket"
+#: .\templates\contact.html:56
+msgid "Mon-Fri: 10:00 - 19:00"
+msgstr ""
 
-msgid "Demiseason Jacket"
-msgstr "Demiseason Jacket"
+#: .\templates\contact.html:65
+msgid "Messengers"
+msgstr ""
 
-msgid "Shirt"
-msgstr "Shirt"
+#: .\templates\contact.html:72
+msgid "We are on social networks"
+msgstr ""
 
-msgid "Office Shirt"
-msgstr "Office Shirt"
+#: .\templates\contact.html:85
+msgid "Write to Us"
+msgstr ""
 
-msgid "Sweatshirt"
-msgstr "Sweatshirt"
+#: .\templates\contact.html:88
+msgid "Name"
+msgstr ""
 
-msgid "Cozy Sweatshirt"
-msgstr "Cozy Sweatshirt"
+#: .\templates\contact.html:100
+msgid "Subject"
+msgstr ""
 
-msgid "Skirt"
-msgstr "Skirt"
+#: .\templates\contact.html:102
+msgid "Choose a topic"
+msgstr ""
 
-msgid "Midi Skirt"
-msgstr "Midi Skirt"
+#: .\templates\contact.html:103
+msgid "Order question"
+msgstr ""
 
-msgid "Pants"
-msgstr "Pants"
+#: .\templates\contact.html:104
+#, fuzzy
+#| msgid "Product Return"
+msgid "Product question"
+msgstr "Product Return"
 
-msgid "Classic Pants"
-msgstr "Classic Pants"
+#: .\templates\contact.html:106
+#, fuzzy
+#| msgid "Easy Returns"
+msgid "Return"
+msgstr "Easy Returns"
 
+#: .\templates\contact.html:107
+msgid "Other"
+msgstr ""
+
+#: .\templates\contact.html:111
+msgid "Message"
+msgstr ""
+
+#: .\templates\contact.html:114
+msgid "Send Message"
+msgstr ""
+
+#: .\templates\contact.html:121
+msgid "How to Find Us"
+msgstr ""
+
+#: .\templates\contact.html:136
+msgid "Map will be here"
+msgstr ""
+
+#: .\templates\contact.html:149
+msgid "Thank you for your message! We will contact you soon."
+msgstr ""
+
+#: .\templates\delivery.html:21
+#, fuzzy
+#| msgid "Delivery and Payment"
+msgid "Delivery Methods"
+msgstr "Delivery and Payment"
+
+#: .\templates\delivery.html:28
+msgid "Courier delivery in Tashkent"
+msgstr ""
+
+#: .\templates\delivery.html:29 .\templates\delivery.html:42
+#: .\templates\delivery.html:55
+msgid "Cost"
+msgstr ""
+
+#: .\templates\delivery.html:29 .\templates\delivery.html:42
+msgid "free for orders over"
+msgstr ""
+
+#: .\templates\delivery.html:30 .\templates\delivery.html:43
+#, fuzzy
+#| msgid "Delivery and Payment"
+msgid "Delivery time"
+msgstr "Delivery and Payment"
+
+#: .\templates\delivery.html:30 .\templates\delivery.html:56
+msgid "1-2 business days"
+msgstr ""
+
+#: .\templates\delivery.html:31
+msgid "Delivery hours"
+msgstr ""
+
+#: .\templates\delivery.html:31
+msgid "from 10:00 to 22:00"
+msgstr ""
+
+#: .\templates\delivery.html:32
+msgid ""
+"Delivery is carried out by courier to the specified address. You can choose "
+"a convenient delivery time when placing an order."
+msgstr ""
+
+#: .\templates\delivery.html:41
+#, fuzzy
+#| msgid "Delivery throughout Uzbekistan in 2-5 days"
+msgid "Delivery throughout Uzbekistan"
+msgstr "Delivery throughout Uzbekistan in 2-5 days"
+
+#: .\templates\delivery.html:42
+msgid "from"
+msgstr ""
+
+#: .\templates\delivery.html:43
+msgid "3-7 business days"
+msgstr ""
+
+#: .\templates\delivery.html:44
+msgid "Delivery services"
+msgstr ""
+
+#: .\templates\delivery.html:44
+msgid "CDEK, Uzbekistan Post, Boxberry"
+msgstr ""
+
+#: .\templates\delivery.html:45
+msgid ""
+"Delivery is carried out to pick-up points or post offices. You will receive "
+"a tracking number to track your package."
+msgstr ""
+
+#: .\templates\delivery.html:54
+msgid "Pickup"
+msgstr ""
+
+#: .\templates\delivery.html:56
+msgid "Ready time"
+msgstr ""
+
+#: .\templates\delivery.html:58
+msgid ""
+"You can pick up your order yourself from our office. When receiving, you "
+"must present an identity document."
+msgstr ""
+
+#: .\templates\delivery.html:62
+msgid "Payment Methods"
+msgstr ""
+
+#: .\templates\delivery.html:69
+msgid "Online bank card"
+msgstr ""
+
+#: .\templates\delivery.html:70
+msgid ""
+"Payment by Visa, MasterCard, MIR cards through a secure payment gateway. "
+"Secure one-click payment."
+msgstr ""
+
+#: .\templates\delivery.html:77
+#, fuzzy
+#| msgid "Fast Delivery"
+msgid "Cash on delivery"
+msgstr "Fast Delivery"
+
+#: .\templates\delivery.html:78
+msgid ""
+"Cash payment to the courier upon delivery or at the pickup point. Available "
+"for orders up to 5 000 000 сум."
+msgstr ""
+
+#: .\templates\delivery.html:85
+msgid "Electronic wallets"
+msgstr ""
+
+#: .\templates\delivery.html:86
+msgid ""
+"Payment through payment systems: YooMoney, WebMoney, QIWI and other "
+"electronic payment systems."
+msgstr ""
+
+#: .\templates\delivery.html:93
+msgid "Bank transfer"
+msgstr ""
+
+#: .\templates\delivery.html:94
+msgid ""
+"Payment by details for legal entities. Invoice is issued after order "
+"confirmation."
+msgstr ""
+
+#: .\templates\delivery.html:98
+msgid "Delivery Terms"
+msgstr ""
+
+#: .\templates\delivery.html:102
+msgid "Minimum order amount — 50 000 сум"
+msgstr ""
+
+#: .\templates\delivery.html:106
+msgid ""
+"Free delivery for orders over 300 000 сум (in Tashkent) and over 500 000 сум "
+"(throughout Uzbekistan)"
+msgstr ""
+
+#: .\templates\delivery.html:110
+msgid "Possibility of trying on before payment (with courier delivery)"
+msgstr ""
+
+#: .\templates\delivery.html:114
+msgid "Order status tracking in personal account"
+msgstr ""
+
+#: .\templates\delivery.html:118
+msgid "Order status notifications via SMS and email"
+msgstr ""
+
+#: .\templates\delivery.html:124
+msgid "You can return the product within 14 days from the date of receipt, if:"
+msgstr ""
+
+#: .\templates\delivery.html:126
+msgid "The product has not been used"
+msgstr ""
+
+#: .\templates\delivery.html:127
+msgid ""
+"The product appearance, consumer properties, seals, factory labels are "
+"preserved"
+msgstr ""
+
+#: .\templates\delivery.html:128
+msgid "There are documents confirming the purchase"
+msgstr ""
+
+#: .\templates\delivery.html:130
+msgid ""
+"Return of goods of proper quality is possible only if its product "
+"appearance, consumer properties, as well as a document confirming the fact "
+"and conditions of purchase of the specified product are preserved."
+msgstr ""
+
+#: .\templates\index.html:6
+msgid "Fashion Store - Online Clothing Store"
+msgstr "Fashion Store - Online Clothing Store"
+
+#: .\templates\index.html:12
 msgid "New Collection"
 msgstr "New Collection"
 
+#: .\templates\index.html:13
 msgid "Discover style and comfort"
 msgstr "Discover style and comfort"
 
+#: .\templates\index.html:14
 msgid "View Catalog"
 msgstr "View Catalog"
 
+#: .\templates\index.html:22
 msgid "Categories"
 msgstr "Categories"
 
-msgid "Men\\"
-msgstr ""
-
-msgid "Women\\"
-msgstr ""
-
-msgid "Kids\\"
-msgstr ""
-
+#: .\templates\index.html:49
 msgid "Popular Products"
 msgstr "Popular Products"
 
+#: .\templates\index.html:121
 msgid "Fast Delivery"
 msgstr "Fast Delivery"
 
+#: .\templates\index.html:122
 msgid "Delivery throughout Uzbekistan in 2-5 days"
 msgstr "Delivery throughout Uzbekistan in 2-5 days"
 
+#: .\templates\index.html:126
 msgid "Easy Returns"
 msgstr "Easy Returns"
 
+#: .\templates\index.html:127
 msgid "Product return within 14 days"
 msgstr "Product return within 14 days"
 
+#: .\templates\index.html:131
 msgid "Quality Guarantee"
 msgstr "Quality Guarantee"
 
+#: .\templates\index.html:132
 msgid "Only original products"
 msgstr "Only original products"
 
+#: .\templates\index.html:136
 msgid "24/7 Support"
 msgstr "24/7 Support"
 
+#: .\templates\index.html:137
 msgid "Our support service is always available"
 msgstr "Our support service is always available"
 
+#: .\templates\index.html:148
 msgid "Our Partners"
 msgstr "Our Partners"
 
+#: .\templates\index.html:149
 msgid "We cooperate with leading brands and suppliers"
 msgstr "We cooperate with leading brands and suppliers"
+
+#: .\templates\product.html:7 .\templates\product.html:13
+#: .\templates\product.html:18
+#, fuzzy
+#| msgid "Product Return"
+msgid "Product"
+msgstr "Product"
+
+#: .\templates\product.html:42
+msgid "View"
+msgstr "View"
+
+#: .\templates\product.html:71 .\templates\product.html:199
+msgid "reviews"
+msgstr "reviews"
+
+#: .\templates\product.html:117
+msgid "Quantity"
+msgstr "Quantity"
+
+#: .\templates\product.html:125
+msgid "In stock"
+msgstr "In stock"
+
+#: .\templates\product.html:156
+msgid "Description"
+msgstr "Description"
+
+#: .\templates\product.html:157 .\templates\product.html:167
+msgid "Specifications"
+msgstr "Specifications"
+
+#: .\templates\product.html:158
+msgid "Reviews"
+msgstr "Reviews"
+
+#: .\templates\product.html:162
+msgid "Product Description"
+msgstr "Product Description"
+
+#: .\templates\product.html:177
+msgid "Available Colors"
+msgstr "Available Colors"
+
+#: .\templates\product.html:183
+msgid "Available Sizes"
+msgstr "Available Sizes"
+
+#: .\templates\product.html:189
+msgid "Stock"
+msgstr "Stock"
+
+#: .\templates\product.html:197
+msgid "Customer Reviews"
+msgstr "Customer Reviews"
+
+#: .\templates\product.html:199
+msgid "Average rating"
+msgstr "Average rating"
+
+#: .\templates\product.html:202
+msgid "No reviews yet. Be the first to review this product!"
+msgstr "No reviews yet. Be the first to review this product!"
+
+#: .\templates\product.html:208
+msgid "Product not found"
+msgstr "Product not found"
+
+#: .\templates\product.html:209
+msgid "The product you are looking for does not exist or has been removed."
+msgstr "The product you are looking for does not exist or has been removed."
+
+#: .\templates\product.html:210
+msgid "Back to Catalog"
+msgstr "Back to Catalog"
+
+#: .\templates\product.html:220
+msgid "Similar Products"
+msgstr "Similar Products"
+
+#: .\templates\product.html:341
+msgid ""
+"Error: Product ID is not specified. This product cannot be added to cart."
+msgstr ""
+"Error: Product ID is not specified. This product cannot be added to cart."
+
+#: .\templates\product.html:347
+msgid "Error: event not found"
+msgstr "Error: event not found"
+
+#: .\templates\product.html:354
+msgid "Adding..."
+msgstr "Adding..."
+
+#: .\templates\product.html:366
+msgid "CSRF token not found. Please refresh the page."
+msgstr "CSRF token not found. Please refresh the page."
+
+#: .\templates\product.html:393
+msgid "Added!"
+msgstr "Added!"
+
+#: .\templates\product.html:408 .\templates\product.html:420
+msgid "Error"
+msgstr "Error"
+
+#: .\templates\product.html:414
+msgid "Failed to add product to cart"
+msgstr "Failed to add product to cart"
+
+#: .\templates\product.html:422
+msgid "Failed to add product to cart. Please refresh the page and try again."
+msgstr "Failed to add product to cart. Please refresh the page and try again."
+
+#, fuzzy
+#~| msgid "Product return within 14 days"
+#~ msgid "Return within 14 days"
+#~ msgstr "Product return within 14 days"
+
+#, fuzzy
+#~| msgid "Quality Guarantee"
+#~ msgid "Quality guarantee"
+#~ msgstr "Quality Guarantee"
+
+#~ msgid "T-shirt"
+#~ msgstr "T-shirt"
+
+#~ msgid "Classic T-shirt"
+#~ msgstr "Classic T-shirt"
+
+#~ msgid "Jeans"
+#~ msgstr "Jeans"
+
+#~ msgid "Classic Jeans"
+#~ msgstr "Classic Jeans"
+
+#~ msgid "Elegant Dress"
+#~ msgstr "Elegant Dress"
+
+#~ msgid "Jacket"
+#~ msgstr "Jacket"
+
+#~ msgid "Demiseason Jacket"
+#~ msgstr "Demiseason Jacket"
+
+#~ msgid "Shirt"
+#~ msgstr "Shirt"
+
+#~ msgid "Office Shirt"
+#~ msgstr "Office Shirt"
+
+#~ msgid "Sweatshirt"
+#~ msgstr "Sweatshirt"
+
+#~ msgid "Cozy Sweatshirt"
+#~ msgstr "Cozy Sweatshirt"
+
+#~ msgid "Skirt"
+#~ msgstr "Skirt"
+
+#~ msgid "Midi Skirt"
+#~ msgstr "Midi Skirt"
+
+#~ msgid "Pants"
+#~ msgstr "Pants"
+
+#~ msgid "Classic Pants"
+#~ msgstr "Classic Pants"

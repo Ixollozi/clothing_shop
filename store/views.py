@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.utils import timezone
+from django.core.cache import cache
+from datetime import timedelta
 from .models import Category, Product, Cart, CartItem, Order
 from .serializers import (
     CategorySerializer, ProductSerializer, CartSerializer,
@@ -77,7 +80,43 @@ class CartViewSet(viewsets.ModelViewSet):
             session_key = self.request.session.session_key
         return Cart.objects.filter(session_key=session_key)
 
+    def cleanup_old_carts(self):
+        """
+        Удаляет корзины, которые не обновлялись более 30 дней.
+        Проверка выполняется не чаще раза в час для оптимизации.
+        """
+        cache_key = 'cart_cleanup_last_run'
+        last_run = cache.get(cache_key)
+        
+        # Проверяем, не выполнялась ли очистка в последний час
+        if last_run is not None:
+            return
+        
+        # Устанавливаем флаг, что очистка выполняется (на 1 час)
+        cache.set(cache_key, timezone.now(), 3600)
+        
+        try:
+            # Вычисляем дату, до которой корзины считаются устаревшими (30 дней)
+            cutoff_date = timezone.now() - timedelta(days=30)
+            
+            # Находим все корзины, которые не обновлялись более 30 дней
+            old_carts = Cart.objects.filter(updated_at__lt=cutoff_date)
+            
+            # Удаляем корзины (CartItem удалятся автоматически благодаря CASCADE)
+            deleted_count = old_carts.count()
+            if deleted_count > 0:
+                old_carts.delete()
+                # Логируем в консоль (в продакшене можно использовать logger)
+                print(f"Очищено {deleted_count} старых корзин (старше 30 дней)")
+        except Exception as e:
+            # В случае ошибки сбрасываем флаг, чтобы попробовать снова
+            cache.delete(cache_key)
+            print(f"Ошибка при очистке старых корзин: {e}")
+
     def get_or_create_cart(self):
+        # Автоматически очищаем старые корзины при каждом запросе (с ограничением частоты)
+        self.cleanup_old_carts()
+        
         session_key = self.request.session.session_key
         if not session_key:
             self.request.session.create()
@@ -96,28 +135,55 @@ class CartViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'])
     def add_item(self, request):
         """Добавить товар в корзину"""
-        cart = self.get_or_create_cart()
-        product_id = request.data.get('product_id')
-        quantity = int(request.data.get('quantity', 1))
-        size = request.data.get('size', '')
-        color = request.data.get('color', '')
+        try:
+            cart = self.get_or_create_cart()
+            product_id = request.data.get('product_id')
+            
+            if not product_id:
+                return Response(
+                    {'error': 'product_id is required'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            try:
+                product_id = int(product_id)
+            except (ValueError, TypeError):
+                return Response(
+                    {'error': 'product_id must be a valid integer'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            quantity = int(request.data.get('quantity', 1))
+            size = request.data.get('size', '')
+            color = request.data.get('color', '')
 
-        product = get_object_or_404(Product, id=product_id, is_active=True)
+            try:
+                product = Product.objects.get(id=product_id, is_active=True)
+            except Product.DoesNotExist:
+                return Response(
+                    {'error': f'Product with id {product_id} not found or is inactive'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
 
-        cart_item, created = CartItem.objects.get_or_create(
-            cart=cart,
-            product=product,
-            size=size,
-            color=color,
-            defaults={'quantity': quantity}
-        )
+            cart_item, created = CartItem.objects.get_or_create(
+                cart=cart,
+                product=product,
+                size=size,
+                color=color,
+                defaults={'quantity': quantity}
+            )
 
-        if not created:
-            cart_item.quantity += quantity
-            cart_item.save()
+            if not created:
+                cart_item.quantity += quantity
+                cart_item.save()
 
-        serializer = CartItemSerializer(cart_item)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+            serializer = CartItemSerializer(cart_item)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
     @action(detail=False, methods=['put'])
     def update_item(self, request):

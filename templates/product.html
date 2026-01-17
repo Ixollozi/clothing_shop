@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
+{% load humanize %}
+{% load translation_tags %}
 
 {% block title %}{% if product %}{{ product.name }}{% else %}{% trans "Product" %}{% endif %} - {{ store_name }}{% endblock %}
 
@@ -70,9 +72,9 @@
                     </div>
                     
                     <div class="product-price-large">
-                        <span class="current-price">{{ product.price }} $</span>
+                        <span class="current-price">{{ product.price|format_price }} сум</span>
                         {% if product.old_price %}
-                            <span class="old-price">{{ product.old_price }} $</span>
+                            <span class="old-price">{{ product.old_price|format_price }} сум</span>
                             {% if discount %}
                                 <span class="discount">-{{ discount }}%</span>
                             {% endif %}
@@ -127,25 +129,24 @@
 
                     <!-- Action Buttons -->
                     <div class="product-actions">
-                        <a href="{% url 'cart' %}" class="btn btn-primary btn-large">{% trans "Add to Cart" %}</a>
-                        <button class="btn btn-secondary btn-large"><i class="far fa-heart"></i> {% trans "Add to Wishlist" %}</button>
+                        {% if product.id %}
+                        <button class="btn btn-primary btn-large" data-product-id="{{ product.id }}" data-product-name="{{ product.name|escapejs }}" data-use-product-form="true">{% trans "Add to Cart" %}</button>
+                        {% else %}
+                        <button class="btn btn-primary btn-large" disabled>{% trans "Add to Cart" %}</button>
+                        {% endif %}
                     </div>
 
                     <!-- Product Features -->
+                    {% if product_features %}
                     <div class="product-features">
+                        {% for feature in product_features %}
                         <div class="feature-item-small">
-                            <i class="fas fa-shipping-fast"></i>
-                            <span>{% trans "Free delivery from 30 $" %}</span>
+                            <i class="{{ feature.icon }}"></i>
+                            <span>{{ feature.text }}</span>
                         </div>
-                        <div class="feature-item-small">
-                            <i class="fas fa-undo"></i>
-                            <span>{% trans "Return within 14 days" %}</span>
-                        </div>
-                        <div class="feature-item-small">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>{% trans "Quality guarantee" %}</span>
-                        </div>
+                        {% endfor %}
                     </div>
+                    {% endif %}
                 </div>
             </div>
 
@@ -239,12 +240,16 @@
                             <h3 class="product-name">{{ related_product.name }}</h3>
                         </a>
                         <p class="product-price">
-                            {{ related_product.price }} $
+                            {{ related_product.price|format_price }} сум
                             {% if related_product.old_price %}
-                                <span style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-left: 0.5rem;">{{ related_product.old_price }} $</span>
+                                <span style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-left: 0.5rem;">{{ related_product.old_price|format_price }} сум</span>
                             {% endif %}
                         </p>
-                        <a href="{% url 'cart' %}" class="btn btn-add-cart">{% trans "Add to Cart" %}</a>
+                        {% if related_product.id %}
+                        <button class="btn btn-add-cart" data-product-id="{{ related_product.id }}" data-product-name="{{ related_product.name|escapejs }}">{% trans "Add to Cart" %}</button>
+                        {% else %}
+                        <button class="btn btn-add-cart" disabled>{% trans "Add to Cart" %}</button>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
@@ -326,5 +331,101 @@
             }
         });
     });
+
+    // Add to Cart functionality
+    window.addToCartFromProduct = async function(event, productId, productName) {
+        console.log('addToCartFromProduct called with:', { productId, productName, event });
+        
+        if (!productId || productId === 'None' || productId === '') {
+            console.error('Product ID is missing or invalid:', productId);
+            alert('{% trans "Error: Product ID is not specified. This product cannot be added to cart." %}');
+            return;
+        }
+        
+        if (!event || !event.target) {
+            console.error('Event is missing or invalid');
+            alert('{% trans "Error: event not found" %}');
+            return;
+        }
+        
+        const button = event.target;
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = '{% trans "Adding..." %}';
+
+        // Получаем выбранные размер и цвет
+        const selectedSize = document.querySelector('.size-option.active')?.getAttribute('data-size') || '';
+        const selectedColor = document.querySelector('.color-option-large.active')?.getAttribute('data-color') || '';
+        const quantity = parseInt(document.getElementById('quantity')?.value || 1);
+
+        try {
+            const csrftoken = getCsrfToken();
+            console.log('CSRF Token:', csrftoken ? 'Found' : 'Not found');
+            
+            if (!csrftoken) {
+                throw new Error('{% trans "CSRF token not found. Please refresh the page." %}');
+            }
+
+            const requestData = {
+                product_id: parseInt(productId),
+                quantity: quantity,
+                size: selectedSize,
+                color: selectedColor
+            };
+            
+            console.log('Sending request to /api/cart/add_item/', requestData);
+
+            const response = await fetch('/api/cart/add_item/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(requestData)
+            });
+
+            console.log('Response status:', response.status, response.statusText);
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Item added successfully:', data);
+                button.textContent = '{% trans "Added!" %}';
+                button.style.backgroundColor = '#2ecc71';
+                
+                // Обновляем иконку корзины
+                updateCartIcon();
+                
+                // Возвращаем исходный текст через 2 секунды
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.backgroundColor = '';
+                    button.disabled = false;
+                }, 2000);
+            } else {
+                const errorData = await response.json().catch(() => ({}));
+                console.error('Failed to add to cart:', response.status, errorData);
+                let errorMessage = '{% trans "Error" %} ' + response.status + ': ';
+                if (errorData.detail) {
+                    errorMessage += errorData.detail;
+                } else if (errorData.error) {
+                    errorMessage += errorData.error;
+                } else {
+                    errorMessage += '{% trans "Failed to add product to cart" %}';
+                }
+                throw new Error(errorMessage);
+            }
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+            button.textContent = '{% trans "Error" %}';
+            button.style.backgroundColor = '#e74c3c';
+            alert(error.message || '{% trans "Failed to add product to cart. Please refresh the page and try again." %}');
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.backgroundColor = '';
+                button.disabled = false;
+            }, 2000);
+        }
+    }
 </script>
 {% endblock %}

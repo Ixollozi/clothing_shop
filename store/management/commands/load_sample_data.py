@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from store.models import Category, Product, ProductImage
+from store.models import Category, Product, ProductImage, Feature, ProductFeatureConfig
 
 
 class Command(BaseCommand):
@@ -146,6 +146,103 @@ class Command(BaseCommand):
                 # В реальном проекте используйте загрузку файлов
             else:
                 self.stdout.write(self.style.WARNING(f'Товар уже существует: {product.name}'))
+
+        # Создание features (особенностей магазина)
+        features_data = [
+            {
+                'icon': 'fas fa-shipping-fast',
+                'title': 'Быстрая доставка',
+                'description': 'Доставка по всему Узбекистану за 2-5 дней',
+                'order': 0,
+            },
+            {
+                'icon': 'fas fa-undo',
+                'title': 'Легкий возврат',
+                'description': 'Возврат товара в течение 14 дней',
+                'order': 1,
+            },
+            {
+                'icon': 'fas fa-shield-alt',
+                'title': 'Гарантия качества',
+                'description': 'Только оригинальные товары',
+                'order': 2,
+            },
+            {
+                'icon': 'fas fa-headset',
+                'title': 'Поддержка 24/7',
+                'description': 'Наша служба поддержки всегда доступна',
+                'order': 3,
+            },
+        ]
+
+        for feature_data in features_data:
+            feature, created = Feature.objects.get_or_create(
+                title=feature_data['title'],
+                defaults={
+                    'icon': feature_data['icon'],
+                    'description': feature_data['description'],
+                    'order': feature_data['order'],
+                    'is_active': True,
+                }
+            )
+            if created:
+                self.stdout.write(self.style.SUCCESS(f'Создана особенность: {feature.title}'))
+            else:
+                # Обновляем существующую запись
+                feature.icon = feature_data['icon']
+                feature.description = feature_data['description']
+                feature.order = feature_data['order']
+                feature.is_active = True
+                feature.save()
+                self.stdout.write(self.style.WARNING(f'Обновлена особенность: {feature.title}'))
+
+        # Создаем примерные features товара, если их нет
+        if not ProductFeatureConfig.objects.exists():
+            # Feature 1: Бесплатная доставка
+            feature1 = ProductFeatureConfig.objects.create(
+                title='Бесплатная доставка',
+                title_ru='Бесплатная доставка',
+                title_en='Free delivery',
+                title_uz='Bepul yetkazib berish',
+                icon='fas fa-shipping-fast',
+                text='Бесплатная доставка от 300 000 сум',
+                text_ru='Бесплатная доставка от 300 000 сум',
+                text_en='Free delivery from 300 000 сум',
+                text_uz='300 000 so\'mdan bepul yetkazib berish',
+                order=1,
+                is_active=True
+            )
+            
+            # Feature 2: Возврат
+            feature2 = ProductFeatureConfig.objects.create(
+                title='Возврат',
+                title_ru='Возврат',
+                title_en='Return',
+                title_uz='Qaytarish',
+                icon='fas fa-undo',
+                text='Возврат в течение 14 дней',
+                text_ru='Возврат в течение 14 дней',
+                text_en='Return within 14 days',
+                text_uz='14 kun ichida qaytarish',
+                order=2,
+                is_active=True
+            )
+            
+            # Feature 3: Гарантия качества
+            feature3 = ProductFeatureConfig.objects.create(
+                title='Гарантия качества',
+                title_ru='Гарантия качества',
+                title_en='Quality guarantee',
+                title_uz='Sifat kafolati',
+                icon='fas fa-shield-alt',
+                text='Гарантия качества',
+                text_ru='Гарантия качества',
+                text_en='Quality guarantee',
+                text_uz='Sifat kafolati',
+                order=3,
+                is_active=True
+            )
+            self.stdout.write(self.style.SUCCESS('Созданы примерные features товара с переводами'))
 
         self.stdout.write(self.style.SUCCESS('Данные успешно загружены!'))
 

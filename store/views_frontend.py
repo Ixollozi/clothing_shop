@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from .models import Product, Category
+from .models import Product, Category, Cart, CartItem
 
 
 def get_dummy_products():
@@ -154,16 +154,36 @@ def catalog(request):
             Q(name__icontains=search_query) | Q(description__icontains=search_query)
         )
     
+    # Фильтрация по размеру
+    size_filter = request.GET.get('size', None)
+    if size_filter:
+        # Ищем товары, у которых в available_sizes есть указанный размер
+        products_queryset = products_queryset.filter(
+            Q(available_sizes__icontains=size_filter)
+        )
+    
+    # Фильтрация по цвету
+    color_filter = request.GET.get('color', None)
+    if color_filter:
+        # Маппинг цветов из hex в названия
+        color_map = {
+            '#000': 'Черный',
+            '#000000': 'Черный',
+            '#fff': 'Белый',
+            '#ffffff': 'Белый',
+            '#e74c3c': 'Красный',
+            '#3498db': 'Синий',
+            '#2ecc71': 'Зеленый',
+            '#f39c12': 'Желтый',
+        }
+        color_name = color_map.get(color_filter.lower(), color_filter)
+        # Ищем товары, у которых в available_colors есть указанный цвет
+        products_queryset = products_queryset.filter(
+            Q(available_colors__icontains=color_name)
+        )
+    
     # Сортировка
-    sort_by = request.GET.get('sort', '-created_at')
-    valid_sorts = {
-        'popularity': '-rating',
-        'price_low': 'price',
-        'price_high': '-price',
-        'newest': '-created_at',
-    }
-    sort_order = valid_sorts.get(sort_by, '-created_at')
-    products_queryset = products_queryset.order_by(sort_order)
+    sort_by = request.GET.get('sort', 'newest')
     
     # Если нет товаров в БД, используем заглушки
     use_dummy = False
@@ -171,12 +191,74 @@ def catalog(request):
         products_queryset = None
         use_dummy = True
     
-    # Пагинация
+    # Применяем сортировку
     if use_dummy:
-        # Для заглушек создаем простой список
+        # Для заглушек создаем простой список и сортируем его
         dummy_products = get_dummy_products()
+        
+        # Добавляем поля для сортировки и фильтрации к заглушкам
+        for i, product in enumerate(dummy_products):
+            product['rating'] = 4.0 + (i % 3) * 0.5  # Разные рейтинги для сортировки
+            product['reviews_count'] = 10 + i * 2  # Разное количество отзывов
+            product['created_at'] = i  # Индекс как дата создания (меньше = новее)
+            product['available_sizes'] = ['XS', 'S', 'M', 'L', 'XL'][i % 5]  # Разные размеры
+            product['available_colors'] = ['Черный', 'Белый', 'Синий', 'Красный', 'Зеленый', 'Желтый'][i % 6]  # Разные цвета
+        
+        # Применяем фильтры к заглушкам
+        if size_filter:
+            dummy_products = [p for p in dummy_products if size_filter in str(p.get('available_sizes', ''))]
+        
+        if color_filter:
+            # Маппинг цветов из hex в названия
+            color_map = {
+                '#000': 'Черный',
+                '#000000': 'Черный',
+                '#fff': 'Белый',
+                '#ffffff': 'Белый',
+                '#e74c3c': 'Красный',
+                '#3498db': 'Синий',
+                '#2ecc71': 'Зеленый',
+                '#f39c12': 'Желтый',
+            }
+            color_name = color_map.get(color_filter.lower(), color_filter)
+            dummy_products = [p for p in dummy_products if color_name in str(p.get('available_colors', ''))]
+        
+        # Сортируем заглушки
+        if sort_by == 'popularity':
+            # По популярности: сначала по рейтингу, потом по количеству отзывов
+            dummy_products.sort(key=lambda x: (-x['rating'], -x['reviews_count']))
+        elif sort_by == 'price_low':
+            # По цене: от низкой к высокой
+            dummy_products.sort(key=lambda x: x['price'])
+        elif sort_by == 'price_high':
+            # По цене: от высокой к низкой
+            dummy_products.sort(key=lambda x: -x['price'])
+        elif sort_by == 'newest':
+            # По новизне: сначала новые (меньший индекс = новее)
+            dummy_products.sort(key=lambda x: x['created_at'])
+        else:
+            # По умолчанию: по новизне
+            dummy_products.sort(key=lambda x: x['created_at'])
+        
         paginator = Paginator(dummy_products, 12)  # 12 товаров на страницу
     else:
+        # Сортировка для реальных товаров из БД
+        if sort_by == 'popularity':
+            # По популярности: сначала по рейтингу, потом по количеству отзывов, потом по дате создания
+            products_queryset = products_queryset.order_by('-rating', '-reviews_count', '-created_at')
+        elif sort_by == 'price_low':
+            # По цене: от низкой к высокой
+            products_queryset = products_queryset.order_by('price', '-created_at')
+        elif sort_by == 'price_high':
+            # По цене: от высокой к низкой
+            products_queryset = products_queryset.order_by('-price', '-created_at')
+        elif sort_by == 'newest':
+            # По новизне: сначала новые
+            products_queryset = products_queryset.order_by('-created_at')
+        else:
+            # По умолчанию: по новизне
+            products_queryset = products_queryset.order_by('-created_at')
+        
         paginator = Paginator(products_queryset, 12)  # 12 товаров на страницу
     
     page = request.GET.get('page', 1)
@@ -200,6 +282,8 @@ def catalog(request):
         'current_search': search_query,
         'min_price': min_price,
         'max_price': max_price,
+        'current_size': size_filter,
+        'current_color': color_filter,
     }
     return render(request, 'catalog.html', context)
 
@@ -209,27 +293,43 @@ def product_detail(request, slug=None):
     product = None
     related_products = []
     
-    try:
-        product = Product.objects.prefetch_related('images').get(slug=slug, is_active=True)
-        
-        # Получаем связанные товары из той же категории
-        related_products = Product.objects.filter(
-            category=product.category,
-            is_active=True
-        ).exclude(id=product.id)[:4]
-        
-    except Product.DoesNotExist:
-        # Если товар не найден, используем заглушку
+    # Сначала пытаемся найти товар в БД
+    if slug:
+        try:
+            product = Product.objects.prefetch_related('images').get(slug=slug, is_active=True)
+            
+            # Получаем связанные товары из той же категории
+            if product.category:
+                related_products = Product.objects.filter(
+                    category=product.category,
+                    is_active=True
+                ).exclude(id=product.id)[:4]
+            else:
+                # Если нет категории, берем любые активные товары
+                related_products = Product.objects.filter(is_active=True).exclude(id=product.id)[:4]
+        except Product.DoesNotExist:
+            pass
+    
+    # Если товар не найден в БД, ищем в заглушках по slug
+    if not product:
         dummy_products = get_dummy_products()
-        if dummy_products:
+        if slug:
+            # Ищем заглушку по slug
+            dummy_product_data = next((p for p in dummy_products if p.get('slug') == slug), None)
+        else:
+            # Берем первую заглушку
+            dummy_product_data = dummy_products[0] if dummy_products else None
+        
+        if dummy_product_data:
             # Создаем объект-заглушку с нужными атрибутами
             class DummyProduct:
                 def __init__(self, data):
+                    self.id = None  # Нет ID для заглушек
                     self.name = data.get('name', '')
                     self.slug = data.get('slug', '')
                     self.price = data.get('price', 0)
                     self.old_price = data.get('old_price')
-                    self.description = 'Classic product description'
+                    self.description = 'Classic product description. This is a high-quality product with excellent materials and craftsmanship.'
                     self.image_url = data.get('image_url')
                     self.image = None
                     self.available_sizes = 'S,M,L,XL'
@@ -240,7 +340,13 @@ def product_detail(request, slug=None):
                     self.category = None
                     self.images = []
             
-            product = DummyProduct(dummy_products[0])
+            product = DummyProduct(dummy_product_data)
+            
+            # Для связанных товаров берем другие заглушки
+            related_products_data = [p for p in dummy_products if p.get('slug') != product.slug][:4]
+            related_products = []
+            for data in related_products_data:
+                related_products.append(DummyProduct(data))
     
     # Вычисляем скидку, если есть старая цена
     discount = None
@@ -275,19 +381,37 @@ def product_detail(request, slug=None):
         color_names = [c.strip() for c in str(product.available_colors).split(',') if c.strip()]
         colors = [{'name': name, 'code': color_map.get(name, '#000000')} for name in color_names]
     
+    # Получаем features товара из базы данных
+    from .models import ProductFeatureConfig
+    product_features = ProductFeatureConfig.objects.filter(is_active=True).order_by('order', 'title')
+    
     context = {
         'product': product,
         'related_products': related_products,
         'discount': discount,
         'sizes': sizes,
         'colors': colors,
+        'product_features': product_features,
     }
     return render(request, 'product.html', context)
 
 
 def cart(request):
     """Страница корзины"""
-    return render(request, 'cart.html')
+    # Получаем или создаем корзину для текущей сессии
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.create()
+        session_key = request.session.session_key
+    
+    cart, created = Cart.objects.get_or_create(session_key=session_key)
+    cart_items = CartItem.objects.filter(cart=cart).select_related('product')
+    
+    context = {
+        'cart': cart,
+        'cart_items': cart_items,
+    }
+    return render(request, 'cart.html', context)
 
 
 def about(request):

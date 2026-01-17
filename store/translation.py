@@ -5,7 +5,7 @@ from modeltranslation.translator import register, TranslationOptions
 from .models import (
     Category, Product, Partner,
     StoreConfig, ContactConfig, HeroConfig, Feature,
-    AboutConfig, SEOConfig
+    AboutConfig, SEOConfig, ProductFeatureConfig
 )
 
 
@@ -53,4 +53,8 @@ class AboutConfigTranslationOptions(TranslationOptions):
 class SEOConfigTranslationOptions(TranslationOptions):
     fields = ('meta_title', 'meta_description', 'meta_keywords')
 
+
+@register(ProductFeatureConfig)
+class ProductFeatureConfigTranslationOptions(TranslationOptions):
+    fields = ('title', 'text')
 

@@ -57,6 +57,7 @@ def load_config_from_models():
                     'street': contact.address_street,
                     'full': contact.address_full,
                 },
+                'map_url': contact.map_url or '',
                 'working_hours': {
                     'weekdays': contact.working_hours_weekdays,
                     'weekend': contact.working_hours_weekend,

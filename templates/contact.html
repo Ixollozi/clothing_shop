@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load translation_tags %}
 
 {% block title %}{% trans "Contacts" %} - {{ store_name }}{% endblock %}
 
@@ -118,11 +119,24 @@
             <!-- Map Section -->
             <div class="map-section">
                 <h2>{% trans "How to Find Us" %}</h2>
-                <div class="map-placeholder">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <p>{% trans "Map will be here" %}</p>
-                    {% if contact_info.address.full %}<p class="map-address">{{ contact_info.address.full }}</p>{% else %}<p class="map-address">{% trans "Tashkent, Example Street, 1" %}</p>{% endif %}
-                </div>
+                {% if contact_info.map_url %}
+                    <div class="yandex-map-container">
+                        <iframe 
+                            src="{{ contact_info.map_url|yandex_map_url }}?lang=ru_RU" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allowfullscreen="true" 
+                            style="position:relative; border-radius: 10px;">
+                        </iframe>
+                    </div>
+                {% else %}
+                    <div class="map-placeholder">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>{% trans "Map will be here" %}</p>
+                        {% if contact_info.address.full %}<p class="map-address">{{ contact_info.address.full }}</p>{% else %}<p class="map-address">{% trans "Tashkent, Example Street, 1" %}</p>{% endif %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </section>
