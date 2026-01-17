@@ -1384,6 +1384,59 @@ input[type="radio"] {
     margin-right: 8px;
 }
 
+/* Стили для чекбоксов размеров */
+.sizes-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+    padding: 15px;
+    background: var(--admin-bg);
+    border-radius: 6px;
+    border: 1px solid var(--admin-border);
+}
+
+.sizes-checkboxes li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.sizes-checkboxes label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    background: var(--admin-content-bg);
+    border: 1px solid var(--admin-border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: var(--admin-text);
+    margin: 0;
+}
+
+.sizes-checkboxes label:hover {
+    background: var(--admin-bg);
+    border-color: var(--admin-link);
+    color: var(--admin-link);
+}
+
+.sizes-checkboxes input[type="checkbox"]:checked + label,
+.sizes-checkboxes label:has(input[type="checkbox"]:checked) {
+    background: var(--admin-link);
+    border-color: var(--admin-link);
+    color: white;
+}
+
+.sizes-checkboxes input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+}
+
 /* Улучшения для изображений */
 img {
     max-width: 100%;

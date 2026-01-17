@@ -115,11 +115,29 @@ const observer = new IntersectionObserver(function(entries) {
 // Применяем анимацию к карточкам товаров и категорий
 document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.product-card, .category-card, .feature-item');
-    cards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(card);
+    cards.forEach((card, index) => {
+        // Проверяем, что элемент содержит контент перед применением анимации
+        const hasContent = card.textContent.trim().length > 0;
+        const hasChildren = card.querySelector('h3, p, i') !== null;
+        
+        if (hasContent && hasChildren) {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+            
+            // Fallback: если observer не сработал через 2 секунды, показываем элемент
+            setTimeout(() => {
+                if (card.style.opacity === '0' || window.getComputedStyle(card).opacity === '0') {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            }, 2000);
+        } else {
+            // Если контента нет, показываем элемент сразу
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }
     });
 });
 

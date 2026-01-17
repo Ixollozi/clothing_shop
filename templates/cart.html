@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load humanize %}
+{% load translation_tags %}
 
 {% block title %}{% trans "Shopping Cart" %} - {{ store_name }}{% endblock %}
 
@@ -20,79 +22,54 @@
             <div class="cart-layout">
                 <!-- Cart Items -->
                 <div class="cart-items">
-                    <div class="cart-item">
-                        <div class="cart-item-image">
-                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=200&h=200&fit=crop" alt="{% trans 'Product' %}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=200&h=200&fit=crop';">
+                    {% if cart_items %}
+                        {% for item in cart_items %}
+                        <div class="cart-item" data-item-id="{{ item.id }}">
+                            <div class="cart-item-image">
+                                {% if item.product.image %}
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                                {% elif item.product.image_url %}
+                                    <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
+                                {% else %}
+                                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200" alt="{{ item.product.name }}">
+                                {% endif %}
+                            </div>
+                            <div class="cart-item-info">
+                                <h3>{{ item.product.name }}</h3>
+                                <p class="cart-item-details">
+                                    {% if item.size %}{% trans "Size" %}: {{ item.size }}{% endif %}
+                                    {% if item.size and item.color %}, {% endif %}
+                                    {% if item.color %}{% trans "Color" %}: {{ item.color }}{% endif %}
+                                </p>
+                                <p class="cart-item-price" data-price="{{ item.product.price }}">{{ item.product.price|format_price }} сум</p>
+                            </div>
+                            <div class="cart-item-quantity">
+                                <button class="qty-btn" onclick="updateQuantity(this, -1, {{ item.id }})">-</button>
+                                <input type="number" value="{{ item.quantity }}" min="1" class="qty-input" data-item-id="{{ item.id }}" onchange="updateQuantityInput(this, {{ item.id }})">
+                                <button class="qty-btn" onclick="updateQuantity(this, 1, {{ item.id }})">+</button>
+                            </div>
+                            <div class="cart-item-total">
+                                <span class="item-total-price" data-item-id="{{ item.id }}">{{ item.total|format_price }} сум</span>
+                            </div>
+                            <button class="cart-item-remove" onclick="removeItem({{ item.id }})">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
-                        <div class="cart-item-info">
-                            <h3>{% trans "Product Name" %}</h3>
-                            <p class="cart-item-details">{% trans "Model" %}: #001</p>
-                            <p class="cart-item-price">20 $</p>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-cart">
+                            <p>{% trans "Your cart is empty" %}</p>
+                            <a href="{% url 'catalog' %}" class="btn btn-primary">{% trans "Continue Shopping" %}</a>
                         </div>
-                        <div class="cart-item-quantity">
-                            <button class="qty-btn" onclick="updateQuantity(this, -1)">-</button>
-                            <input type="number" value="2" min="1" class="qty-input">
-                            <button class="qty-btn" onclick="updateQuantity(this, 1)">+</button>
-                        </div>
-                        <div class="cart-item-total">
-                            <span class="item-total-price">40 $</span>
-                        </div>
-                        <button class="cart-item-remove" onclick="removeItem(this)">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-
-                    <div class="cart-item">
-                        <div class="cart-item-image">
-                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=200&h=200&fit=crop" alt="{% trans 'Product' %}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=200&h=200&fit=crop';">
-                        </div>
-                        <div class="cart-item-info">
-                            <h3>{% trans "Product Name" %}</h3>
-                            <p class="cart-item-details">{% trans "Model" %}: #002</p>
-                            <p class="cart-item-price">35 $</p>
-                        </div>
-                        <div class="cart-item-quantity">
-                            <button class="qty-btn" onclick="updateQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" class="qty-input">
-                            <button class="qty-btn" onclick="updateQuantity(this, 1)">+</button>
-                        </div>
-                        <div class="cart-item-total">
-                            <span class="item-total-price">35 $</span>
-                        </div>
-                        <button class="cart-item-remove" onclick="removeItem(this)">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-
-                    <div class="cart-item">
-                        <div class="cart-item-image">
-                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=200&h=200&fit=crop" alt="{% trans 'Product' %}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=200&h=200&fit=crop';">
-                        </div>
-                        <div class="cart-item-info">
-                            <h3>{% trans "Product Name" %}</h3>
-                            <p class="cart-item-details">{% trans "Model" %}: #003</p>
-                            <p class="cart-item-price">25 $</p>
-                        </div>
-                        <div class="cart-item-quantity">
-                            <button class="qty-btn" onclick="updateQuantity(this, -1)">-</button>
-                            <input type="number" value="1" min="1" class="qty-input">
-                            <button class="qty-btn" onclick="updateQuantity(this, 1)">+</button>
-                        </div>
-                        <div class="cart-item-total">
-                            <span class="item-total-price">25 $</span>
-                        </div>
-                        <button class="cart-item-remove" onclick="removeItem(this)">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
+                    {% endif %}
                 </div>
 
                 <!-- Cart Summary -->
                 <div class="cart-summary">
                     <h2>{% trans "Total" %}</h2>
                     <div class="summary-row">
-                        <span>{% trans "Products" %} (4 {% trans "pcs" %}.)</span>
-                        <span id="subtotal">100 $</span>
+                        <span>{% trans "Products" %} (<span id="items-count">{{ cart.items_count|default:0 }}</span> {% trans "pcs" %}.)</span>
+                        <span id="subtotal">{{ cart.total|default:0|format_price }} сум</span>
                     </div>
                     <div class="summary-row">
                         <span>{% trans "Delivery" %}</span>
@@ -100,11 +77,13 @@
                     </div>
                     <div class="summary-row total-row">
                         <span>{% trans "To pay" %}</span>
-                        <span id="total">100 $</span>
+                        <span id="total">{{ cart.total|default:0|format_price }} сум</span>
                     </div>
-                    <button class="btn btn-primary btn-large" style="width: 100%; margin-top: 1rem;">
+                    {% if cart_items %}
+                    <button class="btn btn-primary btn-large" style="width: 100%; margin-top: 1rem;" onclick="placeOrder()">
                         {% trans "Place Order" %}
                     </button>
+                    {% endif %}
                     <a href="{% url 'catalog' %}" class="continue-shopping">
                         <i class="fas fa-arrow-left"></i> {% trans "Continue Shopping" %}
                     </a>
@@ -116,39 +95,170 @@
 
 {% block extra_js %}
 <script>
-    function updateQuantity(btn, change) {
+    const API_BASE_URL = '/api/cart/';
+    const CSRF_TOKEN = '{{ csrf_token }}';
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function getCsrfToken() {
+        return getCookie('csrftoken') || CSRF_TOKEN;
+    }
+
+    async function updateQuantity(btn, change, itemId) {
         const qtyInput = btn.parentElement.querySelector('.qty-input');
         const currentValue = parseInt(qtyInput.value);
         const newValue = Math.max(1, currentValue + change);
+        
+        if (newValue === currentValue && change < 0) return;
+        
         qtyInput.value = newValue;
-        updateItemTotal(btn.closest('.cart-item'));
-        updateCartTotal();
+        await updateItemQuantity(itemId, newValue);
     }
 
-    function updateItemTotal(item) {
-        const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace(/\s/g, '').replace('$', ''));
-        const quantity = parseInt(item.querySelector('.qty-input').value);
-        const total = price * quantity;
-        item.querySelector('.item-total-price').textContent = total.toLocaleString() + ' $';
+    async function updateQuantityInput(input, itemId) {
+        const newValue = Math.max(1, parseInt(input.value) || 1);
+        input.value = newValue;
+        await updateItemQuantity(itemId, newValue);
     }
 
-    function removeItem(btn) {
-        if (confirm('{% trans "Remove item from cart?" %}')) {
-            btn.closest('.cart-item').remove();
-            updateCartTotal();
+    async function updateItemQuantity(itemId, quantity) {
+        try {
+            const response = await fetch(API_BASE_URL + 'update_item/', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken()
+                },
+                body: JSON.stringify({
+                    item_id: itemId,
+                    quantity: quantity
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                updateItemTotal(itemId, data.total);
+                await updateCartSummary();
+            } else {
+                alert('{% trans "Error updating quantity" %}');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('{% trans "Error updating quantity" %}');
         }
     }
 
-    function updateCartTotal() {
-        const items = document.querySelectorAll('.cart-item');
-        let subtotal = 0;
-        items.forEach(item => {
-            const totalText = item.querySelector('.item-total-price').textContent;
-            subtotal += parseFloat(totalText.replace(/\s/g, '').replace('$', ''));
-        });
-        
-        document.getElementById('subtotal').textContent = subtotal.toLocaleString() + ' $';
-        document.getElementById('total').textContent = subtotal.toLocaleString() + ' $';
+    function formatPrice(price) {
+        // Форматируем число с пробелами для разделения тысяч
+        return Math.round(parseFloat(price)).toLocaleString('ru-RU').replace(/,/g, ' ');
     }
+
+    function updateItemTotal(itemId, total) {
+        const itemElement = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
+        if (itemElement) {
+            const totalElement = itemElement.querySelector('.item-total-price[data-item-id="' + itemId + '"]');
+            if (totalElement) {
+                totalElement.textContent = formatPrice(total) + ' сум';
+            }
+        }
+    }
+
+    async function removeItem(itemId) {
+        if (!confirm('{% trans "Remove item from cart?" %}')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(API_BASE_URL + 'remove_item/?item_id=' + itemId, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': getCsrfToken()
+                }
+            });
+
+            if (response.ok || response.status === 204) {
+                const itemElement = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
+                if (itemElement) {
+                    itemElement.remove();
+                }
+                await updateCartSummary();
+                updateCartIcon();
+                
+                // Если корзина пуста, перезагружаем страницу
+                const remainingItems = document.querySelectorAll('.cart-item');
+                if (remainingItems.length === 0) {
+                    location.reload();
+                }
+            } else {
+                alert('{% trans "Error removing item" %}');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('{% trans "Error removing item" %}');
+        }
+    }
+
+    async function updateCartSummary() {
+        try {
+            const response = await fetch(API_BASE_URL + 'current/', {
+                method: 'GET',
+                headers: {
+                    'X-CSRFToken': getCsrfToken()
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const totalFormatted = formatPrice(data.total);
+                document.getElementById('subtotal').textContent = totalFormatted + ' сум';
+                document.getElementById('total').textContent = totalFormatted + ' сум';
+                document.getElementById('items-count').textContent = data.items_count || 0;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    function updateCartIcon() {
+        // Обновим иконку корзины в header
+        fetch(API_BASE_URL + 'current/')
+            .then(response => response.json())
+            .then(data => {
+                const cartIcon = document.getElementById('cart-icon-count');
+                if (cartIcon) {
+                    cartIcon.textContent = data.items_count || 0;
+                    if (data.items_count > 0) {
+                        cartIcon.style.display = 'flex';
+                    } else {
+                        cartIcon.style.display = 'none';
+                    }
+                }
+            })
+            .catch(error => console.error('Error updating cart icon:', error));
+    }
+
+    function placeOrder() {
+        // Перенаправляем на страницу оформления заказа или показываем форму
+        alert('{% trans "Order placement functionality will be implemented" %}');
+        // TODO: Реализовать оформление заказа
+    }
+
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCartIcon();
+    });
 </script>
 {% endblock %}

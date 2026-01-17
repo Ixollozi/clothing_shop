@@ -6,8 +6,48 @@ from modeltranslation.admin import TabbedTranslationAdmin
 from modeltranslation.translator import translator
 from .models import (
     Category, Product, ProductImage, Cart, CartItem, Order, OrderItem, Partner, Config,
-    StoreConfig, ContactConfig, SocialConfig, HeroConfig, Feature, AboutConfig, SEOConfig, ThemeConfig
+    StoreConfig, ContactConfig, SocialConfig, HeroConfig, Feature, AboutConfig, SEOConfig, ThemeConfig,
+    ProductFeatureConfig
 )
+
+
+class ProductAdminForm(forms.ModelForm):
+    """Кастомная форма для выбора нескольких размеров"""
+    available_sizes_multiple = forms.MultipleChoiceField(
+        choices=Product.SIZE_CHOICES,
+        required=False,
+        label='Доступные размеры',
+        help_text='Выберите один или несколько размеров',
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'sizes-checkboxes'})
+    )
+    
+    class Meta:
+        model = Product
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Скрываем оригинальное поле available_sizes
+        if 'available_sizes' in self.fields:
+            self.fields['available_sizes'].widget = forms.HiddenInput()
+        
+        if self.instance and self.instance.pk:
+            # Если товар существует, загружаем текущие размеры
+            if self.instance.available_sizes:
+                sizes = [s.strip() for s in self.instance.available_sizes.split(',') if s.strip()]
+                self.fields['available_sizes_multiple'].initial = sizes
+        else:
+            # По умолчанию выбран M
+            self.fields['available_sizes_multiple'].initial = ['M']
+    
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        # Сохраняем выбранные размеры через запятую
+        selected_sizes = self.cleaned_data.get('available_sizes_multiple', [])
+        instance.available_sizes = ', '.join(selected_sizes) if selected_sizes else 'M'
+        if commit:
+            instance.save()
+        return instance
 
 # Импортируем переводы перед регистрацией админки
 try:
@@ -66,11 +106,12 @@ class ProductImageInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(TabbedTranslationAdmin):
+    form = ProductAdminForm
     list_display = ['name', 'category', 'price_display', 'old_price_display', 'stock', 'is_active', 'image_preview', 'created_at']
     list_filter = ['category', 'is_active', 'created_at', 'rating']
     search_fields = ['name', 'description', 'available_colors']
     prepopulated_fields = {'slug': ('name',)}
-    readonly_fields = ['created_at', 'updated_at', 'image_preview', 'image_url_preview', 'discount_percent', 'colors_help']
+    readonly_fields = ['created_at', 'updated_at', 'image_preview', 'image_url_preview', 'discount_percent', 'colors_help', 'sizes_help']
     inlines = [ProductImageInline]
     list_editable = ['is_active', 'stock']
     fieldsets = (
@@ -84,7 +125,7 @@ class ProductAdmin(TabbedTranslationAdmin):
             'fields': ('image', 'image_preview', 'image_url', 'image_url_preview')
         }),
         ('Характеристики', {
-            'fields': ('available_sizes', 'available_colors', 'colors_help', 'stock', 'is_active'),
+            'fields': ('available_sizes_multiple', 'sizes_help', 'available_colors', 'colors_help', 'stock', 'is_active'),
             'description': 'Укажите доступные размеры и цвета для товара'
         }),
         ('Рейтинг', {
@@ -95,6 +136,25 @@ class ProductAdmin(TabbedTranslationAdmin):
             'classes': ('collapse',)
         }),
     )
+    
+    def sizes_help(self, obj):
+        """Подсказка о доступных размерах"""
+        sizes_list = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+        html = '<div style="margin-top: 10px; padding: 10px; background: #f5f5f5; border-radius: 4px;">'
+        html += '<strong>Доступные размеры:</strong><br>'
+        html += '<div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 10px;">'
+        for size in sizes_list:
+            html += f'''
+            <div style="display: inline-flex; align-items: center; padding: 5px 10px; background: white; border-radius: 4px; border: 1px solid #ddd;">
+                <span>{size}</span>
+            </div>
+            '''
+        html += '</div>'
+        html += '<p style="margin-top: 10px; margin-bottom: 0; color: #666; font-size: 0.9em;">'
+        html += '💡 <strong>Подсказка:</strong> Выберите один или несколько размеров, используя чекбоксы выше'
+        html += '</p></div>'
+        return mark_safe(html)
+    sizes_help.short_description = 'Подсказка по размерам'
 
     def colors_help(self, obj):
         """Подсказка о доступных цветах"""
@@ -125,12 +185,12 @@ class ProductAdmin(TabbedTranslationAdmin):
     colors_help.short_description = 'Подсказка по цветам'
 
     def price_display(self, obj):
-        return f"${obj.price}"
+        return f"{obj.price:,.0f} сум".replace(',', ' ')
     price_display.short_description = 'Цена'
 
     def old_price_display(self, obj):
         if obj.old_price:
-            return format_html('<span style="text-decoration: line-through; color: #999;">${}</span>', obj.old_price)
+            return format_html('<span style="text-decoration: line-through; color: #999;">{} сум</span>', f"{obj.old_price:,.0f}".replace(',', ' '))
         return "-"
     old_price_display.short_description = 'Старая цена'
 
@@ -193,7 +253,7 @@ class CartAdmin(admin.ModelAdmin):
     items_count_display.short_description = 'Товаров в корзине'
 
     def total_display(self, obj):
-        return f"${obj.total}"
+        return f"{obj.total:,.0f} сум".replace(',', ' ')
     total_display.short_description = 'Итого'
 
 
@@ -205,7 +265,7 @@ class CartItemAdmin(admin.ModelAdmin):
     readonly_fields = ['total_display', 'created_at', 'updated_at']
 
     def total_display(self, obj):
-        return f"${obj.total}"
+        return f"{obj.total:,.0f} сум".replace(',', ' ')
     total_display.short_description = 'Итого'
 
 
@@ -218,7 +278,7 @@ class OrderItemInline(admin.TabularInline):
 
     def total_display(self, obj):
         if obj and obj.pk:
-            return f"${obj.total:.2f}"
+            return f"{obj.total:,.0f} сум".replace(',', ' ')
         return "-"
     total_display.short_description = 'Итого'
 
@@ -255,7 +315,8 @@ class OrderAdmin(admin.ModelAdmin):
     customer_name.short_description = 'Клиент'
 
     def total_display(self, obj):
-        return format_html('<strong style="font-size: 16px; color: #1976d2;">${}</strong>', obj.total)
+        total_formatted = f"{obj.total:,.0f}".replace(',', ' ')
+        return format_html('<strong style="font-size: 16px; color: #1976d2;">{} сум</strong>', total_formatted)
     total_display.short_description = 'Итого'
 
     def status_badge(self, obj):
@@ -287,7 +348,7 @@ class OrderItemAdmin(admin.ModelAdmin):
 
     def total_display(self, obj):
         if obj and obj.pk:
-            return f"${obj.total:.2f}"
+            return f"{obj.total:,.0f} сум".replace(',', ' ')
         return "-"
     total_display.short_description = 'Итого'
 
@@ -449,7 +510,7 @@ class ContactConfigAdmin(TabbedTranslationAdmin):
             'fields': ('phone', 'email', 'is_active')
         }),
         ('Адрес', {
-            'fields': ('address_city', 'address_street', 'address_full')
+            'fields': ('address_city', 'address_street', 'address_full', 'map_url')
         }),
         ('Рабочие часы', {
             'fields': ('working_hours_weekdays', 'working_hours_weekend')
@@ -596,3 +657,31 @@ class ThemeConfigAdmin(admin.ModelAdmin):
             return mark_safe(html)
         return "Сохраните для предпросмотра"
     color_preview.short_description = 'Превью цветов'
+
+
+@admin.register(ProductFeatureConfig)
+class ProductFeatureConfigAdmin(TabbedTranslationAdmin):
+    list_display = ['title', 'icon', 'text', 'order', 'is_active', 'created_at']
+    list_filter = ['is_active', 'created_at']
+    search_fields = ['title', 'text']
+    list_editable = ['order', 'is_active']
+    readonly_fields = ['created_at', 'updated_at', 'icon_preview']
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('title', 'text', 'icon', 'icon_preview', 'order', 'is_active')
+        }),
+        ('Даты', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def icon_preview(self, obj):
+        """Показывает превью иконки"""
+        if obj.icon:
+            return format_html(
+                '<i class="{}" style="font-size: 24px; color: #1976d2;"></i> <span style="margin-left: 10px;">{}</span>',
+                obj.icon, obj.icon
+            )
+        return "Иконка не указана"
+    icon_preview.short_description = 'Превью иконки'

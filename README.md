@@ -49,6 +49,51 @@ python manage.py load_sample_data
 python manage.py runserver
 ```
 
+## Автоматическая очистка старых корзин
+
+Система автоматически удаляет корзины, которые не обновлялись более 30 дней, вместе с их элементами (CartItem).
+
+### Автоматическая очистка работает двумя способами:
+
+1. **При каждом запросе к корзине** (с ограничением частоты - не чаще раза в час)
+2. **Через management команду** (для ручного запуска или настройки cron)
+
+### Ручной запуск очистки:
+
+```bash
+# Проверить, что будет удалено (без фактического удаления)
+python manage.py cleanup_old_carts --dry-run
+
+# Удалить корзины старше 30 дней
+python manage.py cleanup_old_carts
+
+# Удалить корзины старше указанного количества дней
+python manage.py cleanup_old_carts --days 60
+```
+
+### Настройка периодической очистки через cron (Linux/Mac):
+
+Добавьте в crontab для ежедневного запуска в 2:00 ночи:
+
+```bash
+crontab -e
+```
+
+Добавьте строку:
+```
+0 2 * * * cd /path/to/your/project && /path/to/venv/bin/python manage.py cleanup_old_carts
+```
+
+### Настройка периодической очистки через Task Scheduler (Windows):
+
+1. Откройте "Планировщик заданий" (Task Scheduler)
+2. Создайте новое задание
+3. Настройте запуск команды:
+   ```
+   C:\path\to\venv\Scripts\python.exe C:\path\to\project\manage.py cleanup_old_carts
+   ```
+4. Установите расписание (например, ежедневно в 2:00)
+
 API будет доступно по адресу: `http://127.0.0.1:8000/api/`
 
 ## API Endpoints

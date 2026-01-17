@@ -49,7 +49,12 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name='Категория')
     image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name='Основное изображение')
     image_url = models.URLField(blank=True, null=True, verbose_name='URL изображения')
-    available_sizes = models.CharField(max_length=50, choices=SIZE_CHOICES, default='M', verbose_name='Доступные размеры')
+    available_sizes = models.CharField(
+        max_length=200, 
+        verbose_name='Доступные размеры',
+        help_text='Доступные размеры: XS, S, M, L, XL, XXL. Указывайте через запятую, например: "S, M, L, XL"',
+        default='M'
+    )
     available_colors = models.CharField(
         max_length=200, 
         verbose_name='Доступные цвета',
@@ -300,6 +305,7 @@ class ContactConfig(models.Model):
     address_city = models.CharField(max_length=100, default='Tashkent', verbose_name='Город')
     address_street = models.CharField(max_length=200, default='Example Street, 1', verbose_name='Улица')
     address_full = models.CharField(max_length=300, default='Tashkent, Example Street, 1', verbose_name='Полный адрес')
+    map_url = models.URLField(max_length=500, blank=True, null=True, verbose_name='URL Яндекс карты', help_text='Вставьте ссылку на Яндекс карту, например: https://yandex.uz/maps/-/CLhZvD6F')
     working_hours_weekdays = models.CharField(max_length=50, default='9:00 - 20:00', verbose_name='Рабочие часы (будни)')
     working_hours_weekend = models.CharField(max_length=50, default='10:00 - 18:00', verbose_name='Рабочие часы (выходные)')
     is_active = models.BooleanField(default=True, verbose_name='Активна')
@@ -316,6 +322,25 @@ class ContactConfig(models.Model):
         if self.is_active:
             ContactConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
         super().save(*args, **kwargs)
+
+
+class ProductFeatureConfig(models.Model):
+    """Конфигурация features товара (отображаются на странице товара)"""
+    title = models.CharField(max_length=200, verbose_name='Название')
+    icon = models.CharField(max_length=100, default='fas fa-star', verbose_name='Иконка (Font Awesome класс)', help_text='Например: fas fa-shipping-fast')
+    text = models.CharField(max_length=200, verbose_name='Текст')
+    order = models.PositiveIntegerField(default=0, verbose_name='Порядок сортировки')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Feature товара'
+        verbose_name_plural = 'Features товаров'
+        ordering = ['order', 'title']
+
+    def __str__(self):
+        return self.title
 
 
 class SocialConfig(models.Model):

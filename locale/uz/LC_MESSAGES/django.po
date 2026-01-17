@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-08 01:33+0500\n"
+"POT-Creation-Date: 2026-01-17 23:56+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,217 +17,825 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "Django site admin"
-msgstr ""
-
-msgid "Fashion Store - Online Clothing Store"
-msgstr "Fashion Store - Onlayn kiyim do'koni"
-
-msgid "Home"
-msgstr "Bosh sahifa"
-
-msgid "Catalog"
-msgstr "Katalog"
-
-msgid "About"
-msgstr "Biz haqimizda"
-
-msgid "Contacts"
-msgstr "Kontaktlar"
-
-msgid ""
-"Your reliable partner in the world of fashion. Quality clothing at "
-"affordable prices."
-msgstr ""
-
-msgid "For Customers"
-msgstr "Mijozlar uchun"
-
-msgid "Delivery and Payment"
-msgstr "Yetkazib berish va to'lov"
-
-msgid "Product Return"
-msgstr "Mahsulotni qaytarish"
-
-msgid "Size Chart"
-msgstr "O'lchamlar jadvali"
-
-msgid "FAQ"
-msgstr "Ko'p beriladigan savollar"
-
-msgid "About Company"
-msgstr "Kompaniya haqida"
-
+#: .\templates\about.html:4 .\templates\about.html:10 .\templates\about.html:12
+#: .\templates\about.html:27 .\templates\base.html:102
 msgid "About Us"
 msgstr "Biz haqimizda"
 
+#: .\templates\about.html:12 .\templates\base.html:29 .\templates\cart.html:14
+#: .\templates\catalog.html:14 .\templates\contact.html:13
+#: .\templates\delivery.html:12 .\templates\product.html:15
+msgid "Home"
+msgstr "Bosh sahifa"
+
+#: .\templates\about.html:22
+msgid "Welcome to Fashion Store"
+msgstr ""
+
+#: .\templates\about.html:23
+msgid ""
+"Fashion Store is a modern online clothing store that offers a wide range of "
+"quality and stylish clothing for the whole family. We have been in the "
+"market for over 10 years and during this time we have gained the trust of "
+"thousands of customers throughout Uzbekistan."
+msgstr ""
+
+#: .\templates\about.html:31
+msgid "Our Mission"
+msgstr ""
+
+#: .\templates\about.html:32
+msgid ""
+"We strive to make quality and fashionable clothing accessible to everyone. "
+"Our goal is to help you look stylish and feel confident by offering the best "
+"products at fair prices."
+msgstr ""
+
+#: .\templates\about.html:35
+msgid "Our Vision"
+msgstr ""
+
+#: .\templates\about.html:36
+msgid ""
+"Fashion Store was founded in 2014 with a simple idea - to make quality "
+"clothing accessible to everyone. Starting with a small store, we have grown "
+"into a large online store serving customers throughout the country."
+msgstr ""
+
+#: .\templates\about.html:38
+#, fuzzy
+#| msgid "Our Partners"
+msgid "Our Values"
+msgstr "Bizning hamkorlarimiz"
+
+#: .\templates\about.html:47
+msgid "Quality"
+msgstr ""
+
+#: .\templates\about.html:47
+msgid "we guarantee high quality of all products"
+msgstr ""
+
+#: .\templates\about.html:48
+msgid "Honesty"
+msgstr ""
+
+#: .\templates\about.html:48
+msgid "transparent prices and honest conditions"
+msgstr ""
+
+#: .\templates\about.html:49
+#, fuzzy
+#| msgid "For Customers"
+msgid "Customer Care"
+msgstr "Mijozlar uchun"
+
+#: .\templates\about.html:49
+msgid "we are always ready to help and answer questions"
+msgstr ""
+
+#: .\templates\about.html:50
+msgid "Innovation"
+msgstr ""
+
+#: .\templates\about.html:50
+msgid "we constantly improve service and expand capabilities"
+msgstr ""
+
+#: .\templates\about.html:58
+msgid "Years in the market"
+msgstr ""
+
+#: .\templates\about.html:62
+#, fuzzy
+#| msgid "Product Catalog"
+msgid "Products in catalog"
+msgstr "Mahsulotlar katalogi"
+
+#: .\templates\about.html:66
+msgid "Satisfied customers"
+msgstr ""
+
+#: .\templates\about.html:70
+#, fuzzy
+#| msgid "For Customers"
+msgid "Customer support"
+msgstr "Mijozlar uchun"
+
+#: .\templates\admin\base_site.html:4
+msgid "Django site admin"
+msgstr ""
+
+#: .\templates\base.html:30 .\templates\catalog.html:6
+#: .\templates\catalog.html:14 .\templates\product.html:16
+msgid "Catalog"
+msgstr "Katalog"
+
+#: .\templates\base.html:31
+msgid "About"
+msgstr "Biz haqimizda"
+
+#: .\templates\base.html:32 .\templates\base.html:104 .\templates\base.html:109
+#: .\templates\contact.html:5 .\templates\contact.html:11
+#: .\templates\contact.html:13
+msgid "Contacts"
+msgstr "Kontaktlar"
+
+#: .\templates\base.html:91
+msgid "For Customers"
+msgstr "Mijozlar uchun"
+
+#: .\templates\base.html:93 .\templates\delivery.html:4
+#: .\templates\delivery.html:10 .\templates\delivery.html:12
+msgid "Delivery and Payment"
+msgstr "Yetkazib berish va to'lov"
+
+#: .\templates\base.html:94 .\templates\delivery.html:122
+msgid "Product Return"
+msgstr "Mahsulotni qaytarish"
+
+#: .\templates\base.html:95 .\templates\product.html:97
+msgid "Size Chart"
+msgstr "O'lchamlar jadvali"
+
+#: .\templates\base.html:96
+msgid "FAQ"
+msgstr "Ko'p beriladigan savollar"
+
+#: .\templates\base.html:100
+msgid "About Company"
+msgstr "Kompaniya haqida"
+
+#: .\templates\base.html:103
 msgid "Careers"
 msgstr "Vakansiyalar"
 
+#: .\templates\base.html:105
 msgid "Partners"
 msgstr "Hamkorlar"
 
-msgid "Tashkent, Example Street, 1"
-msgstr "Toshkent, Namuna ko'chasi, 1"
+#: .\templates\cart.html:6 .\templates\cart.html:12 .\templates\cart.html:14
+msgid "Shopping Cart"
+msgstr "Savatcha"
 
-msgid "Product Catalog"
-msgstr "Mahsulotlar katalogi"
-
-msgid "Filters"
-msgstr "Filtrlar"
-
-msgid "Category"
-msgstr "Kategoriya"
-
-msgid "Men's Clothing"
-msgstr "Erkaklar kiyimi"
-
-msgid "Women's Clothing"
-msgstr "Ayollar kiyimi"
-
-msgid "Kids' Clothing"
-msgstr "Bolalar kiyimi"
-
-msgid "Accessories"
-msgstr "Aksessuarlar"
-
-msgid "Price"
-msgstr "Narx"
-
+#: .\templates\cart.html:40 .\templates\catalog.html:62
+#: .\templates\product.html:91
 msgid "Size"
 msgstr "O'lcham"
 
+#: .\templates\cart.html:42 .\templates\catalog.html:73
+#: .\templates\product.html:104
 msgid "Color"
 msgstr "Rang"
 
+#: .\templates\cart.html:61
+msgid "Your cart is empty"
+msgstr "Sizning savatchangiz bo'sh"
+
+#: .\templates\cart.html:62 .\templates\cart.html:88
+msgid "Continue Shopping"
+msgstr "Xaridni davom ettirish"
+
+#: .\templates\cart.html:69
+msgid "Total"
+msgstr "Jami"
+
+#: .\templates\cart.html:71
+msgid "Products"
+msgstr "Mahsulotlar"
+
+#: .\templates\cart.html:71 .\templates\product.html:125
+#: .\templates\product.html:190
+msgid "pcs"
+msgstr "dona"
+
+#: .\templates\cart.html:75 .\templates\contact.html:105
+msgid "Delivery"
+msgstr "Yetkazib berish"
+
+#: .\templates\cart.html:76 .\templates\delivery.html:55
+msgid "Free"
+msgstr "Bepul"
+
+#: .\templates\cart.html:79
+msgid "To pay"
+msgstr "To'lash"
+
+#: .\templates\cart.html:84
+msgid "Place Order"
+msgstr "Buyurtma berish"
+
+#: .\templates\cart.html:156 .\templates\cart.html:160
+msgid "Error updating quantity"
+msgstr "Miqdorni yangilashda xatolik"
+
+#: .\templates\cart.html:180
+msgid "Remove item from cart?"
+msgstr "Savatchadan mahsulotni olib tashlash?"
+
+#: .\templates\cart.html:206 .\templates\cart.html:210
+msgid "Error removing item"
+msgstr "Mahsulotni olib tashlashda xatolik"
+
+#: .\templates\cart.html:255
+msgid "Order placement functionality will be implemented"
+msgstr "Buyurtma berish funksiyasi keyinroq qo'shiladi"
+
+#: .\templates\catalog.html:12
+msgid "Product Catalog"
+msgstr "Mahsulotlar katalogi"
+
+#: .\templates\catalog.html:25
+msgid "Filters"
+msgstr "Filtrlar"
+
+#: .\templates\catalog.html:28 .\templates\product.html:171
+msgid "Category"
+msgstr "Kategoriya"
+
+#: .\templates\catalog.html:37
+msgid "Men's Clothing"
+msgstr "Erkaklar kiyimi"
+
+#: .\templates\catalog.html:40
+msgid "Women's Clothing"
+msgstr "Ayollar kiyimi"
+
+#: .\templates\catalog.html:43
+msgid "Kids' Clothing"
+msgstr "Bolalar kiyimi"
+
+#: .\templates\catalog.html:46
+msgid "Accessories"
+msgstr "Aksessuarlar"
+
+#: .\templates\catalog.html:52
+msgid "Price"
+msgstr "Narx"
+
+#: .\templates\catalog.html:84
 msgid "Apply Filters"
 msgstr "Filtrlarni qo'llash"
 
+#: .\templates\catalog.html:85
 msgid "Reset"
 msgstr "Tozalash"
 
+#: .\templates\catalog.html:91
 msgid "Products found"
 msgstr "Topilgan mahsulotlar"
 
+#: .\templates\catalog.html:93
 msgid "Sort by"
 msgstr "Saralash"
 
+#: .\templates\catalog.html:95
 msgid "By popularity"
 msgstr "Mashhurligi bo'yicha"
 
+#: .\templates\catalog.html:96
 msgid "Price: low to high"
 msgstr "Narx: pastdan yuqoriga"
 
+#: .\templates\catalog.html:97
 msgid "Price: high to low"
 msgstr "Narx: yuqoridan pastga"
 
+#: .\templates\catalog.html:98
 msgid "By newest"
 msgstr "Yangi bo'yicha"
 
-msgid "T-shirt"
-msgstr "Futbolka"
-
+#: .\templates\catalog.html:123 .\templates\catalog.html:125
+#: .\templates\index.html:69 .\templates\index.html:71
+#: .\templates\product.html:235
 msgid "Quick View"
 msgstr "Tezkor ko'rish"
 
-msgid "Classic T-shirt"
-msgstr "Klassik futbolka"
-
+#: .\templates\catalog.html:142 .\templates\catalog.html:144
+#: .\templates\index.html:88 .\templates\index.html:90
+#: .\templates\product.html:133 .\templates\product.html:135
+#: .\templates\product.html:249 .\templates\product.html:251
 msgid "Add to Cart"
 msgstr "Savatchaga qo'shish"
 
-msgid "Jeans"
-msgstr "Jinsi"
+#: .\templates\catalog.html:150
+#, fuzzy
+#| msgid "Products found"
+msgid "No products found"
+msgstr "Topilgan mahsulotlar"
 
-msgid "Classic Jeans"
-msgstr "Klassik jinsi"
+#: .\templates\contact.html:24
+#, fuzzy
+#| msgid "Contacts"
+msgid "Contact Us"
+msgstr "Kontaktlar"
 
-msgid "Dress"
+#: .\templates\contact.html:25
+msgid ""
+"We are always happy to answer your questions and help you choose products. "
+"Contact us in any convenient way."
+msgstr ""
+
+#: .\templates\contact.html:32 .\templates\contact.html:96
+msgid "Phone"
+msgstr ""
+
+#: .\templates\contact.html:34
+msgid "Mon-Sun: 9:00 - 21:00"
+msgstr ""
+
+#: .\templates\contact.html:45
+msgid "We will respond within 24 hours"
+msgstr ""
+
+#: .\templates\contact.html:54 .\templates\delivery.html:57
+#, fuzzy
+#| msgid "Dress"
+msgid "Address"
 msgstr "Ko'ylak"
 
-msgid "Elegant Dress"
-msgstr "Zarif ko'ylak"
+#: .\templates\contact.html:55 .\templates\contact.html:137
+#: .\templates\delivery.html:57
+msgid "Tashkent, Example Street, 1"
+msgstr "Toshkent, Namuna ko'chasi, 1"
 
-msgid "Jacket"
-msgstr "Kurtka"
+#: .\templates\contact.html:56
+msgid "Mon-Fri: 10:00 - 19:00"
+msgstr ""
 
-msgid "Demiseason Jacket"
-msgstr "Mavsumlararo kurtka"
+#: .\templates\contact.html:65
+msgid "Messengers"
+msgstr ""
 
-msgid "Shirt"
-msgstr "Ko'ylak"
+#: .\templates\contact.html:72
+msgid "We are on social networks"
+msgstr ""
 
-msgid "Office Shirt"
-msgstr "Ofis ko'ylagi"
+#: .\templates\contact.html:85
+msgid "Write to Us"
+msgstr ""
 
-msgid "Sweatshirt"
-msgstr "Svitshot"
+#: .\templates\contact.html:88
+msgid "Name"
+msgstr ""
 
-msgid "Cozy Sweatshirt"
-msgstr "Qulay svitshot"
+#: .\templates\contact.html:100
+msgid "Subject"
+msgstr ""
 
-msgid "Skirt"
-msgstr "Yubka"
+#: .\templates\contact.html:102
+msgid "Choose a topic"
+msgstr ""
 
-msgid "Midi Skirt"
-msgstr "Midi yubka"
+#: .\templates\contact.html:103
+msgid "Order question"
+msgstr ""
 
-msgid "Pants"
-msgstr "Shim"
+#: .\templates\contact.html:104
+#, fuzzy
+#| msgid "Product Return"
+msgid "Product question"
+msgstr "Mahsulotni qaytarish"
 
-msgid "Classic Pants"
-msgstr "Klassik shim"
+#: .\templates\contact.html:106
+#, fuzzy
+#| msgid "Easy Returns"
+msgid "Return"
+msgstr "Oson qaytarish"
 
+#: .\templates\contact.html:107
+msgid "Other"
+msgstr ""
+
+#: .\templates\contact.html:111
+msgid "Message"
+msgstr ""
+
+#: .\templates\contact.html:114
+msgid "Send Message"
+msgstr ""
+
+#: .\templates\contact.html:121
+msgid "How to Find Us"
+msgstr ""
+
+#: .\templates\contact.html:136
+msgid "Map will be here"
+msgstr ""
+
+#: .\templates\contact.html:149
+msgid "Thank you for your message! We will contact you soon."
+msgstr ""
+
+#: .\templates\delivery.html:21
+#, fuzzy
+#| msgid "Delivery and Payment"
+msgid "Delivery Methods"
+msgstr "Yetkazib berish va to'lov"
+
+#: .\templates\delivery.html:28
+msgid "Courier delivery in Tashkent"
+msgstr ""
+
+#: .\templates\delivery.html:29 .\templates\delivery.html:42
+#: .\templates\delivery.html:55
+msgid "Cost"
+msgstr ""
+
+#: .\templates\delivery.html:29 .\templates\delivery.html:42
+msgid "free for orders over"
+msgstr ""
+
+#: .\templates\delivery.html:30 .\templates\delivery.html:43
+#, fuzzy
+#| msgid "Delivery and Payment"
+msgid "Delivery time"
+msgstr "Yetkazib berish va to'lov"
+
+#: .\templates\delivery.html:30 .\templates\delivery.html:56
+msgid "1-2 business days"
+msgstr ""
+
+#: .\templates\delivery.html:31
+msgid "Delivery hours"
+msgstr ""
+
+#: .\templates\delivery.html:31
+msgid "from 10:00 to 22:00"
+msgstr ""
+
+#: .\templates\delivery.html:32
+msgid ""
+"Delivery is carried out by courier to the specified address. You can choose "
+"a convenient delivery time when placing an order."
+msgstr ""
+
+#: .\templates\delivery.html:41
+#, fuzzy
+#| msgid "Delivery throughout Uzbekistan in 2-5 days"
+msgid "Delivery throughout Uzbekistan"
+msgstr "O'zbekiston bo'ylab 2-5 kun ichida yetkazib berish"
+
+#: .\templates\delivery.html:42
+msgid "from"
+msgstr ""
+
+#: .\templates\delivery.html:43
+msgid "3-7 business days"
+msgstr ""
+
+#: .\templates\delivery.html:44
+msgid "Delivery services"
+msgstr ""
+
+#: .\templates\delivery.html:44
+msgid "CDEK, Uzbekistan Post, Boxberry"
+msgstr ""
+
+#: .\templates\delivery.html:45
+msgid ""
+"Delivery is carried out to pick-up points or post offices. You will receive "
+"a tracking number to track your package."
+msgstr ""
+
+#: .\templates\delivery.html:54
+msgid "Pickup"
+msgstr ""
+
+#: .\templates\delivery.html:56
+msgid "Ready time"
+msgstr ""
+
+#: .\templates\delivery.html:58
+msgid ""
+"You can pick up your order yourself from our office. When receiving, you "
+"must present an identity document."
+msgstr ""
+
+#: .\templates\delivery.html:62
+msgid "Payment Methods"
+msgstr ""
+
+#: .\templates\delivery.html:69
+msgid "Online bank card"
+msgstr ""
+
+#: .\templates\delivery.html:70
+msgid ""
+"Payment by Visa, MasterCard, MIR cards through a secure payment gateway. "
+"Secure one-click payment."
+msgstr ""
+
+#: .\templates\delivery.html:77
+#, fuzzy
+#| msgid "Fast Delivery"
+msgid "Cash on delivery"
+msgstr "Tezkor yetkazib berish"
+
+#: .\templates\delivery.html:78
+msgid ""
+"Cash payment to the courier upon delivery or at the pickup point. Available "
+"for orders up to 5 000 000 сум."
+msgstr ""
+
+#: .\templates\delivery.html:85
+msgid "Electronic wallets"
+msgstr ""
+
+#: .\templates\delivery.html:86
+msgid ""
+"Payment through payment systems: YooMoney, WebMoney, QIWI and other "
+"electronic payment systems."
+msgstr ""
+
+#: .\templates\delivery.html:93
+msgid "Bank transfer"
+msgstr ""
+
+#: .\templates\delivery.html:94
+msgid ""
+"Payment by details for legal entities. Invoice is issued after order "
+"confirmation."
+msgstr ""
+
+#: .\templates\delivery.html:98
+msgid "Delivery Terms"
+msgstr ""
+
+#: .\templates\delivery.html:102
+msgid "Minimum order amount — 50 000 сум"
+msgstr ""
+
+#: .\templates\delivery.html:106
+msgid ""
+"Free delivery for orders over 300 000 сум (in Tashkent) and over 500 000 сум "
+"(throughout Uzbekistan)"
+msgstr ""
+
+#: .\templates\delivery.html:110
+msgid "Possibility of trying on before payment (with courier delivery)"
+msgstr ""
+
+#: .\templates\delivery.html:114
+msgid "Order status tracking in personal account"
+msgstr ""
+
+#: .\templates\delivery.html:118
+msgid "Order status notifications via SMS and email"
+msgstr ""
+
+#: .\templates\delivery.html:124
+msgid "You can return the product within 14 days from the date of receipt, if:"
+msgstr ""
+
+#: .\templates\delivery.html:126
+msgid "The product has not been used"
+msgstr ""
+
+#: .\templates\delivery.html:127
+msgid ""
+"The product appearance, consumer properties, seals, factory labels are "
+"preserved"
+msgstr ""
+
+#: .\templates\delivery.html:128
+msgid "There are documents confirming the purchase"
+msgstr ""
+
+#: .\templates\delivery.html:130
+msgid ""
+"Return of goods of proper quality is possible only if its product "
+"appearance, consumer properties, as well as a document confirming the fact "
+"and conditions of purchase of the specified product are preserved."
+msgstr ""
+
+#: .\templates\index.html:6
+msgid "Fashion Store - Online Clothing Store"
+msgstr "Fashion Store - Onlayn kiyim do'koni"
+
+#: .\templates\index.html:12
 msgid "New Collection"
 msgstr "Yangi kolleksiya"
 
+#: .\templates\index.html:13
 msgid "Discover style and comfort"
 msgstr "Uslub va qulaylikni kashf eting"
 
+#: .\templates\index.html:14
 msgid "View Catalog"
 msgstr "Katalogni ko'rish"
 
+#: .\templates\index.html:22
 msgid "Categories"
 msgstr "Kategoriyalar"
 
-msgid "Men\\"
-msgstr ""
-
-msgid "Women\\"
-msgstr ""
-
-msgid "Kids\\"
-msgstr ""
-
+#: .\templates\index.html:49
 msgid "Popular Products"
 msgstr "Mashhur mahsulotlar"
 
+#: .\templates\index.html:121
 msgid "Fast Delivery"
 msgstr "Tezkor yetkazib berish"
 
+#: .\templates\index.html:122
 msgid "Delivery throughout Uzbekistan in 2-5 days"
 msgstr "O'zbekiston bo'ylab 2-5 kun ichida yetkazib berish"
 
+#: .\templates\index.html:126
 msgid "Easy Returns"
 msgstr "Oson qaytarish"
 
+#: .\templates\index.html:127
 msgid "Product return within 14 days"
 msgstr "14 kun ichida mahsulotni qaytarish"
 
+#: .\templates\index.html:131
 msgid "Quality Guarantee"
 msgstr "Sifat kafolati"
 
+#: .\templates\index.html:132
 msgid "Only original products"
 msgstr "Faqat original mahsulotlar"
 
+#: .\templates\index.html:136
 msgid "24/7 Support"
 msgstr "24/7 qo'llab-quvvatlash"
 
+#: .\templates\index.html:137
 msgid "Our support service is always available"
 msgstr "Bizning qo'llab-quvvatlash xizmatingiz doim mavjud"
 
+#: .\templates\index.html:148
 msgid "Our Partners"
 msgstr "Bizning hamkorlarimiz"
 
+#: .\templates\index.html:149
 msgid "We cooperate with leading brands and suppliers"
 msgstr "Biz etakchi brendlar va yetkazib beruvchilar bilan hamkorlik qilamiz"
+
+#: .\templates\product.html:7 .\templates\product.html:13
+#: .\templates\product.html:18
+#, fuzzy
+#| msgid "Product Return"
+msgid "Product"
+msgstr "Mahsulot"
+
+#: .\templates\product.html:42
+msgid "View"
+msgstr "Ko'rish"
+
+#: .\templates\product.html:71 .\templates\product.html:199
+msgid "reviews"
+msgstr "sharhlar"
+
+#: .\templates\product.html:117
+msgid "Quantity"
+msgstr "Miqdor"
+
+#: .\templates\product.html:125
+msgid "In stock"
+msgstr "Omborda"
+
+#: .\templates\product.html:156
+msgid "Description"
+msgstr "Tavsif"
+
+#: .\templates\product.html:157 .\templates\product.html:167
+msgid "Specifications"
+msgstr "Xususiyatlar"
+
+#: .\templates\product.html:158
+msgid "Reviews"
+msgstr "Sharhlar"
+
+#: .\templates\product.html:162
+msgid "Product Description"
+msgstr "Mahsulot tavsifi"
+
+#: .\templates\product.html:177
+msgid "Available Colors"
+msgstr "Mavjud ranglar"
+
+#: .\templates\product.html:183
+msgid "Available Sizes"
+msgstr "Mavjud o'lchamlar"
+
+#: .\templates\product.html:189
+msgid "Stock"
+msgstr "Omborda"
+
+#: .\templates\product.html:197
+msgid "Customer Reviews"
+msgstr "Mijozlar sharhlari"
+
+#: .\templates\product.html:199
+msgid "Average rating"
+msgstr "O'rtacha baho"
+
+#: .\templates\product.html:202
+msgid "No reviews yet. Be the first to review this product!"
+msgstr "Hali sharhlar yo'q. Bu mahsulot haqida birinchi sharhni siz qoldiring!"
+
+#: .\templates\product.html:208
+msgid "Product not found"
+msgstr "Mahsulot topilmadi"
+
+#: .\templates\product.html:209
+msgid "The product you are looking for does not exist or has been removed."
+msgstr "Qidirayotgan mahsulotingiz mavjud emas yoki o'chirilgan."
+
+#: .\templates\product.html:210
+msgid "Back to Catalog"
+msgstr "Katalogga qaytish"
+
+#: .\templates\product.html:220
+msgid "Similar Products"
+msgstr "O'xshash mahsulotlar"
+
+#: .\templates\product.html:341
+msgid ""
+"Error: Product ID is not specified. This product cannot be added to cart."
+msgstr "Xatolik: Mahsulot ID ko'rsatilmagan. Bu mahsulot savatga qo'shilmaydi."
+
+#: .\templates\product.html:347
+msgid "Error: event not found"
+msgstr "Xatolik: voqea topilmadi"
+
+#: .\templates\product.html:354
+msgid "Adding..."
+msgstr "Qo'shilmoqda..."
+
+#: .\templates\product.html:366
+msgid "CSRF token not found. Please refresh the page."
+msgstr "CSRF token topilmadi. Iltimos, sahifani yangilang."
+
+#: .\templates\product.html:393
+msgid "Added!"
+msgstr "Qo'shildi!"
+
+#: .\templates\product.html:408 .\templates\product.html:420
+msgid "Error"
+msgstr "Xatolik"
+
+#: .\templates\product.html:414
+msgid "Failed to add product to cart"
+msgstr "Mahsulotni savatga qo'shib bo'lmadi"
+
+#: .\templates\product.html:422
+msgid "Failed to add product to cart. Please refresh the page and try again."
+msgstr "Mahsulotni savatga qo'shib bo'lmadi. Iltimos, sahifani yangilang va qayta urinib ko'ring."
+
+#, fuzzy
+#~| msgid "Product return within 14 days"
+#~ msgid "Return within 14 days"
+#~ msgstr "14 kun ichida mahsulotni qaytarish"
+
+#, fuzzy
+#~| msgid "Quality Guarantee"
+#~ msgid "Quality guarantee"
+#~ msgstr "Sifat kafolati"
+
+#~ msgid "T-shirt"
+#~ msgstr "Futbolka"
+
+#~ msgid "Classic T-shirt"
+#~ msgstr "Klassik futbolka"
+
+#~ msgid "Jeans"
+#~ msgstr "Jinsi"
+
+#~ msgid "Classic Jeans"
+#~ msgstr "Klassik jinsi"
+
+#~ msgid "Elegant Dress"
+#~ msgstr "Zarif ko'ylak"
+
+#~ msgid "Jacket"
+#~ msgstr "Kurtka"
+
+#~ msgid "Demiseason Jacket"
+#~ msgstr "Mavsumlararo kurtka"
+
+#~ msgid "Shirt"
+#~ msgstr "Ko'ylak"
+
+#~ msgid "Office Shirt"
+#~ msgstr "Ofis ko'ylagi"
+
+#~ msgid "Sweatshirt"
+#~ msgstr "Svitshot"
+
+#~ msgid "Cozy Sweatshirt"
+#~ msgstr "Qulay svitshot"
+
+#~ msgid "Skirt"
+#~ msgstr "Yubka"
+
+#~ msgid "Midi Skirt"
+#~ msgstr "Midi yubka"
+
+#~ msgid "Pants"
+#~ msgstr "Shim"
+
+#~ msgid "Classic Pants"
+#~ msgstr "Klassik shim"

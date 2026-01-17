@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <title>{% block title %}{{ store_title }}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -32,6 +33,10 @@
                 </nav>
                 <div class="header-icons">
                     <a href="#" class="icon-link"><i class="fas fa-search"></i></a>
+                    <a href="{% url 'cart' %}" class="icon-link cart-link" style="position: relative;">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-icon-count" class="cart-count" style="display: none;">0</span>
+                    </a>
                     <div class="language-switcher">
                         <button class="language-btn" id="languageBtn">
                             <i class="fas fa-globe"></i>
@@ -115,6 +120,205 @@
     </footer>
 
     <script src="{% static 'script.js' %}"></script>
+    <script>
+        console.log('=== Cart script loading ===');
+        
+        // Общие функции для работы с корзиной
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function getCsrfToken() {
+            // Сначала пытаемся получить из cookie
+            let token = getCookie('csrftoken');
+            if (!token) {
+                // Если нет в cookie, берем из мета-тега
+                const metaTag = document.querySelector('meta[name="csrf-token"]');
+                if (metaTag) {
+                    token = metaTag.getAttribute('content');
+                }
+            }
+            return token;
+        }
+
+        function updateCartIcon() {
+            fetch('/api/cart/current/')
+                .then(response => response.json())
+                .then(data => {
+                    const cartIcon = document.getElementById('cart-icon-count');
+                    if (cartIcon) {
+                        const count = data.items_count || 0;
+                        cartIcon.textContent = count;
+                        if (count > 0) {
+                            cartIcon.style.display = 'flex';
+                        } else {
+                            cartIcon.style.display = 'none';
+                        }
+                    }
+                })
+                .catch(error => console.error('Error updating cart icon:', error));
+        }
+
+        // Глобальная функция для добавления в корзину
+        window.addToCart = async function(event, productId, productName) {
+            console.log('=== addToCart FUNCTION CALLED ===');
+            console.log('addToCart called with:', { productId, productName, event });
+            
+            if (!productId || productId === 'None' || productId === '') {
+                console.error('Product ID is missing or invalid:', productId);
+                alert('Ошибка: ID товара не указан. Этот товар не может быть добавлен в корзину.');
+                return;
+            }
+            
+            if (!event || !event.target) {
+                console.error('Event is missing or invalid');
+                alert('Ошибка: событие не найдено');
+                return;
+            }
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.disabled = true;
+            button.textContent = 'Добавление...';
+
+            try {
+                const csrftoken = getCsrfToken();
+                console.log('CSRF Token:', csrftoken ? 'Found' : 'Not found');
+                
+                if (!csrftoken) {
+                    throw new Error('CSRF token not found. Please refresh the page.');
+                }
+
+                const requestData = {
+                    product_id: parseInt(productId),
+                    quantity: 1,
+                    size: '',
+                    color: ''
+                };
+                
+                console.log('Sending request to /api/cart/add_item/', requestData);
+
+                const response = await fetch('/api/cart/add_item/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(requestData)
+                });
+
+                console.log('Response status:', response.status, response.statusText);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Item added successfully:', data);
+                    button.textContent = 'Добавлено!';
+                    button.style.backgroundColor = '#2ecc71';
+                    
+                    // Обновляем иконку корзины
+                    updateCartIcon();
+                    
+                    // Возвращаем исходный текст через 2 секунды
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.backgroundColor = '';
+                        button.disabled = false;
+                    }, 2000);
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error('Failed to add to cart:', response.status, errorData);
+                    let errorMessage = `Ошибка ${response.status}: `;
+                    if (errorData.detail) {
+                        errorMessage += errorData.detail;
+                    } else if (errorData.error) {
+                        errorMessage += errorData.error;
+                    } else {
+                        errorMessage += 'Не удалось добавить товар в корзину';
+                    }
+                    throw new Error(errorMessage);
+                }
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+                button.textContent = 'Ошибка';
+                button.style.backgroundColor = '#e74c3c';
+                alert(error.message || 'Не удалось добавить товар в корзину. Пожалуйста, обновите страницу и попробуйте снова.');
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.backgroundColor = '';
+                    button.disabled = false;
+                }, 2000);
+            }
+        }
+
+        // Обновление иконки корзины при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartIcon();
+            
+            // Проверяем, что функция доступна
+            console.log('addToCart function available:', typeof window.addToCart);
+            
+            // Добавляем обработчики событий для всех кнопок "Добавить в корзину"
+            const addToCartButtons = document.querySelectorAll('.btn-add-cart, .btn-primary.btn-large');
+            console.log('Found buttons:', addToCartButtons.length);
+            
+            addToCartButtons.forEach((button, index) => {
+                // Пропускаем disabled кнопки
+                if (button.disabled) {
+                    console.log(`Button ${index} is disabled`);
+                    return;
+                }
+                
+                // Получаем productId из data-атрибута
+                let productId = button.getAttribute('data-product-id');
+                let productName = button.getAttribute('data-product-name');
+                const useProductForm = button.getAttribute('data-use-product-form') === 'true';
+                
+                console.log(`Button ${index}: productId=${productId}, productName=${productName}, useProductForm=${useProductForm}`);
+                
+                if (productId && productId !== 'None' && productId !== '') {
+                    // Удаляем старый onclick если есть
+                    button.removeAttribute('onclick');
+                    
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        console.log('=== BUTTON CLICKED ===');
+                        console.log('Button clicked via addEventListener, productId:', productId);
+                        
+                        if (useProductForm && typeof window.addToCartFromProduct === 'function') {
+                            console.log('Using addToCartFromProduct');
+                            window.addToCartFromProduct(e, productId, productName || '');
+                        } else if (typeof window.addToCart === 'function') {
+                            console.log('Using addToCart');
+                            window.addToCart(e, productId, productName || '');
+                        } else {
+                            console.error('Neither addToCart nor addToCartFromProduct is available');
+                            alert('Ошибка: функция добавления в корзину не загружена. Пожалуйста, обновите страницу.');
+                        }
+                    });
+                    
+                    console.log(`Event listener added to button ${index}`);
+                } else {
+                    console.warn(`Button ${index} has no valid productId:`, productId);
+                }
+            });
+        });
+        
+        // Также делаем функцию доступной сразу (до DOMContentLoaded)
+        console.log('Cart functions initialized');
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

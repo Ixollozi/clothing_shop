@@ -1,5 +1,7 @@
 {% extends "admin/index.html" %}
 {% load static %}
+{% load humanize %}
+{% load translation_tags %}
 
 {% block content %}
 <div class="dashboard-container">
@@ -118,7 +120,7 @@
                         {% for product in latest_products %}
                         <li class="latest-list-item-photo">
                             <a href="{% url 'admin:store_product_change' product.id %}">
-                                {{ product.name }} - ${{ product.price }}
+                                {{ product.name }} - {{ product.price|format_price }} сум
                             </a>
                         </li>
                         {% empty %}
@@ -187,8 +189,8 @@
                 </div>
                 <div class="info-card-body-photo">
                     <div class="revenue-display-photo">
-                        <span class="revenue-value-photo">{{ total_revenue|default:0 }}</span>
-                        <span class="revenue-currency-photo">$</span>
+                        <span class="revenue-value-photo">{{ total_revenue|default:0|format_price }}</span>
+                        <span class="revenue-currency-photo"> сум</span>
                     </div>
                 </div>
             </div>
