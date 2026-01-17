@@ -19,8 +19,8 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-intro">
-                    <h2>{% if about_info.title %}{{ about_info.title }}{% else %}{% trans "Welcome to Fashion Store" %}{% endif %}</h2>
-                    <p>{% if about_info.description %}{{ about_info.description }}{% else %}{% trans "Fashion Store is a modern online clothing store that offers a wide range of quality and stylish clothing for the whole family. We have been in the market for over 10 years and during this time we have gained the trust of thousands of customers throughout Uzbekistan." %}{% endif %}</p>
+                    <h2>{% if about_config.title %}{{ about_config.title }}{% else %}{% trans "Welcome to Fashion Store" %}{% endif %}</h2>
+                    <p>{% if about_config.description %}{{ about_config.description }}{% else %}{% trans "Fashion Store is a modern online clothing store that offers a wide range of quality and stylish clothing for the whole family. We have been in the market for over 10 years and during this time we have gained the trust of thousands of customers throughout Uzbekistan." %}{% endif %}</p>
                 </div>
 
                 <div class="about-image">
@@ -29,16 +29,16 @@
 
                 <div class="about-text">
                     <h3>{% trans "Our Mission" %}</h3>
-                    <p>{% if about_info.mission %}{{ about_info.mission }}{% else %}{% trans "We strive to make quality and fashionable clothing accessible to everyone. Our goal is to help you look stylish and feel confident by offering the best products at fair prices." %}{% endif %}</p>
+                    <p>{% if about_config.mission %}{{ about_config.mission }}{% else %}{% trans "We strive to make quality and fashionable clothing accessible to everyone. Our goal is to help you look stylish and feel confident by offering the best products at fair prices." %}{% endif %}</p>
 
 
                     <h3>{% trans "Our Vision" %}</h3>
-                    <p>{% if about_info.vision %}{{ about_info.vision }}{% else %}{% trans "Fashion Store was founded in 2014 with a simple idea - to make quality clothing accessible to everyone. Starting with a small store, we have grown into a large online store serving customers throughout the country." %}{% endif %}</p>
+                    <p>{% if about_config.vision %}{{ about_config.vision }}{% else %}{% trans "Fashion Store was founded in 2014 with a simple idea - to make quality clothing accessible to everyone. Starting with a small store, we have grown into a large online store serving customers throughout the country." %}{% endif %}</p>
 
                     <h3>{% trans "Our Values" %}</h3>
-                    {% if about_info.values %}
+                    {% if about_config.values %}
                     <ul class="values-list">
-                        {% for value in about_info.values %}
+                        {% for value in about_config.get_values_list %}
                         <li><strong>{{ value }}</strong></li>
                         {% endfor %}
                     </ul>
@@ -53,22 +53,31 @@
                 </div>
 
                 <div class="stats-section">
-                    <div class="stat-item">
-                        <h3>10+</h3>
-                        <p>{% trans "Years in the market" %}</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>5000+</h3>
-                        <p>{% trans "Products in catalog" %}</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>50000+</h3>
-                        <p>{% trans "Satisfied customers" %}</p>
-                    </div>
-                    <div class="stat-item">
-                        <h3>24/7</h3>
-                        <p>{% trans "Customer support" %}</p>
-                    </div>
+                    {% if stats %}
+                        {% for stat in stats %}
+                        <div class="stat-item">
+                            <h3>{{ stat.value }}</h3>
+                            <p>{{ stat.label }}</p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="stat-item">
+                            <h3>10+</h3>
+                            <p>{% trans "Years in the market" %}</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>5000+</h3>
+                            <p>{% trans "Products in catalog" %}</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>50000+</h3>
+                            <p>{% trans "Satisfied customers" %}</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>24/7</h3>
+                            <p>{% trans "Customer support" %}</p>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

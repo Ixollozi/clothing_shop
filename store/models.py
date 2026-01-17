@@ -435,6 +435,24 @@ class AboutConfig(models.Model):
         super().save(*args, **kwargs)
 
 
+class AboutStat(models.Model):
+    """Статистика для страницы "О нас" """
+    value = models.CharField(max_length=50, default='10+', verbose_name='Значение', help_text='Например: 10+, 5000+, 24/7')
+    label = models.CharField(max_length=200, default='Years in the market', verbose_name='Подпись')
+    order = models.PositiveIntegerField(default=0, verbose_name='Порядок сортировки')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Статистика "О нас"'
+        verbose_name_plural = 'Статистика "О нас"'
+        ordering = ['order', 'created_at']
+
+    def __str__(self):
+        return f"{self.value} - {self.label}"
+
+
 class SEOConfig(models.Model):
     """SEO настройки"""
     meta_title = models.CharField(max_length=200, default='Fashion Store - Online Clothing Store', verbose_name='Meta заголовок')

@@ -7,7 +7,7 @@ from modeltranslation.translator import translator
 from .models import (
     Category, Product, ProductImage, Cart, CartItem, Order, OrderItem, Partner, Config,
     StoreConfig, ContactConfig, SocialConfig, HeroConfig, Feature, AboutConfig, SEOConfig, ThemeConfig,
-    ProductFeatureConfig
+    ProductFeatureConfig, AboutStat
 )
 
 
@@ -602,6 +602,24 @@ class AboutConfigAdmin(TabbedTranslationAdmin):
         }),
         ('Даты', {
             'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(AboutStat)
+class AboutStatAdmin(TabbedTranslationAdmin):
+    list_display = ['value', 'label', 'order', 'is_active', 'created_at']
+    list_filter = ['is_active', 'created_at']
+    search_fields = ['value', 'label']
+    list_editable = ['order', 'is_active']
+    readonly_fields = ['created_at', 'updated_at']
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('value', 'label', 'order', 'is_active')
+        }),
+        ('Даты', {
+            'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
     )

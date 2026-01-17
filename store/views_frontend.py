@@ -416,7 +416,14 @@ def cart(request):
 
 def about(request):
     """Страница о нас"""
-    return render(request, 'about.html')
+    from .models import AboutStat, AboutConfig
+    stats = AboutStat.objects.filter(is_active=True).order_by('order', 'created_at')
+    about_config = AboutConfig.objects.filter(is_active=True).first()
+    context = {
+        'stats': stats,
+        'about_config': about_config,
+    }
+    return render(request, 'about.html', context)
 
 
 def contact(request):
