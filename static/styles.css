@@ -1268,16 +1268,7 @@ body {
     text-align: left;
     font-size: 0.9rem;
     width: 100%;
-<<<<<<< HEAD
-    margin-bottom: 0.5rem;
-    accent-color: var(--secondary-color);
-    cursor: pointer;
-    height: 6px;
-=======
     color: var(--text-color);
-<<<<<<< HEAD
->>>>>>> main
-=======
     font-family: inherit;
     font-weight: 500;
     margin: 0;
@@ -1287,7 +1278,6 @@ body {
     appearance: none;
     outline: none;
     display: block;
->>>>>>> main
 }
 
 .filters-sidebar .price-btn:hover,
@@ -1380,11 +1370,7 @@ button.price-btn:focus {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s;
-<<<<<<< HEAD
-    font-weight: 500;
-=======
     color: var(--text-color);
->>>>>>> main
 }
 
 .size-btn:hover {

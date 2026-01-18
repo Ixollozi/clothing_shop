@@ -25,9 +25,15 @@
 
                 </div>
 
+                {% if about_config.image or about_config.image_url %}
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?w=1200&h=600&fit=crop" alt="{% trans 'About Us' %}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&h=600&fit=crop';">
+                    {% if about_config.image %}
+                        <img src="{{ about_config.image.url }}" alt="{% trans 'About Us' %}">
+                    {% elif about_config.image_url %}
+                        <img src="{{ about_config.image_url }}" alt="{% trans 'About Us' %}">
+                    {% endif %}
                 </div>
+                {% endif %}
 
                 <div class="about-text">
                     <h3>{% trans "Our Mission" %}</h3>
@@ -56,34 +62,6 @@
                         <li><strong>{% trans "Customer Care" %}</strong> — {% trans "we are always ready to help and answer questions" %}</li>
                         <li><strong>{% trans "Innovation" %}</strong> — {% trans "we constantly improve service and expand capabilities" %}</li>
                     </ul>
-                    {% endif %}
-                </div>
-
-                <div class="stats-section">
-                    {% if stats %}
-                        {% for stat in stats %}
-                        <div class="stat-item">
-                            <h3>{{ stat.value }}</h3>
-                            <p>{{ stat.label }}</p>
-                        </div>
-                        {% endfor %}
-                    {% else %}
-                        <div class="stat-item">
-                            <h3>10+</h3>
-                            <p>{% trans "Years in the market" %}</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3>5000+</h3>
-                            <p>{% trans "Products in catalog" %}</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3>50000+</h3>
-                            <p>{% trans "Satisfied customers" %}</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3>24/7</h3>
-                            <p>{% trans "Customer support" %}</p>
-                        </div>
                     {% endif %}
                 </div>
             </div>
