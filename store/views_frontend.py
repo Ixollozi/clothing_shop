@@ -106,6 +106,7 @@ def get_dummy_categories():
 
 def index(request):
     """Главная страница"""
+    from .models import HeroConfig
     # Получаем товары из БД, если есть - иначе заглушки
     products = list(Product.objects.filter(is_active=True).order_by('-rating', '-reviews_count', '-created_at')[:8])
     if not products:
@@ -116,9 +117,13 @@ def index(request):
     if not categories:
         categories = get_dummy_categories()
     
+    # Получаем HeroConfig напрямую из БД для доступа к изображению
+    hero_config_obj = HeroConfig.objects.filter(is_active=True).first()
+    
     context = {
         'products': products,
         'categories': categories,
+        'hero_config_obj': hero_config_obj,  # Объект модели для прямого доступа
     }
     return render(request, 'index.html', context)
 

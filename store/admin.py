@@ -546,19 +546,30 @@ class HeroConfigAdmin(TabbedTranslationAdmin):
         """Скрываем из списка админки, но оставляем доступ к редактированию"""
         return False
     list_display = ['title', 'subtitle', 'is_active', 'updated_at']
-    readonly_fields = ['updated_at']
+    readonly_fields = ['updated_at', 'background_image_preview']
     fieldsets = (
         ('Содержимое', {
             'fields': ('title', 'subtitle', 'button_text', 'is_active')
         }),
         ('Изображение', {
-            'fields': ('background_image',)
+            'fields': ('background_image', 'background_image_url', 'background_image_preview'),
+            'description': 'Загрузите изображение или укажите URL. Приоритет у загруженного изображения.'
         }),
         ('Даты', {
             'fields': ('updated_at',),
             'classes': ('collapse',)
         }),
     )
+
+    def background_image_preview(self, obj):
+        """Показывает превью фонового изображения"""
+        if obj.pk:
+            if obj.background_image:
+                return format_html('<img src="{}" style="max-width: 300px; max-height: 200px; border-radius: 5px; margin-top: 10px;" />', obj.background_image.url)
+            elif obj.background_image_url:
+                return format_html('<img src="{}" style="max-width: 300px; max-height: 200px; border-radius: 5px; margin-top: 10px;" />', obj.background_image_url)
+        return "Сохраните для предпросмотра"
+    background_image_preview.short_description = 'Превью изображения'
 
 
 @admin.register(Feature)

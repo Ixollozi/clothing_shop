@@ -277,6 +277,9 @@ body {
 /* Hero Section */
 .hero {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     height: 600px;
     display: flex;
     align-items: center;
@@ -287,7 +290,8 @@ body {
     overflow: hidden;
 }
 
-.hero::before {
+/* Заглушка изображения - показывается только если нет изображения от пользователя */
+.hero:not([style*="background-image"])::before {
     content: '';
     position: absolute;
     top: 0;
@@ -296,6 +300,29 @@ body {
     bottom: 0;
     background: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920') center/cover;
     opacity: 0.2;
+    z-index: 1;
+}
+
+/* Если есть inline background-image от пользователя, скрываем заглушку и добавляем обрезку */
+.hero[style*="background-image"] {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero[style*="background-image"]::before {
+    display: none;
+}
+
+/* Добавляем затемнение для лучшей читаемости текста поверх изображения */
+.hero[style*="background-image"]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
     z-index: 1;
 }
 

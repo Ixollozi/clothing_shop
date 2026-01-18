@@ -372,7 +372,8 @@ class HeroConfig(models.Model):
     title = models.CharField(max_length=200, default='New Collection', verbose_name='Заголовок')
     subtitle = models.CharField(max_length=200, default='Discover style and comfort', verbose_name='Подзаголовок')
     button_text = models.CharField(max_length=100, default='View Catalog', verbose_name='Текст кнопки')
-    background_image = models.ImageField(upload_to='config/', blank=True, null=True, verbose_name='Фоновое изображение')
+    background_image = models.ImageField(upload_to='config/', blank=True, null=True, verbose_name='Фоновое изображение', help_text='Загрузите изображение или укажите URL ниже')
+    background_image_url = models.URLField(blank=True, null=True, verbose_name='URL фонового изображения', help_text='Укажите URL изображения, если не загружаете файл')
     is_active = models.BooleanField(default=True, verbose_name='Активна')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
 
