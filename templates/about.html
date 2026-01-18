@@ -23,9 +23,15 @@
                     <p>{% if about_config.description %}{{ about_config.description }}{% else %}{% trans "Fashion Store is a modern online clothing store that offers a wide range of quality and stylish clothing for the whole family. We have been in the market for over 10 years and during this time we have gained the trust of thousands of customers throughout Uzbekistan." %}{% endif %}</p>
                 </div>
 
+                {% if about_config.image or about_config.image_url %}
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200" alt="{% trans 'About Us' %}">
+                    {% if about_config.image %}
+                        <img src="{{ about_config.image.url }}" alt="{% trans 'About Us' %}">
+                    {% elif about_config.image_url %}
+                        <img src="{{ about_config.image_url }}" alt="{% trans 'About Us' %}">
+                    {% endif %}
                 </div>
+                {% endif %}
 
                 <div class="about-text">
                     <h3>{% trans "Our Mission" %}</h3>
@@ -49,34 +55,6 @@
                         <li><strong>{% trans "Customer Care" %}</strong> — {% trans "we are always ready to help and answer questions" %}</li>
                         <li><strong>{% trans "Innovation" %}</strong> — {% trans "we constantly improve service and expand capabilities" %}</li>
                     </ul>
-                    {% endif %}
-                </div>
-
-                <div class="stats-section">
-                    {% if stats %}
-                        {% for stat in stats %}
-                        <div class="stat-item">
-                            <h3>{{ stat.value }}</h3>
-                            <p>{{ stat.label }}</p>
-                        </div>
-                        {% endfor %}
-                    {% else %}
-                        <div class="stat-item">
-                            <h3>10+</h3>
-                            <p>{% trans "Years in the market" %}</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3>5000+</h3>
-                            <p>{% trans "Products in catalog" %}</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3>50000+</h3>
-                            <p>{% trans "Satisfied customers" %}</p>
-                        </div>
-                        <div class="stat-item">
-                            <h3>24/7</h3>
-                            <p>{% trans "Customer support" %}</p>
-                        </div>
                     {% endif %}
                 </div>
             </div>

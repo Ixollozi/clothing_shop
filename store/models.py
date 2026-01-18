@@ -416,6 +416,8 @@ class AboutConfig(models.Model):
     mission = models.TextField(default='To provide high-quality fashion items at affordable prices', verbose_name='Миссия')
     vision = models.TextField(default='To become the leading fashion retailer in the region', verbose_name='Видение')
     values = models.TextField(default='Quality\nCustomer Service\nInnovation\nSustainability', verbose_name='Ценности', help_text='Указывайте каждое значение с новой строки')
+    image = models.ImageField(upload_to='config/', blank=True, null=True, verbose_name='Изображение', help_text='Загрузите изображение или укажите URL ниже')
+    image_url = models.URLField(blank=True, null=True, verbose_name='URL изображения', help_text='Укажите URL изображения, если не загружаете файл')
     is_active = models.BooleanField(default=True, verbose_name='Активна')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
 

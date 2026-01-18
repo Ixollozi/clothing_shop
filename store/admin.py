@@ -599,7 +599,7 @@ class AboutConfigAdmin(TabbedTranslationAdmin):
         """Скрываем из списка админки, но оставляем доступ к редактированию"""
         return False
     list_display = ['title', 'is_active', 'updated_at']
-    readonly_fields = ['updated_at']
+    readonly_fields = ['updated_at', 'image_preview']
     fieldsets = (
         ('Основная информация', {
             'fields': ('title', 'description', 'is_active')
@@ -611,15 +611,33 @@ class AboutConfigAdmin(TabbedTranslationAdmin):
             'fields': ('values',),
             'description': 'Указывайте каждое значение с новой строки'
         }),
+        ('Изображение', {
+            'fields': ('image', 'image_url', 'image_preview'),
+            'description': 'Загрузите изображение или укажите URL. Приоритет у загруженного изображения.'
+        }),
         ('Даты', {
             'fields': ('updated_at',),
             'classes': ('collapse',)
         }),
     )
 
+    def image_preview(self, obj):
+        """Показывает превью изображения"""
+        if obj.pk:
+            if obj.image:
+                return format_html('<img src="{}" style="max-width: 300px; max-height: 200px; border-radius: 5px; margin-top: 10px;" />', obj.image.url)
+            elif obj.image_url:
+                return format_html('<img src="{}" style="max-width: 300px; max-height: 200px; border-radius: 5px; margin-top: 10px;" />', obj.image_url)
+        return "Сохраните для предпросмотра"
+    image_preview.short_description = 'Превью изображения'
+
 
 @admin.register(AboutStat)
 class AboutStatAdmin(TabbedTranslationAdmin):
+    def has_module_permission(self, request):
+        """Скрываем из списка админки"""
+        return False
+    
     list_display = ['value', 'label', 'order', 'is_active', 'created_at']
     list_filter = ['is_active', 'created_at']
     search_fields = ['value', 'label']
