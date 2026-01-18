@@ -87,11 +87,20 @@ def load_config_from_models():
         hero = HeroConfig.objects.filter(is_active=True).first()
         if hero:
             # Используем данные из админки
+            # Приоритет: загруженное изображение > URL изображения > заглушка из config.json
+            bg_image = ''
+            if hero.background_image:
+                bg_image = hero.background_image.url
+            elif hero.background_image_url:
+                bg_image = hero.background_image_url
+            else:
+                bg_image = file_config.get('hero', {}).get('background_image', '')
+            
             config['hero'] = {
                 'title': hero.title,
                 'subtitle': hero.subtitle,
                 'button_text': hero.button_text,
-                'background_image': hero.background_image.url if hero.background_image else (file_config.get('hero', {}).get('background_image', '')),
+                'background_image': bg_image,
             }
         elif 'hero' in file_config:
             # Заглушка из config.json

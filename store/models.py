@@ -372,7 +372,8 @@ class HeroConfig(models.Model):
     title = models.CharField(max_length=200, default='New Collection', verbose_name='Заголовок')
     subtitle = models.CharField(max_length=200, default='Discover style and comfort', verbose_name='Подзаголовок')
     button_text = models.CharField(max_length=100, default='View Catalog', verbose_name='Текст кнопки')
-    background_image = models.ImageField(upload_to='config/', blank=True, null=True, verbose_name='Фоновое изображение')
+    background_image = models.ImageField(upload_to='config/', blank=True, null=True, verbose_name='Фоновое изображение', help_text='Загрузите изображение или укажите URL ниже')
+    background_image_url = models.URLField(blank=True, null=True, verbose_name='URL фонового изображения', help_text='Укажите URL изображения, если не загружаете файл')
     is_active = models.BooleanField(default=True, verbose_name='Активна')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
 
@@ -433,6 +434,24 @@ class AboutConfig(models.Model):
         if self.is_active:
             AboutConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
         super().save(*args, **kwargs)
+
+
+class AboutStat(models.Model):
+    """Статистика для страницы "О нас" """
+    value = models.CharField(max_length=50, default='10+', verbose_name='Значение', help_text='Например: 10+, 5000+, 24/7')
+    label = models.CharField(max_length=200, default='Years in the market', verbose_name='Подпись')
+    order = models.PositiveIntegerField(default=0, verbose_name='Порядок сортировки')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Статистика "О нас"'
+        verbose_name_plural = 'Статистика "О нас"'
+        ordering = ['order', 'created_at']
+
+    def __str__(self):
+        return f"{self.value} - {self.label}"
 
 
 class SEOConfig(models.Model):

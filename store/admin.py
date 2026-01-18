@@ -7,7 +7,7 @@ from modeltranslation.translator import translator
 from .models import (
     Category, Product, ProductImage, Cart, CartItem, Order, OrderItem, Partner, Config,
     StoreConfig, ContactConfig, SocialConfig, HeroConfig, Feature, AboutConfig, SEOConfig, ThemeConfig,
-    ProductFeatureConfig
+    ProductFeatureConfig, AboutStat
 )
 
 
@@ -546,19 +546,30 @@ class HeroConfigAdmin(TabbedTranslationAdmin):
         """Скрываем из списка админки, но оставляем доступ к редактированию"""
         return False
     list_display = ['title', 'subtitle', 'is_active', 'updated_at']
-    readonly_fields = ['updated_at']
+    readonly_fields = ['updated_at', 'background_image_preview']
     fieldsets = (
         ('Содержимое', {
             'fields': ('title', 'subtitle', 'button_text', 'is_active')
         }),
         ('Изображение', {
-            'fields': ('background_image',)
+            'fields': ('background_image', 'background_image_url', 'background_image_preview'),
+            'description': 'Загрузите изображение или укажите URL. Приоритет у загруженного изображения.'
         }),
         ('Даты', {
             'fields': ('updated_at',),
             'classes': ('collapse',)
         }),
     )
+
+    def background_image_preview(self, obj):
+        """Показывает превью фонового изображения"""
+        if obj.pk:
+            if obj.background_image:
+                return format_html('<img src="{}" style="max-width: 300px; max-height: 200px; border-radius: 5px; margin-top: 10px;" />', obj.background_image.url)
+            elif obj.background_image_url:
+                return format_html('<img src="{}" style="max-width: 300px; max-height: 200px; border-radius: 5px; margin-top: 10px;" />', obj.background_image_url)
+        return "Сохраните для предпросмотра"
+    background_image_preview.short_description = 'Превью изображения'
 
 
 @admin.register(Feature)
@@ -602,6 +613,24 @@ class AboutConfigAdmin(TabbedTranslationAdmin):
         }),
         ('Даты', {
             'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(AboutStat)
+class AboutStatAdmin(TabbedTranslationAdmin):
+    list_display = ['value', 'label', 'order', 'is_active', 'created_at']
+    list_filter = ['is_active', 'created_at']
+    search_fields = ['value', 'label']
+    list_editable = ['order', 'is_active']
+    readonly_fields = ['created_at', 'updated_at']
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('value', 'label', 'order', 'is_active')
+        }),
+        ('Даты', {
+            'fields': ('created_at', 'updated_at'),
             'classes': ('collapse',)
         }),
     )

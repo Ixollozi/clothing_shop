@@ -32,7 +32,7 @@ msgstr "Главная"
 
 #: .\templates\about.html:22
 msgid "Welcome to Fashion Store"
-msgstr ""
+msgstr "Добро пожаловать в Fashion Store"
 
 #: .\templates\about.html:23
 msgid ""
@@ -40,89 +40,81 @@ msgid ""
 "quality and stylish clothing for the whole family. We have been in the "
 "market for over 10 years and during this time we have gained the trust of "
 "thousands of customers throughout Uzbekistan."
-msgstr ""
+msgstr "Fashion Store — это современный интернет-магазин одежды, предлагающий широкий ассортимент качественной и стильной одежды для всей семьи. Мы работаем на рынке более 10 лет и за это время завоевали доверие тысяч клиентов по всему Узбекистану."
 
 #: .\templates\about.html:31
 msgid "Our Mission"
-msgstr ""
+msgstr "Наша миссия"
 
 #: .\templates\about.html:32
 msgid ""
 "We strive to make quality and fashionable clothing accessible to everyone. "
 "Our goal is to help you look stylish and feel confident by offering the best "
 "products at fair prices."
-msgstr ""
+msgstr "Мы стремимся сделать качественную и модную одежду доступной для всех. Наша цель — помочь вам выглядеть стильно и чувствовать себя уверенно, предлагая лучшие товары по справедливым ценам."
 
 #: .\templates\about.html:35
 msgid "Our Vision"
-msgstr ""
+msgstr "Наше видение"
 
 #: .\templates\about.html:36
 msgid ""
 "Fashion Store was founded in 2014 with a simple idea - to make quality "
 "clothing accessible to everyone. Starting with a small store, we have grown "
 "into a large online store serving customers throughout the country."
-msgstr ""
+msgstr "Fashion Store был основан в 2014 году с простой идеей — сделать качественную одежду доступной для всех. Начиная с небольшого магазина, мы выросли в крупный интернет-магазин, обслуживающий клиентов по всей стране."
 
 #: .\templates\about.html:38
-#, fuzzy
-#| msgid "Our Partners"
 msgid "Our Values"
-msgstr "Наши партнеры"
+msgstr "Наши ценности"
 
 #: .\templates\about.html:47
 msgid "Quality"
-msgstr ""
+msgstr "Качество"
 
 #: .\templates\about.html:47
 msgid "we guarantee high quality of all products"
-msgstr ""
+msgstr "мы гарантируем высокое качество всех товаров"
 
 #: .\templates\about.html:48
 msgid "Honesty"
-msgstr ""
+msgstr "Честность"
 
 #: .\templates\about.html:48
 msgid "transparent prices and honest conditions"
-msgstr ""
+msgstr "прозрачные цены и честные условия"
 
 #: .\templates\about.html:49
-#, fuzzy
-#| msgid "For Customers"
 msgid "Customer Care"
-msgstr "Покупателям"
+msgstr "Забота о клиентах"
 
 #: .\templates\about.html:49
 msgid "we are always ready to help and answer questions"
-msgstr ""
+msgstr "мы всегда готовы помочь и ответить на вопросы"
 
 #: .\templates\about.html:50
 msgid "Innovation"
-msgstr ""
+msgstr "Инновации"
 
 #: .\templates\about.html:50
 msgid "we constantly improve service and expand capabilities"
-msgstr ""
+msgstr "мы постоянно улучшаем сервис и расширяем возможности"
 
 #: .\templates\about.html:58
 msgid "Years in the market"
-msgstr ""
+msgstr "Лет на рынке"
 
 #: .\templates\about.html:62
-#, fuzzy
-#| msgid "Product Catalog"
 msgid "Products in catalog"
-msgstr "Каталог товаров"
+msgstr "Товаров в каталоге"
 
 #: .\templates\about.html:66
 msgid "Satisfied customers"
-msgstr ""
+msgstr "Довольных клиентов"
 
 #: .\templates\about.html:70
-#, fuzzy
-#| msgid "For Customers"
 msgid "Customer support"
-msgstr "Покупателям"
+msgstr "Поддержка клиентов"
 
 #: .\templates\admin\base_site.html:4
 msgid "Django site admin"
@@ -327,34 +319,30 @@ msgid "No products found"
 msgstr "Найдено товаров"
 
 #: .\templates\contact.html:24
-#, fuzzy
-#| msgid "Contacts"
 msgid "Contact Us"
-msgstr "Контакты"
+msgstr "Свяжитесь с нами"
 
 #: .\templates\contact.html:25
 msgid ""
 "We are always happy to answer your questions and help you choose products. "
 "Contact us in any convenient way."
-msgstr ""
+msgstr "Мы всегда рады ответить на ваши вопросы и помочь выбрать товары. Свяжитесь с нами любым удобным способом."
 
 #: .\templates\contact.html:32 .\templates\contact.html:96
 msgid "Phone"
-msgstr ""
+msgstr "Телефон"
 
 #: .\templates\contact.html:34
 msgid "Mon-Sun: 9:00 - 21:00"
-msgstr ""
+msgstr "Пн-Вс: 9:00 - 21:00"
 
 #: .\templates\contact.html:45
 msgid "We will respond within 24 hours"
-msgstr ""
+msgstr "Ответим в течение 24 часов"
 
 #: .\templates\contact.html:54 .\templates\delivery.html:57
-#, fuzzy
-#| msgid "Dress"
 msgid "Address"
-msgstr "Платье"
+msgstr "Адрес"
 
 #: .\templates\contact.html:55 .\templates\contact.html:137
 #: .\templates\delivery.html:57
@@ -363,71 +351,79 @@ msgstr "Ташкент, ул. Примерная, 1"
 
 #: .\templates\contact.html:56
 msgid "Mon-Fri: 10:00 - 19:00"
-msgstr ""
+msgstr "Пн-Пт: 10:00 - 19:00"
 
 #: .\templates\contact.html:65
 msgid "Messengers"
-msgstr ""
+msgstr "Мессенджеры"
 
 #: .\templates\contact.html:72
 msgid "We are on social networks"
-msgstr ""
+msgstr "Мы в социальных сетях"
 
 #: .\templates\contact.html:85
 msgid "Write to Us"
-msgstr ""
+msgstr "Напишите нам"
 
 #: .\templates\contact.html:88
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: .\templates\contact.html:100
 msgid "Subject"
-msgstr ""
+msgstr "Тема"
 
 #: .\templates\contact.html:102
 msgid "Choose a topic"
-msgstr ""
+msgstr "Выберите тему"
 
 #: .\templates\contact.html:103
 msgid "Order question"
-msgstr ""
+msgstr "Вопрос по заказу"
 
 #: .\templates\contact.html:104
-#, fuzzy
-#| msgid "Product Return"
 msgid "Product question"
-msgstr "Возврат товара"
+msgstr "Вопрос по товару"
 
 #: .\templates\contact.html:106
-#, fuzzy
-#| msgid "Easy Returns"
 msgid "Return"
-msgstr "Легкий возврат"
+msgstr "Возврат"
 
 #: .\templates\contact.html:107
 msgid "Other"
-msgstr ""
+msgstr "Другое"
 
 #: .\templates\contact.html:111
 msgid "Message"
-msgstr ""
+msgstr "Сообщение"
 
 #: .\templates\contact.html:114
 msgid "Send Message"
-msgstr ""
+msgstr "Отправить сообщение"
 
 #: .\templates\contact.html:121
 msgid "How to Find Us"
-msgstr ""
+msgstr "Как нас найти"
 
 #: .\templates\contact.html:136
 msgid "Map will be here"
-msgstr ""
+msgstr "Карта будет здесь"
 
 #: .\templates\contact.html:149
 msgid "Thank you for your message! We will contact you soon."
-msgstr ""
+msgstr "Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время."
+
+#: .\templates\contact.html:43 .\templates\contact.html:92
+msgid "Email"
+msgstr "Электронная почта"
+
+#: .\templates\contact.html:66
+msgid "Telegram"
+msgstr "Telegram"
+
+#: .\templates\contact.html:67
+msgid "WhatsApp"
+msgstr "WhatsApp"
 
 #: .\templates\delivery.html:21
 #, fuzzy

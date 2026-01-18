@@ -96,11 +96,6 @@ body {
     color: var(--primary-color);
     font-size: 1.8rem;
     font-weight: 700;
-<<<<<<< HEAD
-    font-family: 'Georgia', serif;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-=======
     margin: 0;
 }
 
@@ -150,7 +145,6 @@ body {
     top: 50%;
     left: 0;
     transform: translateY(-50%) rotate(-45deg);
->>>>>>> main
 }
 
 .nav-menu {
@@ -310,7 +304,11 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #3d2817 0%, #6b4423 50%, #8b6f47 100%);
+
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     height: 600px;
     display: flex;
     align-items: center;
@@ -321,8 +319,9 @@ body {
     overflow: hidden;
 }
 
-/* Overlay для улучшения читаемости текста */
-.hero::before {
+
+/* Заглушка изображения - показывается только если нет изображения от пользователя */
+.hero:not([style*="background-image"])::before {
     content: '';
     position: absolute;
     top: 0;
@@ -337,25 +336,27 @@ body {
     z-index: 1;
 }
 
-/* Если есть background_image, добавляем темный overlay для читаемости */
-.hero[style*="background-image"]::before {
-    background: rgba(61, 40, 23, 0.7);
-    opacity: 1;
+/* Если есть inline background-image от пользователя, скрываем заглушку и добавляем обрезку */
+.hero[style*="background-image"] {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* Текстура дерева */
-.hero::after {
+.hero[style*="background-image"]::before {
+    display: none;
+}
+
+/* Добавляем затемнение для лучшей читаемости текста поверх изображения */
+.hero[style*="background-image"]::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
-        repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255, 255, 255, 0.03) 20px, rgba(255, 255, 255, 0.03) 40px),
-        repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(0, 0, 0, 0.02) 30px, rgba(0, 0, 0, 0.02) 60px);
+    background: rgba(0, 0, 0, 0.3);
     z-index: 1;
-    pointer-events: none;
 }
 
 .hero-content {
@@ -1253,7 +1254,11 @@ body {
     margin-top: 1rem;
 }
 
-.price-btn {
+/* Убеждаемся, что стили применяются в контексте фильтров */
+.filters-sidebar .price-btn,
+.filters-sidebar button.price-btn,
+.filter-group .price-btn,
+.filter-group button.price-btn {
     padding: 10px 15px;
     border: 1px solid #ddd;
     background: var(--white);
@@ -1270,19 +1275,96 @@ body {
     height: 6px;
 =======
     color: var(--text-color);
+<<<<<<< HEAD
+>>>>>>> main
+=======
+    font-family: inherit;
+    font-weight: 500;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    display: block;
 >>>>>>> main
 }
 
-.price-btn:hover {
+.filters-sidebar .price-btn:hover,
+.filters-sidebar button.price-btn:hover,
+.filter-group .price-btn:hover,
+.filter-group button.price-btn:hover {
     border-color: var(--secondary-color);
     color: var(--secondary-color);
     background: #fff5f5;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.price-btn.active {
+.filters-sidebar .price-btn.active,
+.filters-sidebar button.price-btn.active,
+.filter-group .price-btn.active,
+.filter-group button.price-btn.active {
     border-color: var(--secondary-color);
     background: var(--secondary-color);
     color: var(--white);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+}
+
+.filters-sidebar .price-btn:focus,
+.filters-sidebar button.price-btn:focus,
+.filter-group .price-btn:focus,
+.filter-group button.price-btn:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+.price-btn,
+button.price-btn {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    background: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+    font-size: 0.9rem;
+    width: 100%;
+    color: var(--text-color);
+    font-family: inherit;
+    font-weight: 500;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    display: block;
+}
+
+.price-btn:hover,
+button.price-btn:hover {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+    background: #fff5f5;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.price-btn.active,
+button.price-btn.active {
+    border-color: var(--secondary-color);
+    background: var(--secondary-color);
+    color: var(--white);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+}
+
+.price-btn:focus,
+button.price-btn:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
 }
 
 .size-buttons {
