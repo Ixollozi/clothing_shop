@@ -84,6 +84,7 @@
                 <div class="contact-form-container">
                     <h2>{% trans "Write to Us" %}</h2>
                     <form class="contact-form">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="name">{% trans "Name" %} *</label>
                             <input type="text" id="name" name="name" required>
@@ -144,10 +145,95 @@
 
 {% block extra_js %}
 <script>
-    document.querySelector('.contact-form').addEventListener('submit', function(e) {
+    document.querySelector('.contact-form').addEventListener('submit', async function(e) {
         e.preventDefault();
-        alert('{% trans "Thank you for your message! We will contact you soon." %}');
-        this.reset();
+        
+        const form = this;
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        
+        // Получаем данные формы
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+        
+        // Валидация
+        if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+            showNotification('{% trans "Please fill in all required fields." %}', 'warning');
+            return;
+        }
+        
+        // Отключаем кнопку
+        submitButton.disabled = true;
+        submitButton.textContent = '{% trans "Sending..." %}';
+        
+        try {
+            // Получаем CSRF токен
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || 
+                             getCookie('csrftoken') ||
+                             document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            
+            if (!csrftoken) {
+                throw new Error('CSRF token not found');
+            }
+            
+            // Отправляем данные на сервер
+            const response = await fetch('/api/contact/submit/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(formData)
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok && data.success) {
+                showNotification(
+                    '{% trans "Thank you for your message! We will contact you soon." %}',
+                    'success',
+                    '{% trans "Message Sent!" %}',
+                    5000
+                );
+                form.reset();
+            } else {
+                throw new Error(data.error || 'Failed to send message');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification(
+                error.message || '{% trans "An error occurred while sending the message. Please try again later." %}',
+                'error',
+                '{% trans "Error" %}',
+                6000
+            );
+        } finally {
+            // Включаем кнопку обратно
+            submitButton.disabled = false;
+            submitButton.textContent = originalText;
+        }
     });
+    
+    // Функция для получения CSRF токена из cookie
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 </script>
 {% endblock %}

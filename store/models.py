@@ -498,3 +498,80 @@ class ThemeConfig(models.Model):
             ThemeConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
         super().save(*args, **kwargs)
 
+
+class TelegramConfig(models.Model):
+    """Конфигурация Telegram бота для уведомлений"""
+    bot_token = models.CharField(max_length=200, blank=True, verbose_name='Токен бота', help_text='Токен бота от @BotFather')
+    group_chat_id = models.CharField(max_length=100, blank=True, verbose_name='ID группы/чата', help_text='ID группы или чата для отправки уведомлений (например: -1001234567890)')
+    is_active = models.BooleanField(default=False, verbose_name='Активен', help_text='Включить отправку уведомлений в Telegram')
+    notify_new_orders = models.BooleanField(default=True, verbose_name='Уведомлять о новых заказах')
+    notify_status_changes = models.BooleanField(default=True, verbose_name='Уведомлять об изменении статуса')
+    notify_contact_messages = models.BooleanField(default=True, verbose_name='Уведомлять о сообщениях из контактов')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Настройки Telegram'
+        verbose_name_plural = 'Настройки Telegram'
+
+    def __str__(self):
+        return f"Telegram: {'Активен' if self.is_active else 'Неактивен'}"
+
+    def save(self, *args, **kwargs):
+        # Обеспечиваем, что только одна запись активна
+        if self.is_active:
+            TelegramConfig.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def get_active_config(cls):
+        """Получает активную конфигурацию Telegram"""
+        try:
+            return cls.objects.filter(is_active=True).first()
+        except Exception:
+            return None
+
+
+class ContactMessage(models.Model):
+    """Сообщения из формы контактов"""
+    SUBJECT_CHOICES = [
+        ('order', 'Вопрос по заказу'),
+        ('product', 'Вопрос по товару'),
+        ('delivery', 'Доставка'),
+        ('return', 'Возврат'),
+        ('other', 'Другое'),
+    ]
+    
+    name = models.CharField(max_length=200, verbose_name='Имя')
+    email = models.EmailField(verbose_name='Email')
+    phone = models.CharField(max_length=20, blank=True, verbose_name='Телефон')
+    subject = models.CharField(max_length=50, choices=SUBJECT_CHOICES, verbose_name='Тема')
+    message = models.TextField(verbose_name='Сообщение')
+    is_read = models.BooleanField(default=False, verbose_name='Прочитано')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Сообщение из контактов'
+        verbose_name_plural = 'Сообщения из контактов'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Сообщение от {self.name} - {self.get_subject_display()}"
+
+
+class FAQ(models.Model):
+    """Часто задаваемые вопросы"""
+    question = models.CharField(max_length=500, verbose_name='Вопрос')
+    answer = models.TextField(verbose_name='Ответ')
+    order = models.PositiveIntegerField(default=0, verbose_name='Порядок отображения', help_text='Чем меньше число, тем выше вопрос в списке')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Часто задаваемый вопрос'
+        verbose_name_plural = 'Часто задаваемые вопросы'
+        ordering = ['order', 'created_at']
+
+    def __str__(self):
+        return self.question

@@ -313,10 +313,12 @@ msgid "Add to Cart"
 msgstr "В корзину"
 
 #: .\templates\catalog.html:150
-#, fuzzy
-#| msgid "Products found"
 msgid "No products found"
-msgstr "Найдено товаров"
+msgstr "Ничего не найдено"
+
+#: .\templates\catalog.html:149
+msgid "Nothing found"
+msgstr "Ничего не найдено"
 
 #: .\templates\contact.html:24
 msgid "Contact Us"
@@ -832,6 +834,10 @@ msgstr "Не удалось добавить товар в корзину. По�
 
 #~ msgid "Pants"
 #~ msgstr "Брюки"
+
+#: .\templates\faq.html:35
+msgid "No questions yet. Check back soon!"
+msgstr "Пока нет вопросов. Загляните позже!"
 
 #~ msgid "Classic Pants"
 #~ msgstr "Брюки классические"

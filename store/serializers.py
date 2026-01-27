@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Product, ProductImage, Cart, CartItem, Order, OrderItem
+from .models import Category, Product, ProductImage, Cart, CartItem, Order, OrderItem, ContactMessage
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -114,9 +114,24 @@ class CreateOrderSerializer(serializers.ModelSerializer):
             'first_name', 'last_name', 'email', 'phone', 'address',
             'city', 'postal_code', 'payment_method', 'notes', 'items'
         ]
+        extra_kwargs = {
+            'email': {'required': False, 'allow_blank': True},
+            'postal_code': {'required': False, 'allow_blank': True},
+        }
 
     def create(self, validated_data):
-        items_data = validated_data.pop('items')
+        items_data = validated_data.pop('items', [])
+        
+        if not items_data:
+            raise serializers.ValidationError({'items': 'Корзина пуста. Невозможно создать заказ без товаров.'})
+        
+        # Устанавливаем значения по умолчанию для необязательных полей
+        if not validated_data.get('email') or validated_data.get('email') == '':
+            validated_data['email'] = 'no-email@example.com'  # Временный email, так как поле обязательное в модели
+        
+        if not validated_data.get('payment_method') or validated_data.get('payment_method') == '':
+            validated_data['payment_method'] = 'cash'  # По умолчанию наличные
+        
         session_key = self.context['request'].session.session_key
         
         if not session_key:
@@ -128,8 +143,20 @@ class CreateOrderSerializer(serializers.ModelSerializer):
         # Подсчет общей суммы
         total = 0
         for item_data in items_data:
-            product = Product.objects.get(id=item_data['product_id'])
-            total += product.price * item_data['quantity']
+            product_id = item_data.get('product_id')
+            if not product_id:
+                raise serializers.ValidationError({'items': 'Не указан ID товара'})
+            
+            try:
+                product = Product.objects.get(id=product_id, is_active=True)
+            except Product.DoesNotExist:
+                raise serializers.ValidationError({'items': f'Товар с ID {product_id} не найден или неактивен'})
+            
+            quantity = item_data.get('quantity', 1)
+            if quantity <= 0:
+                raise serializers.ValidationError({'items': 'Количество товара должно быть больше 0'})
+            
+            total += product.price * quantity
 
         validated_data['total'] = total
         order = Order.objects.create(**validated_data)
@@ -145,6 +172,35 @@ class CreateOrderSerializer(serializers.ModelSerializer):
                 size=item_data.get('size', ''),
                 color=item_data.get('color', '')
             )
+        
+        # Обновляем заказ из БД, чтобы убедиться, что товары связаны
+        order.refresh_from_db()
+
+        # Отправка уведомления в Telegram о новом заказе
+        try:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.info(f"Попытка отправить уведомление о заказе #{order.id} в Telegram")
+            from .telegram_notifier import telegram_notifier
+            result = telegram_notifier.notify_new_order(order)
+            if result:
+                logger.info(f"Уведомление о заказе #{order.id} успешно отправлено")
+            else:
+                logger.warning(f"Не удалось отправить уведомление о заказе #{order.id} (вернулось False)")
+        except Exception as e:
+            # Логируем ошибку, но не прерываем создание заказа
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Ошибка отправки уведомления в Telegram для заказа #{order.id}: {e}", exc_info=True)
 
         return order
+
+
+class ContactMessageSerializer(serializers.ModelSerializer):
+    subject_display = serializers.CharField(source='get_subject_display', read_only=True)
+
+    class Meta:
+        model = ContactMessage
+        fields = ['id', 'name', 'email', 'phone', 'subject', 'subject_display', 'message', 'is_read', 'created_at', 'updated_at']
+        read_only_fields = ['is_read', 'created_at', 'updated_at']
 

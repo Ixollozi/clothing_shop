@@ -1,8 +1,8 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import CategoryViewSet, ProductViewSet, CartViewSet, OrderViewSet
+from .views import CategoryViewSet, ProductViewSet, CartViewSet, OrderViewSet, submit_contact_message
 from .views_frontend import (
-    index, catalog, product_detail, cart, about, contact, delivery
+    index, catalog, product_detail, cart, about, contact, delivery, faq
 )
 
 router = DefaultRouter()
@@ -14,6 +14,7 @@ router.register(r'orders', OrderViewSet, basename='order')
 # API URLs - только для /api/
 api_urlpatterns = [
     path('', include(router.urls)),
+    path('contact/submit/', submit_contact_message, name='submit_contact_message'),
 ]
 
 # Frontend URLs - только для корня
@@ -26,6 +27,7 @@ frontend_urlpatterns = [
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     path('delivery/', delivery, name='delivery'),
+    path('faq/', faq, name='faq'),
 ]
 
 # По умолчанию возвращаем API URLs (для /api/)

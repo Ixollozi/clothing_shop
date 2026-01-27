@@ -190,81 +190,25 @@ def catalog(request):
     # Сортировка
     sort_by = request.GET.get('sort', 'newest')
     
-    # Если нет товаров в БД, используем заглушки
-    use_dummy = False
-    if not products_queryset.exists():
-        products_queryset = None
-        use_dummy = True
-    
-    # Применяем сортировку
-    if use_dummy:
-        # Для заглушек создаем простой список и сортируем его
-        dummy_products = get_dummy_products()
-        
-        # Добавляем поля для сортировки и фильтрации к заглушкам
-        for i, product in enumerate(dummy_products):
-            product['rating'] = 4.0 + (i % 3) * 0.5  # Разные рейтинги для сортировки
-            product['reviews_count'] = 10 + i * 2  # Разное количество отзывов
-            product['created_at'] = i  # Индекс как дата создания (меньше = новее)
-            product['available_sizes'] = ['XS', 'S', 'M', 'L', 'XL'][i % 5]  # Разные размеры
-            product['available_colors'] = ['Черный', 'Белый', 'Синий', 'Красный', 'Зеленый', 'Желтый'][i % 6]  # Разные цвета
-        
-        # Применяем фильтры к заглушкам
-        if size_filter:
-            dummy_products = [p for p in dummy_products if size_filter in str(p.get('available_sizes', ''))]
-        
-        if color_filter:
-            # Маппинг цветов из hex в названия
-            color_map = {
-                '#000': 'Черный',
-                '#000000': 'Черный',
-                '#fff': 'Белый',
-                '#ffffff': 'Белый',
-                '#e74c3c': 'Красный',
-                '#3498db': 'Синий',
-                '#2ecc71': 'Зеленый',
-                '#f39c12': 'Желтый',
-            }
-            color_name = color_map.get(color_filter.lower(), color_filter)
-            dummy_products = [p for p in dummy_products if color_name in str(p.get('available_colors', ''))]
-        
-        # Сортируем заглушки
-        if sort_by == 'popularity':
-            # По популярности: сначала по рейтингу, потом по количеству отзывов
-            dummy_products.sort(key=lambda x: (-x['rating'], -x['reviews_count']))
-        elif sort_by == 'price_low':
-            # По цене: от низкой к высокой
-            dummy_products.sort(key=lambda x: x['price'])
-        elif sort_by == 'price_high':
-            # По цене: от высокой к низкой
-            dummy_products.sort(key=lambda x: -x['price'])
-        elif sort_by == 'newest':
-            # По новизне: сначала новые (меньший индекс = новее)
-            dummy_products.sort(key=lambda x: x['created_at'])
-        else:
-            # По умолчанию: по новизне
-            dummy_products.sort(key=lambda x: x['created_at'])
-        
-        paginator = Paginator(dummy_products, 12)  # 12 товаров на страницу
+    # Применяем сортировку для реальных товаров из БД
+    if sort_by == 'popularity':
+        # По популярности: сначала по рейтингу, потом по количеству отзывов, потом по дате создания
+        products_queryset = products_queryset.order_by('-rating', '-reviews_count', '-created_at')
+    elif sort_by == 'price_low':
+        # По цене: от низкой к высокой
+        products_queryset = products_queryset.order_by('price', '-created_at')
+    elif sort_by == 'price_high':
+        # По цене: от высокой к низкой
+        products_queryset = products_queryset.order_by('-price', '-created_at')
+    elif sort_by == 'newest':
+        # По новизне: сначала новые
+        products_queryset = products_queryset.order_by('-created_at')
     else:
-        # Сортировка для реальных товаров из БД
-        if sort_by == 'popularity':
-            # По популярности: сначала по рейтингу, потом по количеству отзывов, потом по дате создания
-            products_queryset = products_queryset.order_by('-rating', '-reviews_count', '-created_at')
-        elif sort_by == 'price_low':
-            # По цене: от низкой к высокой
-            products_queryset = products_queryset.order_by('price', '-created_at')
-        elif sort_by == 'price_high':
-            # По цене: от высокой к низкой
-            products_queryset = products_queryset.order_by('-price', '-created_at')
-        elif sort_by == 'newest':
-            # По новизне: сначала новые
-            products_queryset = products_queryset.order_by('-created_at')
-        else:
-            # По умолчанию: по новизне
-            products_queryset = products_queryset.order_by('-created_at')
-        
-        paginator = Paginator(products_queryset, 12)  # 12 товаров на страницу
+        # По умолчанию: по новизне
+        products_queryset = products_queryset.order_by('-created_at')
+    
+    # Создаем пагинатор
+    paginator = Paginator(products_queryset, 12)  # 12 товаров на страницу
     
     page = request.GET.get('page', 1)
     try:
@@ -437,5 +381,15 @@ def contact(request):
 def delivery(request):
     """Страница доставки"""
     return render(request, 'delivery.html')
+
+
+def faq(request):
+    """Страница часто задаваемых вопросов"""
+    from .models import FAQ
+    faqs = FAQ.objects.filter(is_active=True).order_by('order', 'created_at')
+    context = {
+        'faqs': faqs,
+    }
+    return render(request, 'faq.html', context)
 
 
