@@ -71,6 +71,9 @@
 
     {% block content %}{% endblock %}
 
+    <!-- Notification Container -->
+    <div id="notification-container" class="notification-container"></div>
+
     <!-- Footer -->
     <footer class="footer" id="contact">
         <div class="container">
@@ -92,8 +95,8 @@
                     <ul>
                         <li><a href="{% url 'delivery' %}">{% trans "Delivery and Payment" %}</a></li>
                         <li><a href="#">{% trans "Product Return" %}</a></li>
-                        <li><a href="#">{% trans "Product Specifications" %}</a></li>
-                        <li><a href="#">{% trans "FAQ" %}</a></li>
+                        <li><a href="#">{% trans "Size Chart" %}</a></li>
+                        <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -177,13 +180,21 @@
             
             if (!productId || productId === 'None' || productId === '') {
                 console.error('Product ID is missing or invalid:', productId);
-                alert('Ошибка: ID товара не указан. Этот товар не может быть добавлен в корзину.');
+                if (typeof showNotification !== 'undefined') {
+                    showNotification('{% trans "Error: Product ID is not specified. This product cannot be added to cart." %}', 'error');
+                } else {
+                    alert('Ошибка: ID товара не указан. Этот товар не может быть добавлен в корзину.');
+                }
                 return;
             }
             
             if (!event || !event.target) {
                 console.error('Event is missing or invalid');
-                alert('Ошибка: событие не найдено');
+                if (typeof showNotification !== 'undefined') {
+                    showNotification('{% trans "Error: event not found" %}', 'error');
+                } else {
+                    alert('Ошибка: событие не найдено');
+                }
                 return;
             }
             
@@ -253,7 +264,11 @@
                 console.error('Error adding to cart:', error);
                 button.textContent = 'Ошибка';
                 button.style.backgroundColor = '#e74c3c';
-                alert(error.message || 'Не удалось добавить товар в корзину. Пожалуйста, обновите страницу и попробуйте снова.');
+                if (typeof showNotification !== 'undefined') {
+                    showNotification(error.message || '{% trans "Failed to add product to cart. Please refresh the page and try again." %}', 'error');
+                } else {
+                    alert(error.message || 'Не удалось добавить товар в корзину. Пожалуйста, обновите страницу и попробуйте снова.');
+                }
                 setTimeout(() => {
                     button.textContent = originalText;
                     button.style.backgroundColor = '';
@@ -305,7 +320,11 @@
                             window.addToCart(e, productId, productName || '');
                         } else {
                             console.error('Neither addToCart nor addToCartFromProduct is available');
-                            alert('Ошибка: функция добавления в корзину не загружена. Пожалуйста, обновите страницу.');
+                            if (typeof showNotification !== 'undefined') {
+                                showNotification('{% trans "Error: cart function not loaded. Please refresh the page." %}', 'error');
+                            } else {
+                                alert('Ошибка: функция добавления в корзину не загружена. Пожалуйста, обновите страницу.');
+                            }
                         }
                     });
                     
@@ -318,6 +337,269 @@
         
         // Также делаем функцию доступной сразу (до DOMContentLoaded)
         console.log('Cart functions initialized');
+    </script>
+    
+    <!-- Notification System -->
+    <style>
+        /* Notification Styles */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        .notification {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            animation: slideInRight 0.3s ease-out;
+            position: relative;
+            overflow: hidden;
+            min-width: 300px;
+        }
+
+        .notification::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+        }
+
+        .notification.success {
+            border-left: 4px solid #4caf50;
+        }
+
+        .notification.success::before {
+            background: #4caf50;
+        }
+
+        .notification.error {
+            border-left: 4px solid #f44336;
+        }
+
+        .notification.error::before {
+            background: #f44336;
+        }
+
+        .notification.warning {
+            border-left: 4px solid #ff9800;
+        }
+
+        .notification.warning::before {
+            background: #ff9800;
+        }
+
+        .notification.info {
+            border-left: 4px solid #2196f3;
+        }
+
+        .notification.info::before {
+            background: #2196f3;
+        }
+
+        .notification-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .notification.success .notification-icon {
+            color: #4caf50;
+        }
+
+        .notification.error .notification-icon {
+            color: #f44336;
+        }
+
+        .notification.warning .notification-icon {
+            color: #ff9800;
+        }
+
+        .notification.info .notification-icon {
+            color: #2196f3;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .notification-message {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: color 0.2s;
+        }
+
+        .notification-close:hover {
+            color: #333;
+        }
+
+        .notification-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: rgba(0, 0, 0, 0.1);
+            animation: progressBar 5s linear;
+        }
+
+        .notification.success .notification-progress {
+            background: #4caf50;
+        }
+
+        .notification.error .notification-progress {
+            background: #f44336;
+        }
+
+        .notification.warning .notification-progress {
+            background: #ff9800;
+        }
+
+        .notification.info .notification-progress {
+            background: #2196f3;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes progressBar {
+            from {
+                width: 100%;
+            }
+            to {
+                width: 0%;
+            }
+        }
+
+        .notification.hiding {
+            animation: slideOutRight 0.3s ease-out forwards;
+        }
+
+        @media (max-width: 768px) {
+            .notification-container {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+
+            .notification {
+                min-width: auto;
+            }
+        }
+    </style>
+    <script>
+        // Notification System
+        function showNotification(message, type = 'success', title = null, duration = 5000) {
+            const container = document.getElementById('notification-container');
+            if (!container) return;
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+
+            // Icons for different types
+            const icons = {
+                success: '<i class="fas fa-check-circle"></i>',
+                error: '<i class="fas fa-exclamation-circle"></i>',
+                warning: '<i class="fas fa-exclamation-triangle"></i>',
+                info: '<i class="fas fa-info-circle"></i>'
+            };
+
+            // Default titles
+            const defaultTitles = {
+                success: '{% trans "Success" %}',
+                error: '{% trans "Error" %}',
+                warning: '{% trans "Warning" %}',
+                info: '{% trans "Information" %}'
+            };
+
+            const notificationTitle = title || defaultTitles[type] || defaultTitles.success;
+            const icon = icons[type] || icons.success;
+
+            notification.innerHTML = `
+                <div class="notification-icon">${icon}</div>
+                <div class="notification-content">
+                    <div class="notification-title">${notificationTitle}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+                <button class="notification-close" onclick="closeNotification(this)">&times;</button>
+                <div class="notification-progress"></div>
+            `;
+
+            container.appendChild(notification);
+
+            // Auto remove after duration
+            if (duration > 0) {
+                setTimeout(() => {
+                    closeNotification(notification.querySelector('.notification-close'));
+                }, duration);
+            }
+        }
+
+        function closeNotification(button) {
+            const notification = button.closest('.notification');
+            if (notification) {
+                notification.classList.add('hiding');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }
+        }
+
+        // Make it globally available
+        window.showNotification = showNotification;
+        window.closeNotification = closeNotification;
     </script>
     {% block extra_js %}{% endblock %}
 </body>

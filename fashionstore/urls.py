@@ -7,7 +7,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from store.admin_context import get_admin_index_context
 from store.views_frontend import (
-    index, catalog, product_detail, cart, about, contact, delivery
+    index, catalog, product_detail, cart, about, contact, delivery, faq
 )
 from store.admin_config import unified_config_view
 
@@ -37,6 +37,7 @@ urlpatterns = [
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     path('delivery/', delivery, name='delivery'),
+    path('faq/', faq, name='faq'),
 ]
 
 

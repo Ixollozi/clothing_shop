@@ -1,5 +1,5 @@
 from rest_framework import viewsets, status
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.core.cache import cache
 from datetime import timedelta
-from .models import Category, Product, Cart, CartItem, Order
+from .models import Category, Product, Cart, CartItem, Order, ContactMessage
 from .serializers import (
     CategorySerializer, ProductSerializer, CartSerializer,
     CartItemSerializer, OrderSerializer, CreateOrderSerializer
@@ -248,4 +248,51 @@ class OrderViewSet(viewsets.ModelViewSet):
         
         response_serializer = OrderSerializer(order)
         return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def submit_contact_message(request):
+    """API endpoint для отправки сообщений из формы контактов"""
+    try:
+        name = request.data.get('name')
+        email = request.data.get('email')
+        phone = request.data.get('phone', '')
+        subject = request.data.get('subject')
+        message = request.data.get('message')
+
+        # Валидация обязательных полей
+        if not name or not email or not subject or not message:
+            return Response(
+                {'error': 'Все обязательные поля должны быть заполнены'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Создание сообщения
+        contact_message = ContactMessage.objects.create(
+            name=name,
+            email=email,
+            phone=phone,
+            subject=subject,
+            message=message
+        )
+
+        # Отправка уведомления в Telegram
+        try:
+            from .telegram_notifier import telegram_notifier
+            telegram_notifier.notify_contact_message(contact_message)
+        except Exception as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Ошибка отправки уведомления о сообщении из контактов в Telegram: {e}")
+
+        return Response(
+            {'success': True, 'message': 'Сообщение успешно отправлено'},
+            status=status.HTTP_201_CREATED
+        )
+    except Exception as e:
+        return Response(
+            {'error': str(e)},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 

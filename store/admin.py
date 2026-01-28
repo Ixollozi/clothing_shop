@@ -7,7 +7,7 @@ from modeltranslation.translator import translator
 from .models import (
     Category, Product, ProductImage, Cart, CartItem, Order, OrderItem, Partner, Config,
     StoreConfig, ContactConfig, SocialConfig, HeroConfig, Feature, AboutConfig, SEOConfig, ThemeConfig,
-    ProductFeatureConfig, AboutStat
+    ProductFeatureConfig, AboutStat, TelegramConfig, ContactMessage, FAQ
 )
 
 
@@ -732,3 +732,140 @@ class ProductFeatureConfigAdmin(TabbedTranslationAdmin):
             )
         return "Иконка не указана"
     icon_preview.short_description = 'Превью иконки'
+
+
+@admin.register(TelegramConfig)
+class TelegramConfigAdmin(admin.ModelAdmin):
+    # def has_module_permission(self, request):
+    #     """Скрываем из списка админки, но оставляем доступ к редактированию"""
+    #     return False
+    
+    list_display = ['is_active', 'notify_new_orders', 'notify_status_changes', 'notify_contact_messages', 'bot_token_preview', 'group_chat_id', 'updated_at']
+    readonly_fields = ['updated_at', 'test_connection']
+    fieldsets = (
+        ('Основные настройки', {
+            'fields': ('is_active', 'bot_token', 'group_chat_id'),
+            'description': 'Для получения токена бота обратитесь к @BotFather в Telegram. Для получения ID группы используйте бота @userinfobot или добавьте бота в группу и отправьте любое сообщение, затем используйте getUpdates API.'
+        }),
+        ('Типы уведомлений', {
+            'fields': ('notify_new_orders', 'notify_status_changes', 'notify_contact_messages')
+        }),
+        ('Тестирование', {
+            'fields': ('test_connection',),
+            'description': 'Проверьте подключение к Telegram боту'
+        }),
+        ('Даты', {
+            'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def bot_token_preview(self, obj):
+        """Показывает частично скрытый токен"""
+        if obj.bot_token:
+            if len(obj.bot_token) > 20:
+                return f"{obj.bot_token[:10]}...{obj.bot_token[-10:]}"
+            return obj.bot_token
+        return "Не указан"
+    bot_token_preview.short_description = 'Токен бота'
+
+    def test_connection(self, obj):
+        """Кнопка для тестирования подключения"""
+        if not obj.pk:
+            return "Сохраните конфигурацию для тестирования"
+        
+        if not obj.bot_token or not obj.group_chat_id:
+            return mark_safe(
+                '<span style="color: #f44336;">⚠️ Укажите токен бота и ID группы</span>'
+            )
+        
+        try:
+            import telebot
+            bot = telebot.TeleBot(obj.bot_token)
+            # Пытаемся получить информацию о боте
+            bot_info = bot.get_me()
+            bot_name = bot_info.username if bot_info else "Неизвестно"
+            
+            # Пытаемся отправить тестовое сообщение
+            try:
+                test_message = "✅ Тестовое сообщение от Fashion Store. Бот работает корректно!"
+                bot.send_message(chat_id=obj.group_chat_id, text=test_message)
+                return format_html(
+                    '<div style="background: #4caf50; color: white; padding: 10px; border-radius: 5px; margin: 10px 0;">'
+                    '✅ <strong>Подключение успешно!</strong><br>'
+                    'Бот: @{}<br>'
+                    'Тестовое сообщение отправлено в группу.'
+                    '</div>',
+                    bot_name
+                )
+            except telebot.apihelper.ApiTelegramException as e:
+                error_msg = str(e)
+                return format_html(
+                    '<div style="background: #ff9800; color: white; padding: 10px; border-radius: 5px; margin: 10px 0;">'
+                    '⚠️ <strong>Бот инициализирован, но не может отправить сообщение</strong><br>'
+                    'Ошибка: {}<br>'
+                    'Проверьте, что бот добавлен в группу и имеет права на отправку сообщений.'
+                    '</div>',
+                    error_msg
+                )
+        except Exception as e:
+            error_msg = str(e)
+            return format_html(
+                '<div style="background: #f44336; color: white; padding: 10px; border-radius: 5px; margin: 10px 0;">'
+                '❌ <strong>Ошибка подключения</strong><br>'
+                'Ошибка: {}<br>'
+                'Проверьте правильность токена бота.'
+                '</div>',
+                error_msg
+            )
+    test_connection.short_description = 'Тест подключения'
+
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'phone', 'subject_display', 'is_read', 'created_at']
+    list_filter = ['subject', 'is_read', 'created_at']
+    search_fields = ['name', 'email', 'phone', 'message']
+    readonly_fields = ['created_at', 'updated_at', 'subject_display']
+    list_editable = ['is_read']
+    fieldsets = (
+        ('Информация о отправителе', {
+            'fields': ('name', 'email', 'phone')
+        }),
+        ('Сообщение', {
+            'fields': ('subject', 'subject_display', 'message', 'is_read')
+        }),
+        ('Даты', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    def subject_display(self, obj):
+        return obj.get_subject_display()
+    subject_display.short_description = 'Тема'
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.select_related()
+
+
+@admin.register(FAQ)
+class FAQAdmin(TabbedTranslationAdmin):
+    list_display = ('question', 'order', 'is_active', 'created_at')
+    list_filter = ('is_active', 'created_at')
+    search_fields = ('question', 'answer')
+    list_editable = ('order', 'is_active')
+    ordering = ('order', 'created_at')
+    
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('question', 'answer', 'order', 'is_active')
+        }),
+        ('Даты', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    readonly_fields = ('created_at', 'updated_at')

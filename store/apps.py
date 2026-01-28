@@ -7,5 +7,6 @@ class StoreConfig(AppConfig):
     
     def ready(self):
         import store.translation  # Импортируем переводы
+        import store.signals  # Импортируем сигналы для уведомлений
 
 

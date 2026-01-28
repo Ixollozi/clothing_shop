@@ -93,8 +93,7 @@
                     </div>
 
                     <div class="products-grid">
-                        {% if products %}
-                            {% for product in products %}
+                        {% for product in products %}
                             <div class="product-card">
                                 <div class="product-image">
                                     {% if product.slug %}
@@ -137,10 +136,11 @@
                                     {% endif %}
                                 </div>
                             </div>
-                            {% endfor %}
-                        {% else %}
-                            <p>{% trans "No products found" %}</p>
-                        {% endif %}
+                        {% empty %}
+                            <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 0;">
+                                <p style="font-size: 1.2rem; color: #666;">{% trans "Nothing found" %}</p>
+                            </div>
+                        {% endfor %}
                     </div>
 
                     <!-- Pagination -->
