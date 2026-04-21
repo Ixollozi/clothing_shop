@@ -132,6 +132,7 @@ def catalog(request):
     """Страница каталога"""
     # Получаем товары из БД
     products_queryset = Product.objects.filter(is_active=True)
+    has_real_products = Product.objects.filter(is_active=True).exists()
     
     # Фильтрация по категории
     category_slug = request.GET.get('category', None)
@@ -222,9 +223,12 @@ def catalog(request):
     categories = list(Category.objects.all().order_by('name'))
     if not categories:
         categories = get_dummy_categories()
+
+    dummy_products = get_dummy_products() if not has_real_products else []
     
     context = {
         'products': products_page,
+        'dummy_products': dummy_products,
         'categories': categories,
         'current_category': category_slug,
         'current_sort': sort_by,
@@ -365,10 +369,14 @@ def cart(request):
 
 def about(request):
     """Страница о нас"""
-    from .models import AboutConfig
+    from .models import AboutConfig, AboutStat
     about_config = AboutConfig.objects.filter(is_active=True).first()
+    about_stats = list(AboutStat.objects.filter(is_active=True).order_by('order', 'created_at')[:6])
+    about_values = about_config.get_values_list() if about_config else []
     context = {
         'about_config': about_config,
+        'about_stats': about_stats,
+        'about_values': about_values,
     }
     return render(request, 'about.html', context)
 
