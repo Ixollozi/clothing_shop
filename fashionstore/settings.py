@@ -51,9 +51,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # LocaleMiddleware сразу после Session: язык из cookie (set_language) читается на каждом запросе
+    'django.middleware.locale.LocaleMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',  # Должен быть после SessionMiddleware
-    'store.middleware.LanguageSessionMiddleware',  # Сохранение языка в сессии
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -154,6 +154,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Язык после POST /i18n/setlang/ хранится в cookie (Django 5.x), не в сессии
+LANGUAGE_COOKIE_NAME = 'django_language'
+LANGUAGE_COOKIE_PATH = '/'
+LANGUAGE_COOKIE_HTTPONLY = False
+LANGUAGE_COOKIE_SECURE = False
+LANGUAGE_COOKIE_SAMESITE = 'Lax'
+
 # Session settings для сохранения языка
 # Можно переопределить через config.json
 session_config = DJANGO_CONFIG.get('session', {})
@@ -229,6 +236,18 @@ csrf_origins = DJANGO_CONFIG.get('csrf_trusted_origins', [
 ])
 # Фильтруем "*" так как Django 4.0+ требует полные URL с протоколом
 CSRF_TRUSTED_ORIGINS = [origin for origin in csrf_origins if origin != "*"]
+# Если в конфиге только "*", список станет пустым — добавляем типичные dev-оригины (в т.ч. порт 8001)
+if not CSRF_TRUSTED_ORIGINS:
+    CSRF_TRUSTED_ORIGINS = [
+        'http://127.0.0.1:8000',
+        'http://127.0.0.1:8001',
+        'http://127.0.0.1:8002',
+        'http://localhost:8000',
+        'http://localhost:8001',
+        'http://localhost:8002',
+        'http://127.0.0.1:5500',
+        'http://localhost:5500',
+    ]
 
 # Email settings
 # Можно переопределить через config.json
