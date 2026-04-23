@@ -1,32 +1,47 @@
-{% extends "layout.html" %}
-{% load i18n %}
+{% extends "base.html" %}
 
-{% block title %}FAQ • {{ store_title|default:store_name }}{% endblock %}
-{% block meta_description %}Частые вопросы — {{ store_name }}.{% endblock %}
+{% block meta_description %}FAQ: ответы на частые вопросы о товарах и доставке.{% endblock %}
+
+{% block title %}FAQ | {{ store_name|default:"Fashion Store" }}{% endblock %}
 
 {% block content %}
-      <section class="section" aria-labelledby="faq-page-title">
-        <div class="container">
-          <div class="section-head">
-            <h1 id="faq-page-title">{% trans "Частые вопросы" %}</h1>
-            <p class="section-subtitle">
-              {% url 'contact' as contact_url %}
-              {% blocktrans trimmed %}Если не нашли ответ — <a href="{{ contact_url }}">напишите нам</a>.{% endblocktrans %}
-            </p>
-          </div>
+  <section class="section">
+    <div class="container">
+      <div class="catalog-crumbs" aria-label="Хлебные крошки">
+        <a href="{% url 'index' %}">Главная</a>
+        <span aria-hidden="true">/</span>
+        <span>FAQ</span>
+      </div>
 
-          <div class="grid grid-3">
+      <div class="section-head">
+        <h1 class="section-title" style="margin: 0;">FAQ</h1>
+        <p class="section-sub">Короткие ответы на частые вопросы.</p>
+      </div>
+
+      <div class="catalog-layout" style="grid-template-columns: 1fr 360px;">
+        <section class="catalog-main" aria-label="Список вопросов">
+          {% if faqs %}
             {% for faq in faqs %}
-            <div class="card" style="padding:16px;">
-              <details>
-                <summary style="cursor:pointer; font-weight:900;">{{ faq.question }}</summary>
-                <div class="card-text" style="margin-top:10px;">{{ faq.answer|linebreaks }}</div>
+              <details class="faq-item" {% if forloop.first %}open{% endif %}>
+                <summary class="faq-summary">{{ faq.question }}</summary>
+                <div class="faq-body">{{ faq.answer|linebreaks }}</div>
               </details>
-            </div>
-            {% empty %}
-            <p class="section-subtitle">{% trans "Пока нет опубликованных вопросов. Загляните позже или свяжитесь с поддержкой." %}</p>
             {% endfor %}
+          {% else %}
+            <div class="section-sub">Пока нет вопросов — загляните позже.</div>
+          {% endif %}
+        </section>
+
+        <aside class="catalog-sidebar" aria-label="Помощь">
+          <div class="filter-details" style="padding: 14px 0 0;">
+            <div class="filter-summary" style="cursor: default;">Не нашли ответ?</div>
+            <div class="filter-body" style="margin-top: 12px;">
+              <a class="btn btn-primary btn-full" href="{% url 'contact' %}">Написать нам</a>
+              <a class="btn btn-soft btn-full" href="{% url 'catalog' %}#products">Перейти в каталог</a>
+            </div>
           </div>
-        </div>
-      </section>
+        </aside>
+      </div>
+    </div>
+  </section>
 {% endblock %}

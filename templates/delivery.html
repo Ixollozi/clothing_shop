@@ -1,39 +1,73 @@
-{% extends "layout.html" %}
-{% load i18n %}
+{% extends "base.html" %}
 
-{% block title %}Доставка • {{ store_title|default:store_name }}{% endblock %}
-{% block meta_description %}Доставка и оплата — {{ store_name }}.{% endblock %}
+{% block meta_description %}Доставка и оплата: сроки, стоимость, условия.{% endblock %}
+
+{% block title %}Доставка | {{ store_name|default:"Fashion Store" }}{% endblock %}
 
 {% block content %}
-      <section class="section" aria-labelledby="delivery-title">
-        <div class="container">
-          <div class="section-head">
-            <h1 id="delivery-title">{% trans "Доставка и оплата" %}</h1>
-            <p class="section-subtitle">{% trans "Общие условия. Точные сроки и стоимость уточняйте при оформлении заказа." %}</p>
+  <section class="section">
+    <div class="container">
+      <div class="catalog-crumbs" aria-label="Хлебные крошки">
+        <a href="{% url 'index' %}">Главная</a>
+        <span aria-hidden="true">/</span>
+        <span>Доставка</span>
+      </div>
+
+      <div class="section-head">
+        <h1 class="section-title" style="margin: 0;">Доставка и оплата</h1>
+        <p class="section-sub">Коротко о сроках, стоимости и способах оплаты.</p>
+      </div>
+
+      <div class="catalog-layout" style="grid-template-columns: 1fr 360px;">
+        <section class="catalog-main" aria-label="Условия доставки">
+          <div class="panel-card" style="border-radius: var(--radius2);">
+            <div class="panel-title">Способы доставки</div>
+            <div class="panel-rows" style="margin-top: 14px;">
+              <div class="panel-row">
+                <span class="dot dot-1" aria-hidden="true"></span>
+                <span class="panel-row-text">Курьер по Ташкенту: 1–2 дня</span>
+                <span class="panel-row-arrow" aria-hidden="true"> </span>
+              </div>
+              <div class="panel-row">
+                <span class="dot dot-2" aria-hidden="true"></span>
+                <span class="panel-row-text">По Узбекистану: 3–7 дней</span>
+                <span class="panel-row-arrow" aria-hidden="true"> </span>
+              </div>
+              <div class="panel-row">
+                <span class="dot dot-3" aria-hidden="true"></span>
+                <span class="panel-row-text">Самовывоз: бесплатно</span>
+                <span class="panel-row-arrow" aria-hidden="true"> </span>
+              </div>
+            </div>
           </div>
 
-          <div class="grid grid-3">
-            <div class="card" style="padding:18px;">
-              <h2 class="card-title">{% trans "Доставка" %}</h2>
-              <p class="card-text">{% trans "Отправка после подтверждения заказа. По городу и регионам — курьером или службой доставки. Сроки зависят от выбранного способа." %}</p>
-            </div>
-            <div class="card" style="padding:18px;">
-              <h2 class="card-title">{% trans "Оплата" %}</h2>
-              <p class="card-text">{% trans "Способы оплаты согласовываются с менеджером: предоплата или оплата при получении — в зависимости от региона и состава заказа." %}</p>
-            </div>
-            <div class="card" style="padding:18px;">
-              <h2 class="card-title">{% trans "Упаковка" %}</h2>
-              <p class="card-text">{% trans "Заказы упаковываем так, чтобы товары доехали без повреждений. Крупногабарит — по согласованию." %}</p>
+          <div class="panel-card" style="border-radius: var(--radius2); margin-top: 14px;">
+            <div class="panel-title">Оплата</div>
+            <div class="panel-rows" style="margin-top: 14px;">
+              <div class="panel-row">
+                <span class="dot dot-1" aria-hidden="true"></span>
+                <span class="panel-row-text">Онлайн оплата картой</span>
+              </div>
+              <div class="panel-row">
+                <span class="dot dot-2" aria-hidden="true"></span>
+                <span class="panel-row-text">Наличными при получении (если доступно)</span>
+              </div>
             </div>
           </div>
+        </section>
 
-          <div class="callout" style="margin-top:28px;">
-            <div class="callout-left">
-              <h3 class="callout-title">{% trans "Нужны точные условия?" %}</h3>
-              <p class="callout-text">{% trans "Напишите адрес и состав заказа — подскажем варианты и стоимость." %}</p>
+        <aside class="catalog-sidebar" aria-label="Контакты доставки">
+          <div class="filter-details" style="padding: 14px 0 0;">
+            <div class="filter-summary" style="cursor: default;">Адрес самовывоза</div>
+            <div class="filter-body" style="margin-top: 12px;">
+              <div class="catalog-check" style="cursor: default;">
+                <span>{{ contact_info.address.full|default:"Ташкент, Узбекистан" }}</span>
+              </div>
+              <a class="btn btn-soft btn-full" href="{% url 'contact' %}">Задать вопрос</a>
             </div>
-            <a class="btn btn-primary" href="{% url 'contact' %}">{% trans "Связаться" %}</a>
           </div>
-        </div>
-      </section>
+        </aside>
+      </div>
+    </div>
+  </section>
 {% endblock %}

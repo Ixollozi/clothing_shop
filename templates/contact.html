@@ -1,130 +1,140 @@
-{% extends "layout.html" %}
-{% load i18n %}
+{% extends "base.html" %}
 
-{% block title %}{% trans "Контакты" %} • {{ store_title|default:store_name }}{% endblock %}
-{% block meta_description %}{% blocktrans trimmed with store_name=store_name %}Контакты {{ store_name }}.{% endblocktrans %}{% endblock %}
+{% block meta_description %}Контакты: вопросы по заказам, товарам и доставке.{% endblock %}
+
+{% block title %}Контакты | {{ store_name|default:"Fashion Store" }}{% endblock %}
 
 {% block content %}
-      <section class="section section-muted" aria-labelledby="contact-page-title">
-        <div class="container">
-          <div class="section-head">
-            <h1 id="contact-page-title">{% trans "Контакты" %}</h1>
-            <p class="section-subtitle">{% trans "Телефон, почта и форма обратной связи." %}</p>
-          </div>
+  <section class="section">
+    <div class="container">
+      <div class="catalog-crumbs" aria-label="Хлебные крошки">
+        <a href="{% url 'index' %}">Главная</a>
+        <span aria-hidden="true">/</span>
+        <span>Контакты</span>
+      </div>
 
-          <div class="contact">
-            <div class="contact-left">
-              <div class="contact-grid">
-                <div class="contact-item">
-                  <div class="contact-label">{% trans "Телефон" %}</div>
-                  {% if contact_info.phone %}
-                  <a class="contact-link" href="tel:{{ contact_info.phone }}">{{ contact_info.phone }}</a>
-                  {% else %}<span class="contact-text">—</span>{% endif %}
+      <div class="section-head">
+        <h1 class="section-title" style="margin: 0;">Контакты</h1>
+        <p class="section-sub">Напишите нам — мы ответим и поможем подобрать модель и размер.</p>
+      </div>
+
+      <div class="catalog-layout" style="grid-template-columns: 1fr 360px;">
+        <section class="catalog-main" aria-label="Форма обратной связи">
+          <div class="panel-card" style="border-radius: var(--radius2);">
+            <div class="panel-title">Сообщение</div>
+            <div class="panel-rows" style="margin-top: 14px;">
+              <form id="contact-form" class="newsletter-form" aria-label="Форма контактов">
+                {% csrf_token %}
+                <div class="newsletter-row" style="grid-template-columns: 1fr 1fr;">
+                  <input id="name" class="newsletter-input" type="text" placeholder="Ваше имя *" required />
+                  <input id="email" class="newsletter-input" type="email" placeholder="Email *" required />
                 </div>
-                <div class="contact-item">
-                  <div class="contact-label">{% trans "Почта" %}</div>
-                  {% if contact_info.email %}
-                  <a class="contact-link" href="mailto:{{ contact_info.email }}">{{ contact_info.email }}</a>
-                  {% else %}<span class="contact-text">—</span>{% endif %}
+                <div class="newsletter-row" style="grid-template-columns: 1fr 1fr;">
+                  <input id="phone" class="newsletter-input" type="tel" placeholder="Телефон" />
+                  <select id="subject" class="newsletter-input" required aria-label="Тема сообщения">
+                    <option value="" disabled selected>Тема *</option>
+                    <option value="order">Вопрос по заказу</option>
+                    <option value="product">Вопрос по товару</option>
+                    <option value="delivery">Доставка</option>
+                    <option value="return">Возврат</option>
+                    <option value="other">Другое</option>
+                  </select>
                 </div>
-                <div class="contact-item">
-                  <div class="contact-label">{% trans "Адрес" %}</div>
-                  <div class="contact-text">
-                    {% if contact_info.address %}
-                      {% firstof contact_info.address.full contact_info.address.city '' %}
-                      {% if contact_info.address.street and not contact_info.address.full %} {{ contact_info.address.street }}{% endif %}
-                    {% else %}—{% endif %}
-                  </div>
+                <div class="newsletter-row" style="grid-template-columns: 1fr;">
+                  <textarea
+                    id="message"
+                    class="newsletter-input"
+                    placeholder="Сообщение *"
+                    required
+                    rows="6"
+                    style="resize: vertical; min-height: 140px;"
+                  ></textarea>
                 </div>
-                <div class="contact-item">
-                  <div class="contact-label">{% trans "Время" %}</div>
-                  <div class="contact-text">
-                    {% if contact_info.working_hours %}
-                      {{ contact_info.working_hours.weekdays|default:'' }}{% if contact_info.working_hours.weekend %} · {{ contact_info.working_hours.weekend }}{% endif %}
-                    {% else %}—{% endif %}
-                  </div>
+
+                <div class="newsletter-row" style="grid-template-columns: 1fr auto;">
+                  <div class="newsletter-privacy" id="contact-status" aria-live="polite"></div>
+                  <button class="btn btn-primary" type="submit" id="contact-submit">Отправить</button>
                 </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <aside class="catalog-sidebar" aria-label="Контактная информация">
+          <div class="filter-details" style="padding: 14px 0 0;">
+            <div class="filter-summary" style="cursor: default;">Связаться</div>
+            <div class="filter-body" style="margin-top: 12px;">
+              <div class="catalog-check" style="cursor: default;">
+                <span>Телефон</span>
+                <span style="margin-left: auto;">{{ contact_info.phone|default:"+998 (__) ___-__-__" }}</span>
+              </div>
+              <div class="catalog-check" style="cursor: default;">
+                <span>Email</span>
+                <span style="margin-left: auto;">{{ contact_info.email|default:"support@uzbekfolk.example" }}</span>
+              </div>
+              <div class="catalog-check" style="cursor: default;">
+                <span>Адрес</span>
+                <span style="margin-left: auto;">{{ contact_info.address.full|default:"Ташкент, Узбекистан" }}</span>
               </div>
             </div>
-
-            <form class="contact-form" id="contact-form" action="#" method="post">
-              <div
-                id="contact-i18n"
-                data-error-send="{% trans 'Ошибка отправки' %}"
-                data-success-send="{% trans 'Сообщение отправлено. Спасибо!' %}"
-                data-error-generic="{% trans 'Не удалось отправить' %}"
-                style="display:none;"
-                aria-hidden="true"
-              ></div>
-              <div class="form-row">
-                <label class="sr-only" for="c-name">{% trans "Имя" %}</label>
-                <input id="c-name" name="name" placeholder="{% trans 'Ваше имя' %}" required />
-                <label class="sr-only" for="c-email">{% trans "Email" %}</label>
-                <input id="c-email" name="email" type="email" placeholder="{% trans 'Email' %}" required />
-              </div>
-              <label class="sr-only" for="c-phone">{% trans "Телефон" %}</label>
-              <input id="c-phone" name="phone" type="tel" placeholder="{% trans 'Телефон (необязательно)' %}" />
-              <label class="sr-only" for="c-subject">{% trans "Тема" %}</label>
-              <select id="c-subject" name="subject" class="sort-select" style="width:100%; margin-bottom:10px;" required>
-                <option value="" disabled selected>{% trans "Тема сообщения" %}</option>
-                <option value="order">{% trans "Вопрос по заказу" %}</option>
-                <option value="product">{% trans "Вопрос по товару" %}</option>
-                <option value="delivery">{% trans "Доставка" %}</option>
-                <option value="return">{% trans "Возврат" %}</option>
-                <option value="other">{% trans "Другое" %}</option>
-              </select>
-              <label class="sr-only" for="c-message">{% trans "Сообщение" %}</label>
-              <textarea id="c-message" name="message" placeholder="{% trans 'Сообщение' %}" required rows="4"></textarea>
-              <button class="btn btn-primary" type="submit" id="contact-submit">{% trans "Отправить" %}</button>
-              <p id="contact-form-msg" class="card-text" style="margin-top:10px; display:none;"></p>
-            </form>
           </div>
-
-          {% if contact_info.map_url %}
-          <div class="section" style="margin-top:24px;">
-            <iframe title="{% trans 'Карта' %}" src="{{ contact_info.map_url }}" style="width:100%; min-height:320px; border:0; border-radius: var(--radius);" loading="lazy"></iframe>
-          </div>
-          {% endif %}
-        </div>
-      </section>
+        </aside>
+      </div>
+    </div>
+  </section>
 {% endblock %}
 
 {% block extra_js %}
-    <script>
-    (function() {
-      var form = document.getElementById('contact-form');
-      var msg = document.getElementById('contact-form-msg');
-      var i18n = document.getElementById('contact-i18n');
-      var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-      form.addEventListener('submit', function(e) {
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('contact-form');
+      const submit = document.getElementById('contact-submit');
+      const status = document.getElementById('contact-status');
+
+      function setStatus(text, kind) {
+        if (!status) return;
+        status.textContent = text || '';
+        status.style.color = kind === 'error' ? '#b91c1c' : kind === 'success' ? '#166534' : '';
+      }
+
+      if (!form) return;
+
+      form.addEventListener('submit', async function (e) {
         e.preventDefault();
-        msg.style.display = 'none';
-        var payload = {
-          name: document.getElementById('c-name').value.trim(),
-          email: document.getElementById('c-email').value.trim(),
-          phone: document.getElementById('c-phone').value.trim(),
-          subject: document.getElementById('c-subject').value,
-          message: document.getElementById('c-message').value.trim()
+        setStatus('', 'info');
+
+        const payload = {
+          name: document.getElementById('name')?.value || '',
+          email: document.getElementById('email')?.value || '',
+          phone: document.getElementById('phone')?.value || '',
+          subject: document.getElementById('subject')?.value || '',
+          message: document.getElementById('message')?.value || '',
         };
-        fetch('{% url "submit_contact_message" %}', {
-          method: 'POST',
-          credentials: 'same-origin',
-          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
-          body: JSON.stringify(payload)
-        }).then(function(r) {
-          return r.json().then(function(data) {
-            if (!r.ok) throw new Error(data.error || (i18n && i18n.dataset.errorSend) || '');
-            return data;
-          });
-        }).then(function() {
-          msg.textContent = (i18n && i18n.dataset.successSend) || '';
-          msg.style.display = 'block';
+
+        if (!payload.name || !payload.email || !payload.subject || !payload.message) {
+          setStatus('Заполните все поля со звёздочкой.', 'error');
+          return;
+        }
+
+        submit.disabled = true;
+        const old = submit.textContent;
+        submit.textContent = 'Отправка...';
+
+        try {
+          const res = await window.StoreApi.json('/api/contact/submit/', { method: 'POST', body: payload });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok || !data.success) {
+            throw new Error(data.error || 'Не удалось отправить сообщение');
+          }
           form.reset();
-        }).catch(function(err) {
-          msg.textContent = err.message || (i18n && i18n.dataset.errorGeneric) || '';
-          msg.style.display = 'block';
-        });
+          setStatus('Сообщение отправлено. Спасибо!', 'success');
+        } catch (err) {
+          setStatus(err.message || 'Ошибка при отправке.', 'error');
+        } finally {
+          submit.disabled = false;
+          submit.textContent = old;
+        }
       });
-    })();
-    </script>
+    });
+  </script>
 {% endblock %}

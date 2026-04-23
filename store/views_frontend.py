@@ -108,7 +108,7 @@ def index(request):
     """Главная страница"""
     from .models import HeroConfig
     # Получаем товары из БД, если есть - иначе заглушки
-    products = list(Product.objects.filter(is_active=True).order_by('-rating', '-reviews_count', '-created_at')[:8])
+    products = list(Product.objects.filter(is_active=True).exclude(category__slug='demo').order_by('-rating', '-reviews_count', '-created_at')[:8])
     if not products:
         products = get_dummy_products()
     
@@ -132,7 +132,7 @@ def catalog(request):
     """Страница каталога"""
     # Получаем товары из БД
     products_queryset = Product.objects.filter(is_active=True)
-    has_real_products = Product.objects.filter(is_active=True).exists()
+    has_real_products = Product.objects.filter(is_active=True).exclude(category__slug='demo').exists()
     
     # Фильтрация по категории
     category_slug = request.GET.get('category', None)
@@ -209,22 +209,69 @@ def catalog(request):
         products_queryset = products_queryset.order_by('-created_at')
     
     # Создаем пагинатор
-    paginator = Paginator(products_queryset, 12)  # 12 товаров на страницу
-    
     page = request.GET.get('page', 1)
-    try:
-        products_page = paginator.page(page)
-    except PageNotAnInteger:
-        products_page = paginator.page(1)
-    except EmptyPage:
-        products_page = paginator.page(paginator.num_pages)
+
+    # Если реальных товаров нет — используем заглушки и применяем к ним фильтры (хотя бы цену/поиск)
+    if not has_real_products:
+        dummy_products_list = get_dummy_products()
+
+        # Категории/размер/цвет у заглушек не заданы → при активных фильтрах возвращаем пусто
+        if category_slug or size_filter or color_filter:
+            dummy_products_list = []
+
+        # Цена
+        if min_price:
+            try:
+                dummy_products_list = [p for p in dummy_products_list if float(p.get('price') or 0) >= float(min_price)]
+            except (ValueError, TypeError):
+                pass
+        if max_price:
+            try:
+                dummy_products_list = [p for p in dummy_products_list if float(p.get('price') or 0) <= float(max_price)]
+            except (ValueError, TypeError):
+                pass
+
+        # Поиск
+        if search_query:
+            sq = str(search_query).strip().lower()
+            dummy_products_list = [p for p in dummy_products_list if sq in str(p.get('name', '')).lower()]
+
+        # Сортировка (для заглушек поддержим цену)
+        if sort_by == 'price_low':
+            dummy_products_list = sorted(dummy_products_list, key=lambda p: float(p.get('price') or 0))
+        elif sort_by == 'price_high':
+            dummy_products_list = sorted(dummy_products_list, key=lambda p: float(p.get('price') or 0), reverse=True)
+
+        paginator = Paginator(dummy_products_list, 12)
+        try:
+            products_page = paginator.page(page)
+        except PageNotAnInteger:
+            products_page = paginator.page(1)
+        except EmptyPage:
+            products_page = paginator.page(paginator.num_pages)
+
+        dummy_products = []
+    else:
+        paginator = Paginator(products_queryset, 12)  # 12 товаров на страницу
+        try:
+            products_page = paginator.page(page)
+        except PageNotAnInteger:
+            products_page = paginator.page(1)
+        except EmptyPage:
+            products_page = paginator.page(paginator.num_pages)
     
     # Получаем категории из БД
     categories = list(Category.objects.all().order_by('name'))
     if not categories:
         categories = get_dummy_categories()
 
-    dummy_products = get_dummy_products() if not has_real_products else []
+    if has_real_products:
+        dummy_products = []
+
+    # Для пагинации: сохраняем текущие фильтры/сортировку, но убираем page
+    query_params = request.GET.copy()
+    query_params.pop('page', None)
+    pagination_query = query_params.urlencode()
     
     context = {
         'products': products_page,
@@ -237,6 +284,7 @@ def catalog(request):
         'max_price': max_price,
         'current_size': size_filter,
         'current_color': color_filter,
+        'pagination_query': pagination_query,
     }
     return render(request, 'catalog.html', context)
 
@@ -274,6 +322,38 @@ def product_detail(request, slug=None):
             dummy_product_data = dummy_products[0] if dummy_products else None
         
         if dummy_product_data:
+            # Чтобы кнопка "В корзину" работала даже в демо-режиме,
+            # создаем реальный Product в БД, если товаров ещё нет.
+            # Это ограничивает создание только первым запуском/пустой БД.
+            try:
+                if not Product.objects.filter(is_active=True).exclude(category__slug='demo').exists():
+                    demo_category, _ = Category.objects.get_or_create(
+                        slug='demo',
+                        defaults={'name': 'Демо', 'description': ''},
+                    )
+                    created_product, _ = Product.objects.get_or_create(
+                        slug=dummy_product_data.get('slug') or 'demo-product',
+                        defaults={
+                            'name': dummy_product_data.get('name', 'Demo product'),
+                            'description': 'Demo product description.',
+                            'price': dummy_product_data.get('price', 0) or 0,
+                            'old_price': None,
+                            'category': demo_category,
+                            'image_url': dummy_product_data.get('image_url'),
+                            'available_sizes': 'S,M,L,XL',
+                            'available_colors': 'Черный, Белый, Синий, Красный',
+                            'stock': 10,
+                            'is_active': True,
+                            'rating': 4.0,
+                            'reviews_count': 12,
+                        },
+                    )
+                    product = created_product
+            except Exception:
+                # Если миграции/таблицы не готовы — продолжаем работать в режиме заглушки
+                pass
+
+        if dummy_product_data and not product:
             # Создаем объект-заглушку с нужными атрибутами
             class DummyProduct:
                 def __init__(self, data):

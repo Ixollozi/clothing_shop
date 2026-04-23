@@ -1,171 +1,251 @@
-{% extends "layout.html" %}
-{% load humanize i18n %}
+{% extends "base.html" %}
 
-{% block title %}{% trans "Каталог" %} • {{ store_title|default:store_name }}{% endblock %}
-{% block meta_description %}{% firstof store_description seo_config.meta_description _('Каталог товаров') %}{% endblock %}
+{% block meta_description %}Каталог национальной одежды Узбекистана: чапаны, платья, костюмы и аксессуары.{% endblock %}
+
+{% block title %}Каталог | {{ store_name|default:"Fashion Store" }}{% endblock %}
 
 {% block content %}
-      <section class="section" aria-labelledby="catalog-title">
+      <section class="section">
         <div class="container">
-          <div class="section-head section-head-row">
-            <div>
-              <h1 id="catalog-title" style="margin:0; font-size:28px; letter-spacing:-0.02em;">{% trans "Каталог" %}</h1>
-              <p class="section-subtitle" style="margin-top:8px;">
-                {% trans "Фильтры и сортировка — данные из каталога магазина." %}
+          <div class="catalog-crumbs" aria-label="Хлебные крошки">
+            <a href="{% url 'index' %}">Главная</a>
+            <span aria-hidden="true">/</span>
+            <span>Каталог</span>
+          </div>
+
+          <div class="catalog-head">
+            <div class="catalog-head-left">
+              <h1 class="hero-title" style="margin: 0;">Каталог национальной одежды</h1>
+              <p class="section-sub" style="margin-top: 10px;">
+                От чапанов до аксессуаров: выберите стиль и размер, чтобы быстро оформить заказ.
               </p>
             </div>
-            <div class="pill-row" aria-label="{% trans 'Быстрые фильтры по категории' %}">
-              <a class="pill{% if not current_category %} is-active{% endif %}" href="{% url 'catalog' %}" role="listitem">{% trans "Все" %}</a>
-              {% for category in categories|slice:":6" %}
-              <a class="pill{% if current_category == category.slug %} is-active{% endif %}" href="{% url 'catalog' %}?category={{ category.slug }}" role="listitem">{{ category.name|truncatechars:16 }}</a>
-              {% endfor %}
+
+            <div class="catalog-toolbar" aria-label="Панель управления каталогом">
+              <div class="catalog-count">
+                Показано {{ products|length }} товаров
+              </div>
+              <div class="catalog-sort">
+                <span class="sort-label">Сортировка</span>
+                <form method="get" action="{% url 'catalog' %}">
+                  <input type="hidden" name="category" value="{{ current_category|default:'' }}" />
+                  <input type="hidden" name="search" value="{{ current_search|default:'' }}" />
+                  <input type="hidden" name="min_price" value="{{ min_price|default:'' }}" />
+                  <input type="hidden" name="max_price" value="{{ max_price|default:'' }}" />
+                  <input type="hidden" name="size" value="{{ current_size|default:'' }}" />
+                  <input type="hidden" name="color" value="{{ current_color|default:'' }}" />
+                  <select class="sort-select" aria-label="Сортировка" name="sort" onchange="this.form.submit()">
+                    <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>Сначала новые</option>
+                    <option value="popularity" {% if current_sort == 'popularity' %}selected{% endif %}>Популярные</option>
+                    <option value="price_low" {% if current_sort == 'price_low' %}selected{% endif %}>Сначала дешевле</option>
+                    <option value="price_high" {% if current_sort == 'price_high' %}selected{% endif %}>Сначала дороже</option>
+                  </select>
+                </form>
+              </div>
             </div>
           </div>
 
-          <form method="get" action="{% url 'catalog' %}" class="catalog-layout" id="catalog-filters">
-            <aside class="catalog-filters" aria-label="{% trans 'Фильтры каталога' %}">
-              <div class="filters card">
-                <div class="filters-head">
-                  <div class="footer-links-title" style="margin:0;">{% trans "Фильтры" %}</div>
-                  <div class="filters-subtitle">{% trans "Настройте подбор" %}</div>
-                </div>
+          <div class="catalog-quickbar" aria-label="Быстрые фильтры">
+            <a class="chip {% if not current_category %}chip-active{% endif %}" href="{% url 'catalog' %}#products">Все</a>
+            {% for cat in categories %}
+              <a
+                class="chip {% if current_category == cat.slug %}chip-active{% endif %}"
+                href="{% url 'catalog' %}?category={{ cat.slug }}{% if current_search %}&search={{ current_search|urlencode }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}#products"
+              >{{ cat.name }}</a>
+            {% endfor %}
+          </div>
 
-                <div class="filter-block">
-                  <h3 class="filter-title">{% trans "Категория" %}</h3>
-                  <label class="sr-only" for="filter-category">{% trans "Категория" %}</label>
-                  <select id="filter-category" class="sort-select" name="category" style="width:100%;">
-                    <option value="">{% trans "Все категории" %}</option>
-                    {% for category in categories %}
-                    <option value="{{ category.slug }}"{% if current_category == category.slug %} selected{% endif %}>{{ category.name }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-
-                <div class="filter-block">
-                  <h3 class="filter-title">{% trans "Цена, ₽" %}</h3>
-                  <div class="price-range" aria-label="{% trans 'Диапазон цены' %}">
-                    <div class="range-top">
-                      <span class="range-label">{% trans "от" %}</span>
-                      <input class="price-input" type="number" name="min_price" min="0" step="1" value="{{ min_price|default_if_none:'' }}" placeholder="{% trans '0' %}" />
-                      <span class="range-label">{% trans "до" %}</span>
-                      <input class="price-input" type="number" name="max_price" min="0" step="1" value="{{ max_price|default_if_none:'' }}" placeholder="∞" />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="filter-block">
-                  <h3 class="filter-title">{% trans "Размер" %}</h3>
-                  <label class="sr-only" for="filter-size">{% trans "Размер" %}</label>
-                  <input id="filter-size" class="price-input" type="text" name="size" value="{{ current_size|default_if_none:'' }}" placeholder="{% trans 'например S или XL' %}" style="width:100%;" />
-                </div>
-
-                <div class="filter-block">
-                  <h3 class="filter-title">{% trans "Цвет (код или название)" %}</h3>
-                  <label class="sr-only" for="filter-color">{% trans "Цвет" %}</label>
-                  <input id="filter-color" class="price-input" type="text" name="color" value="{{ current_color|default_if_none:'' }}" placeholder="{% trans '#000000 или Черный' %}" style="width:100%;" />
-                </div>
-
-                <div class="filter-block">
-                  <h3 class="filter-title">{% trans "Поиск" %}</h3>
-                  <label class="sr-only" for="filter-search">{% trans "Поиск" %}</label>
-                  <input id="filter-search" class="price-input" type="search" name="search" value="{{ current_search|default_if_none:'' }}" placeholder="{% trans 'Название или описание' %}" style="width:100%;" />
-                </div>
-
-                <div class="filters-actions">
-                  <a class="btn btn-secondary btn-sm" href="{% url 'catalog' %}">{% trans "Сбросить" %}</a>
-                  <button class="btn btn-primary btn-sm" type="submit">{% trans "Применить" %}</button>
-                </div>
-              </div>
-            </aside>
-
-            <div class="catalog-main">
-              <div class="sort-row">
-                <div class="results-note">{% trans "Найдено:" %} <b>{{ products.paginator.count }}</b> {% trans "товаров" %}</div>
-                <div class="sort-controls" aria-label="{% trans 'Сортировка' %}">
-                  <label class="sort-label" for="sort">{% trans "Сортировать" %}</label>
-                  <select id="sort" class="sort-select" aria-label="{% trans 'Сортировка' %}" name="sort" onchange="this.form.submit();">
-                    <option value="newest"{% if current_sort == 'newest' or not current_sort %} selected{% endif %}>{% trans "Сначала новинки" %}</option>
-                    <option value="popularity"{% if current_sort == 'popularity' %} selected{% endif %}>{% trans "По популярности" %}</option>
-                    <option value="price_low"{% if current_sort == 'price_low' %} selected{% endif %}>{% trans "Сначала дешевле" %}</option>
-                    <option value="price_high"{% if current_sort == 'price_high' %} selected{% endif %}>{% trans "Сначала дороже" %}</option>
-                  </select>
-                </div>
+          <div class="catalog-layout">
+            <section class="catalog-main" aria-label="Список товаров">
+              <div class="catalog-products-top" id="products" aria-label="Заголовок результатов">
+                <div class="catalog-products-title">Результаты</div>
+                <div class="catalog-products-sub">Подборка моделей по популярности и отзывам</div>
               </div>
 
-              <div class="catalog-products" id="products">
-                <div class="grid grid-3">
-                  {% if dummy_products %}
-                  {% for product in dummy_products %}
-                  <article class="card product-card">
-                    <div class="product-media{% if not product.image and not product.image_url %} wood-swatch-{% if forloop.counter > 6 %}6{% else %}{{ forloop.counter }}{% endif %}{% endif %}"{% if product.image %} style="background-image:url('{{ product.image.url }}');background-size:cover;background-position:center;"{% elif product.image_url %} style="background-image:url('{{ product.image_url }}');background-size:cover;background-position:center;"{% endif %} aria-hidden="true"></div>
-                    <div class="product-body">
-                      <div class="product-top">
-                        {% if product.old_price %}<span class="tag tag-sale">{% trans "Акция" %}</span>{% endif %}
-                      </div>
-                      <h3 class="card-title"><a href="{% url 'product' slug=product.slug %}">{{ product.name }}</a></h3>
-                      <p class="card-text">{{ product.description|default:''|truncatewords:18|striptags }}</p>
-                      <div class="product-bottom">
-                        <div class="price">
-                          <span class="price-now">{{ product.price|floatformat:0|intcomma }} ₽</span>
-                          {% if product.old_price %}<span class="price-old">{{ product.old_price|floatformat:0|intcomma }} ₽</span>{% endif %}
-                        </div>
-                        <a class="btn btn-sm btn-primary" href="{% url 'product' slug=product.slug %}">{% trans "Подробнее" %}</a>
-                      </div>
-                    </div>
-                  </article>
-                  {% endfor %}
-                  {% else %}
+              <div class="product-grid">
+                {% if products %}
                   {% for product in products %}
-                  <article class="card product-card">
-                    <div class="product-media{% if not product.image and not product.image_url %} wood-swatch-{% if forloop.counter > 6 %}6{% else %}{{ forloop.counter }}{% endif %}{% endif %}"{% if product.image %} style="background-image:url('{{ product.image.url }}');background-size:cover;background-position:center;"{% elif product.image_url %} style="background-image:url('{{ product.image_url }}');background-size:cover;background-position:center;"{% endif %} aria-hidden="true"></div>
-                    <div class="product-body">
-                      <div class="product-top">
-                        {% if product.old_price %}<span class="tag tag-sale">{% trans "Акция" %}</span>{% endif %}
-                        {% if product.rating and product.rating >= 4 %}<span class="tag tag-ink">{% trans "Хит" %}</span>{% endif %}
-                      </div>
-                      <h3 class="card-title"><a href="{% url 'product' slug=product.slug %}">{{ product.name }}</a></h3>
-                      <p class="card-text">{{ product.description|default:''|truncatewords:18|striptags }}</p>
-                      <div class="product-bottom">
-                        <div class="price">
-                          <span class="price-now">{{ product.price|floatformat:0|intcomma }} ₽</span>
-                          {% if product.old_price %}<span class="price-old">{{ product.old_price|floatformat:0|intcomma }} ₽</span>{% endif %}
+                    {% cycle '1' '2' '3' '4' '5' '6' as bg silent %}
+                    <article class="product">
+                      <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                        <div class="product-media" aria-hidden="true">
+                          {% if product.image %}
+                            <img class="product-img" src="{{ product.image.url }}" alt="" loading="lazy" />
+                          {% elif product.image_url %}
+                            <img class="product-img" src="{{ product.image_url }}" alt="" loading="lazy" />
+                          {% else %}
+                            <div class="product-bg product-bg-{{ bg }}"></div>
+                          {% endif %}
+                          <span class="product-tag">Товар</span>
                         </div>
-                        <a class="btn btn-sm btn-primary" href="{% url 'product' slug=product.slug %}">{% trans "Подробнее" %}</a>
+                      </a>
+                      <div class="product-body">
+                        <h3 class="product-title">
+                          <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                            {{ product.name }}
+                          </a>
+                        </h3>
+                        <div class="product-rating">
+                          <div class="stars" aria-label="Рейтинг {{ product.rating|default:0 }} из 5">
+                            <span class="stars-fill" style="--fill: {% widthratio product.rating|default:0 5 100 %}%"></span>
+                          </div>
+                          <span class="rating-text">{{ product.rating|default:"—" }}</span>
+                        </div>
+                        <div class="product-bottom">
+                          <div class="product-price">
+                            <span class="price">{{ product.price }}</span>
+                            <span class="currency">сум</span>
+                          </div>
+                          {% if product.id %}
+                            <a
+                              class="btn btn-cart js-add-to-cart"
+                              href="{% url 'cart' %}"
+                              data-product-id="{{ product.id }}"
+                              data-quantity="1"
+                            >В корзину</a>
+                          {% else %}
+                            <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">Подробнее</a>
+                          {% endif %}
+                        </div>
                       </div>
-                    </div>
-                  </article>
-                  {% empty %}
-                  <p class="section-subtitle">{% trans "Товары скоро появятся в каталоге." %}</p>
+                    </article>
                   {% endfor %}
-                  {% endif %}
-                </div>
+                {% elif dummy_products %}
+                  {% for product in dummy_products %}
+                    {% cycle '1' '2' '3' '4' '5' '6' as bg silent %}
+                    <article class="product">
+                      <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                        <div class="product-media" aria-hidden="true">
+                          {% if product.image %}
+                            <img class="product-img" src="{{ product.image.url }}" alt="" loading="lazy" />
+                          {% elif product.image_url %}
+                            <img class="product-img" src="{{ product.image_url }}" alt="" loading="lazy" />
+                          {% else %}
+                            <div class="product-bg product-bg-{{ bg }}"></div>
+                          {% endif %}
+                          <span class="product-tag">Товар</span>
+                        </div>
+                      </a>
+                      <div class="product-body">
+                        <h3 class="product-title">
+                          <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                            {{ product.name }}
+                          </a>
+                        </h3>
+                        <div class="product-bottom">
+                          <div class="product-price">
+                            <span class="price">{{ product.price }}</span>
+                            <span class="currency">сум</span>
+                          </div>
+                          <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">Подробнее</a>
+                        </div>
+                      </div>
+                    </article>
+                  {% endfor %}
+                {% else %}
+                  <div class="section-sub">Товары скоро появятся.</div>
+                {% endif %}
               </div>
 
-              {% if not dummy_products and products.paginator.num_pages > 1 %}
-              <nav class="pagination" aria-label="{% trans 'Пагинация' %}">
+              <div class="catalog-pagination" aria-label="Пагинация">
                 {% if products.has_previous %}
-                <a class="page-link" href="{% url 'catalog' %}?page={{ products.previous_page_number }}{% if current_category %}&amp;category={{ current_category }}{% endif %}{% if current_search %}&amp;search={{ current_search|urlencode }}{% endif %}{% if min_price %}&amp;min_price={{ min_price }}{% endif %}{% if max_price %}&amp;max_price={{ max_price }}{% endif %}{% if current_size %}&amp;size={{ current_size|urlencode }}{% endif %}{% if current_color %}&amp;color={{ current_color|urlencode }}{% endif %}{% if current_sort %}&amp;sort={{ current_sort }}{% endif %}" aria-label="{% trans 'Предыдущая страница' %}">{% trans "Назад" %}</a>
-                {% else %}
-                <span class="page-link" aria-disabled="true">{% trans "Назад" %}</span>
+                  <a class="chip" href="?page={{ products.previous_page_number }}{% if pagination_query %}&{{ pagination_query }}{% endif %}#products">←</a>
                 {% endif %}
 
                 {% for num in products.paginator.page_range %}
                   {% if num == products.number %}
-                <span class="page-link is-active" aria-current="page">{{ num }}</span>
+                    <a class="chip chip-active" href="?page={{ num }}{% if pagination_query %}&{{ pagination_query }}{% endif %}#products">{{ num }}</a>
                   {% else %}
-                <a class="page-link" href="{% url 'catalog' %}?page={{ num }}{% if current_category %}&amp;category={{ current_category }}{% endif %}{% if current_search %}&amp;search={{ current_search|urlencode }}{% endif %}{% if min_price %}&amp;min_price={{ min_price }}{% endif %}{% if max_price %}&amp;max_price={{ max_price }}{% endif %}{% if current_size %}&amp;size={{ current_size|urlencode }}{% endif %}{% if current_color %}&amp;color={{ current_color|urlencode }}{% endif %}{% if current_sort %}&amp;sort={{ current_sort }}{% endif %}">{{ num }}</a>
+                    <a class="chip" href="?page={{ num }}{% if pagination_query %}&{{ pagination_query }}{% endif %}#products">{{ num }}</a>
                   {% endif %}
                 {% endfor %}
 
                 {% if products.has_next %}
-                <a class="page-link" href="{% url 'catalog' %}?page={{ products.next_page_number }}{% if current_category %}&amp;category={{ current_category }}{% endif %}{% if current_search %}&amp;search={{ current_search|urlencode }}{% endif %}{% if min_price %}&amp;min_price={{ min_price }}{% endif %}{% if max_price %}&amp;max_price={{ max_price }}{% endif %}{% if current_size %}&amp;size={{ current_size|urlencode }}{% endif %}{% if current_color %}&amp;color={{ current_color|urlencode }}{% endif %}{% if current_sort %}&amp;sort={{ current_sort }}{% endif %}" aria-label="{% trans 'Следующая страница' %}">{% trans "Далее" %}</a>
-                {% else %}
-                <span class="page-link" aria-disabled="true">{% trans "Далее" %}</span>
+                  <a class="chip" href="?page={{ products.next_page_number }}{% if pagination_query %}&{{ pagination_query }}{% endif %}#products">→</a>
                 {% endif %}
-              </nav>
-              {% endif %}
-            </div>
-          </form>
+              </div>
+            </section>
+
+            <aside class="catalog-sidebar" aria-label="Фильтры">
+              <form method="get" action="{% url 'catalog' %}">
+                <details open class="filter-details">
+                  <summary class="filter-summary">Категория</summary>
+                  <div class="filter-body">
+                    <label class="catalog-check">
+                      <input type="radio" name="category" value="" {% if not current_category %}checked{% endif %} />
+                      <span>Все</span>
+                    </label>
+                    {% for cat in categories %}
+                      <label class="catalog-check">
+                        <input type="radio" name="category" value="{{ cat.slug }}" {% if current_category == cat.slug %}checked{% endif %} />
+                        <span>{{ cat.name }}</span>
+                      </label>
+                    {% endfor %}
+                  </div>
+                </details>
+
+                <details class="filter-details">
+                  <summary class="filter-summary">Цена</summary>
+                  <div class="filter-body">
+                    <div class="range-row">
+                      <input class="range-input" type="number" name="min_price" placeholder="от" value="{{ min_price|default:'' }}" />
+                      <span class="range-dash">—</span>
+                      <input class="range-input" type="number" name="max_price" placeholder="до" value="{{ max_price|default:'' }}" />
+                    </div>
+                  </div>
+                </details>
+
+                <details class="filter-details">
+                  <summary class="filter-summary">Размер</summary>
+                  <div class="filter-body">
+                    <div class="range-row">
+                      <input class="range-input" type="text" name="size" placeholder="S/M/L/XL" value="{{ current_size|default:'' }}" />
+                    </div>
+                  </div>
+                </details>
+
+                <details class="filter-details">
+                  <summary class="filter-summary">Цвет</summary>
+                  <div class="filter-body">
+                    <div class="range-row">
+                      <input class="range-input" type="text" name="color" placeholder="#000000 или Черный" value="{{ current_color|default:'' }}" />
+                    </div>
+                  </div>
+                </details>
+
+                <input type="hidden" name="search" value="{{ current_search|default:'' }}" />
+                <input type="hidden" name="sort" value="{{ current_sort|default:'newest' }}" />
+                <button class="btn btn-soft btn-full" type="submit">Применить</button>
+              </form>
+            </aside>
+          </div>
         </div>
       </section>
 {% endblock %}
+
+{% block extra_js %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.js-add-to-cart').forEach(function (el) {
+        el.addEventListener('click', async function (e) {
+          e.preventDefault();
+          const productId = this.getAttribute('data-product-id');
+          const quantity = Number(this.getAttribute('data-quantity') || 1);
+          if (!productId) return;
+
+          const res = await window.StoreApi.json('/api/cart/add_item/', {
+            method: 'POST',
+            body: { product_id: Number(productId), quantity: quantity, size: '', color: '' },
+          });
+
+          if (res.ok) {
+            await window.StoreApi.updateCartBadge();
+          } else {
+            window.location.href = this.getAttribute('href') || '{% url "cart" %}';
+          }
+        });
+      });
+    });
+  </script>
+{% endblock %}
+

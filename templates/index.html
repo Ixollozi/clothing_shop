@@ -1,224 +1,277 @@
-{% extends "layout.html" %}
-{% load humanize i18n %}
+{% extends "base.html" %}
 
-{% block title %}{{ store_title|default:store_name }} • {{ store_name }}{% endblock %}
+{% block meta_description %}Интернет-магазин национальной одежды Узбекистана: современный стиль, традиционные ткани, понятный выбор размеров.{% endblock %}
+
+{% block title %}{{ store_title|default:store_name }}{% endblock %}
 
 {% block content %}
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="container hero-inner">
+      <section class="hero">
+        <div class="container hero-grid">
           <div class="hero-copy">
-            <h1 id="hero-title">{% if hero_config_obj %}{{ hero_config_obj.title }}{% else %}{{ hero_config.title|default:store_name }}{% endif %}</h1>
+            <div class="hero-badges" aria-label="Преимущества">
+              <span class="badge">Ручная работа</span>
+              <span class="badge badge-accent">Хлопок и шелк</span>
+              <span class="badge">Доставка по Узбекистану</span>
+            </div>
+
+            <h1 class="hero-title">Национальная одежда Узбекистана - современно и красиво</h1>
             <p class="hero-lead">
-              {% if hero_config_obj %}{{ hero_config_obj.subtitle }}{% else %}{{ hero_config.subtitle|default:store_description|truncatewords:40 }}{% endif %}
+              Подберите образ для праздника или повседневной жизни. Акцент на ткани, аккуратный крой и понятные
+              размеры.
             </p>
 
-            <div class="hero-cta">
-              <a class="btn btn-primary" href="{% url 'catalog' %}">{% if hero_config_obj %}{{ hero_config_obj.button_text }}{% else %}{{ hero_config.button_text|default:_("Каталог") }}{% endif %}</a>
-              <a class="btn btn-secondary" href="#how">{% trans "Почему именно мы" %}</a>
-            </div>
-
-            <div class="hero-stats" role="list" aria-label="{% trans 'Преимущества' %}">
-              <div class="stat" role="listitem">
-                <div class="stat-num">48ч</div>
-                <div class="stat-label">{% trans "доставка по городу" %}</div>
-              </div>
-              <div class="stat" role="listitem">
-                <div class="stat-num">4.9</div>
-                <div class="stat-label">{% trans "оценка покупателей" %}</div>
-              </div>
-              <div class="stat" role="listitem">
-                <div class="stat-num">+100</div>
-                <div class="stat-label">{% trans "готовых идей" %}</div>
-              </div>
+            <div class="hero-ctas">
+              <a class="btn btn-primary" href="#featured">Смотреть витрину</a>
             </div>
           </div>
 
-          <div class="hero-art" aria-hidden="true">
-            {% with hero_product=products|first %}
-            <div class="hero-wood"{% if hero_product and hero_product.image %} style="background-image:url('{{ hero_product.image.url }}');background-size:cover;background-position:center;"{% elif hero_product and hero_product.image_url %} style="background-image:url('{{ hero_product.image_url }}');background-size:cover;background-position:center;"{% elif hero_config_obj and hero_config_obj.background_image %} style="background-image:url('{{ hero_config_obj.background_image.url }}');background-size:cover;background-position:center;"{% elif hero_config_obj and hero_config_obj.background_image_url %} style="background-image:url('{{ hero_config_obj.background_image_url }}');background-size:cover;background-position:center;"{% elif hero_config.background_image %} style="background-image:url('{{ hero_config.background_image }}');background-size:cover;background-position:center;"{% endif %}></div>
-            {% endwith %}
-            <div class="hero-overlay">
-              <div class="mini-card">
-                <div class="mini-card-top">
-                  <span class="dot dot-green"></span>
-                  <span class="mini-card-title">{% trans "Популярно сегодня" %}</span>
-                </div>
-                {% with p=products|first %}
-                {% if p %}
-                <div class="mini-card-row">
-                  <span class="mini-name">{{ p.name }}</span>
-                  <span class="mini-price">{% trans "от" %} {{ p.price|floatformat:0|intcomma }} ₽</span>
-                </div>
-                <a class="mini-link" href="{% url 'product' slug=p.slug %}">{% trans "Смотреть" %}</a>
-                {% else %}
-                <div class="mini-card-row">
-                  <span class="mini-name">{% trans "Каталог" %}</span>
-                  <span class="mini-price">—</span>
-                </div>
-                <a class="mini-link" href="{% url 'catalog' %}">{% trans "Смотреть" %}</a>
-                {% endif %}
+          <div class="hero-visual">
+            <div class="pattern-card">
+              <div class="pattern-top">
+                <span class="pattern-chip">Сейчас в тренде</span>
+                {% with hero_product=products.0 %}
+                  {% if hero_product %}
+                    <span class="pattern-title">{{ hero_product.name }}</span>
+                  {% else %}
+                    <span class="pattern-title">Товар дня</span>
+                  {% endif %}
                 {% endwith %}
               </div>
-              <div class="shape-ring"></div>
-              <div class="shape-triangle"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="categories" aria-labelledby="categories-title">
-        <div class="container">
-          <div class="section-head">
-            <h2 id="categories-title">{% trans "Категории товаров" %}</h2>
-            <p class="section-subtitle">{% trans "Выберите направление — мы подскажем набор под вашу задачу." %}</p>
-          </div>
-
-          <div class="grid grid-4">
-            {% for category in categories %}
-            <a class="card category-card" href="{% url 'catalog' %}?category={{ category.slug }}">
-              <span class="category-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 7h10v10H7V7Z" stroke="currentColor" stroke-width="1.8" />
-                  <path d="M4 9V4h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M20 15v5h-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-              <span class="card-title">{{ category.name }}</span>
-              <span class="card-text">{{ category.description|default:_("Смотреть товары в категории")|truncatewords:20 }}</span>
-            </a>
-            {% endfor %}
-          </div>
-        </div>
-      </section>
-
-      <section class="section section-muted" id="products" aria-labelledby="products-title">
-        <div class="container">
-          <div class="section-head section-head-row">
-            <div>
-              <h2 id="products-title">{% trans "Популярные товары" %}</h2>
-              <p class="section-subtitle">{% trans "Подобрали то, что чаще всего покупают для работы и обучения." %}</p>
-            </div>
-            <div class="pill-row" role="list" aria-label="{% trans 'Фильтры (визуальные)' %}">
-              <span class="pill" role="listitem">{% trans "Все" %}</span>
-              <span class="pill" role="listitem">{% trans "Наборы" %}</span>
-              <span class="pill" role="listitem">{% trans "Стамески" %}</span>
-              <span class="pill" role="listitem">{% trans "Заготовки" %}</span>
-            </div>
-          </div>
-
-          <div class="grid grid-4">
-            {% for product in products %}
-            <article class="card product-card">
-              <div class="product-media{% if not product.image and not product.image_url %} wood-swatch wood-swatch-{% if forloop.counter > 8 %}8{% else %}{{ forloop.counter }}{% endif %}{% endif %}"{% if product.image %} style="background-image:url('{{ product.image.url }}');background-size:cover;background-position:center;"{% elif product.image_url %} style="background-image:url('{{ product.image_url }}');background-size:cover;background-position:center;"{% endif %} aria-hidden="true"></div>
-              <div class="product-body">
-                <div class="product-top">
-                  {% if product.old_price %}<span class="tag tag-sale">Акция</span>{% endif %}
-                  {% if product.rating and product.rating >= 4 %}<span class="tag tag-ink">Хит</span>{% endif %}
-                </div>
-                <h3 class="card-title"><a href="{% url 'product' slug=product.slug %}">{{ product.name }}</a></h3>
-                <p class="card-text">{{ product.description|truncatewords:14|striptags }}</p>
-                <div class="product-bottom">
-                  <div class="price">
-                    <span class="price-now">{{ product.price|floatformat:0|intcomma }} ₽</span>
-                    {% if product.old_price %}<span class="price-old">{{ product.old_price|floatformat:0|intcomma }} ₽</span>{% endif %}
-                  </div>
-                  <a class="btn btn-sm btn-primary" href="{% url 'product' slug=product.slug %}">{% trans "Подробнее" %}</a>
-                </div>
+              <div class="pattern-art" aria-label="Товар дня">
+                {% with hero_product=products.0 %}
+                  {% if hero_product %}
+                    <a class="hero-product" href="{% url 'product_detail' slug=hero_product.slug %}">
+                      <div class="hero-product-media" aria-hidden="true">
+                        {% if hero_product.image %}
+                          <img class="hero-product-img" src="{{ hero_product.image.url }}" alt="" loading="lazy" />
+                        {% elif hero_product.image_url %}
+                          <img class="hero-product-img" src="{{ hero_product.image_url }}" alt="" loading="lazy" />
+                        {% else %}
+                          <div class="hero-product-fallback"></div>
+                        {% endif %}
+                      </div>
+                      <div class="hero-product-body">
+                        <div class="hero-product-title">Товар дня</div>
+                        <div class="hero-product-price">
+                          <span class="price">{{ hero_product.price }}</span>
+                          <span class="currency">сум</span>
+                        </div>
+                      </div>
+                    </a>
+                  {% else %}
+                    <div class="hero-product-empty">Товар скоро появится.</div>
+                  {% endif %}
+                {% endwith %}
               </div>
-            </article>
-            {% empty %}
-            <p class="section-subtitle">{% trans "Товары скоро появятся в каталоге." %}</p>
-            {% endfor %}
+
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="section" id="how" aria-labelledby="how-title">
+      <section class="section section-featured" id="featured">
         <div class="container">
-          <div class="section-head">
-            <h2 id="how-title">{% trans "Почему именно мы" %}</h2>
-            <p class="section-subtitle">{% trans "Быстрый путь к уверенной первой работе." %}</p>
+          <div class="section-head section-head-wide">
+            <div>
+              <h2 class="section-title">Витрина товаров</h2>
+              <p class="section-sub">Подборка популярных моделей с красивыми фактурами.</p>
+            </div>
+
+            <div class="filter-row" aria-label="Фильтры">
+              <span class="filter-label">Категории:</span>
+              <a class="chip chip-active" href="{% url 'catalog' %}#products">Все</a>
+              {% for category in categories %}
+                <a class="chip" href="{% url 'catalog' %}?category={{ category.slug }}#products">{{ category.name }}</a>
+              {% endfor %}
+            </div>
           </div>
 
-          <div class="grid grid-3">
-            {% for feature in features|slice:":3" %}
-            <div class="step">
-              <div class="step-num">{{ forloop.counter }}</div>
-              <h3 class="card-title">{{ feature.title }}</h3>
-              <p class="card-text">{{ feature.description|truncatewords:22 }}</p>
-            </div>
-            {% empty %}
-            <div class="step">
-              <div class="step-num">1</div>
-              <h3 class="card-title">{% trans "Определите технику" %}</h3>
-              <p class="card-text">{% trans "Плоская резьба, контуры, объем или орнаменты — подбираем форму резца." %}</p>
-            </div>
-            <div class="step">
-              <div class="step-num">2</div>
-              <h3 class="card-title">{% trans "Смотрите на размер" %}</h3>
-              <p class="card-text">{% trans "Ширина и радиус влияют на чистоту линии: начните с универсальных размеров." %}</p>
-            </div>
-            <div class="step">
-              <div class="step-num">3</div>
-              <h3 class="card-title">{% trans "Добавьте финиш" %}</h3>
-              <p class="card-text">{% trans "Шлифовка и масло/лак дают красивый рисунок волокон и защиту поверхности." %}</p>
-            </div>
-            {% endfor %}
-          </div>
-
-          <div class="callout">
-            <div class="callout-left">
-              <h3 class="callout-title">{% trans "Хотите подбор под ваш проект?" %}</h3>
-              <p class="callout-text">{% trans "Оставьте сообщение — мы предложим наборы под задачу и уровень навыков." %}</p>
-            </div>
-            <a class="btn btn-primary" href="{% url 'contact' %}">{% trans "Написать нам" %}</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section-muted" id="contact" aria-labelledby="contact-title">
-        <div class="container">
-          <div class="contact">
-            <div class="contact-left">
-              <h2 id="contact-title">{% trans "Свяжитесь с нами" %}</h2>
-              <p class="section-subtitle">{% trans "Ответим по выбору инструмента, наличию и доставке. Можно просто написать «что хочу сделать»." %}</p>
-
-              <div class="contact-grid">
-                <div class="contact-item">
-                  <div class="contact-label">{% trans "Телефон" %}</div>
-                  {% if contact_info.phone %}
-                  <a class="contact-link" href="tel:{{ contact_info.phone }}">{{ contact_info.phone }}</a>
-                  {% else %}
-                  <span class="contact-text">—</span>
-                  {% endif %}
-                </div>
-                <div class="contact-item">
-                  <div class="contact-label">{% trans "Почта" %}</div>
-                  {% if contact_info.email %}
-                  <a class="contact-link" href="mailto:{{ contact_info.email }}">{{ contact_info.email }}</a>
-                  {% else %}
-                  <span class="contact-text">—</span>
-                  {% endif %}
-                </div>
-                <div class="contact-item">
-                  <div class="contact-label">{% trans "Время" %}</div>
-                  <div class="contact-text">
-                    {% if contact_info.working_hours %}
-                      {{ contact_info.working_hours.weekdays|default:"" }}{% if contact_info.working_hours.weekend %} · {{ contact_info.working_hours.weekend }}{% endif %}
+          <div class="product-grid">
+            {% for product in products %}
+              {% cycle '1' '2' '3' '4' '5' '6' as bg silent %}
+              <article class="product">
+                <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                  <div class="product-media" aria-hidden="true">
+                    {% if product.image %}
+                      <img class="product-img" src="{{ product.image.url }}" alt="" loading="lazy" />
+                    {% elif product.image_url %}
+                      <img class="product-img" src="{{ product.image_url }}" alt="" loading="lazy" />
                     {% else %}
-                      {% trans "Пн–Пт: 10:00–19:00" %}
+                      <div class="product-bg product-bg-{{ bg }}"></div>
+                    {% endif %}
+                    <span class="product-tag">Хит</span>
+                  </div>
+                </a>
+                <div class="product-body">
+                  <h3 class="product-title">
+                    <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                      {{ product.name }}
+                    </a>
+                  </h3>
+                  <div class="product-rating">
+                    <div class="stars" aria-label="Рейтинг {{ product.rating|default:0 }} из 5">
+                      <span class="stars-fill" style="--fill: {% widthratio product.rating|default:0 5 100 %}%"></span>
+                    </div>
+                    <span class="rating-text">{{ product.rating|default:"—" }}</span>
+                  </div>
+                  <div class="product-bottom">
+                    <div class="product-price">
+                      <span class="price">{{ product.price }}</span>
+                      <span class="currency">сум</span>
+                    </div>
+                    {% if product.id %}
+                      <a
+                        class="btn btn-cart js-add-to-cart"
+                        href="{% url 'cart' %}"
+                        data-product-id="{{ product.id }}"
+                        data-quantity="1"
+                      >В корзину</a>
+                    {% else %}
+                      <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">Подробнее</a>
                     {% endif %}
                   </div>
                 </div>
+              </article>
+            {% empty %}
+              <div class="section-sub">Товары скоро появятся.</div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-why">
+        <div class="container">
+          <div class="why-grid">
+            <div class="why-copy">
+              <h2 class="section-title">Почему покупают у нас</h2>
+              <p class="section-sub">
+                Упор на ткань, аккуратный крой и понятный сервис, чтобы выбрать модель было легко.
+              </p>
+              <div class="why-list">
+                <div class="why-item">
+                  <span class="why-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M12 2L20 6V14C20 18 16.5 21.5 12 22C7.5 21.5 4 18 4 14V6L12 2Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M9.2 12.2L11.1 14.1L15.3 9.9"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <div class="why-title">Проверенные материалы</div>
+                    <div class="why-sub">Подбираем ткани, приятные к телу.</div>
+                  </div>
+                </div>
+                <div class="why-item">
+                  <span class="why-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3 12H21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                      <path
+                        d="M14 7L19 12L14 17"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M10 7L5 12L10 17"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <div class="why-title">Удобная покупка</div>
+                    <div class="why-sub">Карточки и фильтры, чтобы не запутаться.</div>
+                  </div>
+                </div>
+                <div class="why-item">
+                  <span class="why-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                      />
+                      <path
+                        d="M12 7V12L15 14"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <div class="why-title">Быстрая доставка</div>
+                    <div class="why-sub">Оперативно и бережно упаковываем.</div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="contact-form">
-              <p class="card-text" style="margin:0 0 1rem;">{% trans "Полная форма обратной связи и карта — на странице контактов." %}</p>
-              <a class="btn btn-primary" href="{% url 'contact' %}">{% trans "Написать нам" %}</a>
+            <div class="why-panel">
+              <div class="panel-card">
+                <div class="panel-kicker">Готовые подборки</div>
+                <div class="panel-title">Образы под повод и сезон</div>
+                <div class="panel-rows">
+                  <div class="panel-row">
+                    <span class="dot dot-1" aria-hidden="true"></span>
+                    <span class="panel-row-text">Праздник и торжество</span>
+                  </div>
+                  <div class="panel-row">
+                    <span class="dot dot-2" aria-hidden="true"></span>
+                    <span class="panel-row-text">Повседневный стиль</span>
+                  </div>
+                  <div class="panel-row">
+                    <span class="dot dot-3" aria-hidden="true"></span>
+                    <span class="panel-row-text">Теплый сезон</span>
+                  </div>
+                </div>
+                <a class="btn btn-primary btn-full" href="#featured">Выбрать образ</a>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.js-add-to-cart').forEach(function (el) {
+        el.addEventListener('click', async function (e) {
+          e.preventDefault();
+          const productId = this.getAttribute('data-product-id');
+          const quantity = Number(this.getAttribute('data-quantity') || 1);
+          if (!productId) return;
+
+          const res = await window.StoreApi.json('/api/cart/add_item/', {
+            method: 'POST',
+            body: { product_id: Number(productId), quantity: quantity, size: '', color: '' },
+          });
+
+          if (res.ok) {
+            await window.StoreApi.updateCartBadge();
+          } else {
+            // fallback: просто открыть корзину, чтобы пользователь увидел проблему
+            window.location.href = this.getAttribute('href') || '{% url "cart" %}';
+          }
+        });
+      });
+    });
+  </script>
 {% endblock %}
 

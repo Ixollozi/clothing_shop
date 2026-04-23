@@ -1,124 +1,189 @@
-{% extends "layout.html" %}
-{% load i18n %}
+{% extends "base.html" %}
 
-{% block title %}{% if about_config %}{{ about_config.title }}{% else %}О нас{% endif %} • {{ store_title|default:store_name }}{% endblock %}
-{% block meta_description %}{% if about_config %}{{ about_config.description|striptags|truncatechars:200 }}{% else %}{{ store_description|truncatechars:200 }}{% endif %}{% endblock %}
+{% block meta_description %}О магазине: национальная одежда Узбекистана, ручная работа, забота о качестве и удобный сервис.{% endblock %}
+
+{% block title %}О нас | {{ store_name|default:"Fashion Store" }}{% endblock %}
 
 {% block content %}
-      <section class="hero" aria-labelledby="about-title">
-        <div class="container hero-inner">
-          <div class="hero-copy">
-            <div class="hero-badges">
-              <span class="badge badge-wood">{{ store_name }}</span>
-              <span class="badge badge-ghost">{% trans "О магазине" %}</span>
-            </div>
+      <section class="section">
+        <div class="container">
+          <div class="about-crumbs" aria-label="Хлебные крошки">
+            <a href="{% url 'index' %}">Главная</a>
+            <span aria-hidden="true">/</span>
+            <span>О нас</span>
+          </div>
 
-            <h1 id="about-title">{% if about_config %}{{ about_config.title }}{% else %}О нас{% endif %}</h1>
-            <p class="hero-lead">
-              {% if about_config %}{{ about_config.description|striptags|truncatewords:50 }}{% else %}{{ store_description|default:_("Добро пожаловать в наш магазин.") }}{% endif %}
+          <div class="about-hero">
+            <h1 class="about-title">
+              {{ about_config.title|default:"Мы делаем современную национальную одежду" }}
+            </h1>
+            <p class="about-lead">
+              {{ about_config.description|default:"Uzbek Folk - это магазин национальной одежды Узбекистана. Мы бережно относимся к традициям и превращаем их в удобные повседневные и праздничные образы." }}
             </p>
-
-            <div class="hero-cta">
-              <a class="btn btn-primary" href="{% url 'contact' %}">{% trans "Написать нам" %}</a>
-              <a class="btn btn-secondary" href="#values">{% trans "Наши ценности" %}</a>
-            </div>
-
-            <div class="hero-stats" role="list" aria-label="{% trans 'Показатели' %}">
-              {% for st in about_stats|slice:":3" %}
-              <div class="stat" role="listitem">
-                <div class="stat-num">{{ st.value }}</div>
-                <div class="stat-label">{{ st.label }}</div>
-              </div>
-              {% empty %}
-              <div class="stat" role="listitem">
-                <div class="stat-num">100%</div>
-                <div class="stat-label">{% trans "внимание к деталям" %}</div>
-              </div>
-              <div class="stat" role="listitem">
-                <div class="stat-num">24/7</div>
-                <div class="stat-label">{% trans "онлайн-каталог" %}</div>
-              </div>
-              <div class="stat" role="listitem">
-                <div class="stat-num">★</div>
-                <div class="stat-label">{% trans "качество сервиса" %}</div>
-              </div>
-              {% endfor %}
-            </div>
           </div>
 
-          <div class="hero-art" aria-hidden="true">
-            <div class="hero-wood"{% if about_config and about_config.image %} style="background-image:url('{{ about_config.image.url }}');background-size:cover;background-position:center;"{% elif about_config and about_config.image_url %} style="background-image:url('{{ about_config.image_url }}');background-size:cover;background-position:center;"{% endif %}></div>
-            <div class="hero-overlay">
-              <div class="mini-card">
-                <div class="mini-card-top">
-                  <span class="dot dot-green"></span>
-                  <span class="mini-card-title">{% trans "Миссия" %}</span>
+          <div class="about-grid">
+            {% if features %}
+              {% for f in features|slice:":3" %}
+                <div class="about-card">
+                  <div class="about-card-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M12 2L20 6V14C20 18 16.5 21.5 12 22C7.5 21.5 4 18 4 14V6L12 2Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M9.2 12.2L11.1 14.1L15.3 9.9"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div class="about-card-title">{{ f.title }}</div>
+                  <div class="about-card-sub">{{ f.description }}</div>
                 </div>
-                <p class="card-text" style="margin:0;font-size:14px;">{% if about_config %}{{ about_config.mission|truncatewords:24 }}{% else %}{% trans "Сервис и качество." %}{% endif %}</p>
+              {% endfor %}
+            {% else %}
+              <div class="about-card">
+                <div class="about-card-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M12 2L20 6V14C20 18 16.5 21.5 12 22C7.5 21.5 4 18 4 14V6L12 2Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M9.2 12.2L11.1 14.1L15.3 9.9"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="about-card-title">Качество в каждой детали</div>
+                <div class="about-card-sub">Материалы подбираем так, чтобы ткань была приятной к телу и служила долго.</div>
               </div>
-              <div class="shape-ring"></div>
-              <div class="shape-triangle"></div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section class="section" id="values" aria-labelledby="values-title">
-        <div class="container">
-          <div class="section-head">
-            <h2 id="values-title">{% trans "Ценности" %}</h2>
-            <p class="section-subtitle">{% if about_config %}{% trans "Как мы работаем каждый день." %}{% else %}{% trans "Наши принципы." %}{% endif %}</p>
+              <div class="about-card">
+                <div class="about-card-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 12H21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    <path
+                      d="M14 7L19 12L14 17"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M10 7L5 12L10 17"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="about-card-title">Понятный сервис</div>
+                <div class="about-card-sub">В каталоге легко фильтровать, а карточки помогают выбрать нужный размер и модель.</div>
+              </div>
+
+              <div class="about-card">
+                <div class="about-card-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="M12 7V12L15 14"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="about-card-title">Доставка и поддержка</div>
+                <div class="about-card-sub">Оперативно упаковываем и отвечаем на вопросы, чтобы вы покупали спокойно.</div>
+              </div>
+            {% endif %}
           </div>
 
-          <div class="grid grid-4">
-            {% for v in about_values|slice:":4" %}
-            <div class="card category-card" style="padding:18px;">
-              <span class="card-title">{{ v }}</span>
-              <span class="card-text">{% trans "Часть философии" %} {{ store_name }}.</span>
-            </div>
-            {% empty %}
-            <div class="card category-card" style="padding:18px;">
-              <span class="card-title">{% trans "Качество" %}</span>
-              <span class="card-text">{% trans "Отбор товаров и понятные карточки." %}</span>
-            </div>
-            <div class="card category-card" style="padding:18px;">
-              <span class="card-title">{% trans "Сервис" %}</span>
-              <span class="card-text">{% trans "Помогаем с выбором и доставкой." %}</span>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-      </section>
+          <div class="about-split">
+            <div class="about-timeline" aria-label="Как мы развиваемся">
+              <div class="about-section-title">Наша миссия</div>
+              <div class="timeline">
+                {% if about_config and about_config.mission %}
+                  <div class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="timeline-body">
+                      <div class="timeline-year">Миссия</div>
+                      <div class="timeline-text">{{ about_config.mission }}</div>
+                    </div>
+                  </div>
+                {% endif %}
 
-      {% if about_config %}
-      <section class="section section-muted" aria-labelledby="mission-title">
-        <div class="container">
-          <div class="section-head">
-            <h2 id="mission-title">{% trans "Миссия и видение" %}</h2>
-          </div>
-          <div class="grid grid-3">
-            <div class="card" style="padding:18px;">
-              <h3 class="card-title">{% trans "Миссия" %}</h3>
-              <p class="card-text">{{ about_config.mission }}</p>
-            </div>
-            <div class="card" style="padding:18px;">
-              <h3 class="card-title">{% trans "Видение" %}</h3>
-              <p class="card-text">{{ about_config.vision }}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-      {% endif %}
+                {% if about_config and about_config.vision %}
+                  <div class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="timeline-body">
+                      <div class="timeline-year">Видение</div>
+                      <div class="timeline-text">{{ about_config.vision }}</div>
+                    </div>
+                  </div>
+                {% endif %}
 
-      <section class="section section-muted" aria-labelledby="final-cta-title">
-        <div class="container">
-          <div class="callout">
-            <div class="callout-left">
-              <h2 class="callout-title" id="final-cta-title">{% trans "Свяжитесь с нами" %}</h2>
-              <p class="callout-text">{% trans "Вопросы по ассортименту, опту и сотрудничеству." %}</p>
+                {% if not about_config %}
+                  <div class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="timeline-body">
+                      <div class="timeline-year">1</div>
+                      <div class="timeline-text">Создаём современную национальную одежду с уважением к традициям.</div>
+                    </div>
+                  </div>
+                  <div class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="timeline-body">
+                      <div class="timeline-year">2</div>
+                      <div class="timeline-text">Подбираем ткани и фурнитуру так, чтобы вещам было комфортно каждый день.</div>
+                    </div>
+                  </div>
+                  <div class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="timeline-body">
+                      <div class="timeline-year">3</div>
+                      <div class="timeline-text">Делаем сервис понятным: помогаем с размером, отвечаем и бережно доставляем.</div>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
             </div>
-            <a class="btn btn-primary" href="{% url 'contact' %}">{% trans "Контакты" %}</a>
+
+            <div class="about-faq" aria-label="Частые вопросы">
+              <div class="about-section-title">Наши ценности</div>
+              {% if about_values %}
+                <div class="values-list" aria-label="Список ценностей">
+                  {% for v in about_values %}
+                    <div class="value-item">
+                      <span class="value-dot" aria-hidden="true"></span>
+                      <div class="value-text">{{ v }}</div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="section-sub">Ценности скоро появятся.</div>
+              {% endif %}
+            </div>
           </div>
         </div>
       </section>
 {% endblock %}
+
