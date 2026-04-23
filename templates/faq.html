@@ -1,25 +1,26 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block meta_description %}FAQ: ответы на частые вопросы о товарах и доставке.{% endblock %}
+{% block meta_description %}{% trans "FAQ: ответы на частые вопросы о товарах и доставке." %}{% endblock %}
 
 {% block title %}FAQ | {{ store_name|default:"Fashion Store" }}{% endblock %}
 
 {% block content %}
   <section class="section">
     <div class="container">
-      <div class="catalog-crumbs" aria-label="Хлебные крошки">
-        <a href="{% url 'index' %}">Главная</a>
+      <div class="catalog-crumbs" aria-label="{% trans 'Хлебные крошки' %}">
+        <a href="{% url 'index' %}">{% trans "Главная" %}</a>
         <span aria-hidden="true">/</span>
         <span>FAQ</span>
       </div>
 
       <div class="section-head">
         <h1 class="section-title" style="margin: 0;">FAQ</h1>
-        <p class="section-sub">Короткие ответы на частые вопросы.</p>
+        <p class="section-sub">{% trans "Короткие ответы на частые вопросы." %}</p>
       </div>
 
       <div class="catalog-layout" style="grid-template-columns: 1fr 360px;">
-        <section class="catalog-main" aria-label="Список вопросов">
+        <section class="catalog-main" aria-label="{% trans 'Список вопросов' %}">
           {% if faqs %}
             {% for faq in faqs %}
               <details class="faq-item" {% if forloop.first %}open{% endif %}>
@@ -28,16 +29,16 @@
               </details>
             {% endfor %}
           {% else %}
-            <div class="section-sub">Пока нет вопросов — загляните позже.</div>
+            <div class="section-sub">{% trans "Пока нет вопросов — загляните позже." %}</div>
           {% endif %}
         </section>
 
-        <aside class="catalog-sidebar" aria-label="Помощь">
+        <aside class="catalog-sidebar" aria-label="{% trans 'Помощь' %}">
           <div class="filter-details" style="padding: 14px 0 0;">
-            <div class="filter-summary" style="cursor: default;">Не нашли ответ?</div>
+            <div class="filter-summary" style="cursor: default;">{% trans "Не нашли ответ?" %}</div>
             <div class="filter-body" style="margin-top: 12px;">
-              <a class="btn btn-primary btn-full" href="{% url 'contact' %}">Написать нам</a>
-              <a class="btn btn-soft btn-full" href="{% url 'catalog' %}#products">Перейти в каталог</a>
+              <a class="btn btn-primary btn-full" href="{% url 'contact' %}">{% trans "Написать нам" %}</a>
+              <a class="btn btn-soft btn-full" href="{% url 'catalog' %}#products">{% trans "Перейти в каталог" %}</a>
             </div>
           </div>
         </aside>

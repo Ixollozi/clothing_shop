@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block meta_description %}Интернет-магазин национальной одежды Узбекистана: современный стиль, традиционные ткани, понятный выбор размеров.{% endblock %}
+{% block meta_description %}{% trans "Интернет-магазин национальной одежды Узбекистана: современный стиль, традиционные ткани, понятный выбор размеров." %}{% endblock %}
 
 {% block title %}{{ store_title|default:store_name }}{% endblock %}
 
@@ -8,36 +9,35 @@
       <section class="hero">
         <div class="container hero-grid">
           <div class="hero-copy">
-            <div class="hero-badges" aria-label="Преимущества">
-              <span class="badge">Ручная работа</span>
-              <span class="badge badge-accent">Хлопок и шелк</span>
-              <span class="badge">Доставка по Узбекистану</span>
+            <div class="hero-badges" aria-label="{% trans 'Преимущества' %}">
+              <span class="badge">{% trans "Ручная работа" %}</span>
+              <span class="badge badge-accent">{% trans "Хлопок и шелк" %}</span>
+              <span class="badge">{% trans "Доставка по Узбекистану" %}</span>
             </div>
 
-            <h1 class="hero-title">Национальная одежда Узбекистана - современно и красиво</h1>
+            <h1 class="hero-title">{% trans "Национальная одежда Узбекистана - современно и красиво" %}</h1>
             <p class="hero-lead">
-              Подберите образ для праздника или повседневной жизни. Акцент на ткани, аккуратный крой и понятные
-              размеры.
+              {% trans "Подберите образ для праздника или повседневной жизни. Акцент на ткани, аккуратный крой и понятные размеры." %}
             </p>
 
             <div class="hero-ctas">
-              <a class="btn btn-primary" href="#featured">Смотреть витрину</a>
+              <a class="btn btn-primary" href="#featured">{% trans "Смотреть витрину" %}</a>
             </div>
           </div>
 
           <div class="hero-visual">
             <div class="pattern-card">
               <div class="pattern-top">
-                <span class="pattern-chip">Сейчас в тренде</span>
+                <span class="pattern-chip">{% trans "Сейчас в тренде" %}</span>
                 {% with hero_product=products.0 %}
                   {% if hero_product %}
                     <span class="pattern-title">{{ hero_product.name }}</span>
                   {% else %}
-                    <span class="pattern-title">Товар дня</span>
+                    <span class="pattern-title">{% trans "Товар дня" %}</span>
                   {% endif %}
                 {% endwith %}
               </div>
-              <div class="pattern-art" aria-label="Товар дня">
+              <div class="pattern-art" aria-label="{% trans 'Товар дня' %}">
                 {% with hero_product=products.0 %}
                   {% if hero_product %}
                     <a class="hero-product" href="{% url 'product_detail' slug=hero_product.slug %}">
@@ -51,7 +51,7 @@
                         {% endif %}
                       </div>
                       <div class="hero-product-body">
-                        <div class="hero-product-title">Товар дня</div>
+                        <div class="hero-product-title">{% trans "Товар дня" %}</div>
                         <div class="hero-product-price">
                           <span class="price">{{ hero_product.price }}</span>
                           <span class="currency">сум</span>
@@ -59,7 +59,7 @@
                       </div>
                     </a>
                   {% else %}
-                    <div class="hero-product-empty">Товар скоро появится.</div>
+                    <div class="hero-product-empty">{% trans "Товар скоро появится." %}</div>
                   {% endif %}
                 {% endwith %}
               </div>
@@ -73,12 +73,12 @@
         <div class="container">
           <div class="section-head section-head-wide">
             <div>
-              <h2 class="section-title">Витрина товаров</h2>
-              <p class="section-sub">Подборка популярных моделей с красивыми фактурами.</p>
+              <h2 class="section-title">{% trans "Витрина товаров" %}</h2>
+              <p class="section-sub">{% trans "Подборка популярных моделей с красивыми фактурами." %}</p>
             </div>
 
-            <div class="filter-row" aria-label="Фильтры">
-              <span class="filter-label">Категории:</span>
+            <div class="filter-row" aria-label="{% trans 'Фильтры' %}">
+              <span class="filter-label">{% trans "Категории:" %}</span>
               <a class="chip chip-active" href="{% url 'catalog' %}#products">Все</a>
               {% for category in categories %}
                 <a class="chip" href="{% url 'catalog' %}?category={{ category.slug }}#products">{{ category.name }}</a>
@@ -99,7 +99,7 @@
                     {% else %}
                       <div class="product-bg product-bg-{{ bg }}"></div>
                     {% endif %}
-                    <span class="product-tag">Хит</span>
+                    <span class="product-tag">{% trans "Хит" %}</span>
                   </div>
                 </a>
                 <div class="product-body">
@@ -109,7 +109,7 @@
                     </a>
                   </h3>
                   <div class="product-rating">
-                    <div class="stars" aria-label="Рейтинг {{ product.rating|default:0 }} из 5">
+                    <div class="stars" aria-label="{% blocktrans with r=product.rating|default:0 %}Рейтинг {{ r }} из 5{% endblocktrans %}">
                       <span class="stars-fill" style="--fill: {% widthratio product.rating|default:0 5 100 %}%"></span>
                     </div>
                     <span class="rating-text">{{ product.rating|default:"—" }}</span>
@@ -125,15 +125,15 @@
                         href="{% url 'cart' %}"
                         data-product-id="{{ product.id }}"
                         data-quantity="1"
-                      >В корзину</a>
+                      >{% trans "В корзину" %}</a>
                     {% else %}
-                      <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">Подробнее</a>
+                      <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">{% trans "Подробнее" %}</a>
                     {% endif %}
                   </div>
                 </div>
               </article>
             {% empty %}
-              <div class="section-sub">Товары скоро появятся.</div>
+              <div class="section-sub">{% trans "Товары скоро появятся." %}</div>
             {% endfor %}
           </div>
         </div>
@@ -143,9 +143,9 @@
         <div class="container">
           <div class="why-grid">
             <div class="why-copy">
-              <h2 class="section-title">Почему покупают у нас</h2>
+              <h2 class="section-title">{% trans "Почему покупают у нас" %}</h2>
               <p class="section-sub">
-                Упор на ткань, аккуратный крой и понятный сервис, чтобы выбрать модель было легко.
+                {% trans "Упор на ткань, аккуратный крой и понятный сервис, чтобы выбрать модель было легко." %}
               </p>
               <div class="why-list">
                 <div class="why-item">
@@ -167,8 +167,8 @@
                     </svg>
                   </span>
                   <div>
-                    <div class="why-title">Проверенные материалы</div>
-                    <div class="why-sub">Подбираем ткани, приятные к телу.</div>
+                    <div class="why-title">{% trans "Проверенные материалы" %}</div>
+                    <div class="why-sub">{% trans "Подбираем ткани, приятные к телу." %}</div>
                   </div>
                 </div>
                 <div class="why-item">
@@ -192,8 +192,8 @@
                     </svg>
                   </span>
                   <div>
-                    <div class="why-title">Удобная покупка</div>
-                    <div class="why-sub">Карточки и фильтры, чтобы не запутаться.</div>
+                    <div class="why-title">{% trans "Удобная покупка" %}</div>
+                    <div class="why-sub">{% trans "Карточки и фильтры, чтобы не запутаться." %}</div>
                   </div>
                 </div>
                 <div class="why-item">
@@ -214,8 +214,8 @@
                     </svg>
                   </span>
                   <div>
-                    <div class="why-title">Быстрая доставка</div>
-                    <div class="why-sub">Оперативно и бережно упаковываем.</div>
+                    <div class="why-title">{% trans "Быстрая доставка" %}</div>
+                    <div class="why-sub">{% trans "Оперативно и бережно упаковываем." %}</div>
                   </div>
                 </div>
               </div>
@@ -223,23 +223,23 @@
 
             <div class="why-panel">
               <div class="panel-card">
-                <div class="panel-kicker">Готовые подборки</div>
-                <div class="panel-title">Образы под повод и сезон</div>
+                <div class="panel-kicker">{% trans "Готовые подборки" %}</div>
+                <div class="panel-title">{% trans "Образы под повод и сезон" %}</div>
                 <div class="panel-rows">
                   <div class="panel-row">
                     <span class="dot dot-1" aria-hidden="true"></span>
-                    <span class="panel-row-text">Праздник и торжество</span>
+                    <span class="panel-row-text">{% trans "Праздник и торжество" %}</span>
                   </div>
                   <div class="panel-row">
                     <span class="dot dot-2" aria-hidden="true"></span>
-                    <span class="panel-row-text">Повседневный стиль</span>
+                    <span class="panel-row-text">{% trans "Повседневный стиль" %}</span>
                   </div>
                   <div class="panel-row">
                     <span class="dot dot-3" aria-hidden="true"></span>
-                    <span class="panel-row-text">Теплый сезон</span>
+                    <span class="panel-row-text">{% trans "Теплый сезон" %}</span>
                   </div>
                 </div>
-                <a class="btn btn-primary btn-full" href="#featured">Выбрать образ</a>
+                <a class="btn btn-primary btn-full" href="#featured">{% trans "Выбрать образ" %}</a>
               </div>
             </div>
           </div>

@@ -1,27 +1,28 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block meta_description %}Корзина: товары национальной одежды Узбекистана.{% endblock %}
+{% block meta_description %}{% trans "Корзина: товары национальной одежды Узбекистана." %}{% endblock %}
 
-{% block title %}Корзина | {{ store_name|default:"Fashion Store" }}{% endblock %}
+{% block title %}{% trans "Корзина" %} | {{ store_name|default:"Fashion Store" }}{% endblock %}
 
 {% block content %}
       <section class="section">
         <div class="container">
           <div class="cart-crumbs" aria-label="Хлебные крошки">
-            <a href="{% url 'index' %}">Главная</a>
+            <a href="{% url 'index' %}">{% trans "Главная" %}</a>
             <span aria-hidden="true">/</span>
-            <span>Корзина</span>
+            <span>{% trans "Корзина" %}</span>
           </div>
 
           <div class="cart-head">
-            <h1 class="about-title" style="margin: 0;">Ваша корзина</h1>
+            <h1 class="about-title" style="margin: 0;">{% trans "Ваша корзина" %}</h1>
             <p class="section-sub" style="margin-top: 10px;">
-              Здесь отображаются реальные товары из вашей сессии.
+              {% trans "Здесь отображаются реальные товары из вашей сессии." %}
             </p>
           </div>
 
           <div class="cart-layout">
-            <section class="cart-items" aria-label="Товары в корзине">
+            <section class="cart-items" aria-label="{% trans 'Товары в корзине' %}">
               <div class="cart-items-list">
                 {% for item in cart_items %}
                   {% cycle '4' '1' '2' '3' '6' '5' as cbg silent %}
@@ -50,17 +51,17 @@
                       </h3>
                       <div class="cart-item-meta">
                         <span class="cart-item-sub">
-                          {% if item.size %}Размер: {{ item.size }}{% endif %}
-                          {% if item.color %}{% if item.size %} • {% endif %}Цвет: {{ item.color }}{% endif %}
+                          {% if item.size %}{% trans "Размер:" %} {{ item.size }}{% endif %}
+                          {% if item.color %}{% if item.size %} • {% endif %}{% trans "Цвет:" %} {{ item.color }}{% endif %}
                         </span>
-                        <a class="cart-item-remove js-remove" href="#remove" data-item-id="{{ item.id }}">Удалить</a>
+                        <a class="cart-item-remove js-remove" href="#remove" data-item-id='{{ item.id }}'>{% trans "Удалить" %}</a>
                       </div>
 
                       <div class="cart-item-bottom">
-                        <div class="qty" aria-label="Количество">
-                          <button class="qty-btn js-qty" type="button" aria-label="Уменьшить" data-delta="-1" data-item-id="{{ item.id }}">-</button>
-                          <input class="qty-input" type="number" value="{{ item.quantity }}" min="1" aria-label="Количество" data-item-id="{{ item.id }}" />
-                          <button class="qty-btn js-qty" type="button" aria-label="Увеличить" data-delta="1" data-item-id="{{ item.id }}">+</button>
+                        <div class="qty" aria-label="{% trans 'Количество' %}">
+                          <button class="qty-btn js-qty" type="button" aria-label="{% trans 'Уменьшить' %}" data-delta="-1" data-item-id="{{ item.id }}">-</button>
+                          <input class="qty-input" type="number" value="{{ item.quantity }}" min="1" aria-label="{% trans 'Количество' %}" data-item-id="{{ item.id }}" />
+                          <button class="qty-btn js-qty" type="button" aria-label="{% trans 'Увеличить' %}" data-delta="1" data-item-id="{{ item.id }}">+</button>
                         </div>
 
                         <div class="cart-item-price">
@@ -71,67 +72,67 @@
                     </div>
                   </article>
                 {% empty %}
-                  <div class="section-sub">Корзина пуста.</div>
+                  <div class="section-sub">{% trans "Корзина пуста." %}</div>
                 {% endfor %}
               </div>
 
               <div class="cart-actions">
-                <a class="btn btn-soft" href="{% url 'catalog' %}#products">Продолжить покупки</a>
-                <a class="btn btn-primary js-clear" href="#clear">Очистить корзину</a>
+                <a class="btn btn-soft" href="{% url 'catalog' %}#products">{% trans "Продолжить покупки" %}</a>
+                <a class="btn btn-primary js-clear" href="#clear">{% trans "Очистить корзину" %}</a>
               </div>
             </section>
 
-            <aside class="cart-summary" aria-label="Итог">
+            <aside class="cart-summary" aria-label="{% trans 'Итог' %}">
               <div class="summary-card">
                 <div class="summary-row">
-                  <span class="summary-label">Подытог</span>
+                  <span class="summary-label">{% trans "Подытог" %}</span>
                   <span class="summary-value"><span id="cart-subtotal">—</span> сум</span>
                 </div>
                 <div class="summary-row">
-                  <span class="summary-label">Доставка</span>
-                  <span class="summary-value">по городу</span>
+                  <span class="summary-label">{% trans "Доставка" %}</span>
+                  <span class="summary-value">{% trans "по городу" %}</span>
                 </div>
                 <div class="summary-divider" role="separator" aria-hidden="true"></div>
                 <div class="summary-row summary-total">
-                  <span class="summary-label">Итого</span>
+                  <span class="summary-label">{% trans "Итого" %}</span>
                   <span class="summary-value"><span id="cart-total">—</span> сум</span>
                 </div>
-                <button class="btn btn-primary btn-full js-checkout" type="button">Оформить заказ</button>
-                <form id="checkout-form" class="checkout-form" style="margin-top: 12px; display: none;" aria-label="Оформление заказа">
+                <button class="btn btn-primary btn-full js-checkout" type="button">{% trans "Оформить заказ" %}</button>
+                <form id="checkout-form" class="checkout-form" style="margin-top: 12px; display: none;" aria-label="{% trans 'Оформление заказа' %}">
                   <div class="range-row" style="margin-top: 10px;">
-                    <input class="range-input" name="first_name" type="text" placeholder="Имя *" required />
-                    <input class="range-input" name="last_name" type="text" placeholder="Фамилия *" required />
+                    <input class="range-input" name="first_name" type="text" placeholder="{% trans 'Имя *' %}" required />
+                    <input class="range-input" name="last_name" type="text" placeholder="{% trans 'Фамилия *' %}" required />
                   </div>
                   <div class="range-row" style="margin-top: 10px;">
-                    <input class="range-input" name="phone" type="tel" placeholder="Телефон *" required />
-                    <input class="range-input" name="email" type="email" placeholder="Email (необязательно)" />
+                    <input class="range-input" name="phone" type="tel" placeholder="{% trans 'Телефон *' %}" required />
+                    <input class="range-input" name="email" type="email" placeholder="{% trans 'Email (необязательно)' %}" />
                   </div>
                   <div class="range-row" style="margin-top: 10px;">
-                    <input class="range-input" name="address" type="text" placeholder="Адрес *" required />
+                    <input class="range-input" name="address" type="text" placeholder="{% trans 'Адрес *' %}" required />
                   </div>
                   <div class="range-row" style="margin-top: 10px;">
-                    <input class="range-input" name="city" type="text" placeholder="Город" value="Ташкент" />
-                    <input class="range-input" name="postal_code" type="text" placeholder="Индекс" />
+                    <input class="range-input" name="city" type="text" placeholder="{% trans 'Город' %}" value="{% trans 'Ташкент' %}" />
+                    <input class="range-input" name="postal_code" type="text" placeholder="{% trans 'Индекс' %}" />
                   </div>
                   <div class="range-row" style="margin-top: 10px;">
-                    <select class="sort-select" name="payment_method" aria-label="Способ оплаты">
-                      <option value="cash">Наличными</option>
-                      <option value="card">Картой</option>
-                      <option value="wallet">Электронный кошелёк</option>
-                      <option value="bank">Банковский перевод</option>
+                    <select class="sort-select" name="payment_method" aria-label="{% trans 'Способ оплаты' %}">
+                      <option value="cash">{% trans "Наличными" %}</option>
+                      <option value="card">{% trans "Картой" %}</option>
+                      <option value="wallet">{% trans "Электронный кошелёк" %}</option>
+                      <option value="bank">{% trans "Банковский перевод" %}</option>
                     </select>
                   </div>
                   <div class="range-row" style="margin-top: 10px;">
-                    <input class="range-input" name="notes" type="text" placeholder="Комментарий к заказу" />
+                    <input class="range-input" name="notes" type="text" placeholder="{% trans 'Комментарий к заказу' %}" />
                   </div>
                   <div class="range-row" style="margin-top: 10px; justify-content: flex-end;">
-                    <button class="btn btn-soft" type="button" id="checkout-cancel">Отмена</button>
-                    <button class="btn btn-primary" type="submit" id="checkout-submit">Подтвердить</button>
+                    <button class="btn btn-soft" type="button" id="checkout-cancel">{% trans "Отмена" %}</button>
+                    <button class="btn btn-primary" type="submit" id="checkout-submit">{% trans "Подтвердить" %}</button>
                   </div>
                   <div class="section-sub" id="checkout-status" style="margin-top: 8px;" aria-live="polite"></div>
                 </form>
                 <div class="summary-note">
-                  Демо: оформление заказа можно подключить следующим шагом.
+                  {% trans "Демо: оформление заказа можно подключить следующим шагом." %}
                 </div>
               </div>
             </aside>
@@ -141,6 +142,17 @@
 {% endblock %}
 
 {% block extra_js %}
+  <div
+    id="i18n-cart"
+    hidden
+    data-empty-checkout="{% trans 'Корзина пуста. Добавьте товары, чтобы оформить заказ.' %}"
+    data-required-fields="{% trans 'Заполните обязательные поля (имя, фамилия, телефон, адрес).' %}"
+    data-sending="{% trans 'Отправка...' %}"
+    data-order-failed="{% trans 'Не удалось оформить заказ' %}"
+    data-order-success="{% trans 'Заказ оформлен. Мы свяжемся с вами.' %}"
+    data-order-generic-error="{% trans 'Ошибка при оформлении.' %}"
+    data-city-default="{% trans 'Ташкент' %}"
+  ></div>
   <script>
     function parsePrice(text) {
       const raw = String(text || '').trim();
@@ -200,6 +212,8 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+      const i18n = document.getElementById('i18n-cart');
+      const t = i18n ? i18n.dataset : {};
       recalcTotals();
 
       function setCheckoutStatus(text, kind) {
@@ -251,7 +265,7 @@
             .filter(Boolean);
 
           if (!items.length) {
-            setCheckoutStatus('Корзина пуста. Добавьте товары, чтобы оформить заказ.', 'error');
+            setCheckoutStatus(t.emptyCheckout || '', 'error');
             return;
           }
 
@@ -262,7 +276,7 @@
             email: String(fd.get('email') || '').trim(),
             phone: String(fd.get('phone') || '').trim(),
             address: String(fd.get('address') || '').trim(),
-            city: String(fd.get('city') || 'Ташкент').trim(),
+            city: String(fd.get('city') || t.cityDefault || '').trim(),
             postal_code: String(fd.get('postal_code') || '').trim(),
             payment_method: String(fd.get('payment_method') || 'cash'),
             notes: String(fd.get('notes') || '').trim(),
@@ -270,27 +284,29 @@
           };
 
           if (!payload.first_name || !payload.last_name || !payload.phone || !payload.address) {
-            setCheckoutStatus('Заполните обязательные поля (имя, фамилия, телефон, адрес).', 'error');
+            setCheckoutStatus(t.requiredFields || '', 'error');
             return;
           }
 
           checkoutSubmit.disabled = true;
           const oldText = checkoutSubmit.textContent;
-          checkoutSubmit.textContent = 'Отправка...';
+          checkoutSubmit.textContent = t.sending || oldText;
 
           try {
             const res = await window.StoreApi.json('/api/orders/', { method: 'POST', body: payload });
             const data = await res.json().catch(() => ({}));
             if (!res.ok) {
-              const msg = (data && (data.detail || data.error)) ? String(data.detail || data.error) : 'Не удалось оформить заказ';
+              const msg = (data && (data.detail || data.error))
+                ? String(data.detail || data.error)
+                : (t.orderFailed || '');
               throw new Error(msg);
             }
-            setCheckoutStatus('Заказ оформлен. Мы свяжемся с вами.', 'success');
+            setCheckoutStatus(t.orderSuccess || '', 'success');
             // API очищает корзину; обновим UI
             await window.StoreApi.updateCartBadge();
             window.location.reload();
           } catch (err) {
-            setCheckoutStatus(err.message || 'Ошибка при оформлении.', 'error');
+            setCheckoutStatus(err.message || t.orderGenericError || '', 'error');
           } finally {
             checkoutSubmit.disabled = false;
             checkoutSubmit.textContent = oldText;

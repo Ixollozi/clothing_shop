@@ -152,25 +152,41 @@ class Command(BaseCommand):
             {
                 'icon': 'fas fa-shipping-fast',
                 'title': 'Быстрая доставка',
+                'title_en': 'Fast delivery',
+                'title_uz': 'Tez yetkazib berish',
                 'description': 'Доставка по всему Узбекистану за 2-5 дней',
+                'description_en': 'Delivery across Uzbekistan in 2–5 days',
+                'description_uz': "O‘zbekiston bo‘ylab 2–5 kunda yetkazib berish",
                 'order': 0,
             },
             {
                 'icon': 'fas fa-undo',
                 'title': 'Легкий возврат',
+                'title_en': 'Easy returns',
+                'title_uz': 'Oson qaytarish',
                 'description': 'Возврат товара в течение 14 дней',
+                'description_en': 'Return items within 14 days',
+                'description_uz': 'Mahsulotni 14 kun ichida qaytarish',
                 'order': 1,
             },
             {
                 'icon': 'fas fa-shield-alt',
                 'title': 'Гарантия качества',
+                'title_en': 'Quality guarantee',
+                'title_uz': 'Sifat kafolati',
                 'description': 'Только оригинальные товары',
+                'description_en': 'Only original products',
+                'description_uz': 'Faqat original mahsulotlar',
                 'order': 2,
             },
             {
                 'icon': 'fas fa-headset',
                 'title': 'Поддержка 24/7',
+                'title_en': '24/7 support',
+                'title_uz': '24/7 qo‘llab-quvvatlash',
                 'description': 'Наша служба поддержки всегда доступна',
+                'description_en': 'Our support team is always available',
+                'description_uz': 'Qo‘llab-quvvatlash xizmati doimo mavjud',
                 'order': 3,
             },
         ]
@@ -183,6 +199,11 @@ class Command(BaseCommand):
                     'description': feature_data['description'],
                     'order': feature_data['order'],
                     'is_active': True,
+                    # modeltranslation fields (if installed) – harmless if absent
+                    'title_en': feature_data.get('title_en', ''),
+                    'title_uz': feature_data.get('title_uz', ''),
+                    'description_en': feature_data.get('description_en', ''),
+                    'description_uz': feature_data.get('description_uz', ''),
                 }
             )
             if created:
@@ -193,6 +214,9 @@ class Command(BaseCommand):
                 feature.description = feature_data['description']
                 feature.order = feature_data['order']
                 feature.is_active = True
+                for k in ('title_en', 'title_uz', 'description_en', 'description_uz'):
+                    if hasattr(feature, k) and feature_data.get(k):
+                        setattr(feature, k, feature_data[k])
                 feature.save()
                 self.stdout.write(self.style.WARNING(f'Обновлена особенность: {feature.title}'))
 

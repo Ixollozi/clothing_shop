@@ -1,32 +1,33 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block meta_description %}Каталог национальной одежды Узбекистана: чапаны, платья, костюмы и аксессуары.{% endblock %}
+{% block meta_description %}{% trans "Каталог национальной одежды Узбекистана: чапаны, платья, костюмы и аксессуары." %}{% endblock %}
 
-{% block title %}Каталог | {{ store_name|default:"Fashion Store" }}{% endblock %}
+{% block title %}{% trans "Каталог" %} | {{ store_name|default:"Fashion Store" }}{% endblock %}
 
 {% block content %}
       <section class="section">
         <div class="container">
           <div class="catalog-crumbs" aria-label="Хлебные крошки">
-            <a href="{% url 'index' %}">Главная</a>
+            <a href="{% url 'index' %}">{% trans "Главная" %}</a>
             <span aria-hidden="true">/</span>
-            <span>Каталог</span>
+            <span>{% trans "Каталог" %}</span>
           </div>
 
           <div class="catalog-head">
             <div class="catalog-head-left">
-              <h1 class="hero-title" style="margin: 0;">Каталог национальной одежды</h1>
+              <h1 class="hero-title" style="margin: 0;">{% trans "Каталог национальной одежды" %}</h1>
               <p class="section-sub" style="margin-top: 10px;">
-                От чапанов до аксессуаров: выберите стиль и размер, чтобы быстро оформить заказ.
+                {% trans "От чапанов до аксессуаров: выберите стиль и размер, чтобы быстро оформить заказ." %}
               </p>
             </div>
 
-            <div class="catalog-toolbar" aria-label="Панель управления каталогом">
+            <div class="catalog-toolbar" aria-label="{% trans 'Панель управления каталогом' %}">
               <div class="catalog-count">
-                Показано {{ products|length }} товаров
+                {% blocktrans with count=products|length %}Показано {{ count }} товаров{% endblocktrans %}
               </div>
               <div class="catalog-sort">
-                <span class="sort-label">Сортировка</span>
+                <span class="sort-label">{% trans "Сортировка" %}</span>
                 <form method="get" action="{% url 'catalog' %}">
                   <input type="hidden" name="category" value="{{ current_category|default:'' }}" />
                   <input type="hidden" name="search" value="{{ current_search|default:'' }}" />
@@ -34,19 +35,19 @@
                   <input type="hidden" name="max_price" value="{{ max_price|default:'' }}" />
                   <input type="hidden" name="size" value="{{ current_size|default:'' }}" />
                   <input type="hidden" name="color" value="{{ current_color|default:'' }}" />
-                  <select class="sort-select" aria-label="Сортировка" name="sort" onchange="this.form.submit()">
-                    <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>Сначала новые</option>
-                    <option value="popularity" {% if current_sort == 'popularity' %}selected{% endif %}>Популярные</option>
-                    <option value="price_low" {% if current_sort == 'price_low' %}selected{% endif %}>Сначала дешевле</option>
-                    <option value="price_high" {% if current_sort == 'price_high' %}selected{% endif %}>Сначала дороже</option>
+                  <select class="sort-select" aria-label="{% trans 'Сортировка' %}" name="sort" onchange="this.form.submit()">
+                    <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>{% trans "Сначала новые" %}</option>
+                    <option value="popularity" {% if current_sort == 'popularity' %}selected{% endif %}>{% trans "Популярные" %}</option>
+                    <option value="price_low" {% if current_sort == 'price_low' %}selected{% endif %}>{% trans "Сначала дешевле" %}</option>
+                    <option value="price_high" {% if current_sort == 'price_high' %}selected{% endif %}>{% trans "Сначала дороже" %}</option>
                   </select>
                 </form>
               </div>
             </div>
           </div>
 
-          <div class="catalog-quickbar" aria-label="Быстрые фильтры">
-            <a class="chip {% if not current_category %}chip-active{% endif %}" href="{% url 'catalog' %}#products">Все</a>
+          <div class="catalog-quickbar" aria-label="{% trans 'Быстрые фильтры' %}">
+            <a class="chip {% if not current_category %}chip-active{% endif %}" href="{% url 'catalog' %}#products">{% trans "Все" %}</a>
             {% for cat in categories %}
               <a
                 class="chip {% if current_category == cat.slug %}chip-active{% endif %}"
@@ -56,10 +57,10 @@
           </div>
 
           <div class="catalog-layout">
-            <section class="catalog-main" aria-label="Список товаров">
-              <div class="catalog-products-top" id="products" aria-label="Заголовок результатов">
-                <div class="catalog-products-title">Результаты</div>
-                <div class="catalog-products-sub">Подборка моделей по популярности и отзывам</div>
+            <section class="catalog-main" aria-label="{% trans 'Список товаров' %}">
+              <div class="catalog-products-top" id="products" aria-label="{% trans 'Заголовок результатов' %}">
+                <div class="catalog-products-title">{% trans "Результаты" %}</div>
+                <div class="catalog-products-sub">{% trans "Подборка моделей по популярности и отзывам" %}</div>
               </div>
 
               <div class="product-grid">
@@ -76,7 +77,7 @@
                           {% else %}
                             <div class="product-bg product-bg-{{ bg }}"></div>
                           {% endif %}
-                          <span class="product-tag">Товар</span>
+                          <span class="product-tag">{% trans "Товар" %}</span>
                         </div>
                       </a>
                       <div class="product-body">
@@ -86,7 +87,7 @@
                           </a>
                         </h3>
                         <div class="product-rating">
-                          <div class="stars" aria-label="Рейтинг {{ product.rating|default:0 }} из 5">
+                          <div class="stars" aria-label="{% blocktrans with r=product.rating|default:0 %}Рейтинг {{ r }} из 5{% endblocktrans %}">
                             <span class="stars-fill" style="--fill: {% widthratio product.rating|default:0 5 100 %}%"></span>
                           </div>
                           <span class="rating-text">{{ product.rating|default:"—" }}</span>
@@ -102,9 +103,9 @@
                               href="{% url 'cart' %}"
                               data-product-id="{{ product.id }}"
                               data-quantity="1"
-                            >В корзину</a>
+                            >{% trans "В корзину" %}</a>
                           {% else %}
-                            <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">Подробнее</a>
+                            <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">{% trans "Подробнее" %}</a>
                           {% endif %}
                         </div>
                       </div>
@@ -123,7 +124,7 @@
                           {% else %}
                             <div class="product-bg product-bg-{{ bg }}"></div>
                           {% endif %}
-                          <span class="product-tag">Товар</span>
+                          <span class="product-tag">{% trans "Товар" %}</span>
                         </div>
                       </a>
                       <div class="product-body">
@@ -137,17 +138,17 @@
                             <span class="price">{{ product.price }}</span>
                             <span class="currency">сум</span>
                           </div>
-                          <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">Подробнее</a>
+                          <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">{% trans "Подробнее" %}</a>
                         </div>
                       </div>
                     </article>
                   {% endfor %}
                 {% else %}
-                  <div class="section-sub">Товары скоро появятся.</div>
+                  <div class="section-sub">{% trans "Товары скоро появятся." %}</div>
                 {% endif %}
               </div>
 
-              <div class="catalog-pagination" aria-label="Пагинация">
+              <div class="catalog-pagination" aria-label="{% trans 'Пагинация' %}">
                 {% if products.has_previous %}
                   <a class="chip" href="?page={{ products.previous_page_number }}{% if pagination_query %}&{{ pagination_query }}{% endif %}#products">←</a>
                 {% endif %}
@@ -166,14 +167,14 @@
               </div>
             </section>
 
-            <aside class="catalog-sidebar" aria-label="Фильтры">
+            <aside class="catalog-sidebar" aria-label="{% trans 'Фильтры' %}">
               <form method="get" action="{% url 'catalog' %}">
                 <details open class="filter-details">
-                  <summary class="filter-summary">Категория</summary>
+                  <summary class="filter-summary">{% trans "Категория" %}</summary>
                   <div class="filter-body">
                     <label class="catalog-check">
                       <input type="radio" name="category" value="" {% if not current_category %}checked{% endif %} />
-                      <span>Все</span>
+                      <span>{% trans "Все" %}</span>
                     </label>
                     {% for cat in categories %}
                       <label class="catalog-check">
@@ -185,18 +186,18 @@
                 </details>
 
                 <details class="filter-details">
-                  <summary class="filter-summary">Цена</summary>
+                  <summary class="filter-summary">{% trans "Цена" %}</summary>
                   <div class="filter-body">
                     <div class="range-row">
-                      <input class="range-input" type="number" name="min_price" placeholder="от" value="{{ min_price|default:'' }}" />
+                      <input class="range-input" type="number" name="min_price" placeholder="{% trans 'от' %}" value="{{ min_price|default:'' }}" />
                       <span class="range-dash">—</span>
-                      <input class="range-input" type="number" name="max_price" placeholder="до" value="{{ max_price|default:'' }}" />
+                      <input class="range-input" type="number" name="max_price" placeholder="{% trans 'до' %}" value="{{ max_price|default:'' }}" />
                     </div>
                   </div>
                 </details>
 
                 <details class="filter-details">
-                  <summary class="filter-summary">Размер</summary>
+                  <summary class="filter-summary">{% trans "Размер" %}</summary>
                   <div class="filter-body">
                     <div class="range-row">
                       <input class="range-input" type="text" name="size" placeholder="S/M/L/XL" value="{{ current_size|default:'' }}" />
@@ -205,7 +206,7 @@
                 </details>
 
                 <details class="filter-details">
-                  <summary class="filter-summary">Цвет</summary>
+                  <summary class="filter-summary">{% trans "Цвет" %}</summary>
                   <div class="filter-body">
                     <div class="range-row">
                       <input class="range-input" type="text" name="color" placeholder="#000000 или Черный" value="{{ current_color|default:'' }}" />
@@ -215,7 +216,7 @@
 
                 <input type="hidden" name="search" value="{{ current_search|default:'' }}" />
                 <input type="hidden" name="sort" value="{{ current_sort|default:'newest' }}" />
-                <button class="btn btn-soft btn-full" type="submit">Применить</button>
+                <button class="btn btn-soft btn-full" type="submit">{% trans "Применить" %}</button>
               </form>
             </aside>
           </div>

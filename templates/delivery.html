@@ -1,69 +1,70 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block meta_description %}Доставка и оплата: сроки, стоимость, условия.{% endblock %}
+{% block meta_description %}{% trans "Доставка и оплата: сроки, стоимость, условия." %}{% endblock %}
 
-{% block title %}Доставка | {{ store_name|default:"Fashion Store" }}{% endblock %}
+{% block title %}{% trans "Доставка" %} | {{ store_name|default:"Fashion Store" }}{% endblock %}
 
 {% block content %}
   <section class="section">
     <div class="container">
       <div class="catalog-crumbs" aria-label="Хлебные крошки">
-        <a href="{% url 'index' %}">Главная</a>
+        <a href="{% url 'index' %}">{% trans "Главная" %}</a>
         <span aria-hidden="true">/</span>
-        <span>Доставка</span>
+        <span>{% trans "Доставка" %}</span>
       </div>
 
       <div class="section-head">
-        <h1 class="section-title" style="margin: 0;">Доставка и оплата</h1>
-        <p class="section-sub">Коротко о сроках, стоимости и способах оплаты.</p>
+        <h1 class="section-title" style="margin: 0;">{% trans "Доставка и оплата" %}</h1>
+        <p class="section-sub">{% trans "Коротко о сроках, стоимости и способах оплаты." %}</p>
       </div>
 
       <div class="catalog-layout" style="grid-template-columns: 1fr 360px;">
-        <section class="catalog-main" aria-label="Условия доставки">
+        <section class="catalog-main" aria-label="{% trans 'Условия доставки' %}">
           <div class="panel-card" style="border-radius: var(--radius2);">
-            <div class="panel-title">Способы доставки</div>
+            <div class="panel-title">{% trans "Способы доставки" %}</div>
             <div class="panel-rows" style="margin-top: 14px;">
               <div class="panel-row">
                 <span class="dot dot-1" aria-hidden="true"></span>
-                <span class="panel-row-text">Курьер по Ташкенту: 1–2 дня</span>
+                <span class="panel-row-text">{% trans "Курьер по Ташкенту: 1–2 дня" %}</span>
                 <span class="panel-row-arrow" aria-hidden="true"> </span>
               </div>
               <div class="panel-row">
                 <span class="dot dot-2" aria-hidden="true"></span>
-                <span class="panel-row-text">По Узбекистану: 3–7 дней</span>
+                <span class="panel-row-text">{% trans "По Узбекистану: 3–7 дней" %}</span>
                 <span class="panel-row-arrow" aria-hidden="true"> </span>
               </div>
               <div class="panel-row">
                 <span class="dot dot-3" aria-hidden="true"></span>
-                <span class="panel-row-text">Самовывоз: бесплатно</span>
+                <span class="panel-row-text">{% trans "Самовывоз: бесплатно" %}</span>
                 <span class="panel-row-arrow" aria-hidden="true"> </span>
               </div>
             </div>
           </div>
 
           <div class="panel-card" style="border-radius: var(--radius2); margin-top: 14px;">
-            <div class="panel-title">Оплата</div>
+            <div class="panel-title">{% trans "Оплата" %}</div>
             <div class="panel-rows" style="margin-top: 14px;">
               <div class="panel-row">
                 <span class="dot dot-1" aria-hidden="true"></span>
-                <span class="panel-row-text">Онлайн оплата картой</span>
+                <span class="panel-row-text">{% trans "Онлайн оплата картой" %}</span>
               </div>
               <div class="panel-row">
                 <span class="dot dot-2" aria-hidden="true"></span>
-                <span class="panel-row-text">Наличными при получении (если доступно)</span>
+                <span class="panel-row-text">{% trans "Наличными при получении (если доступно)" %}</span>
               </div>
             </div>
           </div>
         </section>
 
-        <aside class="catalog-sidebar" aria-label="Контакты доставки">
+        <aside class="catalog-sidebar" aria-label="{% trans 'Контакты доставки' %}">
           <div class="filter-details" style="padding: 14px 0 0;">
-            <div class="filter-summary" style="cursor: default;">Адрес самовывоза</div>
+            <div class="filter-summary" style="cursor: default;">{% trans "Адрес самовывоза" %}</div>
             <div class="filter-body" style="margin-top: 12px;">
               <div class="catalog-check" style="cursor: default;">
                 <span>{{ contact_info.address.full|default:"Ташкент, Узбекистан" }}</span>
               </div>
-              <a class="btn btn-soft btn-full" href="{% url 'contact' %}">Задать вопрос</a>
+              <a class="btn btn-soft btn-full" href="{% url 'contact' %}">{% trans "Задать вопрос" %}</a>
             </div>
           </div>
         </aside>

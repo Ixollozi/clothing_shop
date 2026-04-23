@@ -1,6 +1,6 @@
 {% load static i18n %}
 <!doctype html>
-<html lang="ru">
+<html lang="{{ LANGUAGE_CODE|default:'ru' }}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,26 +12,26 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}" />
   </head>
   <body>
-    <a class="skip-link" href="#main">Перейти к содержимому</a>
+    <a class="skip-link" href="#main">{% trans "Перейти к содержимому" %}</a>
 
     <header class="topbar">
       <div class="container topbar-inner">
-        <a class="logo" href="{% url 'index' %}" aria-label="{{ store_name|default:'Fashion Store' }} - на главную">
+        <a class="logo" href="{% url 'index' %}" aria-label="{% trans 'На главную' %}">
           <span class="logo-text">
             <span class="logo-title">{{ store_name|default:'Fashion Store' }}</span>
             <span class="logo-sub">{{ store_title|default:store_name }}</span>
           </span>
         </a>
 
-        <nav class="nav-desktop" aria-label="Основная навигация">
-          <a class="nav-link" href="{% url 'catalog' %}#products">Каталог</a>
-          <a class="nav-link" href="{% url 'about' %}">О нас</a>
+        <nav class="nav-desktop" aria-label="{% trans 'Основная навигация' %}">
+          <a class="nav-link" href="{% url 'catalog' %}#products">{% trans "Каталог" %}</a>
+          <a class="nav-link" href="{% url 'about' %}">{% trans "О нас" %}</a>
           <a class="nav-link" href="{% url 'faq' %}">FAQ</a>
-          <a class="nav-link" href="{% url 'contact' %}">Контакты</a>
+          <a class="nav-link" href="{% url 'contact' %}">{% trans "Контакты" %}</a>
         </nav>
 
         <div class="top-actions">
-          <form class="lang-switch" action="{% url 'set_language' %}" method="post" aria-label="Переключение языка">
+          <form class="lang-switch" action="{% url 'set_language' %}" method="post" aria-label="{% trans 'Переключение языка' %}">
             {% csrf_token %}
             {% get_current_language as CURRENT_LANGUAGE %}
             <input type="hidden" name="next" value="{{ request.get_full_path }}" />
@@ -44,7 +44,7 @@
             </select>
           </form>
 
-          <a class="cart" href="{% url 'cart' %}" aria-label="Корзина">
+          <a class="cart" href="{% url 'cart' %}" aria-label="{% trans 'Корзина' %}">
             <span id="cart-badge" class="cart-badge" aria-hidden="true" style="display: none;">0</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6.7 9.2L6 5H3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
@@ -78,18 +78,18 @@
 
         <div class="footer-cols">
           <div class="footer-col">
-            <div class="footer-col-title">Покупателям</div>
-            <a class="footer-link" href="{% url 'catalog' %}#products">Каталог</a>
-            <a class="footer-link" href="{% url 'delivery' %}">Доставка</a>
+            <div class="footer-col-title">{% trans "Покупателям" %}</div>
+            <a class="footer-link" href="{% url 'catalog' %}#products">{% trans "Каталог" %}</a>
+            <a class="footer-link" href="{% url 'delivery' %}">{% trans "Доставка" %}</a>
             <a class="footer-link" href="{% url 'faq' %}">FAQ</a>
           </div>
           <div class="footer-col">
-            <div class="footer-col-title">Компания</div>
-            <a class="footer-link" href="{% url 'about' %}">О магазине</a>
-            <a class="footer-link" href="{% url 'contact' %}">Контакты</a>
+            <div class="footer-col-title">{% trans "Компания" %}</div>
+            <a class="footer-link" href="{% url 'about' %}">{% trans "О магазине" %}</a>
+            <a class="footer-link" href="{% url 'contact' %}">{% trans "Контакты" %}</a>
           </div>
           <div class="footer-col">
-            <div class="footer-col-title">Контакты</div>
+            <div class="footer-col-title">{% trans "Контакты" %}</div>
             <div class="footer-text">{{ contact_info.email|default:"support@example.com" }}</div>
             <div class="footer-text">{{ contact_info.address.full|default:"" }}</div>
           </div>

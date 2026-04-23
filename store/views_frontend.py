@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.utils.translation import gettext as _
+
 from .models import Product, Category, Cart, CartItem
 
 
@@ -335,7 +337,9 @@ def product_detail(request, slug=None):
                         slug=dummy_product_data.get('slug') or 'demo-product',
                         defaults={
                             'name': dummy_product_data.get('name', 'Demo product'),
-                            'description': 'Demo product description.',
+                            'description': _(
+                                'Описание демо-товара: качественные материалы и аккуратное исполнение.'
+                            ),
                             'price': dummy_product_data.get('price', 0) or 0,
                             'old_price': None,
                             'category': demo_category,
@@ -362,7 +366,9 @@ def product_detail(request, slug=None):
                     self.slug = data.get('slug', '')
                     self.price = data.get('price', 0)
                     self.old_price = data.get('old_price')
-                    self.description = 'Classic product description. This is a high-quality product with excellent materials and craftsmanship.'
+                    self.description = _(
+                        'Описание демо-товара: качественные материалы и аккуратное исполнение.'
+                    )
                     self.image_url = data.get('image_url')
                     self.image = None
                     self.available_sizes = 'S,M,L,XL'

@@ -1,16 +1,17 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block meta_description %}О магазине: национальная одежда Узбекистана, ручная работа, забота о качестве и удобный сервис.{% endblock %}
+{% block meta_description %}{% trans "О магазине: национальная одежда Узбекистана, ручная работа, забота о качестве и удобный сервис." %}{% endblock %}
 
-{% block title %}О нас | {{ store_name|default:"Fashion Store" }}{% endblock %}
+{% block title %}{% trans "О нас" %} | {{ store_name|default:"Fashion Store" }}{% endblock %}
 
 {% block content %}
       <section class="section">
         <div class="container">
           <div class="about-crumbs" aria-label="Хлебные крошки">
-            <a href="{% url 'index' %}">Главная</a>
+            <a href="{% url 'index' %}">{% trans "Главная" %}</a>
             <span aria-hidden="true">/</span>
-            <span>О нас</span>
+            <span>{% trans "О нас" %}</span>
           </div>
 
           <div class="about-hero">
@@ -66,8 +67,8 @@
                     />
                   </svg>
                 </div>
-                <div class="about-card-title">Качество в каждой детали</div>
-                <div class="about-card-sub">Материалы подбираем так, чтобы ткань была приятной к телу и служила долго.</div>
+                <div class="about-card-title">{% trans "Качество в каждой детали" %}</div>
+                <div class="about-card-sub">{% trans "Материалы подбираем так, чтобы ткань была приятной к телу и служила долго." %}</div>
               </div>
 
               <div class="about-card">
@@ -90,8 +91,8 @@
                     />
                   </svg>
                 </div>
-                <div class="about-card-title">Понятный сервис</div>
-                <div class="about-card-sub">В каталоге легко фильтровать, а карточки помогают выбрать нужный размер и модель.</div>
+                <div class="about-card-title">{% trans "Понятный сервис" %}</div>
+                <div class="about-card-sub">{% trans "В каталоге легко фильтровать, а карточки помогают выбрать нужный размер и модель." %}</div>
               </div>
 
               <div class="about-card">
@@ -111,21 +112,21 @@
                     />
                   </svg>
                 </div>
-                <div class="about-card-title">Доставка и поддержка</div>
-                <div class="about-card-sub">Оперативно упаковываем и отвечаем на вопросы, чтобы вы покупали спокойно.</div>
+                <div class="about-card-title">{% trans "Доставка и поддержка" %}</div>
+                <div class="about-card-sub">{% trans "Оперативно упаковываем и отвечаем на вопросы, чтобы вы покупали спокойно." %}</div>
               </div>
             {% endif %}
           </div>
 
           <div class="about-split">
-            <div class="about-timeline" aria-label="Как мы развиваемся">
-              <div class="about-section-title">Наша миссия</div>
+            <div class="about-timeline" aria-label="{% trans 'Как мы развиваемся' %}">
+              <div class="about-section-title">{% trans "Наша миссия" %}</div>
               <div class="timeline">
                 {% if about_config and about_config.mission %}
                   <div class="timeline-item">
                     <div class="timeline-dot" aria-hidden="true"></div>
                     <div class="timeline-body">
-                      <div class="timeline-year">Миссия</div>
+                      <div class="timeline-year">{% trans "Миссия" %}</div>
                       <div class="timeline-text">{{ about_config.mission }}</div>
                     </div>
                   </div>
@@ -135,7 +136,7 @@
                   <div class="timeline-item">
                     <div class="timeline-dot" aria-hidden="true"></div>
                     <div class="timeline-body">
-                      <div class="timeline-year">Видение</div>
+                      <div class="timeline-year">{% trans "Видение" %}</div>
                       <div class="timeline-text">{{ about_config.vision }}</div>
                     </div>
                   </div>
@@ -146,31 +147,31 @@
                     <div class="timeline-dot" aria-hidden="true"></div>
                     <div class="timeline-body">
                       <div class="timeline-year">1</div>
-                      <div class="timeline-text">Создаём современную национальную одежду с уважением к традициям.</div>
+                      <div class="timeline-text">{% trans "Создаём современную национальную одежду с уважением к традициям." %}</div>
                     </div>
                   </div>
                   <div class="timeline-item">
                     <div class="timeline-dot" aria-hidden="true"></div>
                     <div class="timeline-body">
                       <div class="timeline-year">2</div>
-                      <div class="timeline-text">Подбираем ткани и фурнитуру так, чтобы вещам было комфортно каждый день.</div>
+                      <div class="timeline-text">{% trans "Подбираем ткани и фурнитуру так, чтобы вещам было комфортно каждый день." %}</div>
                     </div>
                   </div>
                   <div class="timeline-item">
                     <div class="timeline-dot" aria-hidden="true"></div>
                     <div class="timeline-body">
                       <div class="timeline-year">3</div>
-                      <div class="timeline-text">Делаем сервис понятным: помогаем с размером, отвечаем и бережно доставляем.</div>
+                      <div class="timeline-text">{% trans "Делаем сервис понятным: помогаем с размером, отвечаем и бережно доставляем." %}</div>
                     </div>
                   </div>
                 {% endif %}
               </div>
             </div>
 
-            <div class="about-faq" aria-label="Частые вопросы">
-              <div class="about-section-title">Наши ценности</div>
+            <div class="about-faq" aria-label="{% trans 'Частые вопросы' %}">
+              <div class="about-section-title">{% trans "Наши ценности" %}</div>
               {% if about_values %}
-                <div class="values-list" aria-label="Список ценностей">
+                <div class="values-list" aria-label="{% trans 'Список ценностей' %}">
                   {% for v in about_values %}
                     <div class="value-item">
                       <span class="value-dot" aria-hidden="true"></span>
@@ -179,7 +180,7 @@
                   {% endfor %}
                 </div>
               {% else %}
-                <div class="section-sub">Ценности скоро появятся.</div>
+                <div class="section-sub">{% trans "Ценности скоро появятся." %}</div>
               {% endif %}
             </div>
           </div>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fashionstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-22 01:02+0500\n"
+"POT-Creation-Date: 2026-04-24 02:24+0500\n"
 "PO-Revision-Date: 2026-04-21 00:00+0000\n"
 "Language: uz\n"
 "MIME-Version: 1.0\n"
@@ -10,914 +10,1055 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: .\templates\about.html:13
-msgid "О магазине"
-msgstr "Do‘kon haqida"
-
-#: .\templates\about.html:18
-msgid "Добро пожаловать в наш магазин."
-msgstr "Do‘konimizga xush kelibsiz."
-
-#: .\templates\about.html:22 .\templates\index.html:174
-#: .\templates\index.html:218
-msgid "Написать нам"
-msgstr "Bizga yozing"
-
-#: .\templates\about.html:23
-msgid "Наши ценности"
-msgstr "Qadriyatlarimiz"
-
-#: .\templates\about.html:26
-msgid "Показатели"
-msgstr "Ko‘rsatkichlar"
-
-#: .\templates\about.html:35
-msgid "внимание к деталям"
-msgstr "detallarga e’tibor"
-
-#: .\templates\about.html:39
-#, fuzzy
-#| msgid "Каталог"
-msgid "онлайн-каталог"
-msgstr "Katalog"
-
-#: .\templates\about.html:43
-msgid "качество сервиса"
-msgstr "xizmat sifati"
-
-#: .\templates\about.html:55 .\templates\about.html:101
-msgid "Миссия"
-msgstr "Missiya"
-
-#: .\templates\about.html:57
-msgid "Сервис и качество."
-msgstr "Xizmat va sifat."
-
-#: .\templates\about.html:69
-msgid "Ценности"
-msgstr "Qadriyatlar"
-
-#: .\templates\about.html:70
-msgid "Как мы работаем каждый день."
-msgstr "Har kuni qanday ishlaymiz."
-
-#: .\templates\about.html:70
-msgid "Наши принципы."
-msgstr "Bizning tamoyillarimiz."
-
-#: .\templates\about.html:77
-msgid "Часть философии"
-msgstr "Falsafamizning bir qismi"
-
-#: .\templates\about.html:81
-#, fuzzy
-#| msgid "Преимущества"
-msgid "Качество"
-msgstr "Afzalliklar"
-
-#: .\templates\about.html:82
-msgid "Отбор товаров и понятные карточки."
-msgstr "Tanlab olingan mahsulotlar va tushunarli kartochkalar."
-
-#: .\templates\about.html:85
-msgid "Сервис"
-msgstr "Xizmat"
-
-#: .\templates\about.html:86
-msgid "Помогаем с выбором и доставкой."
-msgstr "Tanlash va yetkazib berishda yordam beramiz."
-
-#: .\templates\about.html:97
-msgid "Миссия и видение"
-msgstr "Missiya va qarash"
-
-#: .\templates\about.html:105
-msgid "Видение"
-msgstr "Qarash"
-
-#: .\templates\about.html:117 .\templates\index.html:183
-msgid "Свяжитесь с нами"
-msgstr "Biz bilan bog‘laning"
-
-#: .\templates\about.html:118
-msgid "Вопросы по ассортименту, опту и сотрудничеству."
-msgstr "Assortiment, ulgurji savdo va hamkorlik bo‘yicha savollar."
-
-#: .\templates\about.html:120 .\templates\contact.html:4
-#: .\templates\contact.html:11 .\templates\layout.html:38
-#: .\templates\layout.html:100
-msgid "Контакты"
-msgstr "Kontaktlar"
-
-#: .\templates\admin\base_site.html:4
-msgid "Django site admin"
+msgid "Описание демо-товара: качественные материалы и аккуратное исполнение."
 msgstr ""
+"Demo mahsulot tavsifi: sifatli materiallar va aniq ishlash."
 
-#: .\templates\cart.html:11 .\templates\layout.html:61
-msgid "Корзина"
-msgstr "Savat"
-
-#: .\templates\cart.html:12
-msgid "Проверьте состав и количество. Изменения сохраняются автоматически."
-msgstr "Tarkib va miqdorni tekshiring. O‘zgarishlar avtomatik saqlanadi."
-
-#: .\templates\cart.html:16
-#, fuzzy
-#| msgid "Смотреть товары в категории"
-msgid "Список товаров в корзине"
-msgstr "Toifadagi mahsulotlarni ko‘rish"
-
-#: .\templates\cart.html:26
-msgid "Размер:"
-msgstr "O‘lcham:"
-
-#: .\templates\cart.html:28
-msgid "Цвет:"
-msgstr "Rang:"
-
-#: .\templates\cart.html:34
-#, fuzzy
-#| msgid "Популярные товары"
-msgid "Удалить товар"
-msgstr "Ommabop mahsulotlar"
-
-#: .\templates\cart.html:34
-msgid "Удалить"
-msgstr "O‘chirish"
-
-#: .\templates\cart.html:37 .\templates\product.html:73
-#, fuzzy
-#| msgid "Преимущества"
-msgid "Количество"
-msgstr "Afzalliklar"
-
-#: .\templates\cart.html:38 .\templates\product.html:74
-msgid "Уменьшить"
-msgstr "Kamaytirish"
-
-#: .\templates\cart.html:39 .\templates\product.html:75
-#, fuzzy
-#| msgid "Категории товаров"
-msgid "Количество товара"
-msgstr "Mahsulot toifalari"
-
-#: .\templates\cart.html:40 .\templates\product.html:76
-msgid "Увеличить"
-msgstr "Ko‘paytirish"
-
-#: .\templates\cart.html:50
-#, fuzzy
-#| msgid "Корзина"
-msgid "Корзина пуста."
-msgstr "Savat"
-
-#: .\templates\cart.html:50
-#, fuzzy
-#| msgid "Перейти к содержимому"
-msgid "Перейти в каталог"
-msgstr "Kontentga o‘tish"
-
-#: .\templates\cart.html:54
-msgid "Итоги заказа"
-msgstr "Buyurtma xulosasi"
-
-#: .\templates\cart.html:56
-msgid "Сумма"
-msgstr "Summa"
-
-#: .\templates\cart.html:57
-msgid "Доставка уточняется при оформлении."
-msgstr "Yetkazib berish tafsilotlari rasmiylashtirishda aniqlanadi."
-
-#: .\templates\cart.html:61
-msgid "Товары"
-msgstr "Mahsulotlar"
-
-#: .\templates\cart.html:61 .\templates\product.html:65
-msgid "шт."
-msgstr "dona"
-
-#: .\templates\cart.html:68
-msgid "Итого"
-msgstr "Jami"
-
-#: .\templates\cart.html:72
-msgid "Оформить заказ"
-msgstr "Buyurtmani rasmiylashtirish"
-
-#: .\templates\cart.html:74
-msgid "Для оплаты и доставки свяжитесь с нами или уточните детали в сообщении."
-msgstr ""
-"To‘lov va yetkazib berish uchun biz bilan bog‘laning yoki xabarda "
-"tafsilotlarni aniqlashtiring."
-
-#: .\templates\cart.html:77
-#, fuzzy
-#| msgid "Помощь с подбором"
-msgid "Нужна помощь с выбором?"
-msgstr "Tanlashda yordam"
-
-#: .\templates\cart.html:78
-#, fuzzy
-#| msgid "Написать нам"
-msgid "Напишите нам"
-msgstr "Bizga yozing"
-
-#: .\templates\catalog.html:4 .\templates\catalog.html:12
-#: .\templates\index.html:16 .\templates\index.html:55
-#: .\templates\layout.html:35 .\templates\layout.html:98
-#: .\templates\product.html:13
-msgid "Каталог"
-msgstr "Katalog"
-
-#: .\templates\catalog.html:5
-#, fuzzy
-#| msgid "Категории товаров"
-msgid "Каталог товаров"
-msgstr "Mahsulot toifalari"
-
-#: .\templates\catalog.html:14
-msgid "Фильтры и сортировка — данные из каталога магазина."
-msgstr "Filtrlar va saralash — do‘kon katalogi ma’lumotlari asosida."
-
-#: .\templates\catalog.html:17
-#, fuzzy
-#| msgid "Смотреть товары в категории"
-msgid "Быстрые фильтры по категории"
-msgstr "Toifadagi mahsulotlarni ko‘rish"
-
-#: .\templates\catalog.html:18 .\templates\index.html:102
-msgid "Все"
-msgstr "Barchasi"
-
-#: .\templates\catalog.html:26
-#, fuzzy
-#| msgid "Фильтры (визуальные)"
-msgid "Фильтры каталога"
-msgstr "Filtrlar (vizual)"
-
-#: .\templates\catalog.html:29
-msgid "Фильтры"
-msgstr "Filtrlar"
-
-#: .\templates\catalog.html:30
-msgid "Настройте подбор"
-msgstr "Tanlovni sozlang"
-
-#: .\templates\catalog.html:34 .\templates\catalog.html:35
-#: .\templates\product.html:110
-msgid "Категория"
-msgstr "Toifa"
-
-#: .\templates\catalog.html:37
-msgid "Все категории"
-msgstr "Barcha toifalar"
-
-#: .\templates\catalog.html:45
-msgid "Цена, ₽"
-msgstr "Narx, ₽"
-
-#: .\templates\catalog.html:46
-msgid "Диапазон цены"
-msgstr "Narx oralig‘i"
-
-#: .\templates\catalog.html:48 .\templates\index.html:50
-msgid "от"
-msgstr "dan"
-
-#: .\templates\catalog.html:49
-msgid "0"
-msgstr "0"
-
-#: .\templates\catalog.html:50
-msgid "до"
-msgstr "gacha"
-
-#: .\templates\catalog.html:57 .\templates\catalog.html:58
-#: .\templates\product.html:90 .\templates\product.html:91
-msgid "Размер"
-msgstr "O‘lcham"
-
-#: .\templates\catalog.html:59
-msgid "например S или XL"
-msgstr "masalan, S yoki XL"
-
-#: .\templates\catalog.html:63
-msgid "Цвет (код или название)"
-msgstr "Rang (kod yoki nom)"
-
-#: .\templates\catalog.html:64 .\templates\product.html:99
-#: .\templates\product.html:100
-msgid "Цвет"
-msgstr "Rang"
-
-#: .\templates\catalog.html:65
-msgid "#000000 или Черный"
-msgstr "#000000 yoki Qora"
-
-#: .\templates\catalog.html:69 .\templates\catalog.html:70
-#: .\templates\layout.html:55
-msgid "Поиск"
-msgstr "Qidiruv"
-
-#: .\templates\catalog.html:71
-msgid "Название или описание"
-msgstr "Nomi yoki tavsifi"
-
-#: .\templates\catalog.html:75
-msgid "Сбросить"
-msgstr "Qayta o‘rnatish"
-
-#: .\templates\catalog.html:76
-msgid "Применить"
-msgstr "Qo‘llash"
-
-#: .\templates\catalog.html:83
-msgid "Найдено:"
-msgstr "Topildi:"
-
-#: .\templates\catalog.html:83
-msgid "товаров"
-msgstr "mahsulot"
-
-#: .\templates\catalog.html:84 .\templates\catalog.html:86
-msgid "Сортировка"
-msgstr "Saralash"
-
-#: .\templates\catalog.html:85
-msgid "Сортировать"
-msgstr "Saralash"
-
-#: .\templates\catalog.html:87
-msgid "Сначала новинки"
-msgstr "Avval yangilari"
-
-#: .\templates\catalog.html:88
-#, fuzzy
-#| msgid "Популярно сегодня"
-msgid "По популярности"
-msgstr "Bugun ommabop"
-
-#: .\templates\catalog.html:89
-msgid "Сначала дешевле"
-msgstr "Avval arzonlari"
-
-#: .\templates\catalog.html:90
-msgid "Сначала дороже"
-msgstr "Avval qimmatroqlari"
-
-#: .\templates\catalog.html:103 .\templates\catalog.html:123
-#: .\templates\product.html:207
-msgid "Акция"
-msgstr "Aksiya"
-
-#: .\templates\catalog.html:112 .\templates\catalog.html:133
-#: .\templates\index.html:125 .\templates\product.html:216
-msgid "Подробнее"
-msgstr "Batafsil"
-
-#: .\templates\catalog.html:124 .\templates\product.html:51
-#, fuzzy
-#| msgid "от"
-msgid "Хит"
-msgstr "Xit"
-
-#: .\templates\catalog.html:138 .\templates\index.html:130
-msgid "Товары скоро появятся в каталоге."
-msgstr "Mahsulotlar tez orada katalogda paydo bo‘ladi."
-
-#: .\templates\catalog.html:145
-msgid "Пагинация"
-msgstr ""
-
-#: .\templates\catalog.html:147
-msgid "Предыдущая страница"
-msgstr ""
-
-#: .\templates\catalog.html:147 .\templates\catalog.html:149
-msgid "Назад"
-msgstr ""
-
-#: .\templates\catalog.html:161
-msgid "Следующая страница"
-msgstr ""
-
-#: .\templates\catalog.html:161 .\templates\catalog.html:163
-msgid "Далее"
-msgstr ""
-
-#: .\templates\contact.html:5
-#, fuzzy, python-format
-#| msgid "Контакты"
-msgid "Контакты %(store_name)s."
-msgstr "Kontaktlar"
-
-#: .\templates\contact.html:12
-msgid "Телефон, почта и форма обратной связи."
-msgstr "Telefon, email va aloqa formasi."
-
-#: .\templates\contact.html:19 .\templates\contact.html:65
-#: .\templates\index.html:188
-msgid "Телефон"
-msgstr "Telefon"
-
-#: .\templates\contact.html:25 .\templates\index.html:196
-msgid "Почта"
-msgstr "Email"
-
-#: .\templates\contact.html:31
-msgid "Адрес"
-msgstr "Manzil"
-
-#: .\templates\contact.html:40 .\templates\index.html:204
-msgid "Время"
-msgstr "Vaqt"
-
-#: .\templates\contact.html:53
-msgid "Ошибка отправки"
-msgstr "Yuborishda xatolik"
-
-#: .\templates\contact.html:54
-msgid "Сообщение отправлено. Спасибо!"
-msgstr "Xabar yuborildi. Rahmat!"
-
-#: .\templates\contact.html:55
-msgid "Не удалось отправить"
-msgstr "Yuborib bo‘lmadi"
-
-#: .\templates\contact.html:60
-#, fuzzy
-#| msgid "Время"
-msgid "Имя"
-msgstr "Vaqt"
-
-#: .\templates\contact.html:61
-msgid "Ваше имя"
-msgstr "Ismingiz"
-
-#: .\templates\contact.html:62 .\templates\contact.html:63
-msgid "Email"
-msgstr "Email"
-
-#: .\templates\contact.html:66
-msgid "Телефон (необязательно)"
-msgstr "Telefon (ixtiyoriy)"
-
-#: .\templates\contact.html:67
-msgid "Тема"
-msgstr "Mavzu"
-
-#: .\templates\contact.html:69
-msgid "Тема сообщения"
-msgstr "Xabar mavzusi"
-
-#: .\templates\contact.html:70
-#, fuzzy
-#| msgid "Вопросы и ответы"
-msgid "Вопрос по заказу"
-msgstr "Savol-javoblar"
-
-#: .\templates\contact.html:71
-#, fuzzy
-#| msgid "Вопросы и ответы"
-msgid "Вопрос по товару"
-msgstr "Savol-javoblar"
-
-#: .\templates\contact.html:72 .\templates\delivery.html:17
-#: .\templates\product.html:140 .\templates\product.html:163
-#: .\templates\product.html:168
-#, fuzzy
-#| msgid "Доставка и оплата"
-msgid "Доставка"
-msgstr "Yetkazib berish va to‘lov"
-
-#: .\templates\contact.html:73
-msgid "Возврат"
-msgstr "Qaytarish"
-
-#: .\templates\contact.html:74
-msgid "Другое"
-msgstr "Boshqa"
-
-#: .\templates\contact.html:76 .\templates\contact.html:77
-msgid "Сообщение"
-msgstr "Xabar"
-
-#: .\templates\contact.html:78
-msgid "Отправить"
-msgstr "Yuborish"
-
-#: .\templates\contact.html:85
-msgid "Карта"
-msgstr "Xarita"
-
-#: .\templates\delivery.html:11 .\templates\layout.html:108
-msgid "Доставка и оплата"
-msgstr "Yetkazib berish va to‘lov"
-
-#: .\templates\delivery.html:12
 msgid ""
-"Общие условия. Точные сроки и стоимость уточняйте при оформлении заказа."
+"О магазине: национальная одежда Узбекистана, ручная работа, забота о "
+"качестве и удобный сервис."
 msgstr ""
-"Umumiy shartlar. Aniq muddat va narxni buyurtma rasmiylashtirishda "
-"aniqlashtiring."
 
-#: .\templates\delivery.html:18
-msgid ""
-"Отправка после подтверждения заказа. По городу и регионам — курьером или "
-"службой доставки. Сроки зависят от выбранного способа."
-msgstr ""
-"Buyurtma tasdiqlangandan so‘ng jo‘natiladi. Shahar va hududlar bo‘yicha — "
-"kuryer yoki yetkazib berish xizmati orqali. Muddat tanlangan usulga bog‘liq."
-
-#: .\templates\delivery.html:21
-msgid "Оплата"
-msgstr "To‘lov"
-
-#: .\templates\delivery.html:22
-msgid ""
-"Способы оплаты согласовываются с менеджером: предоплата или оплата при "
-"получении — в зависимости от региона и состава заказа."
-msgstr ""
-"To‘lov usullari menejer bilan kelishiladi: oldindan to‘lov yoki yetkazib "
-"berilganda to‘lov — hudud va buyurtma tarkibiga qarab."
-
-#: .\templates\delivery.html:25
-msgid "Упаковка"
-msgstr "Qadoqlash"
-
-#: .\templates\delivery.html:26
-msgid ""
-"Заказы упаковываем так, чтобы товары доехали без повреждений. Крупногабарит "
-"— по согласованию."
-msgstr ""
-"Buyurtmalarni mahsulotlar shikastlanmasdan yetib borishi uchun qadoqlaymiz. "
-"Katta o‘lchamdagilar — kelishuv asosida."
-
-#: .\templates\delivery.html:32
-msgid "Нужны точные условия?"
-msgstr "Aniq shartlar kerakmi?"
-
-#: .\templates\delivery.html:33
-msgid "Напишите адрес и состав заказа — подскажем варианты и стоимость."
-msgstr "Manzil va buyurtma tarkibini yozing — variantlar va narxni aytamiz."
-
-#: .\templates\delivery.html:35
-msgid "Связаться"
-msgstr "Bog‘lanish"
-
-#: .\templates\faq.html:11
-msgid "Частые вопросы"
-msgstr "Ko‘p so‘raladigan savollar"
-
-#: .\templates\faq.html:14
-#, python-format
-msgid "Если не нашли ответ — <a href=\"%(contact_url)s\">напишите нам</a>."
-msgstr "Agar javob topilmasa — <a href=\"%(contact_url)s\">bizga yozing</a>."
-
-#: .\templates\faq.html:27
-msgid ""
-"Пока нет опубликованных вопросов. Загляните позже или свяжитесь с поддержкой."
-msgstr ""
-"Hozircha e’lon qilingan savollar yo‘q. Keyinroq yana kirib ko‘ring yoki "
-"qo‘llab-quvvatlash bilan bog‘laning."
-
-#: .\templates\index.html:17 .\templates\index.html:139
-msgid "Почему именно мы"
-msgstr "Nega aynan biz"
-
-#: .\templates\index.html:20
-msgid "Преимущества"
-msgstr "Afzalliklar"
-
-#: .\templates\index.html:23
-msgid "доставка по городу"
-msgstr "shahar bo‘ylab yetkazish"
-
-#: .\templates\index.html:27
-msgid "оценка покупателей"
-msgstr "mijozlar bahosi"
-
-#: .\templates\index.html:31
-msgid "готовых идей"
-msgstr "tayyor g‘oyalar"
-
-#: .\templates\index.html:44
-msgid "Популярно сегодня"
-msgstr "Bugun ommabop"
-
-#: .\templates\index.html:52 .\templates\index.html:58
-msgid "Смотреть"
-msgstr "Ko‘rish"
-
-#: .\templates\index.html:72
-msgid "Категории товаров"
-msgstr "Mahsulot toifalari"
-
-#: .\templates\index.html:73
-msgid "Выберите направление — мы подскажем набор под вашу задачу."
-msgstr "Yo‘nalishni tanlang — vazifangizga mos to‘plamni tavsiya qilamiz."
-
-#: .\templates\index.html:87
-msgid "Смотреть товары в категории"
-msgstr "Toifadagi mahsulotlarni ko‘rish"
-
-#: .\templates\index.html:98
-msgid "Популярные товары"
-msgstr "Ommabop mahsulotlar"
-
-#: .\templates\index.html:99
-msgid "Подобрали то, что чаще всего покупают для работы и обучения."
-msgstr "Ish va o‘rganish uchun eng ko‘p olinadiganlarini tanladik."
-
-#: .\templates\index.html:101
-msgid "Фильтры (визуальные)"
-msgstr "Filtrlar (vizual)"
-
-#: .\templates\index.html:103
-msgid "Наборы"
-msgstr "To‘plamlar"
-
-#: .\templates\index.html:104
-msgid "Стамески"
-msgstr "Kesgichlar"
-
-#: .\templates\index.html:105
-msgid "Заготовки"
-msgstr "Tayyor blankalar"
-
-#: .\templates\index.html:140
-msgid "Быстрый путь к уверенной первой работе."
-msgstr "Birinchi ishingizni ishonch bilan boshlash uchun tez yo‘l."
-
-#: .\templates\index.html:153
-msgid "Определите технику"
-msgstr "Texnikani tanlang"
-
-#: .\templates\index.html:154
-msgid "Плоская резьба, контуры, объем или орнаменты — подбираем форму резца."
-msgstr ""
-"Yassi o‘ymakorlik, kontur, hajm yoki naqsh — mos kesgich shaklini tanlang."
-
-#: .\templates\index.html:158
-msgid "Смотрите на размер"
-msgstr "O‘lchamga qarang"
-
-#: .\templates\index.html:159
-msgid ""
-"Ширина и радиус влияют на чистоту линии: начните с универсальных размеров."
-msgstr ""
-"Kenglik va radius chiziq sifatiga ta’sir qiladi: universal o‘lchamlardan "
-"boshlang."
-
-#: .\templates\index.html:163
-msgid "Добавьте финиш"
-msgstr "Yakuniy ishlov bering"
-
-#: .\templates\index.html:164
-msgid ""
-"Шлифовка и масло/лак дают красивый рисунок волокон и защиту поверхности."
-msgstr "Silliqlash va moy/lak tolalar naqshini ochadi va yuzani himoya qiladi."
-
-#: .\templates\index.html:171
-msgid "Хотите подбор под ваш проект?"
-msgstr "Loyihangiz uchun to‘plam kerakmi?"
-
-#: .\templates\index.html:172
-msgid "Оставьте сообщение — мы предложим наборы под задачу и уровень навыков."
-msgstr ""
-"Xabar qoldiring — vazifa va tajribangizga mos to‘plamlarni tavsiya qilamiz."
-
-#: .\templates\index.html:184
-msgid ""
-"Ответим по выбору инструмента, наличию и доставке. Можно просто написать "
-"«что хочу сделать»."
-msgstr ""
-"Asbob tanlash, mavjudlik va yetkazib berish bo‘yicha yordam beramiz. "
-"Shunchaki “nimani qilmoqchiman” deb yozing."
-
-#: .\templates\index.html:209
-msgid "Пн–Пт: 10:00–19:00"
-msgstr "Du–Ju: 10:00–19:00"
-
-#: .\templates\index.html:217
-msgid "Полная форма обратной связи и карта — на странице контактов."
-msgstr "To‘liq aloqa formasi va xarita kontaktlar sahifasida."
-
-#: .\templates\layout.html:15
-msgid "Перейти к содержимому"
-msgstr "Kontentga o‘tish"
-
-#: .\templates\layout.html:20
-msgid "На главную"
-msgstr "Bosh sahifaga"
-
-#: .\templates\layout.html:28
-msgid "Основная навигация"
-msgstr "Asosiy navigatsiya"
-
-#: .\templates\layout.html:30
-msgid "Открыть меню"
-msgstr "Menyuni ochish"
-
-#: .\templates\layout.html:34 .\templates\layout.html:97
-#: .\templates\product.html:11
-msgid "Главная"
-msgstr "Bosh sahifa"
-
-#: .\templates\layout.html:36 .\templates\layout.html:99
 msgid "О нас"
 msgstr "Biz haqimizda"
 
-#: .\templates\layout.html:42
-msgid "Быстрые действия"
-msgstr "Tezkor amallar"
+msgid "Главная"
+msgstr "Bosh sahifa"
 
-#: .\templates\layout.html:43
+msgid "Качество в каждой детали"
+msgstr "Har bir detalda sifat"
+
+msgid ""
+"Материалы подбираем так, чтобы ткань была приятной к телу и служила долго."
+msgstr ""
+"Matolarni tanlaymizki, tana uchun yoqimli bo‘lsin va uzoq xizmat qilsin."
+
+msgid "Понятный сервис"
+msgstr "Qulay xizmat"
+
+msgid ""
+"В каталоге легко фильтровать, а карточки помогают выбрать нужный размер и "
+"модель."
+msgstr ""
+"Katalogda filtrlash oson, kartochkalar esa kerakli o‘lcham va modelni "
+"tanlashga yordam beradi."
+
+msgid "Доставка и поддержка"
+msgstr "Yetkazib berish va qo‘llab-quvvatlash"
+
+msgid ""
+"Оперативно упаковываем и отвечаем на вопросы, чтобы вы покупали спокойно."
+msgstr ""
+"Tezda qadoqlaymiz va savollarga javob beramiz — siz xotirjam xarid qilasiz."
+
+msgid "Как мы развиваемся"
+msgstr "Qanday rivojlanamiz"
+
+msgid "Наша миссия"
+msgstr "Bizning missiyamiz"
+
+msgid "Миссия"
+msgstr "Missiya"
+
+msgid "Видение"
+msgstr "Qarash"
+
+msgid "Создаём современную национальную одежду с уважением к традициям."
+msgstr "An’analarni hurmat qilgan holda zamonaviy milliy kiyimlar yaratamiz."
+
+msgid ""
+"Подбираем ткани и фурнитуру так, чтобы вещам было комфортно каждый день."
+msgstr "Matolar va aksessuarlarni tanlaymiz — har kuni kiyish qulay bo‘lsin."
+
+msgid ""
+"Делаем сервис понятным: помогаем с размером, отвечаем и бережно доставляем."
+msgstr ""
+"Xizmatni tushunarli qilamiz: o‘lcham tanlashga yordam beramiz, javob beramiz "
+"va ehtiyotkorlik bilan yetkazamiz."
+
+msgid "Частые вопросы"
+msgstr "Ko‘p so‘raladigan savollar"
+
+msgid "Наши ценности"
+msgstr "Qadriyatlarimiz"
+
+msgid "Список ценностей"
+msgstr "Qadriyatlar ro‘yxati"
+
+msgid "Ценности скоро появятся."
+msgstr "Qadriyatlar tez orada paydo bo‘ladi."
+
+msgid "Django site admin"
+msgstr ""
+
+msgid "Перейти к содержимому"
+msgstr "Kontentga o‘tish"
+
+msgid "На главную"
+msgstr "Bosh sahifaga"
+
+msgid "Основная навигация"
+msgstr "Asosiy navigatsiya"
+
+msgid "Каталог"
+msgstr "Katalog"
+
+msgid "Контакты"
+msgstr "Kontaktlar"
+
 msgid "Переключение языка"
 msgstr "Tilni almashtirish"
 
-#: .\templates\layout.html:47
 msgid "Язык"
 msgstr "Til"
 
-#: .\templates\layout.html:82
+msgid "Корзина"
+msgstr "Savat"
+
+msgid "Покупателям"
+msgstr "Mijozlar uchun"
+
+msgid "Доставка"
+msgstr "Yetkazib berish"
+
+msgid "Компания"
+msgstr "Kompaniya"
+
+msgid "О магазине"
+msgstr "Do‘kon haqida"
+
+msgid "Корзина: товары национальной одежды Узбекистана."
+msgstr "Savat: O‘zbekiston milliy kiyimlari."
+
+msgid "Ваша корзина"
+msgstr "Sizning savatingiz"
+
+msgid "Здесь отображаются реальные товары из вашей сессии."
+msgstr "Bu yerda sessiyangizdagi haqiqiy mahsulotlar ko‘rsatiladi."
+
+msgid "Товары в корзине"
+msgstr "Savatdagi mahsulotlar"
+
+msgid "Размер:"
+msgstr "O‘lcham:"
+
+msgid "Цвет:"
+msgstr "Rang:"
+
+msgid "Удалить"
+msgstr "O‘chirish"
+
+msgid "Количество"
+msgstr "Miqdor"
+
+msgid "Уменьшить"
+msgstr "Kamaytirish"
+
+msgid "Увеличить"
+msgstr "Ko‘paytirish"
+
+msgid "Корзина пуста."
+msgstr "Savat bo‘sh."
+
+msgid "Продолжить покупки"
+msgstr "Xaridni davom ettirish"
+
+msgid "Очистить корзину"
+msgstr "Savatni tozalash"
+
+#, fuzzy
+#| msgid "Итого"
+msgid "Итог"
+msgstr "Jami"
+
+msgid "Подытог"
+msgstr "Oraliq jami"
+
+msgid "по городу"
+msgstr "Shahar ichida"
+
+msgid "Итого"
+msgstr "Jami"
+
+msgid "Оформить заказ"
+msgstr "Buyurtmani rasmiylashtirish"
+
+#, fuzzy
+#| msgid "Оформить заказ"
+msgid "Оформление заказа"
+msgstr "Buyurtmani rasmiylashtirish"
+
+msgid "Имя *"
+msgstr ""
+
+msgid "Фамилия *"
+msgstr ""
+
+#, fuzzy
+#| msgid "Телефон"
+msgid "Телефон *"
+msgstr "Telefon"
+
+#, fuzzy
+#| msgid "Телефон (необязательно)"
+msgid "Email (необязательно)"
+msgstr "Telefon (ixtiyoriy)"
+
+#, fuzzy
+#| msgid "Адрес"
+msgid "Адрес *"
+msgstr "Manzil"
+
+msgid "Город"
+msgstr ""
+
+msgid "Ташкент"
+msgstr ""
+
+msgid "Индекс"
+msgstr ""
+
+#, fuzzy
+#| msgid "Доставка и оплата"
+msgid "Способ оплаты"
+msgstr "Yetkazib berish va to‘lov"
+
+#, fuzzy
+#| msgid "В наличии"
+msgid "Наличными"
+msgstr "Mavjud"
+
+#, fuzzy
+#| msgid "Карта"
+msgid "Картой"
+msgstr "Xarita"
+
+msgid "Электронный кошелёк"
+msgstr ""
+
+msgid "Банковский перевод"
+msgstr ""
+
+msgid "Комментарий к заказу"
+msgstr "Buyurtma izohi"
+
+msgid "Отмена"
+msgstr "Bekor qilish"
+
+msgid "Подтвердить"
+msgstr "Tasdiqlash"
+
+msgid "Демо: оформление заказа можно подключить следующим шагом."
+msgstr "Demo: buyurtma rasmiylashtirishni keyingi bosqichda ulash mumkin."
+
+msgid "Корзина пуста. Добавьте товары, чтобы оформить заказ."
+msgstr "Savat bo‘sh. Buyurtma berish uchun mahsulot qo‘shing."
+
+msgid "Заполните обязательные поля (имя, фамилия, телефон, адрес)."
+msgstr "Majburiy maydonlarni to‘ldiring (ism, familiya, telefon, manzil)."
+
+msgid "Отправка..."
+msgstr "Yuborilmoqda..."
+
+msgid "Не удалось оформить заказ"
+msgstr "Buyurtmani rasmiylashtirib bo‘lmadi"
+
+msgid "Заказ оформлен. Мы свяжемся с вами."
+msgstr "Buyurtma qabul qilindi. Siz bilan bog‘lanamiz."
+
+msgid "Ошибка при оформлении."
+msgstr "Rasmiylashtirishda xatolik."
+
+msgid ""
+"Каталог национальной одежды Узбекистана: чапаны, платья, костюмы и "
+"аксессуары."
+msgstr ""
+"O‘zbekiston milliy kiyimlari katalogi: chapanlar, ko‘ylaklar, kostyumlar va "
+"aksessuarlar."
+
+msgid "Каталог национальной одежды"
+msgstr "Milliy kiyimlar katalogi"
+
+msgid ""
+"От чапанов до аксессуаров: выберите стиль и размер, чтобы быстро оформить "
+"заказ."
+msgstr ""
+"Chapanlardan aksessuarlargacha: uslub va o‘lchamni tanlab, buyurtmani tez "
+"rasmiylashtiring."
+
+msgid "Панель управления каталогом"
+msgstr "Katalog boshqaruvi"
+
+#, python-format
+msgid "Показано %(count)s товаров"
+msgstr "%(count)s ta mahsulot ko‘rsatildi"
+
+msgid "Сортировка"
+msgstr "Saralash"
+
+#, fuzzy
+#| msgid "Сначала новинки"
+msgid "Сначала новые"
+msgstr "Avval yangilari"
+
+#, fuzzy
+#| msgid "Популярные товары"
+msgid "Популярные"
+msgstr "Ommabop mahsulotlar"
+
+msgid "Сначала дешевле"
+msgstr "Avval arzonlari"
+
+msgid "Сначала дороже"
+msgstr "Avval qimmatroqlari"
+
+#, fuzzy
+#| msgid "Быстрые действия"
+msgid "Быстрые фильтры"
+msgstr "Tezkor amallar"
+
+msgid "Все"
+msgstr "Barchasi"
+
+#, fuzzy
+#| msgid "Смотреть товары в категории"
+msgid "Список товаров"
+msgstr "Toifadagi mahsulotlarni ko‘rish"
+
+msgid "Заголовок результатов"
+msgstr ""
+
+msgid "Результаты"
+msgstr ""
+
+msgid "Подборка моделей по популярности и отзывам"
+msgstr ""
+
+msgid "Товар"
+msgstr "Mahsulot"
+
+#, python-format
+msgid "Рейтинг %(r)s из 5"
+msgstr "%(r)s / 5 reyting"
+
+msgid "В корзину"
+msgstr "Savatga"
+
+msgid "Подробнее"
+msgstr "Batafsil"
+
+#, fuzzy
+#| msgid "Товары скоро появятся в каталоге."
+msgid "Товары скоро появятся."
+msgstr "Mahsulotlar tez orada katalogda paydo bo‘ladi."
+
+msgid "Пагинация"
+msgstr ""
+
+msgid "Фильтры"
+msgstr "Filtrlar"
+
+msgid "Категория"
+msgstr "Toifa"
+
+#, fuzzy
+#| msgid "Цена, ₽"
+msgid "Цена"
+msgstr "Narx, ₽"
+
+msgid "от"
+msgstr "dan"
+
+msgid "до"
+msgstr "gacha"
+
+msgid "Размер"
+msgstr "O‘lcham"
+
+msgid "Цвет"
+msgstr "Rang"
+
+msgid "Применить"
+msgstr "Qo‘llash"
+
+msgid "Контакты: вопросы по заказам, товарам и доставке."
+msgstr "Kontaktlar: buyurtma, mahsulot va yetkazib berish bo‘yicha savollar."
+
+msgid "Напишите нам — мы ответим и поможем подобрать модель и размер."
+msgstr ""
+
+#, fuzzy
+#| msgid "Телефон, почта и форма обратной связи."
+msgid "Форма обратной связи"
+msgstr "Telefon, email va aloqa formasi."
+
+msgid "Сообщение"
+msgstr "Xabar"
+
+msgid "Форма контактов"
+msgstr "Aloqa formasi"
+
+msgid "Ваше имя *"
+msgstr "Ismingiz *"
+
+msgid "Email *"
+msgstr "Email *"
+
+msgid "Телефон"
+msgstr "Telefon"
+
+msgid "Тема сообщения"
+msgstr "Xabar mavzusi"
+
+msgid "Тема *"
+msgstr "Mavzu *"
+
+msgid "Вопрос по заказу"
+msgstr "Buyurtma bo‘yicha savol"
+
+msgid "Вопрос по товару"
+msgstr "Tovar bo‘yicha savol"
+
+msgid "Возврат"
+msgstr "Qaytarish"
+
+msgid "Другое"
+msgstr "Boshqa"
+
+msgid "Сообщение *"
+msgstr "Xabar *"
+
+msgid "Отправить"
+msgstr "Yuborish"
+
+msgid "Контактная информация"
+msgstr "Aloqa ma'lumotlari"
+
+msgid "Связаться"
+msgstr "Bog‘lanish"
+
+msgid "Адрес"
+msgstr "Manzil"
+
+msgid "Заполните все поля со звёздочкой."
+msgstr "Yulduzcha bilan belgilangan barcha maydonlarni to‘ldiring."
+
+msgid "Не удалось отправить сообщение"
+msgstr "Xabarni yuborib bo‘lmadi"
+
+msgid "Сообщение отправлено. Спасибо!"
+msgstr "Xabar yuborildi. Rahmat!"
+
+msgid "Ошибка при отправке."
+msgstr "Yuborishda xatolik yuz berdi."
+
+msgid "Доставка и оплата: сроки, стоимость, условия."
+msgstr "Yetkazib berish va to‘lov: muddatlar, narx, shartlar."
+
+msgid "Доставка и оплата"
+msgstr "Yetkazib berish va to‘lov"
+
+msgid "Коротко о сроках, стоимости и способах оплаты."
+msgstr ""
+
+#, fuzzy
+#| msgid "Ошибка отправки"
+msgid "Условия доставки"
+msgstr "Yuborishda xatolik"
+
+#, fuzzy
+#| msgid "Ошибка отправки"
+msgid "Способы доставки"
+msgstr "Yuborishda xatolik"
+
+msgid "Курьер по Ташкенту: 1–2 дня"
+msgstr ""
+
+msgid "По Узбекистану: 3–7 дней"
+msgstr ""
+
+msgid "Самовывоз: бесплатно"
+msgstr ""
+
+msgid "Оплата"
+msgstr "To‘lov"
+
+#, fuzzy
+#| msgid "Каталог"
+msgid "Онлайн оплата картой"
+msgstr "Katalog"
+
+msgid "Наличными при получении (если доступно)"
+msgstr ""
+
+msgid "Контакты доставки"
+msgstr "Yetkazib berish kontaktlari"
+
+msgid "Адрес самовывоза"
+msgstr ""
+
+#, fuzzy
+#| msgid "Частые вопросы"
+msgid "Задать вопрос"
+msgstr "Ko‘p so‘raladigan savollar"
+
+msgid "FAQ: ответы на частые вопросы о товарах и доставке."
+msgstr ""
+"FAQ: mahsulotlar va yetkazib berish bo‘yicha tez-tez so‘raladigan savollarga "
+"javoblar."
+
+msgid "Хлебные крошки"
+msgstr "Navigatsiya zanjiri"
+
+msgid "Короткие ответы на частые вопросы."
+msgstr "Tez-tez beriladigan savollarga qisqa javoblar."
+
+msgid "Список вопросов"
+msgstr "Savollar ro‘yxati"
+
+msgid "Пока нет вопросов — загляните позже."
+msgstr "Hozircha savollar yo‘q — keyinroq qaytib keling."
+
+msgid "Помощь"
+msgstr "Yordam"
+
+msgid "Не нашли ответ?"
+msgstr "Javob topa olmadingizmi?"
+
+msgid "Написать нам"
+msgstr "Bizga yozing"
+
+msgid "Перейти в каталог"
+msgstr "Katalogga o‘tish"
+
+msgid ""
+"Интернет-магазин национальной одежды Узбекистана: современный стиль, "
+"традиционные ткани, понятный выбор размеров."
+msgstr ""
+"O‘zbekiston milliy kiyimlari onlayn do‘koni: zamonaviy uslub, an’anaviy "
+"matolar va o‘lchamni oson tanlash."
+
+msgid "Преимущества"
+msgstr "Afzalliklar"
+
+msgid "Ручная работа"
+msgstr "Qo‘l mehnati"
+
+msgid "Хлопок и шелк"
+msgstr "Paxta va ipak"
+
+msgid "Доставка по Узбекистану"
+msgstr "O‘zbekiston bo‘ylab yetkazib berish"
+
+msgid "Национальная одежда Узбекистана - современно и красиво"
+msgstr ""
+
+msgid ""
+"Подберите образ для праздника или повседневной жизни. Акцент на ткани, "
+"аккуратный крой и понятные размеры."
+msgstr ""
+
+msgid "Смотреть витрину"
+msgstr "Vitrinani ko‘rish"
+
+msgid "Сейчас в тренде"
+msgstr "Hozir trendda"
+
+msgid "Товар дня"
+msgstr "Kun mahsuloti"
+
+msgid "Товар скоро появится."
+msgstr "Mahsulot tez orada paydo bo‘ladi."
+
+msgid "Витрина товаров"
+msgstr "Mahsulotlar vitrinasi"
+
+msgid "Подборка популярных моделей с красивыми фактурами."
+msgstr "Chiroyli fakturali ommabop modellar tanlovi."
+
+msgid "Категории:"
+msgstr "Toifalar:"
+
+msgid "Хит"
+msgstr "Xit"
+
+msgid "Почему покупают у нас"
+msgstr "Nega bizdan xarid qilishadi"
+
+msgid ""
+"Упор на ткань, аккуратный крой и понятный сервис, чтобы выбрать модель было "
+"легко."
+msgstr ""
+"Matoga urg‘u, puxta tikuv va tushunarli xizmat — model tanlash oson bo‘lishi "
+"uchun."
+
+msgid "Проверенные материалы"
+msgstr "Sinalgan materiallar"
+
+msgid "Подбираем ткани, приятные к телу."
+msgstr "Tana uchun yoqimli matolarni tanlaymiz."
+
+msgid "Удобная покупка"
+msgstr "Qulay xarid"
+
+msgid "Карточки и фильтры, чтобы не запутаться."
+msgstr "Adashmaslik uchun kartochkalar va filtrlar."
+
+msgid "Быстрая доставка"
+msgstr "Tez yetkazib berish"
+
+msgid "Оперативно и бережно упаковываем."
+msgstr "Tez va ehtiyotkorlik bilan qadoqlaymiz."
+
+msgid "Готовые подборки"
+msgstr "Tayyor tanlovlar"
+
+msgid "Образы под повод и сезон"
+msgstr "Tadbir va fasl uchun stillar"
+
+msgid "Праздник и торжество"
+msgstr "Bayram va tantanalar"
+
+msgid "Повседневный стиль"
+msgstr "Kundalik uslub"
+
+msgid "Теплый сезон"
+msgstr "Issiq fasl"
+
+msgid "Выбрать образ"
+msgstr "Stilni tanlash"
+
+msgid "Открыть меню"
+msgstr "Menyuni ochish"
+
+msgid "Быстрые действия"
+msgstr "Tezkor amallar"
+
+msgid "Поиск"
+msgstr "Qidiruv"
+
 msgid "Нижний колонтитул"
 msgstr "Pastki qism"
 
-#: .\templates\layout.html:88
 msgid "интернет-магазин"
 msgstr "onlayn do‘kon"
 
-#: .\templates\layout.html:95
 msgid "Разделы"
 msgstr "Bo‘limlar"
 
-#: .\templates\layout.html:105
 msgid "Поддержка"
 msgstr "Yordam"
 
-#: .\templates\layout.html:107
 msgid "Помощь с подбором"
 msgstr "Tanlashda yordam"
 
-#: .\templates\layout.html:109
 msgid "Вопросы и ответы"
 msgstr "Savol-javoblar"
 
-#: .\templates\product.html:10
-msgid "Хлебные крошки"
-msgstr "Navigatsiya yo‘li"
+msgid "Описание скоро появится."
+msgstr "Tavsif tez orada paydo bo‘ladi."
 
-#: .\templates\product.html:37
+msgid "Карточка товара: чапан, платья, костюмы и аксессуары."
+msgstr "Mahsulot sahifasi: chapan, ko‘ylaklar, kostyumlar va aksessuarlar."
+
 msgid "Миниатюры"
 msgstr "Miniatyuralar"
 
-#: .\templates\product.html:39
-msgid "Основное фото"
-msgstr "Asosiy rasm"
-
-#: .\templates\product.html:42
 #, python-format
-msgid "Фото %(forloop.counter)s"
-msgstr "%(forloop.counter)s-rasm"
+msgid "Фото %(n)s"
+msgstr "%(n)s-rasm"
 
-#: .\templates\product.html:45
-msgid "Выберите миниатюру для смены фото."
-msgstr "Rasmni almashtirish uchun miniatyurani tanlang."
+msgid "Отзывы:"
+msgstr "Sharhlar:"
 
-#: .\templates\product.html:65
-msgid "В наличии"
-msgstr "Mavjud"
+msgid "Хлопок"
+msgstr "Paxta"
 
-#: .\templates\product.html:67
-msgid "Нет в наличии"
-msgstr "Mavjud emas"
-
-#: .\templates\product.html:79
-#, fuzzy
-#| msgid "Корзина"
-msgid "В корзину"
-msgstr "Savat"
-
-#: .\templates\product.html:81 .\templates\product.html:188
-#, fuzzy
-#| msgid "Каталог"
-msgid "В каталог"
-msgstr "Katalog"
-
-#: .\templates\product.html:84
-msgid "Размер и цвет учитываются при добавлении в корзину."
-msgstr "Savatga qo‘shishda o‘lcham va rang hisobga olinadi."
-
-#: .\templates\product.html:107
-#, fuzzy
-#| msgid "Быстрые действия"
-msgid "Быстрые факты"
-msgstr "Tezkor amallar"
-
-#: .\templates\product.html:115
-msgid "Рейтинг"
-msgstr "Reyting"
-
-#: .\templates\product.html:117
-#, python-format
-msgid "%(rating)s (%(reviews)s отзывов)"
-msgstr "%(rating)s (%(reviews)s ta fikr)"
-
-#: .\templates\product.html:125
-msgid "Не уверены?"
-msgstr "Ishonchingiz komil emasmi?"
-
-#: .\templates\product.html:125
-#, fuzzy
-#| msgid "Помощь с подбором"
-msgid "Напишите — подберём"
-msgstr "Tanlashda yordam"
-
-#: .\templates\product.html:132
 msgid "Описание и характеристики"
 msgstr "Tavsif va xususiyatlar"
 
-#: .\templates\product.html:138 .\templates\product.html:143
-#, fuzzy
-#| msgid "Написать нам"
 msgid "Описание"
-msgstr "Bizga yozing"
+msgstr "Tavsif"
 
-#: .\templates\product.html:139 .\templates\product.html:148
-msgid "Особенности"
+msgid "Характеристики"
 msgstr "Xususiyatlar"
 
-#: .\templates\product.html:144
-msgid "О товаре"
-msgstr "Mahsulot haqida"
+msgid "Характеристики скоро появятся."
+msgstr "Xususiyatlar tez orada qo‘shiladi."
 
-#: .\templates\product.html:159
-msgid "Дополнительные характеристики можно уточнить у поддержки."
-msgstr ""
-"Qo‘shimcha xususiyatlarni qo‘llab-quvvatlashdan aniqlashtirishingiz mumkin."
+msgid "Уход"
+msgstr "Parvarish"
 
-#: .\templates\product.html:165
 msgid ""
-"Условия доставки и оплаты — на странице «Доставка». Обычно отправка в "
-"течение 1–2 рабочих дней после подтверждения заказа."
+"Рекомендуется бережная стирка. Не перегревать при сушке и гладить по ткани."
 msgstr ""
-"Yetkazib berish va to‘lov shartlari “Yetkazib berish” sahifasida. Odatda "
-"buyurtma tasdiqlangandan so‘ng 1–2 ish kuni ichida jo‘natiladi."
+"Ehtiyotkor yuvish tavsiya etiladi. Quritishda ortiqcha issiqlikdan qoching va "
+"mato bo‘yicha dazmolang."
 
-#: .\templates\product.html:169
-msgid "FAQ"
-msgstr "FAQ"
+msgid "Покупка"
+msgstr "Xarid"
 
-#: .\templates\product.html:177
-#, fuzzy
-#| msgid "оценка покупателей"
-msgid "С этим покупают"
-msgstr "mijozlar bahosi"
+msgid "сум"
+msgstr "so'm"
 
-#: .\templates\product.html:185
-#, fuzzy
-#| msgid "Товары скоро появятся в каталоге."
-msgid "Похожие товары появятся позже."
-msgstr "Mahsulotlar tez orada katalogda paydo bo‘ladi."
+msgid "Выбор размера"
+msgstr "O‘lcham tanlash"
 
-#: .\templates\product.html:196
-#, fuzzy
-#| msgid "Популярные товары"
+msgid "Добавить в корзину"
+msgstr "Savatga qo‘shish"
+
+msgid ""
+"Подсказка по размеру доступна в каталоге. Мы поможем с выбором, если "
+"напишете."
+msgstr ""
+"O‘lcham bo‘yicha maslahat katalogda mavjud. Agar yozsangiz, tanlashda "
+"yordam beramiz."
+
+msgid "Сервис"
+msgstr "Xizmat"
+
+msgid "Качество"
+msgstr "Sifat"
+
+msgid "Аккуратная сборка и приятная ткань"
+msgstr "Aniq tikish va yoqimli mato"
+
+msgid "Удобно"
+msgstr "Qulay"
+
+msgid "Подбор по размеру и понятный UI"
+msgstr "O‘lcham bo‘yicha tanlash va tushunarli interfeys"
+
+msgid "Доставляем по Узбекистану"
+msgstr "O‘zbekiston bo‘ylab yetkazib beramiz"
+
 msgid "Похожие товары"
-msgstr "Ommabop mahsulotlar"
+msgstr "O‘xshash mahsulotlar"
 
-#: .\templates\product.html:197
-msgid "Из той же категории и популярное рядом."
-msgstr "Xuddi shu toifadan va yonida ommaboplari."
+msgid "Ещё варианты в том же стиле"
+msgstr "Xuddi shu uslubda boshqa variantlar"
 
-#: .\templates\product.html:221
+msgid "Похожие товары скоро появятся."
+msgstr "O‘xshash mahsulotlar tez orada paydo bo‘ladi."
+
+#~ msgid "Добро пожаловать в наш магазин."
+#~ msgstr "Do‘konimizga xush kelibsiz."
+
+#~ msgid "внимание к деталям"
+#~ msgstr "detallarga e’tibor"
+
+#~ msgid "Ценности"
+#~ msgstr "Qadriyatlar"
+
+#~ msgid "Наши принципы."
+#~ msgstr "Bizning tamoyillarimiz."
+
+#~ msgid "Часть философии"
+#~ msgstr "Falsafamizning bir qismi"
+
+#~ msgid "Помогаем с выбором и доставкой."
+#~ msgstr "Tanlash va yetkazib berishda yordam beramiz."
+
+#~ msgid "Миссия и видение"
+#~ msgstr "Missiya va qarash"
+
+#~ msgid "Свяжитесь с нами"
+#~ msgstr "Biz bilan bog‘laning"
+
+#~ msgid "Вопросы по ассортименту, опту и сотрудничеству."
+#~ msgstr "Assortiment, ulgurji savdo va hamkorlik bo‘yicha savollar."
+
+#~ msgid "Проверьте состав и количество. Изменения сохраняются автоматически."
+#~ msgstr "Tarkib va miqdorni tekshiring. O‘zgarishlar avtomatik saqlanadi."
+
 #, fuzzy
-#| msgid "Категории товаров"
-msgid "Пока нет похожих товаров."
-msgstr "Mahsulot toifalari"
+#~| msgid "Популярные товары"
+#~ msgid "Удалить товар"
+#~ msgstr "Ommabop mahsulotlar"
 
-#: .\templates\product.html:230
 #, fuzzy
-#| msgid "Помощь с подбором"
-msgid "Нужна помощь с подбором?"
-msgstr "Tanlashda yordam"
+#~| msgid "Категории товаров"
+#~ msgid "Количество товара"
+#~ msgstr "Mahsulot toifalari"
 
-#: .\templates\product.html:231
-msgid "Опишите задачу — подскажем комплектацию."
-msgstr "Vazifani yozing — mos to‘plamni tavsiya qilamiz."
+#~ msgid "Итоги заказа"
+#~ msgstr "Buyurtma xulosasi"
 
-#: .\templates\product.html:233
+#~ msgid "Сумма"
+#~ msgstr "Summa"
+
+#~ msgid "шт."
+#~ msgstr "dona"
+
+#~ msgid ""
+#~ "Для оплаты и доставки свяжитесь с нами или уточните детали в сообщении."
+#~ msgstr ""
+#~ "To‘lov va yetkazib berish uchun biz bilan bog‘laning yoki xabarda "
+#~ "tafsilotlarni aniqlashtiring."
+
 #, fuzzy
-#| msgid "Написать нам"
-msgid "Написать"
-msgstr "Bizga yozing"
+#~| msgid "Помощь с подбором"
+#~ msgid "Нужна помощь с выбором?"
+#~ msgstr "Tanlashda yordam"
 
-#: .\templates\product.html:245
-msgid "Товар добавлен в корзину."
-msgstr "Mahsulot savatga qo‘shildi."
+#, fuzzy
+#~| msgid "Написать нам"
+#~ msgid "Напишите нам"
+#~ msgstr "Bizga yozing"
 
-#: .\templates\product.html:246 .\templates\product.html:247
-msgid "Не удалось добавить в корзину"
-msgstr "Savatga qo‘shib bo‘lmadi"
+#~ msgid "Фильтры и сортировка — данные из каталога магазина."
+#~ msgstr "Filtrlar va saralash — do‘kon katalogi ma’lumotlari asosida."
+
+#, fuzzy
+#~| msgid "Смотреть товары в категории"
+#~ msgid "Быстрые фильтры по категории"
+#~ msgstr "Toifadagi mahsulotlarni ko‘rish"
+
+#~ msgid "Все категории"
+#~ msgstr "Barcha toifalar"
+
+#~ msgid "Диапазон цены"
+#~ msgstr "Narx oralig‘i"
+
+#~ msgid "0"
+#~ msgstr "0"
+
+#~ msgid "например S или XL"
+#~ msgstr "masalan, S yoki XL"
+
+#~ msgid "Цвет (код или название)"
+#~ msgstr "Rang (kod yoki nom)"
+
+#~ msgid "#000000 или Черный"
+#~ msgstr "#000000 yoki Qora"
+
+#~ msgid "Название или описание"
+#~ msgstr "Nomi yoki tavsifi"
+
+#~ msgid "Сбросить"
+#~ msgstr "Qayta o‘rnatish"
+
+#~ msgid "Найдено:"
+#~ msgstr "Topildi:"
+
+#~ msgid "товаров"
+#~ msgstr "mahsulot"
+
+#~ msgid "Сортировать"
+#~ msgstr "Saralash"
+
+#, fuzzy
+#~| msgid "Популярно сегодня"
+#~ msgid "По популярности"
+#~ msgstr "Bugun ommabop"
+
+#~ msgid "Акция"
+#~ msgstr "Aksiya"
+
+#, fuzzy, python-format
+#~| msgid "Контакты"
+#~ msgid "Контакты %(store_name)s."
+#~ msgstr "Kontaktlar"
+
+#~ msgid "Почта"
+#~ msgstr "Email"
+
+#~ msgid "Время"
+#~ msgstr "Vaqt"
+
+#, fuzzy
+#~| msgid "Время"
+#~ msgid "Имя"
+#~ msgstr "Vaqt"
+
+#~ msgid ""
+#~ "Общие условия. Точные сроки и стоимость уточняйте при оформлении заказа."
+#~ msgstr ""
+#~ "Umumiy shartlar. Aniq muddat va narxni buyurtma rasmiylashtirishda "
+#~ "aniqlashtiring."
+
+#~ msgid ""
+#~ "Отправка после подтверждения заказа. По городу и регионам — курьером или "
+#~ "службой доставки. Сроки зависят от выбранного способа."
+#~ msgstr ""
+#~ "Buyurtma tasdiqlangandan so‘ng jo‘natiladi. Shahar va hududlar bo‘yicha — "
+#~ "kuryer yoki yetkazib berish xizmati orqali. Muddat tanlangan usulga "
+#~ "bog‘liq."
+
+#~ msgid ""
+#~ "Способы оплаты согласовываются с менеджером: предоплата или оплата при "
+#~ "получении — в зависимости от региона и состава заказа."
+#~ msgstr ""
+#~ "To‘lov usullari menejer bilan kelishiladi: oldindan to‘lov yoki yetkazib "
+#~ "berilganda to‘lov — hudud va buyurtma tarkibiga qarab."
+
+#~ msgid "Упаковка"
+#~ msgstr "Qadoqlash"
+
+#~ msgid ""
+#~ "Заказы упаковываем так, чтобы товары доехали без повреждений. "
+#~ "Крупногабарит — по согласованию."
+#~ msgstr ""
+#~ "Buyurtmalarni mahsulotlar shikastlanmasdan yetib borishi uchun "
+#~ "qadoqlaymiz. Katta o‘lchamdagilar — kelishuv asosida."
+
+#~ msgid "Нужны точные условия?"
+#~ msgstr "Aniq shartlar kerakmi?"
+
+#~ msgid "Напишите адрес и состав заказа — подскажем варианты и стоимость."
+#~ msgstr "Manzil va buyurtma tarkibini yozing — variantlar va narxni aytamiz."
+
+#, python-format
+#~ msgid "Если не нашли ответ — <a href=\"%(contact_url)s\">напишите нам</a>."
+#~ msgstr ""
+#~ "Agar javob topilmasa — <a href=\"%(contact_url)s\">bizga yozing</a>."
+
+#~ msgid ""
+#~ "Пока нет опубликованных вопросов. Загляните позже или свяжитесь с "
+#~ "поддержкой."
+#~ msgstr ""
+#~ "Hozircha e’lon qilingan savollar yo‘q. Keyinroq yana kirib ko‘ring yoki "
+#~ "qo‘llab-quvvatlash bilan bog‘laning."
+
+#~ msgid "Почему именно мы"
+#~ msgstr "Nega aynan biz"
+
+#~ msgid "готовых идей"
+#~ msgstr "tayyor g‘oyalar"
+
+#~ msgid "Популярно сегодня"
+#~ msgstr "Bugun ommabop"
+
+#~ msgid "Выберите направление — мы подскажем набор под вашу задачу."
+#~ msgstr "Yo‘nalishni tanlang — vazifangizga mos to‘plamni tavsiya qilamiz."
+
+#~ msgid "Смотреть товары в категории"
+#~ msgstr "Toifadagi mahsulotlarni ko‘rish"
+
+#~ msgid "Подобрали то, что чаще всего покупают для работы и обучения."
+#~ msgstr "Ish va o‘rganish uchun eng ko‘p olinadiganlarini tanladik."
+
+#~ msgid "Фильтры (визуальные)"
+#~ msgstr "Filtrlar (vizual)"
+
+#~ msgid "Наборы"
+#~ msgstr "To‘plamlar"
+
+#~ msgid "Стамески"
+#~ msgstr "Kesgichlar"
+
+#~ msgid "Заготовки"
+#~ msgstr "Tayyor blankalar"
+
+#~ msgid "Быстрый путь к уверенной первой работе."
+#~ msgstr "Birinchi ishingizni ishonch bilan boshlash uchun tez yo‘l."
+
+#~ msgid "Определите технику"
+#~ msgstr "Texnikani tanlang"
+
+#~ msgid ""
+#~ "Плоская резьба, контуры, объем или орнаменты — подбираем форму резца."
+#~ msgstr ""
+#~ "Yassi o‘ymakorlik, kontur, hajm yoki naqsh — mos kesgich shaklini tanlang."
+
+#~ msgid ""
+#~ "Ширина и радиус влияют на чистоту линии: начните с универсальных размеров."
+#~ msgstr ""
+#~ "Kenglik va radius chiziq sifatiga ta’sir qiladi: universal o‘lchamlardan "
+#~ "boshlang."
+
+#~ msgid "Добавьте финиш"
+#~ msgstr "Yakuniy ishlov bering"
+
+#~ msgid ""
+#~ "Шлифовка и масло/лак дают красивый рисунок волокон и защиту поверхности."
+#~ msgstr ""
+#~ "Silliqlash va moy/lak tolalar naqshini ochadi va yuzani himoya qiladi."
+
+#~ msgid "Хотите подбор под ваш проект?"
+#~ msgstr "Loyihangiz uchun to‘plam kerakmi?"
+
+#~ msgid ""
+#~ "Оставьте сообщение — мы предложим наборы под задачу и уровень навыков."
+#~ msgstr ""
+#~ "Xabar qoldiring — vazifa va tajribangizga mos to‘plamlarni tavsiya "
+#~ "qilamiz."
+
+#~ msgid ""
+#~ "Ответим по выбору инструмента, наличию и доставке. Можно просто написать "
+#~ "«что хочу сделать»."
+#~ msgstr ""
+#~ "Asbob tanlash, mavjudlik va yetkazib berish bo‘yicha yordam beramiz. "
+#~ "Shunchaki “nimani qilmoqchiman” deb yozing."
+
+#~ msgid "Пн–Пт: 10:00–19:00"
+#~ msgstr "Du–Ju: 10:00–19:00"
+
+#~ msgid "Полная форма обратной связи и карта — на странице контактов."
+#~ msgstr "To‘liq aloqa formasi va xarita kontaktlar sahifasida."
+
+#~ msgid "Основное фото"
+#~ msgstr "Asosiy rasm"
+
+#~ msgid "Выберите миниатюру для смены фото."
+#~ msgstr "Rasmni almashtirish uchun miniatyurani tanlang."
+
+#~ msgid "Нет в наличии"
+#~ msgstr "Mavjud emas"
+
+#, fuzzy
+#~| msgid "Каталог"
+#~ msgid "В каталог"
+#~ msgstr "Katalog"
+
+#~ msgid "Размер и цвет учитываются при добавлении в корзину."
+#~ msgstr "Savatga qo‘shishda o‘lcham va rang hisobga olinadi."
+
+#, python-format
+#~ msgid "%(rating)s (%(reviews)s отзывов)"
+#~ msgstr "%(rating)s (%(reviews)s ta fikr)"
+
+#~ msgid "Не уверены?"
+#~ msgstr "Ishonchingiz komil emasmi?"
+
+#, fuzzy
+#~| msgid "Помощь с подбором"
+#~ msgid "Напишите — подберём"
+#~ msgstr "Tanlashda yordam"
+
+#~ msgid "О товаре"
+#~ msgstr "Mahsulot haqida"
+
+#~ msgid "Дополнительные характеристики можно уточнить у поддержки."
+#~ msgstr ""
+#~ "Qo‘shimcha xususiyatlarni qo‘llab-quvvatlashdan aniqlashtirishingiz "
+#~ "mumkin."
+
+#~ msgid ""
+#~ "Условия доставки и оплаты — на странице «Доставка». Обычно отправка в "
+#~ "течение 1–2 рабочих дней после подтверждения заказа."
+#~ msgstr ""
+#~ "Yetkazib berish va to‘lov shartlari “Yetkazib berish” sahifasida. Odatda "
+#~ "buyurtma tasdiqlangandan so‘ng 1–2 ish kuni ichida jo‘natiladi."
+
+#~ msgid "FAQ"
+#~ msgstr "FAQ"
+
+#~ msgid "Из той же категории и популярное рядом."
+#~ msgstr "Xuddi shu toifadan va yonida ommaboplari."
+
+#, fuzzy
+#~| msgid "Помощь с подбором"
+#~ msgid "Нужна помощь с подбором?"
+#~ msgstr "Tanlashda yordam"
+
+#~ msgid "Опишите задачу — подскажем комплектацию."
+#~ msgstr "Vazifani yozing — mos to‘plamni tavsiya qilamiz."
+
+#, fuzzy
+#~| msgid "Написать нам"
+#~ msgid "Написать"
+#~ msgstr "Bizga yozing"
+
+#~ msgid "Товар добавлен в корзину."
+#~ msgstr "Mahsulot savatga qo‘shildi."
