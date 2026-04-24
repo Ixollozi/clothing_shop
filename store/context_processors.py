@@ -2,7 +2,7 @@
 Context processors для передачи конфигурации в шаблоны
 """
 from .config_loader import get_config
-from .models import Partner, Feature
+from .models import Partner, Feature, Cart
 
 
 def store_config(request):
@@ -15,6 +15,19 @@ def store_config(request):
     # Получаем features из БД вместо конфига
     features = Feature.objects.filter(is_active=True).order_by('order', 'title')
     
+    # Cart badge count (header)
+    cart_items_count = 0
+    try:
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.create()
+            session_key = request.session.session_key
+        cart = Cart.objects.filter(session_key=session_key).first()
+        if cart:
+            cart_items_count = cart.items_count
+    except Exception:
+        cart_items_count = 0
+
     return {
         'store_config': config,
         'store_name': config.get('store', {}).get('name', 'Fashion Store'),
@@ -28,5 +41,6 @@ def store_config(request):
         'hero_config': config.get('hero', {}),
         'seo_config': config.get('seo', {}),
         'theme_config': config.get('theme', {}),
+        'cart_items_count': cart_items_count,
     }
 
