@@ -8,67 +8,67 @@ def get_dummy_products():
     """Возвращает заглушки товаров"""
     return [
         {
-            'name': 'Деревянный обеденный стол',
-            'slug': 'dummy-wooden-table',
-            'price': 450,
+            'name': 'Classic T-shirt',
+            'slug': 'dummy-tshirt',
+            'price': 20,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop',
+            'image_url': 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400',
             'image': None,
         },
         {
-            'name': 'Металлическая стеллажная система',
-            'slug': 'dummy-metal-shelf',
-            'price': 320,
+            'name': 'Classic Jeans',
+            'slug': 'dummy-jeans',
+            'price': 35,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1551292831-023188e34287?w=400&h=400&fit=crop',
+            'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
             'image': None,
         },
         {
-            'name': 'Деревянный шкаф',
-            'slug': 'dummy-wooden-cabinet',
-            'price': 680,
+            'name': 'Elegant Dress',
+            'slug': 'dummy-dress',
+            'price': 50,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop',
+            'image_url': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
             'image': None,
         },
         {
-            'name': 'Металлическая кровать',
-            'slug': 'dummy-metal-bed',
-            'price': 550,
+            'name': 'Demiseason Jacket',
+            'slug': 'dummy-jacket',
+            'price': 60,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&h=400&fit=crop',
+            'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
             'image': None,
         },
         {
-            'name': 'Деревянное кресло',
-            'slug': 'dummy-wooden-chair',
-            'price': 280,
+            'name': 'Office Shirt',
+            'slug': 'dummy-shirt',
+            'price': 25,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1506439773649-6c5e9a6d8b12?w=400&h=400&fit=crop',
+            'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
             'image': None,
         },
         {
-            'name': 'Металлическая полка',
-            'slug': 'dummy-metal-rack',
-            'price': 190,
+            'name': 'Cozy Sweatshirt',
+            'slug': 'dummy-sweatshirt',
+            'price': 40,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop',
+            'image_url': 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
             'image': None,
         },
         {
-            'name': 'Деревянный комод',
-            'slug': 'dummy-wooden-dresser',
-            'price': 520,
+            'name': 'Midi Skirt',
+            'slug': 'dummy-skirt',
+            'price': 28,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=400&fit=crop',
+            'image_url': 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400',
             'image': None,
         },
         {
-            'name': 'Металлическая конструкция',
-            'slug': 'dummy-metal-structure',
-            'price': 380,
+            'name': 'Classic Pants',
+            'slug': 'dummy-pants',
+            'price': 33,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=400&fit=crop',
+            'image_url': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
             'image': None,
         },
     ]
@@ -78,27 +78,27 @@ def get_dummy_categories():
     """Возвращает заглушки категорий"""
     return [
         {
-            'name': "Деревянная мебель",
-            'slug': 'wooden-furniture',
-            'image_url': 'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?w=400&h=400&fit=crop',
+            'name': "Men's Clothing",
+            'slug': 'mens-clothing',
+            'image_url': 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
             'image': None,
         },
         {
-            'name': "Металлические изделия",
-            'slug': 'metal-products',
-            'image_url': 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=400&fit=crop',
+            'name': "Women's Clothing",
+            'slug': 'womens-clothing',
+            'image_url': 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400',
             'image': None,
         },
         {
-            'name': "Столы и стулья",
-            'slug': 'tables-chairs',
-            'image_url': 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=400&h=400&fit=crop',
+            'name': "Kids' Clothing",
+            'slug': 'kids-clothing',
+            'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
             'image': None,
         },
         {
-            'name': 'Шкафы и комоды',
-            'slug': 'cabinets-dressers',
-            'image_url': 'https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?w=400&h=400&fit=crop',
+            'name': 'Accessories',
+            'slug': 'accessories',
+            'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
             'image': None,
         },
     ]
@@ -132,6 +132,7 @@ def catalog(request):
     """Страница каталога"""
     # Получаем товары из БД
     products_queryset = Product.objects.filter(is_active=True)
+    has_real_products = Product.objects.filter(is_active=True).exists()
     
     # Фильтрация по категории
     category_slug = request.GET.get('category', None)
@@ -222,9 +223,12 @@ def catalog(request):
     categories = list(Category.objects.all().order_by('name'))
     if not categories:
         categories = get_dummy_categories()
+
+    dummy_products = get_dummy_products() if not has_real_products else []
     
     context = {
         'products': products_page,
+        'dummy_products': dummy_products,
         'categories': categories,
         'current_category': category_slug,
         'current_sort': sort_by,
@@ -333,6 +337,22 @@ def product_detail(request, slug=None):
     # Получаем features товара из базы данных
     from .models import ProductFeatureConfig
     product_features = ProductFeatureConfig.objects.filter(is_active=True).order_by('order', 'title')
+
+    # Приводим изображения к единому виду (iterable list) для шаблона:
+    # у реального Product это RelatedManager, у DummyProduct — обычный list.
+    product_images = []
+    if product is not None and hasattr(product, "images"):
+        images_attr = getattr(product, "images")
+        if hasattr(images_attr, "all"):
+            try:
+                product_images = list(images_attr.all())
+            except Exception:
+                product_images = []
+        else:
+            try:
+                product_images = list(images_attr)
+            except Exception:
+                product_images = []
     
     context = {
         'product': product,
@@ -340,6 +360,7 @@ def product_detail(request, slug=None):
         'discount': discount,
         'sizes': sizes,
         'colors': colors,
+        'product_images': product_images,
         'product_features': product_features,
     }
     return render(request, 'product.html', context)
@@ -365,10 +386,14 @@ def cart(request):
 
 def about(request):
     """Страница о нас"""
-    from .models import AboutConfig
+    from .models import AboutConfig, AboutStat
     about_config = AboutConfig.objects.filter(is_active=True).first()
+    about_stats = list(AboutStat.objects.filter(is_active=True).order_by('order', 'created_at')[:6])
+    about_values = about_config.get_values_list() if about_config else []
     context = {
         'about_config': about_config,
+        'about_stats': about_stats,
+        'about_values': about_values,
     }
     return render(request, 'about.html', context)
 
