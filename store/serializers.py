@@ -115,7 +115,6 @@ class CreateOrderSerializer(serializers.ModelSerializer):
             'city', 'postal_code', 'payment_method', 'notes', 'items'
         ]
         extra_kwargs = {
-            'last_name': {'required': False, 'allow_blank': True},
             'email': {'required': False, 'allow_blank': True},
             'postal_code': {'required': False, 'allow_blank': True},
         }
@@ -127,9 +126,6 @@ class CreateOrderSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'items': 'Корзина пуста. Невозможно создать заказ без товаров.'})
         
         # Устанавливаем значения по умолчанию для необязательных полей
-        if not validated_data.get('last_name'):
-            validated_data['last_name'] = ''
-
         if not validated_data.get('email') or validated_data.get('email') == '':
             validated_data['email'] = 'no-email@example.com'  # Временный email, так как поле обязательное в модели
         
