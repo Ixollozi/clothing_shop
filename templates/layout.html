@@ -58,7 +58,7 @@
               <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
             </svg>
           </a>
-          <a class="icon-btn" href="{% url 'cart' %}" aria-label="{% trans 'Корзина' %}">
+          <a class="icon-btn icon-btn-cart" href="{% url 'cart' %}" aria-label="{% trans 'Корзина' %}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M7 7h14l-1.4 7.6a2 2 0 0 1-2 1.6H9.5a2 2 0 0 1-2-1.6L6 3H3"
@@ -70,6 +70,9 @@
               <path d="M9.3 21a.8.8 0 1 0 0-1.6.8.8 0 0 0 0 1.6Z" fill="currentColor" />
               <path d="M16.3 21a.8.8 0 1 0 0-1.6.8.8 0 0 0 0 1.6Z" fill="currentColor" />
             </svg>
+            {% if cart_items_count and cart_items_count > 0 %}
+              <span class="cart-badge" aria-hidden="true">{{ cart_items_count }}</span>
+            {% endif %}
           </a>
         </div>
       </div>

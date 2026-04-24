@@ -15,7 +15,14 @@
           <div class="cart-grid" id="cart">
             <div class="cart-items" aria-label="{% trans 'Список товаров в корзине' %}">
               {% for item in cart_items %}
-              <article class="cart-item card" data-item-id="{{ item.id }}" data-unit-price="{{ item.product.price }}">
+              <article
+                class="cart-item card"
+                data-item-id="{{ item.id }}"
+                data-product-id="{{ item.product.id }}"
+                data-size="{{ item.size|default:'' }}"
+                data-color="{{ item.color|default:'' }}"
+                data-unit-price="{{ item.product.price }}"
+              >
                 <div class="cart-item-media{% if not item.product.image and not item.product.image_url %} wood-swatch-{% cycle '1' '2' '3' '4' '5' '6' %}{% endif %}"{% if item.product.image %} style="background-image:url('{{ item.product.image.url }}');background-size:cover;background-position:center;"{% elif item.product.image_url %} style="background-image:url('{{ item.product.image_url }}');background-size:cover;background-position:center;"{% endif %} aria-hidden="true"></div>
                 <div class="cart-item-body">
                   <div class="cart-item-top">
@@ -69,7 +76,31 @@
                 <span id="cart-grand-total">{{ cart.total|floatformat:0|intcomma }} ₽</span>
               </div>
 
-              <a class="btn btn-primary" href="{% url 'contact' %}" role="button" aria-label="{% trans 'Оформить заказ' %}">{% trans "Оформить заказ" %}</a>
+              <details class="tab" style="margin-top:12px;" {% if cart.items_count %}open{% endif %}>
+                <summary class="tab-summary">{% trans "Оформить заказ" %}</summary>
+                <div class="tab-body">
+                  <form id="checkout-form" class="checkout-form" aria-label="{% trans 'Форма оформления заказа' %}">
+                    <div class="checkout-grid">
+                      <input id="checkout-name" class="checkout-input" type="text" placeholder="{% trans 'Ваше имя *' %}" required />
+                      <input id="checkout-phone" class="checkout-input" type="tel" placeholder="{% trans 'Телефон *' %}" required />
+                      <input id="checkout-city" class="checkout-input" type="text" placeholder="{% trans 'Город *' %}" required />
+                      <input id="checkout-address" class="checkout-input" type="text" placeholder="{% trans 'Адрес *' %}" required />
+                      <textarea
+                        id="checkout-notes"
+                        class="checkout-input"
+                        placeholder="{% trans 'Комментарий к заказу (необязательно)' %}"
+                        rows="3"
+                      ></textarea>
+                    </div>
+                    <button class="btn btn-primary btn-full" type="submit" aria-label="{% trans 'Отправить заказ' %}">
+                      {% trans "Отправить заказ" %}
+                    </button>
+                    <div class="cart-small" style="margin-top:10px;">
+                      {% trans "После отправки мы получим заказ в Telegram и свяжемся с вами." %}
+                    </div>
+                  </form>
+                </div>
+              </details>
 
               <div class="cart-small">{% trans "Для оплаты и доставки свяжитесь с нами или уточните детали в сообщении." %}</div>
 
@@ -89,6 +120,12 @@
       const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
       const removeUrl = '{% url "cart-remove-item" %}';
       const updateUrl = '{% url "cart-update-item" %}';
+      const createOrderUrl = '/api/orders/';
+
+      const msgFillRequired = "{% trans 'Заполните все обязательные поля.' %}";
+      const msgCartEmpty = "{% trans 'Корзина пуста.' %}";
+      const msgOrderSent = "{% trans 'Заказ отправлен. Спасибо!' %}";
+      const msgOrderFailed = "{% trans 'Не удалось отправить заказ. Попробуйте ещё раз.' %}";
 
       function reload() { window.location.reload(); }
 
@@ -152,6 +189,78 @@
           }).then(function(r) { if (r.ok) reload(); });
         });
       });
+
+      const form = document.getElementById('checkout-form');
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          const nameEl = document.getElementById('checkout-name');
+          const phoneEl = document.getElementById('checkout-phone');
+          const cityEl = document.getElementById('checkout-city');
+          const addrEl = document.getElementById('checkout-address');
+          const notesEl = document.getElementById('checkout-notes');
+
+          const firstName = (nameEl && nameEl.value || '').trim();
+          const phone = (phoneEl && phoneEl.value || '').trim();
+          const city = (cityEl && cityEl.value || '').trim();
+          const address = (addrEl && addrEl.value || '').trim();
+          const notes = (notesEl && notesEl.value || '').trim();
+
+          if (!firstName || !phone || !city || !address) {
+            alert(msgFillRequired);
+            return;
+          }
+
+          const items = [];
+          document.querySelectorAll('.cart-item').forEach(function (row) {
+            const productId = parseInt(row.getAttribute('data-product-id') || '0', 10);
+            const size = row.getAttribute('data-size') || '';
+            const color = row.getAttribute('data-color') || '';
+            const qtyInput = row.querySelector('.js-qty-input');
+            const quantity = qtyInput ? Math.max(1, parseInt(qtyInput.value || '1', 10) || 1) : 1;
+            if (productId) {
+              items.push({ product_id: productId, quantity: quantity, size: size, color: color });
+            }
+          });
+
+          if (!items.length) {
+            alert(msgCartEmpty);
+            return;
+          }
+
+          const payload = {
+            first_name: firstName,
+            last_name: '',
+            email: '',
+            phone: phone,
+            city: city,
+            address: address,
+            postal_code: '',
+            payment_method: 'cash',
+            notes: notes,
+            items: items,
+          };
+
+          fetch(createOrderUrl, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+            body: JSON.stringify(payload),
+          }).then(function (r) {
+            return r.json().then(function (data) { return { ok: r.ok, status: r.status, data: data }; });
+          }).then(function (res) {
+            if (res.ok) {
+              alert(msgOrderSent);
+              window.location.reload();
+            } else {
+              alert((res.data && (res.data.error || res.data.detail)) ? (res.data.error || res.data.detail) : msgOrderFailed);
+            }
+          }).catch(function () {
+            alert(msgOrderFailed);
+          });
+        });
+      }
     })();
     </script>
 {% endblock %}

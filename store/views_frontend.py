@@ -337,6 +337,22 @@ def product_detail(request, slug=None):
     # Получаем features товара из базы данных
     from .models import ProductFeatureConfig
     product_features = ProductFeatureConfig.objects.filter(is_active=True).order_by('order', 'title')
+
+    # Приводим изображения к единому виду (iterable list) для шаблона:
+    # у реального Product это RelatedManager, у DummyProduct — обычный list.
+    product_images = []
+    if product is not None and hasattr(product, "images"):
+        images_attr = getattr(product, "images")
+        if hasattr(images_attr, "all"):
+            try:
+                product_images = list(images_attr.all())
+            except Exception:
+                product_images = []
+        else:
+            try:
+                product_images = list(images_attr)
+            except Exception:
+                product_images = []
     
     context = {
         'product': product,
@@ -344,6 +360,7 @@ def product_detail(request, slug=None):
         'discount': discount,
         'sizes': sizes,
         'colors': colors,
+        'product_images': product_images,
         'product_features': product_features,
     }
     return render(request, 'product.html', context)

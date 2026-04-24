@@ -26,7 +26,7 @@
               {% elif product.image_url %}
               <div class="gallery-main" id="gallery-main" style="background-image:url('{{ product.image_url }}');background-size:cover;background-position:center;" aria-hidden="true"></div>
               {% else %}
-                {% for img in product.images %}
+                {% for img in product_images %}
                   {% if forloop.first %}
               <div class="gallery-main" id="gallery-main" style="background-image:url('{{ img.image.url }}');background-size:cover;background-position:center;" aria-hidden="true"></div>
                   {% endif %}
@@ -38,7 +38,7 @@
                 {% if product.image %}
                 <button class="thumb is-active" type="button" data-bg="{{ product.image.url }}" aria-label="{% trans 'Основное фото' %}"></button>
                 {% endif %}
-                {% for img in product.images %}
+                {% for img in product_images %}
                 <button class="thumb{% if forloop.first and not product.image %} is-active{% endif %}" type="button" data-bg="{{ img.image.url }}" aria-label="{% blocktrans %}Фото {{ forloop.counter }}{% endblocktrans %}"></button>
                 {% endfor %}
               </div>
