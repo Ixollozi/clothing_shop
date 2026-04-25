@@ -53,7 +53,8 @@ class Product(models.Model):
         max_length=200, 
         verbose_name='Доступные размеры',
         help_text='Доступные размеры: XS, S, M, L, XL, XXL. Указывайте через запятую, например: "S, M, L, XL"',
-        default='M'
+        blank=True,
+        default=''
     )
     available_colors = models.CharField(
         max_length=200, 
