@@ -1,8 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from django.utils.translation import gettext as _
-
 from .models import Product, Category, Cart, CartItem
 
 
@@ -14,7 +12,7 @@ def get_dummy_products():
             'slug': 'dummy-tshirt',
             'price': 20,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -22,7 +20,7 @@ def get_dummy_products():
             'slug': 'dummy-jeans',
             'price': 35,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -30,7 +28,7 @@ def get_dummy_products():
             'slug': 'dummy-dress',
             'price': 50,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -38,7 +36,7 @@ def get_dummy_products():
             'slug': 'dummy-jacket',
             'price': 60,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -46,7 +44,7 @@ def get_dummy_products():
             'slug': 'dummy-shirt',
             'price': 25,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -54,7 +52,7 @@ def get_dummy_products():
             'slug': 'dummy-sweatshirt',
             'price': 40,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -62,7 +60,7 @@ def get_dummy_products():
             'slug': 'dummy-skirt',
             'price': 28,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -70,7 +68,7 @@ def get_dummy_products():
             'slug': 'dummy-pants',
             'price': 33,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
+            'image_url': '',
             'image': None,
         },
     ]
@@ -110,7 +108,7 @@ def index(request):
     """Главная страница"""
     from .models import HeroConfig
     # Получаем товары из БД, если есть - иначе заглушки
-    products = list(Product.objects.filter(is_active=True).exclude(category__slug='demo').order_by('-rating', '-reviews_count', '-created_at')[:8])
+    products = list(Product.objects.filter(is_active=True).order_by('-rating', '-reviews_count', '-created_at')[:8])
     if not products:
         products = get_dummy_products()
     
@@ -134,7 +132,7 @@ def catalog(request):
     """Страница каталога"""
     # Получаем товары из БД
     products_queryset = Product.objects.filter(is_active=True)
-    has_real_products = Product.objects.filter(is_active=True).exclude(category__slug='demo').exists()
+    has_real_products = Product.objects.filter(is_active=True).exists()
     
     # Фильтрация по категории
     category_slug = request.GET.get('category', None)
@@ -211,69 +209,22 @@ def catalog(request):
         products_queryset = products_queryset.order_by('-created_at')
     
     # Создаем пагинатор
+    paginator = Paginator(products_queryset, 12)  # 12 товаров на страницу
+    
     page = request.GET.get('page', 1)
-
-    # Если реальных товаров нет — используем заглушки и применяем к ним фильтры (хотя бы цену/поиск)
-    if not has_real_products:
-        dummy_products_list = get_dummy_products()
-
-        # Категории/размер/цвет у заглушек не заданы → при активных фильтрах возвращаем пусто
-        if category_slug or size_filter or color_filter:
-            dummy_products_list = []
-
-        # Цена
-        if min_price:
-            try:
-                dummy_products_list = [p for p in dummy_products_list if float(p.get('price') or 0) >= float(min_price)]
-            except (ValueError, TypeError):
-                pass
-        if max_price:
-            try:
-                dummy_products_list = [p for p in dummy_products_list if float(p.get('price') or 0) <= float(max_price)]
-            except (ValueError, TypeError):
-                pass
-
-        # Поиск
-        if search_query:
-            sq = str(search_query).strip().lower()
-            dummy_products_list = [p for p in dummy_products_list if sq in str(p.get('name', '')).lower()]
-
-        # Сортировка (для заглушек поддержим цену)
-        if sort_by == 'price_low':
-            dummy_products_list = sorted(dummy_products_list, key=lambda p: float(p.get('price') or 0))
-        elif sort_by == 'price_high':
-            dummy_products_list = sorted(dummy_products_list, key=lambda p: float(p.get('price') or 0), reverse=True)
-
-        paginator = Paginator(dummy_products_list, 12)
-        try:
-            products_page = paginator.page(page)
-        except PageNotAnInteger:
-            products_page = paginator.page(1)
-        except EmptyPage:
-            products_page = paginator.page(paginator.num_pages)
-
-        dummy_products = []
-    else:
-        paginator = Paginator(products_queryset, 12)  # 12 товаров на страницу
-        try:
-            products_page = paginator.page(page)
-        except PageNotAnInteger:
-            products_page = paginator.page(1)
-        except EmptyPage:
-            products_page = paginator.page(paginator.num_pages)
+    try:
+        products_page = paginator.page(page)
+    except PageNotAnInteger:
+        products_page = paginator.page(1)
+    except EmptyPage:
+        products_page = paginator.page(paginator.num_pages)
     
     # Получаем категории из БД
     categories = list(Category.objects.all().order_by('name'))
     if not categories:
         categories = get_dummy_categories()
 
-    if has_real_products:
-        dummy_products = []
-
-    # Для пагинации: сохраняем текущие фильтры/сортировку, но убираем page
-    query_params = request.GET.copy()
-    query_params.pop('page', None)
-    pagination_query = query_params.urlencode()
+    dummy_products = get_dummy_products() if not has_real_products else []
     
     context = {
         'products': products_page,
@@ -286,7 +237,6 @@ def catalog(request):
         'max_price': max_price,
         'current_size': size_filter,
         'current_color': color_filter,
-        'pagination_query': pagination_query,
     }
     return render(request, 'catalog.html', context)
 
@@ -324,40 +274,6 @@ def product_detail(request, slug=None):
             dummy_product_data = dummy_products[0] if dummy_products else None
         
         if dummy_product_data:
-            # Чтобы кнопка "В корзину" работала даже в демо-режиме,
-            # создаем реальный Product в БД, если товаров ещё нет.
-            # Это ограничивает создание только первым запуском/пустой БД.
-            try:
-                if not Product.objects.filter(is_active=True).exclude(category__slug='demo').exists():
-                    demo_category, _ = Category.objects.get_or_create(
-                        slug='demo',
-                        defaults={'name': 'Демо', 'description': ''},
-                    )
-                    created_product, _ = Product.objects.get_or_create(
-                        slug=dummy_product_data.get('slug') or 'demo-product',
-                        defaults={
-                            'name': dummy_product_data.get('name', 'Demo product'),
-                            'description': _(
-                                'Описание демо-товара: качественные материалы и аккуратное исполнение.'
-                            ),
-                            'price': dummy_product_data.get('price', 0) or 0,
-                            'old_price': None,
-                            'category': demo_category,
-                            'image_url': dummy_product_data.get('image_url'),
-                            'available_sizes': 'S,M,L,XL',
-                            'available_colors': 'Черный, Белый, Синий, Красный',
-                            'stock': 10,
-                            'is_active': True,
-                            'rating': 4.0,
-                            'reviews_count': 12,
-                        },
-                    )
-                    product = created_product
-            except Exception:
-                # Если миграции/таблицы не готовы — продолжаем работать в режиме заглушки
-                pass
-
-        if dummy_product_data and not product:
             # Создаем объект-заглушку с нужными атрибутами
             class DummyProduct:
                 def __init__(self, data):
@@ -366,10 +282,8 @@ def product_detail(request, slug=None):
                     self.slug = data.get('slug', '')
                     self.price = data.get('price', 0)
                     self.old_price = data.get('old_price')
-                    self.description = _(
-                        'Описание демо-товара: качественные материалы и аккуратное исполнение.'
-                    )
-                    self.image_url = data.get('image_url')
+                    self.description = 'Classic product description. This is a high-quality product with excellent materials and craftsmanship.'
+                    self.image_url = data.get('image_url') or ''
                     self.image = None
                     self.available_sizes = 'S,M,L,XL'
                     self.available_colors = 'Черный, Белый, Синий, Красный'
@@ -423,6 +337,22 @@ def product_detail(request, slug=None):
     # Получаем features товара из базы данных
     from .models import ProductFeatureConfig
     product_features = ProductFeatureConfig.objects.filter(is_active=True).order_by('order', 'title')
+
+    # Приводим изображения к единому виду (iterable list) для шаблона:
+    # у реального Product это RelatedManager, у DummyProduct — обычный list.
+    product_images = []
+    if product is not None and hasattr(product, "images"):
+        images_attr = getattr(product, "images")
+        if hasattr(images_attr, "all"):
+            try:
+                product_images = list(images_attr.all())
+            except Exception:
+                product_images = []
+        else:
+            try:
+                product_images = list(images_attr)
+            except Exception:
+                product_images = []
     
     context = {
         'product': product,
@@ -430,6 +360,7 @@ def product_detail(request, slug=None):
         'discount': discount,
         'sizes': sizes,
         'colors': colors,
+        'product_images': product_images,
         'product_features': product_features,
     }
     return render(request, 'product.html', context)
