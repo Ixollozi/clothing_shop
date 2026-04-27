@@ -12,7 +12,7 @@ def get_dummy_products():
             'slug': 'dummy-tshirt',
             'price': 20,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -20,7 +20,7 @@ def get_dummy_products():
             'slug': 'dummy-jeans',
             'price': 35,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -28,7 +28,7 @@ def get_dummy_products():
             'slug': 'dummy-dress',
             'price': 50,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -36,7 +36,7 @@ def get_dummy_products():
             'slug': 'dummy-jacket',
             'price': 60,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -44,7 +44,7 @@ def get_dummy_products():
             'slug': 'dummy-shirt',
             'price': 25,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -52,7 +52,7 @@ def get_dummy_products():
             'slug': 'dummy-sweatshirt',
             'price': 40,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -60,7 +60,7 @@ def get_dummy_products():
             'slug': 'dummy-skirt',
             'price': 28,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400',
+            'image_url': '',
             'image': None,
         },
         {
@@ -68,7 +68,7 @@ def get_dummy_products():
             'slug': 'dummy-pants',
             'price': 33,
             'old_price': None,
-            'image_url': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
+            'image_url': '',
             'image': None,
         },
     ]
@@ -283,7 +283,7 @@ def product_detail(request, slug=None):
                     self.price = data.get('price', 0)
                     self.old_price = data.get('old_price')
                     self.description = 'Classic product description. This is a high-quality product with excellent materials and craftsmanship.'
-                    self.image_url = data.get('image_url')
+                    self.image_url = data.get('image_url') or ''
                     self.image = None
                     self.available_sizes = 'S,M,L,XL'
                     self.available_colors = 'Черный, Белый, Синий, Красный'
