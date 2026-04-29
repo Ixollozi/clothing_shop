@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fashionstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 15:17+0500\n"
+"POT-Creation-Date: 2026-04-30 01:28+0500\n"
 "PO-Revision-Date: 2026-04-21 00:00+0000\n"
 "Language: uz\n"
 "MIME-Version: 1.0\n"
@@ -98,6 +98,9 @@ msgstr ""
 msgid "Contacts"
 msgstr ""
 
+msgid "Корзина"
+msgstr "Savat"
+
 msgid "For Customers"
 msgstr ""
 
@@ -150,9 +153,6 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-msgid "Корзина"
-msgstr "Savat"
-
 msgid "Проверьте состав и количество. Изменения сохраняются автоматически."
 msgstr "Tarkib va miqdorni tekshiring. O‘zgarishlar avtomatik saqlanadi."
 
@@ -191,6 +191,12 @@ msgstr "Mahsulot toifalari"
 msgid "Увеличить"
 msgstr "Ko‘paytirish"
 
+msgid "сум"
+msgstr ""
+
+msgid "шт."
+msgstr "dona"
+
 #, fuzzy
 #| msgid "Корзина"
 msgid "Корзина пуста."
@@ -212,9 +218,6 @@ msgstr "Yetkazib berish tafsilotlari rasmiylashtirishda aniqlanadi."
 
 msgid "Товары"
 msgstr "Mahsulotlar"
-
-msgid "шт."
-msgstr "dona"
 
 msgid "Итого"
 msgstr "Jami"
@@ -324,7 +327,9 @@ msgstr "Toifa"
 msgid "Все категории"
 msgstr "Barcha toifalar"
 
-msgid "Цена, ₽"
+#, fuzzy
+#| msgid "Цена, ₽"
+msgid "Цена, сум"
 msgstr "Narx, ₽"
 
 msgid "Диапазон цены"

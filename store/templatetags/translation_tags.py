@@ -38,6 +38,21 @@ def format_price(value):
 
 
 @register.filter
+def to_sum(value, factor=10000):
+    """
+    Конвертирует базовую цену в сумы умножением.
+    По умолчанию: 1 -> 10000.
+    Возвращает int, чтобы удобно форматировать через format_price/intcomma.
+    """
+    if value is None:
+        return 0
+    try:
+        return int(float(value) * int(factor))
+    except (ValueError, TypeError):
+        return 0
+
+
+@register.filter
 def yandex_map_url(value):
     """
     Преобразует URL Яндекс карты в формат для iframe

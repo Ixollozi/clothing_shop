@@ -61,6 +61,71 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+/* ============================================
+   ThemeConfig color palette widgets
+   ============================================ */
+.admin-color-field{
+    margin-top: 2px;
+}
+.admin-color-row{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.admin-color-picker{
+    width: 44px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid var(--admin-border);
+    border-radius: 8px;
+    background: var(--admin-content-bg);
+    cursor: pointer;
+}
+input.admin-color-hex{
+    width: 130px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+.admin-color-preview{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--admin-border);
+    background: var(--admin-content-bg);
+}
+.admin-color-preview-swatch{
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,.12);
+    background: #000;
+}
+.admin-color-preview-hex{
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 12px;
+    color: var(--admin-text-secondary);
+}
+.admin-color-palette{
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(12, 18px);
+    gap: 8px;
+}
+.admin-color-swatch{
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,.15);
+    cursor: pointer;
+    padding: 0;
+}
+.admin-color-swatch:focus{
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(33,150,243,.35);
+}
+
 #header {
     background-color: var(--admin-header-bg) !important;
     color: var(--admin-header-color) !important;

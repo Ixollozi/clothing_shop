@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fashionstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 15:17+0500\n"
+"POT-Creation-Date: 2026-04-30 01:28+0500\n"
 "PO-Revision-Date: 2026-04-21 00:00+0000\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -98,6 +98,9 @@ msgstr ""
 msgid "Contacts"
 msgstr ""
 
+msgid "Корзина"
+msgstr "Cart"
+
 msgid "For Customers"
 msgstr ""
 
@@ -150,9 +153,6 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-msgid "Корзина"
-msgstr "Cart"
-
 msgid "Проверьте состав и количество. Изменения сохраняются автоматически."
 msgstr "Check items and quantities. Changes are saved automatically."
 
@@ -191,6 +191,12 @@ msgstr "Product categories"
 msgid "Увеличить"
 msgstr "Increase"
 
+msgid "сум"
+msgstr ""
+
+msgid "шт."
+msgstr "pcs."
+
 #, fuzzy
 #| msgid "Корзина"
 msgid "Корзина пуста."
@@ -212,9 +218,6 @@ msgstr "Delivery will be confirmed at checkout."
 
 msgid "Товары"
 msgstr "Items"
-
-msgid "шт."
-msgstr "pcs."
 
 msgid "Итого"
 msgstr "Total"
@@ -323,7 +326,9 @@ msgstr "Category"
 msgid "Все категории"
 msgstr "All categories"
 
-msgid "Цена, ₽"
+#, fuzzy
+#| msgid "Цена, ₽"
+msgid "Цена, сум"
 msgstr "Price, ₽"
 
 msgid "Диапазон цены"

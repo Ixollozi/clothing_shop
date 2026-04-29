@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="{% block meta_description %}{% firstof store_description seo_config.meta_description '' %}{% endblock %}" />
     <meta name="theme-color" content="#7a4a2a" />
-    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}{% if active_theme %}?v={{ active_theme.updated_at|date:'U' }}{% endif %}" />
+    {% if theme_css_vars %}
+    <style>
+      :root{ {{ theme_css_vars|safe }} }
+    </style>
+    {% endif %}
     <title>{% block title %}{{ store_title|default:store_name }}{% endblock %}</title>
     {% block extra_head %}{% endblock %}
   </head>

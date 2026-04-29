@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-24 15:17+0500\n"
+"POT-Creation-Date: 2026-04-30 01:28+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,6 +103,9 @@ msgstr "О нас"
 msgid "Contacts"
 msgstr "Контакты"
 
+msgid "Корзина"
+msgstr ""
+
 msgid "For Customers"
 msgstr "Покупателям"
 
@@ -162,9 +165,6 @@ msgstr ""
 msgid "Information"
 msgstr "Инновации"
 
-msgid "Корзина"
-msgstr ""
-
 msgid "Проверьте состав и количество. Изменения сохраняются автоматически."
 msgstr ""
 
@@ -195,6 +195,12 @@ msgstr ""
 msgid "Увеличить"
 msgstr ""
 
+msgid "сум"
+msgstr ""
+
+msgid "шт."
+msgstr ""
+
 msgid "Корзина пуста."
 msgstr ""
 
@@ -211,9 +217,6 @@ msgid "Доставка уточняется при оформлении."
 msgstr ""
 
 msgid "Товары"
-msgstr ""
-
-msgid "шт."
 msgstr ""
 
 msgid "Итого"
@@ -294,7 +297,7 @@ msgstr ""
 msgid "Все категории"
 msgstr ""
 
-msgid "Цена, ₽"
+msgid "Цена, сум"
 msgstr ""
 
 msgid "Диапазон цены"

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% load humanize i18n %}
+{% load humanize i18n translation_tags %}
 
 {% block title %}Корзина • {{ store_title|default:store_name }}{% endblock %}
 {% block meta_description %}Корзина покупок {{ store_name }}.{% endblock %}
@@ -47,8 +47,8 @@
                       <button class="qty-btn js-qty-plus" type="button" aria-label="{% trans 'Увеличить' %}">+</button>
                     </div>
                     <div class="cart-item-price">
-                      <div class="price-now">{{ item.total|floatformat:0|intcomma }} ₽</div>
-                      <div class="price-old" style="opacity:.75;font-size:13px;">{{ item.product.price|floatformat:0|intcomma }} ₽ / шт.</div>
+                      <div class="price-now">{{ item.total|format_price }} {% trans "сум" %}</div>
+                      <div class="price-old" style="opacity:.75;font-size:13px;">{{ item.product.price|format_price }} {% trans "сум" %} / {% trans "шт." %}</div>
                     </div>
                   </div>
                 </div>
@@ -66,14 +66,14 @@
 
               <div class="cart-row">
                 <span>{% trans "Товары" %} ({{ cart.items_count }} {% trans "шт." %})</span>
-                <span>{{ cart.total|floatformat:0|intcomma }} ₽</span>
+                <span>{{ cart.total|format_price }} {% trans "сум" %}</span>
               </div>
 
               <div class="cart-divider" aria-hidden="true"></div>
 
               <div class="cart-total">
                 <span>{% trans "Итого" %}</span>
-                <span id="cart-grand-total">{{ cart.total|floatformat:0|intcomma }} ₽</span>
+                <span id="cart-grand-total">{{ cart.total|format_price }} {% trans "сум" %}</span>
               </div>
 
               <details class="tab" style="margin-top:12px;" {% if cart.items_count %}open{% endif %}>
@@ -138,8 +138,8 @@
           const q = parseInt(qtyInput.value, 10) || 1;
           const line = row.querySelector('.price-now');
           if (line && priceUnit) {
-            const total = Math.round(priceUnit * q);
-            line.textContent = total.toLocaleString('ru-RU') + ' ₽';
+          const total = Math.round(priceUnit * q);
+          line.textContent = total.toLocaleString('ru-RU') + ' ' + '{% trans "сум" %}';
           }
         }
 

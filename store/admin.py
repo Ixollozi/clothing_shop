@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html, mark_safe
 from django.urls import reverse
 from django import forms
+from django.forms.widgets import TextInput
 from modeltranslation.admin import TabbedTranslationAdmin
 from modeltranslation.translator import translator
 from .models import (
@@ -9,6 +10,72 @@ from .models import (
     StoreConfig, ContactConfig, SocialConfig, HeroConfig, Feature, AboutConfig, SEOConfig, ThemeConfig,
     ProductFeatureConfig, AboutStat, TelegramConfig, ContactMessage, FAQ
 )
+
+class ColorPaletteWidget(TextInput):
+    """
+    Виджет выбора цвета для админки:
+    - нативный color picker
+    - HEX поле
+    - кликабельная палитра
+    - превью выбранного цвета
+    """
+
+    PRESET_COLORS = [
+        # Neutrals
+        "#000000", "#1f2937", "#374151", "#6b7280", "#9ca3af", "#d1d5db", "#e5e7eb", "#ffffff",
+        # Brand-friendly
+        "#1976d2", "#0ea5e9", "#22c55e", "#f59e0b", "#ef4444", "#a855f7", "#ec4899", "#14b8a6",
+        # Warm palette
+        "#7a4a2a", "#c49a63", "#f3e6d6", "#2d2d2d",
+    ]
+
+    def __init__(self, attrs=None):
+        base = {"class": "vTextField admin-color-hex", "placeholder": "#1976d2"}
+        if attrs:
+            base.update(attrs)
+        super().__init__(attrs=base)
+
+    def format_value(self, value):
+        if not value:
+            return ""
+        return str(value)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        html = super().render(name, value, attrs, renderer)
+        palette = "".join(
+            f'<button type="button" class="admin-color-swatch" data-color="{c}" style="background:{c}" aria-label="{c}"></button>'
+            for c in self.PRESET_COLORS
+        )
+        color_value = self.format_value(value) or "#000000"
+        return mark_safe(
+            f"""
+            <div class="admin-color-field" data-color-field>
+              <div class="admin-color-row">
+                <input type="color" class="admin-color-picker" value="{color_value}" aria-label="Color picker" />
+                {html}
+                <span class="admin-color-preview" title="{color_value}">
+                  <span class="admin-color-preview-swatch" style="background:{color_value}"></span>
+                  <span class="admin-color-preview-hex">{color_value}</span>
+                </span>
+              </div>
+              <div class="admin-color-palette" role="list" aria-label="Палитра">
+                {palette}
+              </div>
+            </div>
+            """
+        )
+
+
+class ThemeConfigAdminForm(forms.ModelForm):
+    class Meta:
+        model = ThemeConfig
+        fields = "__all__"
+        widgets = {
+            "primary_color": ColorPaletteWidget(),
+            "secondary_color": ColorPaletteWidget(),
+            "text_color": ColorPaletteWidget(),
+            "background_color": ColorPaletteWidget(),
+        }
 
 
 class ProductAdminForm(forms.ModelForm):
@@ -679,6 +746,7 @@ class ThemeConfigAdmin(admin.ModelAdmin):
         return False
     list_display = ['primary_color', 'secondary_color', 'is_active', 'updated_at']
     readonly_fields = ['updated_at', 'color_preview']
+    form = ThemeConfigAdminForm
     fieldsets = (
         ('Цвета темы', {
             'fields': ('primary_color', 'secondary_color', 'text_color', 'background_color', 'is_active', 'color_preview')
@@ -688,6 +756,12 @@ class ThemeConfigAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
+
+    class Media:
+        css = {
+            "all": ("admin/css/custom_admin.css",)
+        }
+        js = ("admin/js/theme_palette.js",)
 
     def color_preview(self, obj):
         """Показывает превью цветов"""

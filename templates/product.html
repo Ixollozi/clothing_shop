@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% load humanize i18n %}
+{% load humanize i18n translation_tags %}
 
 {% block title %}{{ product.name }} • {{ store_title|default:store_name }}{% endblock %}
 {% block meta_description %}{{ product.description|default:''|striptags|truncatechars:160 }}{% endblock %}
@@ -55,8 +55,8 @@
               <p class="product-lead">{{ product.description|striptags|truncatewords:32 }}</p>
 
               <div class="product-price">
-                <div class="price-now">{{ product.price|floatformat:0|intcomma }} ₽</div>
-                {% if product.old_price %}<div class="price-old">{{ product.old_price|floatformat:0|intcomma }} ₽</div>{% endif %}
+                <div class="price-now">{{ product.price|format_price }} {% trans "сум" %}</div>
+                {% if product.old_price %}<div class="price-old">{{ product.old_price|format_price }} {% trans "сум" %}</div>{% endif %}
               </div>
 
               <div class="product-availability">
@@ -210,8 +210,8 @@
                   <p class="card-text">{{ rp.description|striptags|truncatewords:12 }}</p>
                   <div class="product-bottom">
                     <div class="price">
-                      <span class="price-now">{{ rp.price|floatformat:0|intcomma }} ₽</span>
-                      {% if rp.old_price %}<span class="price-old">{{ rp.old_price|floatformat:0|intcomma }} ₽</span>{% endif %}
+                      <span class="price-now">{{ rp.price|format_price }} {% trans "сум" %}</span>
+                      {% if rp.old_price %}<span class="price-old">{{ rp.old_price|format_price }} {% trans "сум" %}</span>{% endif %}
                     </div>
                   <a class="btn btn-sm btn-primary" href="{% url 'product' slug=rp.slug %}">{% trans "Подробнее" %}</a>
                   </div>
