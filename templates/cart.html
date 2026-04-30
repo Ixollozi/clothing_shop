@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load translation_tags %}
 
 {% block meta_description %}{% trans "Корзина: товары национальной одежды Узбекистана." %}{% endblock %}
 
@@ -65,7 +66,7 @@
                         </div>
 
                         <div class="cart-item-price">
-                          <span class="price">{{ item.product.price }}</span>
+                          <span class="price">{{ item.product.price|format_price }}</span>
                           <span class="currency">сум</span>
                         </div>
                       </div>

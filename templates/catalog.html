@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load translation_tags %}
 
 {% block meta_description %}{% trans "Каталог национальной одежды Узбекистана: чапаны, платья, костюмы и аксессуары." %}{% endblock %}
 
@@ -94,7 +95,7 @@
                         </div>
                         <div class="product-bottom">
                           <div class="product-price">
-                            <span class="price">{{ product.price }}</span>
+                            <span class="price">{{ product.price|format_price }}</span>
                             <span class="currency">сум</span>
                           </div>
                           {% if product.id %}
@@ -135,7 +136,7 @@
                         </h3>
                         <div class="product-bottom">
                           <div class="product-price">
-                            <span class="price">{{ product.price }}</span>
+                            <span class="price">{{ product.price|format_price }}</span>
                             <span class="currency">сум</span>
                           </div>
                           <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">{% trans "Подробнее" %}</a>

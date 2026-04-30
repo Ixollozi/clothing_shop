@@ -6,69 +6,73 @@ from .models import Product, Category, Cart, CartItem
 
 def get_dummy_products():
     """Возвращает заглушки товаров"""
+    # В шаблонах, если нет `image` и `image_url`, подставляется дефолтное фото.
+    # Поэтому для "товары без фото" даём валидный, но пустой data-URI (прозрачный 1×1).
+    no_photo_image_url = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+    price_multiplier = 10_000
     return [
         {
             'name': 'Classic T-shirt',
             'slug': 'dummy-tshirt',
-            'price': 20,
+            'price': 20 * price_multiplier,
             'old_price': None,
-            'image_url': '',
+            'image_url': no_photo_image_url,
             'image': None,
         },
         {
             'name': 'Classic Jeans',
             'slug': 'dummy-jeans',
-            'price': 35,
+            'price': 35 * price_multiplier,
             'old_price': None,
-            'image_url': '',
+            'image_url': no_photo_image_url,
             'image': None,
         },
         {
             'name': 'Elegant Dress',
             'slug': 'dummy-dress',
-            'price': 50,
+            'price': 50 * price_multiplier,
             'old_price': None,
-            'image_url': '',
+            'image_url': no_photo_image_url,
             'image': None,
         },
         {
             'name': 'Demiseason Jacket',
             'slug': 'dummy-jacket',
-            'price': 60,
+            'price': 60 * price_multiplier,
             'old_price': None,
-            'image_url': '',
+            'image_url': no_photo_image_url,
             'image': None,
         },
         {
             'name': 'Office Shirt',
             'slug': 'dummy-shirt',
-            'price': 25,
+            'price': 25 * price_multiplier,
             'old_price': None,
-            'image_url': '',
+            'image_url': no_photo_image_url,
             'image': None,
         },
         {
             'name': 'Cozy Sweatshirt',
             'slug': 'dummy-sweatshirt',
-            'price': 40,
+            'price': 40 * price_multiplier,
             'old_price': None,
-            'image_url': '',
+            'image_url': no_photo_image_url,
             'image': None,
         },
         {
             'name': 'Midi Skirt',
             'slug': 'dummy-skirt',
-            'price': 28,
+            'price': 28 * price_multiplier,
             'old_price': None,
-            'image_url': '',
+            'image_url': no_photo_image_url,
             'image': None,
         },
         {
             'name': 'Classic Pants',
             'slug': 'dummy-pants',
-            'price': 33,
+            'price': 33 * price_multiplier,
             'old_price': None,
-            'image_url': '',
+            'image_url': no_photo_image_url,
             'image': None,
         },
     ]

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load translation_tags %}
 
 {% block meta_description %}{% trans "Интернет-магазин национальной одежды Узбекистана: современный стиль, традиционные ткани, понятный выбор размеров." %}{% endblock %}
 
@@ -53,7 +54,7 @@
                       <div class="hero-product-body">
                         <div class="hero-product-title">{% trans "Товар дня" %}</div>
                         <div class="hero-product-price">
-                          <span class="price">{{ hero_product.price }}</span>
+                          <span class="price">{{ hero_product.price|format_price }}</span>
                           <span class="currency">сум</span>
                         </div>
                       </div>
@@ -116,7 +117,7 @@
                   </div>
                   <div class="product-bottom">
                     <div class="product-price">
-                      <span class="price">{{ product.price }}</span>
+                      <span class="price">{{ product.price|format_price }}</span>
                       <span class="currency">сум</span>
                     </div>
                     {% if product.id %}

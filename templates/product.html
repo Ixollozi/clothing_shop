@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load translation_tags %}
 
 {% block meta_description %}{% trans "Карточка товара: чапан, платья, костюмы и аксессуары." %}{% endblock %}
 
@@ -100,7 +101,7 @@
             <aside class="product-buy" aria-label="{% trans 'Покупка' %}">
               <div class="buy-card">
                 <div class="buy-price">
-                  <span class="price">{{ product.price|default:"—" }}</span>
+                  <span class="price">{{ product.price|default:"—"|format_price }}</span>
                   <span class="currency">{% trans "сум" %}</span>
                 </div>
 
@@ -196,7 +197,7 @@
                     </h3>
                     <div class="product-bottom">
                       <div class="product-price">
-                        <span class="price">{{ p.price }}</span>
+                        <span class="price">{{ p.price|format_price }}</span>
                         <span class="currency">{% trans "сум" %}</span>
                       </div>
                       {% if p.id %}
