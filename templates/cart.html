@@ -31,7 +31,7 @@
                                 {% elif item.product.image_url %}
                                     <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
                                 {% else %}
-                                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200" alt="{{ item.product.name }}">
+                                    <div class="product-image-placeholder" aria-hidden="true"></div>
                                 {% endif %}
                             </div>
                             <div class="cart-item-info">

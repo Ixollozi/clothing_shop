@@ -6,11 +6,12 @@ from .models import Product, Category, Cart, CartItem
 
 def get_dummy_products():
     """Возвращает заглушки товаров"""
+    factor = 10000
     return [
         {
             'name': 'Classic T-shirt',
             'slug': 'dummy-tshirt',
-            'price': 20,
+            'price': 20 * factor,
             'old_price': None,
             'image_url': '',
             'image': None,
@@ -18,7 +19,7 @@ def get_dummy_products():
         {
             'name': 'Classic Jeans',
             'slug': 'dummy-jeans',
-            'price': 35,
+            'price': 35 * factor,
             'old_price': None,
             'image_url': '',
             'image': None,
@@ -26,7 +27,7 @@ def get_dummy_products():
         {
             'name': 'Elegant Dress',
             'slug': 'dummy-dress',
-            'price': 50,
+            'price': 50 * factor,
             'old_price': None,
             'image_url': '',
             'image': None,
@@ -34,7 +35,7 @@ def get_dummy_products():
         {
             'name': 'Demiseason Jacket',
             'slug': 'dummy-jacket',
-            'price': 60,
+            'price': 60 * factor,
             'old_price': None,
             'image_url': '',
             'image': None,
@@ -42,7 +43,7 @@ def get_dummy_products():
         {
             'name': 'Office Shirt',
             'slug': 'dummy-shirt',
-            'price': 25,
+            'price': 25 * factor,
             'old_price': None,
             'image_url': '',
             'image': None,
@@ -50,7 +51,7 @@ def get_dummy_products():
         {
             'name': 'Cozy Sweatshirt',
             'slug': 'dummy-sweatshirt',
-            'price': 40,
+            'price': 40 * factor,
             'old_price': None,
             'image_url': '',
             'image': None,
@@ -58,7 +59,7 @@ def get_dummy_products():
         {
             'name': 'Midi Skirt',
             'slug': 'dummy-skirt',
-            'price': 28,
+            'price': 28 * factor,
             'old_price': None,
             'image_url': '',
             'image': None,
@@ -66,7 +67,7 @@ def get_dummy_products():
         {
             'name': 'Classic Pants',
             'slug': 'dummy-pants',
-            'price': 33,
+            'price': 33 * factor,
             'old_price': None,
             'image_url': '',
             'image': None,
@@ -108,7 +109,11 @@ def index(request):
     """Главная страница"""
     from .models import HeroConfig
     # Получаем товары из БД, если есть - иначе заглушки
-    products = list(Product.objects.filter(is_active=True).order_by('-rating', '-reviews_count', '-created_at')[:8])
+    products = list(
+        Product.objects.filter(is_active=True)
+        .exclude(category__slug='demo')
+        .order_by('-rating', '-reviews_count', '-created_at')[:8]
+    )
     if not products:
         products = get_dummy_products()
     
@@ -131,8 +136,8 @@ def index(request):
 def catalog(request):
     """Страница каталога"""
     # Получаем товары из БД
-    products_queryset = Product.objects.filter(is_active=True)
-    has_real_products = Product.objects.filter(is_active=True).exists()
+    products_queryset = Product.objects.filter(is_active=True).exclude(category__slug='demo')
+    has_real_products = Product.objects.filter(is_active=True).exclude(category__slug='demo').exists()
     
     # Фильтрация по категории
     category_slug = request.GET.get('category', None)
