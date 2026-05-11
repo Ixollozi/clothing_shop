@@ -31,14 +31,12 @@
                                 {% elif item.product.image_url %}
                                     <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
                                 {% else %}
-                                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200" alt="{{ item.product.name }}">
+                                    <div class="product-image-placeholder" aria-hidden="true"></div>
                                 {% endif %}
                             </div>
                             <div class="cart-item-info">
                                 <h3>{{ item.product.name }}</h3>
                                 <p class="cart-item-details">
-                                    {% if item.size %}{% trans "Size" %}: {{ item.size }}{% endif %}
-                                    {% if item.size and item.color %}, {% endif %}
                                     {% if item.color %}{% trans "Color" %}: {{ item.color }}{% endif %}
                                 </p>
                                 <p class="cart-item-price" data-price="{{ item.product.price }}">{{ item.product.price|format_price }} сум</p>

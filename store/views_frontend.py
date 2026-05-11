@@ -6,73 +6,70 @@ from .models import Product, Category, Cart, CartItem
 
 def get_dummy_products():
     """Возвращает заглушки товаров"""
-    # В шаблонах, если нет `image` и `image_url`, подставляется дефолтное фото.
-    # Поэтому для "товары без фото" даём валидный, но пустой data-URI (прозрачный 1×1).
-    no_photo_image_url = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-    price_multiplier = 10_000
+    factor = 10000
     return [
         {
             'name': 'Classic T-shirt',
             'slug': 'dummy-tshirt',
-            'price': 20 * price_multiplier,
+            'price': 20 * factor,
             'old_price': None,
-            'image_url': no_photo_image_url,
+            'image_url': '',
             'image': None,
         },
         {
             'name': 'Classic Jeans',
             'slug': 'dummy-jeans',
-            'price': 35 * price_multiplier,
+            'price': 35 * factor,
             'old_price': None,
-            'image_url': no_photo_image_url,
+            'image_url': '',
             'image': None,
         },
         {
             'name': 'Elegant Dress',
             'slug': 'dummy-dress',
-            'price': 50 * price_multiplier,
+            'price': 50 * factor,
             'old_price': None,
-            'image_url': no_photo_image_url,
+            'image_url': '',
             'image': None,
         },
         {
             'name': 'Demiseason Jacket',
             'slug': 'dummy-jacket',
-            'price': 60 * price_multiplier,
+            'price': 60 * factor,
             'old_price': None,
-            'image_url': no_photo_image_url,
+            'image_url': '',
             'image': None,
         },
         {
             'name': 'Office Shirt',
             'slug': 'dummy-shirt',
-            'price': 25 * price_multiplier,
+            'price': 25 * factor,
             'old_price': None,
-            'image_url': no_photo_image_url,
+            'image_url': '',
             'image': None,
         },
         {
             'name': 'Cozy Sweatshirt',
             'slug': 'dummy-sweatshirt',
-            'price': 40 * price_multiplier,
+            'price': 40 * factor,
             'old_price': None,
-            'image_url': no_photo_image_url,
+            'image_url': '',
             'image': None,
         },
         {
             'name': 'Midi Skirt',
             'slug': 'dummy-skirt',
-            'price': 28 * price_multiplier,
+            'price': 28 * factor,
             'old_price': None,
-            'image_url': no_photo_image_url,
+            'image_url': '',
             'image': None,
         },
         {
             'name': 'Classic Pants',
             'slug': 'dummy-pants',
-            'price': 33 * price_multiplier,
+            'price': 33 * factor,
             'old_price': None,
-            'image_url': no_photo_image_url,
+            'image_url': '',
             'image': None,
         },
     ]
@@ -112,7 +109,11 @@ def index(request):
     """Главная страница"""
     from .models import HeroConfig
     # Получаем товары из БД, если есть - иначе заглушки
-    products = list(Product.objects.filter(is_active=True).order_by('-rating', '-reviews_count', '-created_at')[:8])
+    products = list(
+        Product.objects.filter(is_active=True)
+        .exclude(category__slug='demo')
+        .order_by('-rating', '-reviews_count', '-created_at')[:8]
+    )
     if not products:
         products = get_dummy_products()
     
@@ -135,8 +136,8 @@ def index(request):
 def catalog(request):
     """Страница каталога"""
     # Получаем товары из БД
-    products_queryset = Product.objects.filter(is_active=True)
-    has_real_products = Product.objects.filter(is_active=True).exists()
+    products_queryset = Product.objects.filter(is_active=True).exclude(category__slug='demo')
+    has_real_products = Product.objects.filter(is_active=True).exclude(category__slug='demo').exists()
     
     # Фильтрация по категории
     category_slug = request.GET.get('category', None)
@@ -162,14 +163,6 @@ def catalog(request):
     if search_query:
         products_queryset = products_queryset.filter(
             Q(name__icontains=search_query) | Q(description__icontains=search_query)
-        )
-    
-    # Фильтрация по размеру
-    size_filter = request.GET.get('size', None)
-    if size_filter:
-        # Ищем товары, у которых в available_sizes есть указанный размер
-        products_queryset = products_queryset.filter(
-            Q(available_sizes__icontains=size_filter)
         )
     
     # Фильтрация по цвету
@@ -239,7 +232,6 @@ def catalog(request):
         'current_search': search_query,
         'min_price': min_price,
         'max_price': max_price,
-        'current_size': size_filter,
         'current_color': color_filter,
     }
     return render(request, 'catalog.html', context)
@@ -310,19 +302,6 @@ def product_detail(request, slug=None):
     if product and hasattr(product, 'old_price') and product.old_price:
         discount = int(((product.old_price - product.price) / product.old_price) * 100)
     
-    # Парсим доступные размеры
-    sizes = []
-    if product and hasattr(product, 'available_sizes'):
-        sizes_str = str(product.available_sizes)
-        # Если это одно значение (не содержит запятую), добавляем его как список
-        if ',' in sizes_str:
-            sizes = [s.strip() for s in sizes_str.split(',') if s.strip()]
-        else:
-            sizes = [sizes_str.strip()] if sizes_str.strip() else []
-        # Если размеры все еще пусты, используем значения по умолчанию
-        if not sizes:
-            sizes = ['S', 'M', 'L', 'XL']
-    
     # Парсим доступные цвета
     colors = []
     color_map = {
@@ -362,7 +341,6 @@ def product_detail(request, slug=None):
         'product': product,
         'related_products': related_products,
         'discount': discount,
-        'sizes': sizes,
         'colors': colors,
         'product_images': product_images,
         'product_features': product_features,

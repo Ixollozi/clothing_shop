@@ -3,16 +3,14 @@
 {% load humanize %}
 {% load translation_tags %}
 
-{% block title %}{{ store_title }}{% endblock %}
+{% block title %}{% trans "Fashion Store - Online Clothing Store" %}{% endblock %}
 
 {% block content %}
     <!-- Hero Section -->
-
     <section class="hero" id="home" {% if hero_config_obj.background_image %}style="background-image: url('{{ hero_config_obj.background_image.url }}'); background-size: cover; background-position: center; background-repeat: no-repeat;"{% elif hero_config_obj.background_image_url %}style="background-image: url('{{ hero_config_obj.background_image_url }}'); background-size: cover; background-position: center; background-repeat: no-repeat;"{% elif hero_config.background_image %}style="background-image: url('{{ hero_config.background_image }}'); background-size: cover; background-position: center; background-repeat: no-repeat;"{% endif %}>
-
         <div class="hero-content">
-            <h2 class="hero-title">{% if hero_config.title %}{{ hero_config.title }}{% else %}{% trans "Welcome to Our Store" %}{% endif %}</h2>
-            <p class="hero-subtitle">{% if hero_config.subtitle %}{{ hero_config.subtitle }}{% else %}{% trans "Discover quality products" %}{% endif %}</p>
+            <h2 class="hero-title">{% if hero_config.title %}{{ hero_config.title }}{% else %}{% trans "New Collection" %}{% endif %}</h2>
+            <p class="hero-subtitle">{% if hero_config.subtitle %}{{ hero_config.subtitle }}{% else %}{% trans "Discover style and comfort" %}{% endif %}</p>
             <a href="{% url 'catalog' %}" class="btn btn-primary">{% if hero_config.button_text %}{{ hero_config.button_text }}{% else %}{% trans "View Catalog" %}{% endif %}</a>
         </div>
     </section>
@@ -28,11 +26,11 @@
                     <div class="category-card">
                         <div class="category-image">
                             {% if category.image %}
-                                <img src="{{ category.image.url }}" alt="{{ category.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
+                                <img src="{{ category.image.url }}" alt="{{ category.name }}">
                             {% elif category.image_url %}
-                                <img src="{{ category.image_url }}" alt="{{ category.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
+                                <img src="{{ category.image_url }}" alt="{{ category.name }}">
                             {% else %}
-                                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop" alt="{{ category.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop';">
+                                <div class="product-image-placeholder" aria-hidden="true"></div>
                             {% endif %}
                         </div>
                         <h3>{{ category.name }}</h3>
@@ -59,11 +57,11 @@
                             <a href="{% url 'catalog' %}">
                         {% endif %}
                             {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
                             {% elif product.image_url %}
-                                <img src="{{ product.image_url }}" alt="{{ product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
+                                <img src="{{ product.image_url }}" alt="{{ product.name }}">
                             {% else %}
-                                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop" alt="{{ product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
+                                <div class="product-image-placeholder" aria-hidden="true"></div>
                             {% endif %}
                         </a>
                         <div class="product-overlay">

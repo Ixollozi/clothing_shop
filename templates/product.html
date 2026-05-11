@@ -29,25 +29,25 @@
                 <div class="product-images">
                     <div class="main-image">
                         {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}" id="mainImage" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" id="mainImage">
                         {% elif product.image_url %}
-                            <img src="{{ product.image_url }}" alt="{{ product.name }}" id="mainImage" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
+                            <img src="{{ product.image_url }}" alt="{{ product.name }}" id="mainImage">
                         {% else %}
-                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=600&fit=crop" alt="{{ product.name }}" id="mainImage" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
+                            <div class="product-image-placeholder product-image-placeholder-lg" aria-hidden="true"></div>
                         {% endif %}
                     </div>
                     <div class="thumbnail-images">
                         {% if product.images.all %}
                             {% for img in product.images.all %}
-                                <img src="{{ img.image.url }}" alt="{{ product.name }} - {% trans 'View' %} {{ forloop.counter }}" class="thumbnail {% if forloop.first %}active{% endif %}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
+                                <img src="{{ img.image.url }}" alt="{{ product.name }} - {% trans 'View' %} {{ forloop.counter }}" class="thumbnail {% if forloop.first %}active{% endif %}">
                             {% endfor %}
                         {% else %}
                             {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="thumbnail active" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="thumbnail active">
                             {% elif product.image_url %}
-                                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="thumbnail active" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
+                                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="thumbnail active">
                             {% else %}
-                                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=600&fit=crop" alt="{{ product.name }}" class="thumbnail active" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=600&fit=crop';">
+                                <div class="product-image-placeholder" aria-hidden="true"></div>
                             {% endif %}
                         {% endif %}
                     </div>
@@ -84,19 +84,6 @@
                     <div class="product-description">
                         <p>{{ product.description|linebreaks }}</p>
                     </div>
-
-                    <!-- Size Selection -->
-                    {% if sizes %}
-                    <div class="product-options">
-                        <h3>{% trans "Size" %}</h3>
-                        <div class="size-selector">
-                            {% for size in sizes %}
-                                <button class="size-option {% if forloop.first %}active{% endif %}" data-size="{{ size }}">{{ size }}</button>
-                            {% endfor %}
-                        </div>
-                        {% comment %} Size guide link - only show if relevant for product type {% endcomment %}
-                    </div>
-                    {% endif %}
 
                     <!-- Color Selection -->
                     {% if colors %}
@@ -178,12 +165,6 @@
                             <td>{{ product.available_colors }}</td>
                         </tr>
                         {% endif %}
-                        {% if sizes %}
-                        <tr>
-                            <td>{% trans "Available Sizes" %}</td>
-                            <td>{{ sizes|join:", " }}</td>
-                        </tr>
-                        {% endif %}
                         {% if product.stock %}
                         <tr>
                             <td>{% trans "Stock" %}</td>
@@ -224,11 +205,11 @@
                     <div class="product-image">
                         <a href="{% url 'product' related_product.slug %}">
                             {% if related_product.image %}
-                                <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
+                                <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}">
                             {% elif related_product.image_url %}
-                                <img src="{{ related_product.image_url }}" alt="{{ related_product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
+                                <img src="{{ related_product.image_url }}" alt="{{ related_product.name }}">
                             {% else %}
-                                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop" alt="{{ related_product.name }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop';">
+                                <div class="product-image-placeholder" aria-hidden="true"></div>
                             {% endif %}
                         </a>
                         <div class="product-overlay">
@@ -295,15 +276,6 @@
         });
     }
 
-    // Size selector
-    const sizeOptions = document.querySelectorAll('.size-option');
-    sizeOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            sizeOptions.forEach(o => o.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-
     // Color selector
     const colorOptions = document.querySelectorAll('.color-option-large');
     colorOptions.forEach(option => {
@@ -353,8 +325,6 @@
         button.disabled = true;
         button.textContent = '{% trans "Adding..." %}';
 
-        // Получаем выбранные размер и цвет
-        const selectedSize = document.querySelector('.size-option.active')?.getAttribute('data-size') || '';
         const selectedColor = document.querySelector('.color-option-large.active')?.getAttribute('data-color') || '';
         const quantity = parseInt(document.getElementById('quantity')?.value || 1);
 
@@ -369,7 +339,7 @@
             const requestData = {
                 product_id: parseInt(productId),
                 quantity: quantity,
-                size: selectedSize,
+                size: '',
                 color: selectedColor
             };
             
