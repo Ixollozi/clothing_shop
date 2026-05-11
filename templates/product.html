@@ -85,19 +85,6 @@
                         <p>{{ product.description|linebreaks }}</p>
                     </div>
 
-                    <!-- Size Selection -->
-                    {% if sizes %}
-                    <div class="product-options">
-                        <h3>{% trans "Size" %}</h3>
-                        <div class="size-selector">
-                            {% for size in sizes %}
-                                <button class="size-option {% if forloop.first %}active{% endif %}" data-size="{{ size }}">{{ size }}</button>
-                            {% endfor %}
-                        </div>
-                        <a href="#" class="size-guide-link">{% trans "Size Chart" %}</a>
-                    </div>
-                    {% endif %}
-
                     <!-- Color Selection -->
                     {% if colors %}
                     <div class="product-options">
@@ -176,12 +163,6 @@
                         <tr>
                             <td>{% trans "Available Colors" %}</td>
                             <td>{{ product.available_colors }}</td>
-                        </tr>
-                        {% endif %}
-                        {% if sizes %}
-                        <tr>
-                            <td>{% trans "Available Sizes" %}</td>
-                            <td>{{ sizes|join:", " }}</td>
                         </tr>
                         {% endif %}
                         {% if product.stock %}
@@ -295,15 +276,6 @@
         });
     }
 
-    // Size selector
-    const sizeOptions = document.querySelectorAll('.size-option');
-    sizeOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            sizeOptions.forEach(o => o.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-
     // Color selector
     const colorOptions = document.querySelectorAll('.color-option-large');
     colorOptions.forEach(option => {
@@ -353,8 +325,6 @@
         button.disabled = true;
         button.textContent = '{% trans "Adding..." %}';
 
-        // Получаем выбранные размер и цвет
-        const selectedSize = document.querySelector('.size-option.active')?.getAttribute('data-size') || '';
         const selectedColor = document.querySelector('.color-option-large.active')?.getAttribute('data-color') || '';
         const quantity = parseInt(document.getElementById('quantity')?.value || 1);
 
@@ -369,7 +339,7 @@
             const requestData = {
                 product_id: parseInt(productId),
                 quantity: quantity,
-                size: selectedSize,
+                size: '',
                 color: selectedColor
             };
             

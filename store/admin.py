@@ -11,44 +11,6 @@ from .models import (
 )
 
 
-class ProductAdminForm(forms.ModelForm):
-    """Кастомная форма для выбора нескольких размеров"""
-    available_sizes_multiple = forms.MultipleChoiceField(
-        choices=Product.SIZE_CHOICES,
-        required=False,
-        label='Доступные размеры',
-        help_text='Выберите один или несколько размеров',
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'sizes-checkboxes'})
-    )
-    
-    class Meta:
-        model = Product
-        fields = '__all__'
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Скрываем оригинальное поле available_sizes
-        if 'available_sizes' in self.fields:
-            self.fields['available_sizes'].widget = forms.HiddenInput()
-        
-        if self.instance and self.instance.pk:
-            # Если товар существует, загружаем текущие размеры
-            if self.instance.available_sizes:
-                sizes = [s.strip() for s in self.instance.available_sizes.split(',') if s.strip()]
-                self.fields['available_sizes_multiple'].initial = sizes
-        else:
-            # По умолчанию выбран M
-            self.fields['available_sizes_multiple'].initial = ['M']
-    
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        # Сохраняем выбранные размеры через запятую
-        selected_sizes = self.cleaned_data.get('available_sizes_multiple', [])
-        instance.available_sizes = ', '.join(selected_sizes) if selected_sizes else 'M'
-        if commit:
-            instance.save()
-        return instance
-
 # Импортируем переводы перед регистрацией админки
 try:
     from . import translation
@@ -106,12 +68,12 @@ class ProductImageInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(TabbedTranslationAdmin):
-    form = ProductAdminForm
+    exclude = ('available_sizes',)
     list_display = ['name', 'category', 'price_display', 'old_price_display', 'stock', 'is_active', 'image_preview', 'created_at']
     list_filter = ['category', 'is_active', 'created_at', 'rating']
     search_fields = ['name', 'description', 'available_colors']
     prepopulated_fields = {'slug': ('name',)}
-    readonly_fields = ['created_at', 'updated_at', 'image_preview', 'image_url_preview', 'discount_percent', 'colors_help', 'sizes_help']
+    readonly_fields = ['created_at', 'updated_at', 'image_preview', 'image_url_preview', 'discount_percent', 'colors_help']
     inlines = [ProductImageInline]
     list_editable = ['is_active', 'stock']
     fieldsets = (
@@ -125,8 +87,8 @@ class ProductAdmin(TabbedTranslationAdmin):
             'fields': ('image', 'image_preview', 'image_url', 'image_url_preview')
         }),
         ('Характеристики', {
-            'fields': ('available_sizes_multiple', 'sizes_help', 'available_colors', 'colors_help', 'stock', 'is_active'),
-            'description': 'Укажите доступные размеры и цвета для товара'
+            'fields': ('available_colors', 'colors_help', 'stock', 'is_active'),
+            'description': 'Укажите доступные цвета для товара'
         }),
         ('Рейтинг', {
             'fields': ('rating', 'reviews_count')
@@ -137,25 +99,6 @@ class ProductAdmin(TabbedTranslationAdmin):
         }),
     )
     
-    def sizes_help(self, obj):
-        """Подсказка о доступных размерах"""
-        sizes_list = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
-        html = '<div style="margin-top: 10px; padding: 10px; background: #f5f5f5; border-radius: 4px;">'
-        html += '<strong>Доступные размеры:</strong><br>'
-        html += '<div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 10px;">'
-        for size in sizes_list:
-            html += f'''
-            <div style="display: inline-flex; align-items: center; padding: 5px 10px; background: white; border-radius: 4px; border: 1px solid #ddd;">
-                <span>{size}</span>
-            </div>
-            '''
-        html += '</div>'
-        html += '<p style="margin-top: 10px; margin-bottom: 0; color: #666; font-size: 0.9em;">'
-        html += '💡 <strong>Подсказка:</strong> Выберите один или несколько размеров, используя чекбоксы выше'
-        html += '</p></div>'
-        return mark_safe(html)
-    sizes_help.short_description = 'Подсказка по размерам'
-
     def colors_help(self, obj):
         """Подсказка о доступных цветах"""
         colors_list = [
@@ -259,7 +202,8 @@ class CartAdmin(admin.ModelAdmin):
 
 @admin.register(CartItem)
 class CartItemAdmin(admin.ModelAdmin):
-    list_display = ['product', 'cart', 'quantity', 'size', 'color', 'total_display', 'created_at']
+    exclude = ('size',)
+    list_display = ['product', 'cart', 'quantity', 'color', 'total_display', 'created_at']
     list_filter = ['cart', 'created_at', 'product__category']
     search_fields = ['product__name', 'cart__session_key']
     readonly_fields = ['total_display', 'created_at', 'updated_at']
@@ -273,7 +217,7 @@ class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
     readonly_fields = ['total_display']
-    fields = ('product', 'quantity', 'price', 'size', 'color', 'total_display')
+    fields = ('product', 'quantity', 'price', 'color', 'total_display')
     can_delete = False
 
     def total_display(self, obj):
@@ -341,7 +285,8 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ['order', 'product', 'quantity', 'price', 'size', 'color', 'total_display']
+    exclude = ('size',)
+    list_display = ['order', 'product', 'quantity', 'price', 'color', 'total_display']
     list_filter = ['order__status', 'order__created_at', 'product__category']
     search_fields = ['product__name', 'order__first_name', 'order__last_name', 'order__email']
     readonly_fields = ['total_display']

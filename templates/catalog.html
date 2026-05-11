@@ -59,17 +59,6 @@
                     </div>
 
                     <div class="filter-group">
-                        <h4>{% trans "Size" %}</h4>
-                        <div class="size-buttons">
-                            <button class="size-btn" data-size="XS" {% if current_size == 'XS' %}data-active="true"{% endif %}>XS</button>
-                            <button class="size-btn" data-size="S" {% if current_size == 'S' %}data-active="true"{% endif %}>S</button>
-                            <button class="size-btn" data-size="M" {% if current_size == 'M' %}data-active="true"{% endif %}>M</button>
-                            <button class="size-btn" data-size="L" {% if current_size == 'L' %}data-active="true"{% endif %}>L</button>
-                            <button class="size-btn" data-size="XL" {% if current_size == 'XL' %}data-active="true"{% endif %}>XL</button>
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
                         <h4>{% trans "Color" %}</h4>
                         <div class="color-options">
                             <span class="color-option" data-color="#000" {% if current_color == '#000' or current_color == '#000000' %}data-active="true"{% endif %} style="background: #000;"></span>
@@ -155,7 +144,7 @@
                     {% if products and products.paginator.num_pages > 1 %}
                     <div class="pagination">
                         {% if products.has_previous %}
-                            <a href="?page={{ products.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if current_size %}&size={{ current_size }}{% endif %}{% if current_color %}&color={{ current_color }}{% endif %}" class="page-link">
+                            <a href="?page={{ products.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if current_color %}&color={{ current_color }}{% endif %}" class="page-link">
                                 <i class="fas fa-chevron-left"></i>
                             </a>
                         {% else %}
@@ -166,12 +155,12 @@
                             {% if products.number == num %}
                                 <span class="page-link active">{{ num }}</span>
                             {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
-                                <a href="?page={{ num }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if current_size %}&size={{ current_size }}{% endif %}{% if current_color %}&color={{ current_color }}{% endif %}" class="page-link">{{ num }}</a>
+                                <a href="?page={{ num }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if current_color %}&color={{ current_color }}{% endif %}" class="page-link">{{ num }}</a>
                             {% endif %}
                         {% endfor %}
                         
                         {% if products.has_next %}
-                            <a href="?page={{ products.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if current_size %}&size={{ current_size }}{% endif %}{% if current_color %}&color={{ current_color }}{% endif %}" class="page-link">
+                            <a href="?page={{ products.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if current_color %}&color={{ current_color }}{% endif %}" class="page-link">
                                 <i class="fas fa-chevron-right"></i>
                             </a>
                         {% else %}
@@ -268,35 +257,6 @@
     }
 
 
-    // Size filter buttons
-    const sizeButtons = document.querySelectorAll('.size-btn');
-    let selectedSize = null;
-    sizeButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            // Toggle active state
-            if (this.classList.contains('active')) {
-                this.classList.remove('active');
-                selectedSize = null;
-            } else {
-                // Remove active from all size buttons
-                sizeButtons.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                selectedSize = this.getAttribute('data-size');
-            }
-        });
-    });
-    
-    // Set active size button based on current URL parameters
-    const currentSize = urlParams.get('size');
-    if (currentSize) {
-        sizeButtons.forEach(btn => {
-            if (btn.getAttribute('data-size') === currentSize) {
-                btn.classList.add('active');
-                selectedSize = currentSize;
-            }
-        });
-    }
-    
     // Color filter options
     const colorOptions = document.querySelectorAll('.color-option');
     let selectedColor = null;
@@ -384,13 +344,6 @@
             url.searchParams.set('max_price', currentMaxPrice);
         }
         
-        // Применяем фильтр по размеру
-        if (selectedSize) {
-            url.searchParams.set('size', selectedSize);
-        } else {
-            url.searchParams.delete('size');
-        }
-        
         // Применяем фильтр по цвету
         if (selectedColor) {
             url.searchParams.set('color', selectedColor);
@@ -426,13 +379,11 @@
         
         // Убираем активный класс со всех фильтров
         priceButtons.forEach(btn => btn.classList.remove('active'));
-        sizeButtons.forEach(btn => btn.classList.remove('active'));
         colorOptions.forEach(option => option.classList.remove('active'));
         categoryCheckboxes.forEach(checkbox => checkbox.checked = false);
         
         // Сбрасываем выбранные значения
-        selectedSize = null;
-        selectedColor = null;
+selectedColor = null;
         selectedCategories = [];
         
         window.location.href = url.toString();

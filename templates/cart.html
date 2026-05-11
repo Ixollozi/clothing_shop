@@ -36,11 +36,9 @@
                             </div>
                             <div class="cart-item-info">
                                 <h3>{{ item.product.name }}</h3>
-                                <p class="cart-item-details">
-                                    {% if item.size %}{% trans "Size" %}: {{ item.size }}{% endif %}
-                                    {% if item.size and item.color %}, {% endif %}
-                                    {% if item.color %}{% trans "Color" %}: {{ item.color }}{% endif %}
-                                </p>
+                                {% if item.color %}
+                                <p class="cart-item-details">{% trans "Color" %}: {{ item.color }}</p>
+                                {% endif %}
                                 <p class="cart-item-price" data-price="{{ item.product.price }}">{{ item.product.price|format_price }} сум</p>
                             </div>
                             <div class="cart-item-quantity">
