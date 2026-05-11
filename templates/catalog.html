@@ -19,7 +19,7 @@
             <div class="catalog-head-left">
               <h1 class="hero-title" style="margin: 0;">{% trans "Каталог национальной одежды" %}</h1>
               <p class="section-sub" style="margin-top: 10px;">
-                {% trans "От чапанов до аксессуаров: выберите стиль и размер, чтобы быстро оформить заказ." %}
+                {% trans "От чапанов до аксессуаров: выберите стиль, чтобы быстро оформить заказ." %}
               </p>
             </div>
 
@@ -34,7 +34,6 @@
                   <input type="hidden" name="search" value="{{ current_search|default:'' }}" />
                   <input type="hidden" name="min_price" value="{{ min_price|default:'' }}" />
                   <input type="hidden" name="max_price" value="{{ max_price|default:'' }}" />
-                  <input type="hidden" name="size" value="{{ current_size|default:'' }}" />
                   <input type="hidden" name="color" value="{{ current_color|default:'' }}" />
                   <select class="sort-select" aria-label="{% trans 'Сортировка' %}" name="sort" onchange="this.form.submit()">
                     <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>{% trans "Сначала новые" %}</option>
@@ -193,15 +192,6 @@
                       <input class="range-input" type="number" name="min_price" placeholder="{% trans 'от' %}" value="{{ min_price|default:'' }}" />
                       <span class="range-dash">—</span>
                       <input class="range-input" type="number" name="max_price" placeholder="{% trans 'до' %}" value="{{ max_price|default:'' }}" />
-                    </div>
-                  </div>
-                </details>
-
-                <details class="filter-details">
-                  <summary class="filter-summary">{% trans "Размер" %}</summary>
-                  <div class="filter-body">
-                    <div class="range-row">
-                      <input class="range-input" type="text" name="size" placeholder="S/M/L/XL" value="{{ current_size|default:'' }}" />
                     </div>
                   </div>
                 </details>

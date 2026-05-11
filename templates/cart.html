@@ -31,7 +31,6 @@
                     class="cart-item"
                     data-item-id="{{ item.id }}"
                     data-product-id="{{ item.product.id }}"
-                    data-size="{{ item.size|default:'' }}"
                     data-color="{{ item.color|default:'' }}"
                   >
                     <div class="cart-item-media" aria-hidden="true">
@@ -52,8 +51,7 @@
                       </h3>
                       <div class="cart-item-meta">
                         <span class="cart-item-sub">
-                          {% if item.size %}{% trans "Размер:" %} {{ item.size }}{% endif %}
-                          {% if item.color %}{% if item.size %} • {% endif %}{% trans "Цвет:" %} {{ item.color }}{% endif %}
+                          {% if item.color %}{% trans "Цвет:" %} {{ item.color }}{% endif %}
                         </span>
                         <a class="cart-item-remove js-remove" href="#remove" data-item-id='{{ item.id }}'>{% trans "Удалить" %}</a>
                       </div>
@@ -258,10 +256,9 @@
               const productId = row.getAttribute('data-product-id');
               const qtyEl = row.querySelector('.qty-input');
               const qty = qtyEl ? Math.max(1, Number(qtyEl.value || 1)) : 1;
-              const size = row.getAttribute('data-size') || '';
               const color = row.getAttribute('data-color') || '';
               if (!productId) return null;
-              return { product_id: Number(productId), quantity: qty, size: size, color: color };
+              return { product_id: Number(productId), quantity: qty, size: '', color: color };
             })
             .filter(Boolean);
 

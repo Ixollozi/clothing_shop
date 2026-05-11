@@ -132,11 +132,8 @@ class TelegramNotifier:
             # Добавляем информацию о товарах
             for item in order.items.all():
                 product_name = escape(str(item.product.name))
-                size = escape(str(item.size)) if item.size else ''
                 color = escape(str(item.color)) if item.color else ''
                 message += f"• {product_name} x{item.quantity}\n"
-                if size:
-                    message += f"  Размер: {size}\n"
                 if color:
                     message += f"  Цвет: {color}\n"
                 message += f"  Цена: {item.price:,.0f} сум\n\n"

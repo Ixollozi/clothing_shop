@@ -106,17 +106,6 @@
                 </div>
 
                 <div class="buy-row">
-                  <div class="buy-label">{% trans "Размер" %}</div>
-                  <div class="size-choices" role="group" aria-label="{% trans 'Выбор размера' %}">
-                    {% for s in sizes %}
-                      <a class="size-pill {% if forloop.first %}size-pill-active{% endif %}" href="#size" data-size="{{ s }}">{{ s }}</a>
-                    {% empty %}
-                      <a class="size-pill size-pill-active" href="#size" data-size="">M</a>
-                    {% endfor %}
-                  </div>
-                </div>
-
-                <div class="buy-row">
                   <div class="buy-label">{% trans "Количество" %}</div>
                   <div class="qty" aria-label="{% trans 'Количество' %}">
                     <button class="qty-btn" type="button" aria-label="{% trans 'Уменьшить' %}">-</button>
@@ -139,7 +128,7 @@
                 {% endif %}
 
                 <div class="buy-note">
-                  {% trans "Подсказка по размеру доступна в каталоге. Мы поможем с выбором, если напишете." %}
+                  {% trans "Если нужна консультация по модели — напишите нам, мы поможем." %}
                 </div>
               </div>
 
@@ -155,7 +144,7 @@
                   <div class="service-icon" aria-hidden="true">↻</div>
                   <div>
                     <div class="service-title">{% trans "Удобно" %}</div>
-                    <div class="service-sub">{% trans "Подбор по размеру и понятный UI" %}</div>
+                    <div class="service-sub">{% trans "Понятный каталог и удобный заказ" %}</div>
                   </div>
                 </div>
                 <div class="service-item">
@@ -236,19 +225,6 @@
         });
       });
 
-      // size selection
-      let selectedSize = '';
-      document.querySelectorAll('.size-pill').forEach(function (pill) {
-        pill.addEventListener('click', function (e) {
-          e.preventDefault();
-          document.querySelectorAll('.size-pill').forEach(function (p) {
-            p.classList.remove('size-pill-active');
-          });
-          this.classList.add('size-pill-active');
-          selectedSize = this.getAttribute('data-size') || '';
-        });
-      });
-
       // add to cart
       document.querySelectorAll('.js-add-to-cart').forEach(function (el) {
         el.addEventListener('click', async function (e) {
@@ -260,7 +236,7 @@
 
           const res = await window.StoreApi.json('/api/cart/add_item/', {
             method: 'POST',
-            body: { product_id: Number(productId), quantity: quantity, size: selectedSize, color: '' },
+            body: { product_id: Number(productId), quantity: quantity, size: '', color: '' },
           });
 
           if (res.ok) {

@@ -164,14 +164,6 @@ def catalog(request):
             Q(name__icontains=search_query) | Q(description__icontains=search_query)
         )
     
-    # Фильтрация по размеру
-    size_filter = request.GET.get('size', None)
-    if size_filter:
-        # Ищем товары, у которых в available_sizes есть указанный размер
-        products_queryset = products_queryset.filter(
-            Q(available_sizes__icontains=size_filter)
-        )
-    
     # Фильтрация по цвету
     color_filter = request.GET.get('color', None)
     if color_filter:
@@ -239,7 +231,6 @@ def catalog(request):
         'current_search': search_query,
         'min_price': min_price,
         'max_price': max_price,
-        'current_size': size_filter,
         'current_color': color_filter,
     }
     return render(request, 'catalog.html', context)
@@ -310,19 +301,6 @@ def product_detail(request, slug=None):
     if product and hasattr(product, 'old_price') and product.old_price:
         discount = int(((product.old_price - product.price) / product.old_price) * 100)
     
-    # Парсим доступные размеры
-    sizes = []
-    if product and hasattr(product, 'available_sizes'):
-        sizes_str = str(product.available_sizes)
-        # Если это одно значение (не содержит запятую), добавляем его как список
-        if ',' in sizes_str:
-            sizes = [s.strip() for s in sizes_str.split(',') if s.strip()]
-        else:
-            sizes = [sizes_str.strip()] if sizes_str.strip() else []
-        # Если размеры все еще пусты, используем значения по умолчанию
-        if not sizes:
-            sizes = ['S', 'M', 'L', 'XL']
-    
     # Парсим доступные цвета
     colors = []
     color_map = {
@@ -362,7 +340,6 @@ def product_detail(request, slug=None):
         'product': product,
         'related_products': related_products,
         'discount': discount,
-        'sizes': sizes,
         'colors': colors,
         'product_images': product_images,
         'product_features': product_features,
