@@ -81,19 +81,10 @@
                   <a class="btn btn-primary buy-btn" href="{% url 'catalog' %}">{% trans "В каталог" %}</a>
                   {% endif %}
                 </div>
-                <div class="buy-sub">{% trans "Размер и цвет учитываются при добавлении в корзину." %}</div>
+                <div class="buy-sub">{% if colors %}{% trans "Цвет можно выбрать при добавлении в корзину." %}{% else %}{% trans "Добавьте товар в корзину и оформите заказ." %}{% endif %}</div>
                 <div id="cart-add-message" class="card-text" style="margin-top:8px; display:none;"></div>
               </div>
 
-              {% if sizes %}
-              <div class="filter-block" style="margin-top:12px;">
-                <h3 class="filter-title">{% trans "Размер" %}</h3>
-                <label class="sr-only" for="cart-size">{% trans "Размер" %}</label>
-                <select id="cart-size" class="sort-select" style="width:100%;">
-                  {% for s in sizes %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
-                </select>
-              </div>
-              {% endif %}
               {% if colors %}
               <div class="filter-block" style="margin-top:8px;">
                 <h3 class="filter-title">{% trans "Цвет" %}</h3>
@@ -255,7 +246,6 @@
       const msg = document.getElementById('cart-add-message');
       const i18n = document.getElementById('product-i18n');
       const qtyInput = document.getElementById('cart-qty');
-      const sizeEl = document.getElementById('cart-size');
       const colorEl = document.getElementById('cart-color');
       const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]') && document.querySelector('[name=csrfmiddlewaretoken]').value;
 
@@ -287,7 +277,7 @@
           const body = {
             product_id: productId,
             quantity: parseInt(qtyInput.value, 10) || 1,
-            size: sizeEl ? sizeEl.value : '',
+            size: '',
             color: colorEl ? colorEl.value : ''
           };
           fetch('{% url "cart-add-item" %}', {

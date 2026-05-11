@@ -19,7 +19,6 @@
                 class="cart-item card"
                 data-item-id="{{ item.id }}"
                 data-product-id="{{ item.product.id }}"
-                data-size="{{ item.size|default:'' }}"
                 data-color="{{ item.color|default:'' }}"
                 data-unit-price="{{ item.product.price }}"
               >
@@ -29,10 +28,8 @@
                     <div>
                       <div class="cart-item-title"><a href="{% url 'product' slug=item.product.slug %}">{{ item.product.name }}</a></div>
                       <div class="cart-item-meta">
-                        {% if item.size or item.color %}
-                          {% if item.size %}{% trans "Размер:" %} {{ item.size }}{% endif %}
-                          {% if item.size and item.color %} · {% endif %}
-                          {% if item.color %}{% trans "Цвет:" %} {{ item.color }}{% endif %}
+                        {% if item.color %}
+                          {% trans "Цвет:" %} {{ item.color }}
                         {% else %}
                           —
                         {% endif %}
@@ -215,12 +212,11 @@
           const items = [];
           document.querySelectorAll('.cart-item').forEach(function (row) {
             const productId = parseInt(row.getAttribute('data-product-id') || '0', 10);
-            const size = row.getAttribute('data-size') || '';
             const color = row.getAttribute('data-color') || '';
             const qtyInput = row.querySelector('.js-qty-input');
             const quantity = qtyInput ? Math.max(1, parseInt(qtyInput.value || '1', 10) || 1) : 1;
             if (productId) {
-              items.push({ product_id: productId, quantity: quantity, size: size, color: color });
+              items.push({ product_id: productId, quantity: quantity, color: color });
             }
           });
 

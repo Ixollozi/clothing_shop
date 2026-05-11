@@ -161,7 +161,7 @@ class CartViewSet(viewsets.ModelViewSet):
                 )
             
             quantity = int(request.data.get('quantity', 1))
-            size = request.data.get('size', '')
+            size = ''  # размер на фронте не используем
             color = request.data.get('color', '')
 
             try:

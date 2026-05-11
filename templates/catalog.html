@@ -54,12 +54,6 @@
                 </div>
 
                 <div class="filter-block">
-                  <h3 class="filter-title">{% trans "Размер" %}</h3>
-                  <label class="sr-only" for="filter-size">{% trans "Размер" %}</label>
-                  <input id="filter-size" class="price-input" type="text" name="size" value="{{ current_size|default_if_none:'' }}" placeholder="{% trans 'например S или XL' %}" style="width:100%;" />
-                </div>
-
-                <div class="filter-block">
                   <h3 class="filter-title">{% trans "Цвет (код или название)" %}</h3>
                   <label class="sr-only" for="filter-color">{% trans "Цвет" %}</label>
                   <input id="filter-color" class="price-input" type="text" name="color" value="{{ current_color|default_if_none:'' }}" placeholder="{% trans '#000000 или Черный' %}" style="width:100%;" />
@@ -144,7 +138,7 @@
               {% if not dummy_products and products.paginator.num_pages > 1 %}
               <nav class="pagination" aria-label="{% trans 'Пагинация' %}">
                 {% if products.has_previous %}
-                <a class="page-link" href="{% url 'catalog' %}?page={{ products.previous_page_number }}{% if current_category %}&amp;category={{ current_category }}{% endif %}{% if current_search %}&amp;search={{ current_search|urlencode }}{% endif %}{% if min_price %}&amp;min_price={{ min_price }}{% endif %}{% if max_price %}&amp;max_price={{ max_price }}{% endif %}{% if current_size %}&amp;size={{ current_size|urlencode }}{% endif %}{% if current_color %}&amp;color={{ current_color|urlencode }}{% endif %}{% if current_sort %}&amp;sort={{ current_sort }}{% endif %}" aria-label="{% trans 'Предыдущая страница' %}">{% trans "Назад" %}</a>
+                <a class="page-link" href="{% url 'catalog' %}?page={{ products.previous_page_number }}{% if current_category %}&amp;category={{ current_category }}{% endif %}{% if current_search %}&amp;search={{ current_search|urlencode }}{% endif %}{% if min_price %}&amp;min_price={{ min_price }}{% endif %}{% if max_price %}&amp;max_price={{ max_price }}{% endif %}{% if current_color %}&amp;color={{ current_color|urlencode }}{% endif %}{% if current_sort %}&amp;sort={{ current_sort }}{% endif %}" aria-label="{% trans 'Предыдущая страница' %}">{% trans "Назад" %}</a>
                 {% else %}
                 <span class="page-link" aria-disabled="true">{% trans "Назад" %}</span>
                 {% endif %}
@@ -153,12 +147,12 @@
                   {% if num == products.number %}
                 <span class="page-link is-active" aria-current="page">{{ num }}</span>
                   {% else %}
-                <a class="page-link" href="{% url 'catalog' %}?page={{ num }}{% if current_category %}&amp;category={{ current_category }}{% endif %}{% if current_search %}&amp;search={{ current_search|urlencode }}{% endif %}{% if min_price %}&amp;min_price={{ min_price }}{% endif %}{% if max_price %}&amp;max_price={{ max_price }}{% endif %}{% if current_size %}&amp;size={{ current_size|urlencode }}{% endif %}{% if current_color %}&amp;color={{ current_color|urlencode }}{% endif %}{% if current_sort %}&amp;sort={{ current_sort }}{% endif %}">{{ num }}</a>
+                <a class="page-link" href="{% url 'catalog' %}?page={{ num }}{% if current_category %}&amp;category={{ current_category }}{% endif %}{% if current_search %}&amp;search={{ current_search|urlencode }}{% endif %}{% if min_price %}&amp;min_price={{ min_price }}{% endif %}{% if max_price %}&amp;max_price={{ max_price }}{% endif %}{% if current_color %}&amp;color={{ current_color|urlencode }}{% endif %}{% if current_sort %}&amp;sort={{ current_sort }}{% endif %}">{{ num }}</a>
                   {% endif %}
                 {% endfor %}
 
                 {% if products.has_next %}
-                <a class="page-link" href="{% url 'catalog' %}?page={{ products.next_page_number }}{% if current_category %}&amp;category={{ current_category }}{% endif %}{% if current_search %}&amp;search={{ current_search|urlencode }}{% endif %}{% if min_price %}&amp;min_price={{ min_price }}{% endif %}{% if max_price %}&amp;max_price={{ max_price }}{% endif %}{% if current_size %}&amp;size={{ current_size|urlencode }}{% endif %}{% if current_color %}&amp;color={{ current_color|urlencode }}{% endif %}{% if current_sort %}&amp;sort={{ current_sort }}{% endif %}" aria-label="{% trans 'Следующая страница' %}">{% trans "Далее" %}</a>
+                <a class="page-link" href="{% url 'catalog' %}?page={{ products.next_page_number }}{% if current_category %}&amp;category={{ current_category }}{% endif %}{% if current_search %}&amp;search={{ current_search|urlencode }}{% endif %}{% if min_price %}&amp;min_price={{ min_price }}{% endif %}{% if max_price %}&amp;max_price={{ max_price }}{% endif %}{% if current_color %}&amp;color={{ current_color|urlencode }}{% endif %}{% if current_sort %}&amp;sort={{ current_sort }}{% endif %}" aria-label="{% trans 'Следующая страница' %}">{% trans "Далее" %}</a>
                 {% else %}
                 <span class="page-link" aria-disabled="true">{% trans "Далее" %}</span>
                 {% endif %}
