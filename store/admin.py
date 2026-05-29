@@ -8,8 +8,10 @@ from modeltranslation.translator import translator
 from .models import (
     Category, Product, ProductImage, Cart, CartItem, Order, OrderItem, Partner, Config,
     StoreConfig, ContactConfig, SocialConfig, HeroConfig, Feature, AboutConfig, SEOConfig, ThemeConfig,
-    ProductFeatureConfig, AboutStat, TelegramConfig, ContactMessage, FAQ
+    ProductFeatureConfig, AboutStat, ContactMessage, FAQ,
+    TelegramNotificationSettings, TelegramSubscriber,
 )
+from .admin_context import get_admin_index_context
 
 class ColorPaletteWidget(TextInput):
     """
@@ -369,7 +371,18 @@ class OrderItemAdmin(admin.ModelAdmin):
 admin.site.site_header = "Администрирование"
 admin.site.site_title = "Admin"
 admin.site.index_title = "Панель управления"
-admin.site.index_template = 'admin/index.html'
+admin.site.index_template = 'admin/store_dashboard_index.html'
+
+_original_admin_index = admin.site.index
+
+
+def _admin_index_with_dashboard(request, extra_context=None):
+    merged = dict(extra_context or {})
+    merged.update(get_admin_index_context())
+    return _original_admin_index(request, merged)
+
+
+admin.site.index = _admin_index_with_dashboard
 
 
 @admin.register(Partner)
@@ -554,18 +567,16 @@ class SocialConfigAdmin(admin.ModelAdmin):
 
 @admin.register(HeroConfig)
 class HeroConfigAdmin(TabbedTranslationAdmin):
-    def has_module_permission(self, request):
-        """Скрываем из списка админки, но оставляем доступ к редактированию"""
-        return False
+    """Фон и тексты большого баннера на главной витрине (React)."""
     list_display = ['title', 'subtitle', 'is_active', 'updated_at']
     readonly_fields = ['updated_at', 'background_image_preview']
     fieldsets = (
         ('Содержимое', {
             'fields': ('title', 'subtitle', 'button_text', 'is_active')
         }),
-        ('Изображение', {
+        ('Фон главной страницы', {
             'fields': ('background_image', 'background_image_url', 'background_image_preview'),
-            'description': 'Загрузите изображение или укажите URL. Приоритет у загруженного изображения.'
+            'description': 'Фото за текстом на главной. Сначала используется загруженный файл; если файла нет — URL. После сохранения обновите главную (F5).',
         }),
         ('Даты', {
             'fields': ('updated_at',),
@@ -753,91 +764,68 @@ class ProductFeatureConfigAdmin(TabbedTranslationAdmin):
     icon_preview.short_description = 'Превью иконки'
 
 
-@admin.register(TelegramConfig)
-class TelegramConfigAdmin(admin.ModelAdmin):
-    # def has_module_permission(self, request):
-    #     """Скрываем из списка админки, но оставляем доступ к редактированию"""
-    #     return False
-    
-    list_display = ['is_active', 'notify_new_orders', 'notify_status_changes', 'notify_contact_messages', 'bot_token_preview', 'group_chat_id', 'updated_at']
-    readonly_fields = ['updated_at', 'test_connection']
+@admin.register(TelegramNotificationSettings)
+class TelegramNotificationSettingsAdmin(admin.ModelAdmin):
+    list_display = (
+        'is_active',
+        'bot_token_preview',
+        'notify_new_orders',
+        'notify_status_changes',
+        'notify_contact_messages',
+        'updated_at',
+    )
+    readonly_fields = ('updated_at',)
     fieldsets = (
-        ('Основные настройки', {
-            'fields': ('is_active', 'bot_token', 'group_chat_id'),
-            'description': 'Для получения токена бота обратитесь к @BotFather в Telegram. Для получения ID группы используйте бота @userinfobot или добавьте бота в группу и отправьте любое сообщение, затем используйте getUpdates API.'
-        }),
-        ('Типы уведомлений', {
-            'fields': ('notify_new_orders', 'notify_status_changes', 'notify_contact_messages')
-        }),
-        ('Тестирование', {
-            'fields': ('test_connection',),
-            'description': 'Проверьте подключение к Telegram боту'
-        }),
-        ('Даты', {
-            'fields': ('updated_at',),
-            'classes': ('collapse',)
-        }),
+        (
+            'Токен бота',
+            {
+                'fields': ('bot_token',),
+                'description': 'Токен от @BotFather, хранится в базе. Если пусто — берётся TELEGRAM_BOT_TOKEN с сервера (если задан).',
+            },
+        ),
+        (
+            'Что слать в Telegram',
+            {
+                'fields': (
+                    'is_active',
+                    'notify_new_orders',
+                    'notify_status_changes',
+                    'notify_contact_messages',
+                ),
+            },
+        ),
+        ('Даты', {'fields': ('updated_at',)}),
     )
 
     def bot_token_preview(self, obj):
-        """Показывает частично скрытый токен"""
-        if obj.bot_token:
-            if len(obj.bot_token) > 20:
-                return f"{obj.bot_token[:10]}...{obj.bot_token[-10:]}"
-            return obj.bot_token
-        return "Не указан"
-    bot_token_preview.short_description = 'Токен бота'
+        if not obj or not getattr(obj, 'pk', None):
+            return '—'
+        t = (obj.bot_token or '').strip()
+        if not t:
+            return 'из .env или не задан'
+        if len(t) > 24:
+            return f'{t[:10]}…{t[-6:]}'
+        return 'задан'
 
-    def test_connection(self, obj):
-        """Кнопка для тестирования подключения"""
-        if not obj.pk:
-            return "Сохраните конфигурацию для тестирования"
-        
-        if not obj.bot_token or not obj.group_chat_id:
-            return mark_safe(
-                '<span style="color: #f44336;">⚠️ Укажите токен бота и ID группы</span>'
-            )
-        
-        try:
-            import telebot
-            bot = telebot.TeleBot(obj.bot_token)
-            # Пытаемся получить информацию о боте
-            bot_info = bot.get_me()
-            bot_name = bot_info.username if bot_info else "Неизвестно"
-            
-            # Пытаемся отправить тестовое сообщение
-            try:
-                test_message = "✅ Тестовое сообщение от Fashion Store. Бот работает корректно!"
-                bot.send_message(chat_id=obj.group_chat_id, text=test_message)
-                return format_html(
-                    '<div style="background: #4caf50; color: white; padding: 10px; border-radius: 5px; margin: 10px 0;">'
-                    '✅ <strong>Подключение успешно!</strong><br>'
-                    'Бот: @{}<br>'
-                    'Тестовое сообщение отправлено в группу.'
-                    '</div>',
-                    bot_name
-                )
-            except telebot.apihelper.ApiTelegramException as e:
-                error_msg = str(e)
-                return format_html(
-                    '<div style="background: #ff9800; color: white; padding: 10px; border-radius: 5px; margin: 10px 0;">'
-                    '⚠️ <strong>Бот инициализирован, но не может отправить сообщение</strong><br>'
-                    'Ошибка: {}<br>'
-                    'Проверьте, что бот добавлен в группу и имеет права на отправку сообщений.'
-                    '</div>',
-                    error_msg
-                )
-        except Exception as e:
-            error_msg = str(e)
-            return format_html(
-                '<div style="background: #f44336; color: white; padding: 10px; border-radius: 5px; margin: 10px 0;">'
-                '❌ <strong>Ошибка подключения</strong><br>'
-                'Ошибка: {}<br>'
-                'Проверьте правильность токена бота.'
-                '</div>',
-                error_msg
-            )
-    test_connection.short_description = 'Тест подключения'
+    bot_token_preview.short_description = 'Токен в БД'
+
+
+@admin.register(TelegramSubscriber)
+class TelegramSubscriberAdmin(admin.ModelAdmin):
+    list_display = ('telegram_chat_id', 'telegram_username', 'display_name', 'is_active', 'updated_at')
+    list_filter = ('is_active',)
+    search_fields = ('telegram_username', 'display_name', 'telegram_chat_id')
+    fieldsets = (
+        (
+            None,
+            {
+                'fields': ('telegram_chat_id', 'telegram_username', 'display_name', 'is_active'),
+                'description': 'ID чата — только цифры (например 123456789). Узнать: напишите @userinfobot в Telegram.',
+            },
+        ),
+        ('Даты', {'fields': ('created_at', 'updated_at'), 'classes': ('collapse',)}),
+    )
+    readonly_fields = ('created_at', 'updated_at')
 
 
 @admin.register(ContactMessage)

@@ -188,6 +188,19 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+# Исходники Vite/React (`frontend/`) и лимит товаров в bootstrap
+_frontend_cfg = DJANGO_CONFIG.get('frontend')
+if not isinstance(_frontend_cfg, dict):
+    _frontend_cfg = {}
+FRONTEND_SOURCE_ROOT = BASE_DIR / _frontend_cfg.get('source_dir', 'frontend')
+SPA_BOOTSTRAP_PRODUCT_LIMIT = int(_frontend_cfg.get('bootstrap_product_limit', 500))
+# Поле Product.price в БД — в «малых» единицах; на витрине умножаем до сум (UZS), см. bootstrap priceUzsMultiplier
+SPA_PRICE_UZS_MULTIPLIER = int(_frontend_cfg.get('price_uzs_multiplier', DJANGO_CONFIG.get('price_uzs_multiplier', 10000)))
+
+# Кодировка ответов и шаблонов (кириллица)
+DEFAULT_CHARSET = 'utf-8'
+FILE_CHARSET = 'utf-8'
+
 # Настройки медиа файлов можно переопределить через config.json
 media_config = DJANGO_CONFIG.get('media', {})
 MEDIA_URL = media_config.get('url', '/media/')
@@ -266,3 +279,34 @@ if email_config.get('password'):
 EMAIL_FROM = email_config.get('from_email', 'noreply@fashionstore.ru')
 
 
+# --- Celery ---
+# Прод: Redis + отдельный процесс `celery -A fashionstore worker`.
+# Локально (DEBUG=True): по умолчанию задачи выполняются в процессе Django — Redis и worker не обязательны.
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_EAGER_PROPAGATES = True
+
+_eager_env = os.environ.get('CELERY_TASK_ALWAYS_EAGER', '').strip().lower()
+if _eager_env in ('true', '1', 'yes'):
+    CELERY_TASK_ALWAYS_EAGER = True
+elif _eager_env in ('false', '0', 'no'):
+    CELERY_TASK_ALWAYS_EAGER = False
+else:
+    CELERY_TASK_ALWAYS_EAGER = bool(DEBUG)
+
+if CELERY_TASK_ALWAYS_EAGER:
+    # Без Redis: in-memory broker + backend, иначе даже при eager Celery тянет Redis и падает.
+    CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'memory://')
+    CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'cache+memory://')
+else:
+    CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://127.0.0.1:6379/0')
+    CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', CELERY_BROKER_URL)
+
+# --- Telegram: shared bot token (env), per-site subscribers in DB ---
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')
+TELEGRAM_BOT_USERNAME = os.environ.get('TELEGRAM_BOT_USERNAME', '').lstrip('@')
+SITE_TELEGRAM_CODE = os.environ.get('SITE_TELEGRAM_CODE', '').strip()
+SITE_PUBLIC_URL = os.environ.get('SITE_PUBLIC_URL', '').rstrip('/')
+TELEGRAM_BIND_SHARED_SECRET = os.environ.get('TELEGRAM_BIND_SHARED_SECRET', '')

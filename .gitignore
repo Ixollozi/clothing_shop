@@ -1,14 +1,21 @@
+# Env (keep tracked templates like .env.example)
+.env*
+!.env.example
+
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+.python-version
 env/
 venv/
+.venv/
 ENV/
 build/
 develop-eggs/
+# sdist/wheel and frontend/Vite build output
 dist/
 downloads/
 eggs/
@@ -19,17 +26,52 @@ parts/
 sdist/
 var/
 wheels/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
 
 # Django
 *.log
 local_settings.py
-db.sqlite3
-db.sqlite3-journal
+*.sqlite3
+*.sqlite3-journal
 /media
 /staticfiles
+
+# Celery
+celerybeat-schedule
+celerybeat-schedule.*
+celerybeat.pid
+
+# Node / npm / Vite
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+# Vite dev: перезагрузка vite.config.* может оставить временный .mjs в каталоге фронта
+**/vite.config.ts.timestamp-*.mjs
+**/vite.config.js.timestamp-*.mjs
+# Не игнорировать static/frontend/.vite/ — там manifest прод-сборки (Vite build)
+*.tsbuildinfo
+.eslintcache
+
+# Tests & linters
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.hypothesis/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
 
 # IDE
 .vscode/
@@ -41,5 +83,5 @@ db.sqlite3-journal
 # OS
 .DS_Store
 Thumbs.db
-
-
+ehthumbs.db
+Desktop.ini

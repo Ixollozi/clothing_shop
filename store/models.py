@@ -44,7 +44,12 @@ class Product(models.Model):
     name = models.CharField(max_length=200, verbose_name='Название')
     slug = models.SlugField(unique=True, verbose_name='URL')
     description = models.TextField(verbose_name='Описание')
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name='Цена',
+        help_text='Условные единицы: на витрине цена в сумах = это значение × SPA_PRICE_UZS_MULTIPLIER (по умолчанию 10 000).',
+    )
     old_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Старая цена')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name='Категория')
     image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name='Основное изображение')
@@ -379,8 +384,8 @@ class HeroConfig(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
 
     class Meta:
-        verbose_name = 'Главный баннер'
-        verbose_name_plural = 'Главный баннер'
+        verbose_name = 'Главная страница — баннер'
+        verbose_name_plural = 'Главная страница — баннер'
 
     def __str__(self):
         return f"Hero: {self.title}"
@@ -576,3 +581,145 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
+
+
+# --- Telegram notifications (queue + private subscribers) ---
+
+
+class TelegramNotificationSettings(models.Model):
+    """
+    Singleton-style row per database: toggles and optional bot token.
+    Token: поле bot_token в админке; иначе fallback на TELEGRAM_BOT_TOKEN в env (для хостинга).
+    """
+
+    bot_token = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name='Токен бота',
+        help_text='От @BotFather. Можно указать здесь — владельцу не нужен доступ к .env на сервере. '
+        'Если пусто, используется переменная окружения TELEGRAM_BOT_TOKEN (если задана).',
+    )
+    is_active = models.BooleanField(
+        default=False,
+        verbose_name='Включить уведомления в Telegram',
+        help_text='Пока выключено — заказы и контакты не ставятся в очередь на отправку.',
+    )
+    notify_new_orders = models.BooleanField(
+        default=True,
+        verbose_name='Сообщать о новых заказах',
+    )
+    notify_status_changes = models.BooleanField(
+        default=True,
+        verbose_name='Сообщать о смене статуса заказа',
+    )
+    notify_contact_messages = models.BooleanField(
+        default=True,
+        verbose_name='Сообщать о новых сообщениях с формы «Контакты»',
+    )
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Telegram — настройки'
+        verbose_name_plural = 'Telegram — настройки'
+
+    def __str__(self):
+        return 'Telegram: активен' if self.is_active else 'Telegram: выключен'
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            TelegramNotificationSettings.objects.filter(is_active=True).exclude(pk=self.pk).update(
+                is_active=False
+            )
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def get_active(cls):
+        return cls.objects.filter(is_active=True).first()
+
+    def resolved_bot_token(self) -> str:
+        """Токен из БД или из настроек Django (env), без пробелов."""
+        from django.conf import settings as dj_settings
+
+        db = (self.bot_token or '').strip()
+        if db:
+            return db
+        return (getattr(dj_settings, 'TELEGRAM_BOT_TOKEN', None) or '').strip()
+
+
+class TelegramSubscriber(models.Model):
+    """Private chat recipients for this site (one DB = one site)."""
+
+    telegram_chat_id = models.BigIntegerField(
+        verbose_name='ID чата в Telegram',
+        db_index=True,
+        help_text='Число: напишите боту @userinfobot в Telegram — он ответит вашим Id. Или привязка по кнопке ниже в «Настройках».',
+    )
+    telegram_username = models.CharField(max_length=255, blank=True, verbose_name='Ник в Telegram')
+    display_name = models.CharField(max_length=255, blank=True, verbose_name='Как подписать в списке')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Telegram — получатель'
+        verbose_name_plural = 'Telegram — кому слать'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.display_name or self.telegram_username or self.telegram_chat_id}'
+
+
+class NotificationOutbox(models.Model):
+    """Transactional outbox for async Telegram delivery."""
+
+    class EventType(models.TextChoices):
+        ORDER_PLACED = 'order_placed', 'Новый заказ'
+        ORDER_STATUS_CHANGED = 'order_status_changed', 'Смена статуса'
+        CONTACT_MESSAGE = 'contact_message', 'Контакты'
+
+    class Status(models.TextChoices):
+        PENDING = 'pending', 'В очереди'
+        PROCESSING = 'processing', 'Обработка'
+        SENT = 'sent', 'Отправлено'
+        FAILED = 'failed', 'Ошибка'
+
+    event_type = models.CharField(max_length=64, choices=EventType.choices, verbose_name='Событие')
+    payload = models.JSONField(default=dict, verbose_name='Payload')
+    status = models.CharField(
+        max_length=32,
+        choices=Status.choices,
+        default=Status.PENDING,
+        verbose_name='Статус',
+        db_index=True,
+    )
+    attempts = models.PositiveIntegerField(default=0, verbose_name='Попытки')
+    last_error = models.TextField(blank=True, verbose_name='Последняя ошибка')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Очередь Telegram (отладка)'
+        verbose_name_plural = 'Очередь Telegram (отладка)'
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['status', 'created_at']),
+        ]
+
+    def __str__(self):
+        return f'{self.event_type} #{self.pk} ({self.status})'
+
+
+class TelegramBindIntent(models.Model):
+    """One-time nonce for deep-link owner binding via central registrar."""
+
+    nonce = models.CharField(max_length=32, unique=True, db_index=True, verbose_name='Nonce')
+    expires_at = models.DateTimeField(verbose_name='Истекает')
+    used_at = models.DateTimeField(null=True, blank=True, verbose_name='Использован')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+
+    class Meta:
+        verbose_name = 'Сессия привязки по ссылке'
+        verbose_name_plural = 'Сессии привязки (служебное)'
+
+    def __str__(self):
+        return self.nonce

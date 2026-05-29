@@ -6,4 +6,7 @@ python-decouple
 django-modeltranslation
 gunicorn
 pyTelegramBotAPI
-
+polib
+celery[redis]>=5.3,<6
+redis>=5.0
+httpx>=0.27

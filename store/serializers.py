@@ -1,5 +1,7 @@
+from django.db import transaction
 from rest_framework import serializers
 from .models import Category, Product, ProductImage, Cart, CartItem, Order, OrderItem, ContactMessage
+from .notification_enqueue import enqueue_order_placed
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -163,39 +165,23 @@ class CreateOrderSerializer(serializers.ModelSerializer):
             total += product.price * quantity
 
         validated_data['total'] = total
-        order = Order.objects.create(**validated_data)
 
-        # Создание элементов заказа
-        for item_data in items_data:
-            product = Product.objects.get(id=item_data['product_id'])
-            OrderItem.objects.create(
-                order=order,
-                product=product,
-                quantity=item_data['quantity'],
-                price=product.price,
-                size='',
-                color=item_data.get('color', '')
-            )
-        
-        # Обновляем заказ из БД, чтобы убедиться, что товары связаны
-        order.refresh_from_db()
+        with transaction.atomic():
+            order = Order.objects.create(**validated_data)
 
-        # Отправка уведомления в Telegram о новом заказе
-        try:
-            import logging
-            logger = logging.getLogger(__name__)
-            logger.info(f"Попытка отправить уведомление о заказе #{order.id} в Telegram")
-            from .telegram_notifier import telegram_notifier
-            result = telegram_notifier.notify_new_order(order)
-            if result:
-                logger.info(f"Уведомление о заказе #{order.id} успешно отправлено")
-            else:
-                logger.warning(f"Не удалось отправить уведомление о заказе #{order.id} (вернулось False)")
-        except Exception as e:
-            # Логируем ошибку, но не прерываем создание заказа
-            import logging
-            logger = logging.getLogger(__name__)
-            logger.error(f"Ошибка отправки уведомления в Telegram для заказа #{order.id}: {e}", exc_info=True)
+            for item_data in items_data:
+                product = Product.objects.get(id=item_data['product_id'])
+                OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    quantity=item_data['quantity'],
+                    price=product.price,
+                    size='',
+                    color=item_data.get('color', '')
+                )
+
+            order.refresh_from_db()
+            enqueue_order_placed(order.id)
 
         return order
 

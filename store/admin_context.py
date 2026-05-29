@@ -21,6 +21,7 @@ def get_admin_index_context():
         'processing_orders': Order.objects.filter(status='processing').count(),
         'delivered_orders': Order.objects.filter(status='delivered').count(),
         'cancelled_orders': Order.objects.filter(status='cancelled').count(),
+        'shipped_orders': Order.objects.filter(status='shipped').count(),
         'total_revenue': f"{Order.objects.filter(status__in=['delivered', 'shipped', 'processing']).aggregate(total=Sum('total'))['total'] or 0:.2f}",
     }
 

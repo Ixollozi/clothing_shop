@@ -3,15 +3,32 @@ from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
+from django.conf import settings
+from django.db import transaction
 from django.db.models import Q
 from django.utils import timezone
 from django.core.cache import cache
 from datetime import timedelta
+from .constants import LEGACY_PLACEHOLDER_PRODUCT_SLUGS
 from .models import Category, Product, Cart, CartItem, Order, ContactMessage
 from .serializers import (
     CategorySerializer, ProductSerializer, CartSerializer,
     CartItemSerializer, OrderSerializer, CreateOrderSerializer
 )
+
+
+def _product_text_search_q(term: str) -> Q:
+    """Поиск по названию и описанию на всех языках (modeltranslation)."""
+    term = (term or "").strip()
+    if not term:
+        return Q()
+    default_lang = getattr(settings, "MODELTRANSLATION_DEFAULT_LANGUAGE", settings.LANGUAGE_CODE)
+    q = Q(name__icontains=term) | Q(description__icontains=term)
+    for code, _ in settings.LANGUAGES:
+        if code == default_lang:
+            continue
+        q |= Q(**{f"name_{code}__icontains": term}) | Q(**{f"description_{code}__icontains": term})
+    return q
 
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -22,7 +39,7 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Product.objects.filter(is_active=True)
+    queryset = Product.objects.filter(is_active=True).exclude(slug__in=LEGACY_PLACEHOLDER_PRODUCT_SLUGS)
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
     lookup_field = 'slug'
@@ -33,7 +50,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         return context
 
     def get_queryset(self):
-        queryset = Product.objects.filter(is_active=True)
+        queryset = Product.objects.filter(is_active=True).exclude(slug__in=LEGACY_PLACEHOLDER_PRODUCT_SLUGS)
         
         # Фильтрация по категории
         category = self.request.query_params.get('category', None)
@@ -58,9 +75,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         # Поиск
         search = self.request.query_params.get('search', None)
         if search:
-            queryset = queryset.filter(
-                Q(name__icontains=search) | Q(description__icontains=search)
-            )
+            queryset = queryset.filter(_product_text_search_q(search))
         
         # Сортировка
         ordering = self.request.query_params.get('ordering', '-created_at')
@@ -275,23 +290,17 @@ def submit_contact_message(request):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Создание сообщения
-        contact_message = ContactMessage.objects.create(
-            name=name,
-            email=email,
-            phone=phone,
-            subject=subject,
-            message=message
-        )
+        with transaction.atomic():
+            contact_message = ContactMessage.objects.create(
+                name=name,
+                email=email,
+                phone=phone,
+                subject=subject,
+                message=message,
+            )
+            from .notification_enqueue import enqueue_contact_message
 
-        # Отправка уведомления в Telegram
-        try:
-            from .telegram_notifier import telegram_notifier
-            telegram_notifier.notify_contact_message(contact_message)
-        except Exception as e:
-            import logging
-            logger = logging.getLogger(__name__)
-            logger.error(f"Ошибка отправки уведомления о сообщении из контактов в Telegram: {e}")
+            enqueue_contact_message(contact_message.id)
 
         return Response(
             {'success': True, 'message': 'Сообщение успешно отправлено'},

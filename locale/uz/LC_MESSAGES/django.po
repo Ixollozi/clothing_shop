@@ -1,8 +1,9 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: fashionstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-30 01:28+0500\n"
+"POT-Creation-Date: 2026-05-30 01:03+0500\n"
 "PO-Revision-Date: 2026-04-21 00:00+0000\n"
 "Language: uz\n"
 "MIME-Version: 1.0\n"
@@ -10,816 +11,1182 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "О магазине"
-msgstr "Do‘kon haqida"
+#: .\store\spa_bootstrap.py:55 .\store\spa_ui_strings.py:24
+msgid "Магазин"
+msgstr "Store"
 
-msgid "Добро пожаловать в наш магазин."
-msgstr "Do‘konimizga xush kelibsiz."
+#: .\store\spa_bootstrap.py:227
+msgid "Все"
+msgstr "All"
 
-msgid "Написать нам"
-msgstr "Bizga yozing"
+#: .\store\spa_bootstrap.py:242
+#, python-format
+msgid "О %(name)s"
+msgstr "About %(name)s"
 
-msgid "Наши ценности"
-msgstr "Qadriyatlarimiz"
+#: .\store\spa_bootstrap.py:244 .\store\spa_ui_strings.py:26
+#: .\store\spa_ui_strings.py:51
+msgid "О мастерской"
+msgstr "About the workshop"
 
-msgid "Показатели"
-msgstr "Ko‘rsatkichlar"
+#: .\store\spa_ui_strings.py:12 .\store\spa_ui_strings.py:79
+#: .\store\spa_ui_strings.py:91
+msgid "Каталог"
+msgstr "Catalog"
 
-msgid "внимание к деталям"
-msgstr "detallarga e’tibor"
+#: .\store\spa_ui_strings.py:13 .\store\spa_ui_strings.py:34
+#: .\store\spa_ui_strings.py:52 .\store\spa_ui_strings.py:63
+msgid "О нас"
+msgstr "About us"
 
-#, fuzzy
-#| msgid "Каталог"
-msgid "онлайн-каталог"
-msgstr "Katalog"
-
-msgid "качество сервиса"
-msgstr "xizmat sifati"
-
-msgid "Миссия"
-msgstr "Missiya"
-
-msgid "Сервис и качество."
-msgstr "Xizmat va sifat."
-
-msgid "Ценности"
-msgstr "Qadriyatlar"
-
-msgid "Как мы работаем каждый день."
-msgstr "Har kuni qanday ishlaymiz."
-
-msgid "Наши принципы."
-msgstr "Bizning tamoyillarimiz."
-
-msgid "Часть философии"
-msgstr "Falsafamizning bir qismi"
-
-#, fuzzy
-#| msgid "Преимущества"
-msgid "Качество"
-msgstr "Afzalliklar"
-
-msgid "Отбор товаров и понятные карточки."
-msgstr "Tanlab olingan mahsulotlar va tushunarli kartochkalar."
-
-msgid "Сервис"
-msgstr "Xizmat"
-
-msgid "Помогаем с выбором и доставкой."
-msgstr "Tanlash va yetkazib berishda yordam beramiz."
-
-msgid "Миссия и видение"
-msgstr "Missiya va qarash"
-
-msgid "Видение"
-msgstr "Qarash"
-
-msgid "Свяжитесь с нами"
-msgstr "Biz bilan bog‘laning"
-
-msgid "Вопросы по ассортименту, опту и сотрудничеству."
-msgstr "Assortiment, ulgurji savdo va hamkorlik bo‘yicha savollar."
-
-msgid "Контакты"
-msgstr "Kontaktlar"
-
-msgid "Django site admin"
-msgstr ""
-
-msgid "Home"
-msgstr ""
-
-msgid "Catalog"
-msgstr ""
-
-msgid "About"
-msgstr ""
-
-msgid "Contacts"
-msgstr ""
-
-msgid "Корзина"
-msgstr "Savat"
-
-msgid "For Customers"
-msgstr ""
-
-msgid "Delivery and Payment"
-msgstr ""
-
-msgid "Product Return"
-msgstr ""
-
-msgid "Size Chart"
-msgstr ""
-
+#: .\store\spa_ui_strings.py:14
 msgid "FAQ"
 msgstr "FAQ"
 
-msgid "About Company"
-msgstr ""
+#: .\store\spa_ui_strings.py:15
+msgid "Главная"
+msgstr "Home"
 
-msgid "About Us"
-msgstr ""
+#: .\store\spa_ui_strings.py:16 .\store\spa_ui_strings.py:113
+msgid "Корзина"
+msgstr "Cart"
 
-msgid "Careers"
-msgstr ""
+#: .\store\spa_ui_strings.py:17
+msgid "Навигация"
+msgstr "Navigation"
 
-msgid "Partners"
-msgstr ""
+#: .\store\spa_ui_strings.py:18
+msgid "Контакты"
+msgstr "Contacts"
 
+#: .\store\spa_ui_strings.py:19
+msgid "Все права защищены."
+msgstr "All rights reserved."
+
+#: .\store\spa_ui_strings.py:20
+msgid "Сделано с любовью к ремеслу"
+msgstr "Made with love for the craft"
+
+#: .\store\spa_ui_strings.py:21
+msgid "Язык"
+msgstr "Language"
+
+#: .\store\spa_ui_strings.py:22
+msgid "Язык сайта"
+msgstr "Site language"
+
+#: .\store\spa_ui_strings.py:23
+msgid "Выбор языка"
+msgstr "Choose language"
+
+#: .\store\spa_ui_strings.py:25 .\store\spa_ui_strings.py:62
+msgid "Смотреть каталог"
+msgstr "View catalog"
+
+#: .\store\spa_ui_strings.py:27
+msgid "SCROLL"
+msgstr "SCROLL"
+
+#: .\store\spa_ui_strings.py:28
+msgid "Популярное"
+msgstr "Popular"
+
+#: .\store\spa_ui_strings.py:29
+msgid "Хиты коллекции"
+msgstr "Collection highlights"
+
+#: .\store\spa_ui_strings.py:30
+msgid "Весь каталог"
+msgstr "Full catalog"
+
+#: .\store\spa_ui_strings.py:31
+msgid "Смотреть всё"
+msgstr "View all"
+
+#: .\store\spa_ui_strings.py:32
+msgid "Только появились"
+msgstr "Just arrived"
+
+#: .\store\spa_ui_strings.py:33
+msgid "Новинки"
+msgstr "New arrivals"
+
+#: .\store\spa_ui_strings.py:35 .\store\spa_ui_strings.py:53
+msgid "Наша история"
+msgstr "Our story"
+
+#: .\store\spa_ui_strings.py:36
+msgid "Индивидуальный заказ"
+msgstr "Custom order"
+
+#: .\store\spa_ui_strings.py:37
+msgid "Хотите что-то"
+msgstr "Want something"
+
+#: .\store\spa_ui_strings.py:38
+msgid "по-настоящему уникальное?"
+msgstr "truly one of a kind?"
+
+#: .\store\spa_ui_strings.py:40
 msgid ""
-"Error: Product ID is not specified. This product cannot be added to cart."
+"Мы создаём изделия по индивидуальным эскизам. Ваш размер, ваши цвета, ваша "
+"история."
 msgstr ""
+"We create pieces from custom sketches. Your size, your colors, your story."
 
-msgid "Error: event not found"
-msgstr ""
+#: .\store\spa_ui_strings.py:42
+msgid "Узнать больше"
+msgstr "Learn more"
 
-msgid "Failed to add product to cart. Please refresh the page and try again."
-msgstr ""
+#: .\store\spa_ui_strings.py:43
+msgid "Ручная работа"
+msgstr "Handmade"
 
-msgid "Error: cart function not loaded. Please refresh the page."
-msgstr ""
+#: .\store\spa_ui_strings.py:44
+msgid "Каждое изделие создаётся вручную опытными мастерами."
+msgstr "Each piece is crafted by hand by experienced artisans."
 
-msgid "Success"
-msgstr ""
+#: .\store\spa_ui_strings.py:45
+msgid "Живые материалы"
+msgstr "Natural materials"
 
-msgid "Error"
-msgstr ""
+#: .\store\spa_ui_strings.py:46
+msgid "Только природная глина и проверенные глазури."
+msgstr "Only natural clay and trusted glazes."
 
-msgid "Warning"
-msgstr ""
+#: .\store\spa_ui_strings.py:47
+msgid "Доставка без потерь"
+msgstr "Safe delivery"
 
-msgid "Information"
-msgstr ""
+#: .\store\spa_ui_strings.py:48
+msgid "Бережная упаковка каждого изделия."
+msgstr "Careful packaging for every piece."
 
-msgid "Проверьте состав и количество. Изменения сохраняются автоматически."
-msgstr "Tarkib va miqdorni tekshiring. O‘zgarishlar avtomatik saqlanadi."
+#: .\store\spa_ui_strings.py:49
+msgid "Новинка"
+msgstr "New"
 
-#, fuzzy
-#| msgid "Смотреть товары в категории"
-msgid "Список товаров в корзине"
-msgstr "Toifadagi mahsulotlarni ko‘rish"
-
-msgid "Размер:"
-msgstr "O‘lcham:"
-
-msgid "Цвет:"
-msgstr "Rang:"
-
-#, fuzzy
-#| msgid "Популярные товары"
-msgid "Удалить товар"
-msgstr "Ommabop mahsulotlar"
-
-msgid "Удалить"
-msgstr "O‘chirish"
-
-#, fuzzy
-#| msgid "Преимущества"
-msgid "Количество"
-msgstr "Afzalliklar"
-
-msgid "Уменьшить"
-msgstr "Kamaytirish"
-
-#, fuzzy
-#| msgid "Категории товаров"
-msgid "Количество товара"
-msgstr "Mahsulot toifalari"
-
-msgid "Увеличить"
-msgstr "Ko‘paytirish"
-
-msgid "сум"
-msgstr ""
-
-msgid "шт."
-msgstr "dona"
-
-#, fuzzy
-#| msgid "Корзина"
-msgid "Корзина пуста."
-msgstr "Savat"
-
-#, fuzzy
-#| msgid "Перейти к содержимому"
-msgid "Перейти в каталог"
-msgstr "Kontentga o‘tish"
-
-msgid "Итоги заказа"
-msgstr "Buyurtma xulosasi"
-
-msgid "Сумма"
-msgstr "Summa"
-
-msgid "Доставка уточняется при оформлении."
-msgstr "Yetkazib berish tafsilotlari rasmiylashtirishda aniqlanadi."
-
-msgid "Товары"
-msgstr "Mahsulotlar"
-
-msgid "Итого"
-msgstr "Jami"
-
-msgid "Оформить заказ"
-msgstr "Buyurtmani rasmiylashtirish"
-
-#, fuzzy
-#| msgid "Оформить заказ"
-msgid "Форма оформления заказа"
-msgstr "Buyurtmani rasmiylashtirish"
-
-#, fuzzy
-#| msgid "Ваше имя"
-msgid "Ваше имя *"
-msgstr "Ismingiz"
-
-#, fuzzy
-#| msgid "Телефон"
-msgid "Телефон *"
-msgstr "Telefon"
-
-msgid "Город *"
-msgstr ""
-
-#, fuzzy
-#| msgid "Адрес"
-msgid "Адрес *"
-msgstr "Manzil"
-
-#, fuzzy
-#| msgid "Телефон (необязательно)"
-msgid "Комментарий к заказу (необязательно)"
-msgstr "Telefon (ixtiyoriy)"
-
-#, fuzzy
-#| msgid "Оформить заказ"
-msgid "Отправить заказ"
-msgstr "Buyurtmani rasmiylashtirish"
-
-msgid "После отправки мы получим заказ в Telegram и свяжемся с вами."
-msgstr ""
-
-msgid "Для оплаты и доставки свяжитесь с нами или уточните детали в сообщении."
-msgstr ""
-"To‘lov va yetkazib berish uchun biz bilan bog‘laning yoki xabarda "
-"tafsilotlarni aniqlashtiring."
-
-#, fuzzy
-#| msgid "Помощь с подбором"
-msgid "Нужна помощь с выбором?"
-msgstr "Tanlashda yordam"
-
-#, fuzzy
-#| msgid "Написать нам"
-msgid "Напишите нам"
-msgstr "Bizga yozing"
-
-#, fuzzy
-#| msgid "Телефон (необязательно)"
-msgid "Заполните все обязательные поля."
-msgstr "Telefon (ixtiyoriy)"
-
-#, fuzzy
-#| msgid "Сообщение отправлено. Спасибо!"
-msgid "Заказ отправлен. Спасибо!"
-msgstr "Xabar yuborildi. Rahmat!"
-
-#, fuzzy
-#| msgid "Не удалось добавить в корзину"
-msgid "Не удалось отправить заказ. Попробуйте ещё раз."
-msgstr "Savatga qo‘shib bo‘lmadi"
-
-msgid "Каталог"
-msgstr "Katalog"
-
-#, fuzzy
-#| msgid "Категории товаров"
-msgid "Каталог товаров"
-msgstr "Mahsulot toifalari"
-
-msgid "Фильтры и сортировка — данные из каталога магазина."
-msgstr "Filtrlar va saralash — do‘kon katalogi ma’lumotlari asosida."
-
-#, fuzzy
-#| msgid "Смотреть товары в категории"
-msgid "Быстрые фильтры по категории"
-msgstr "Toifadagi mahsulotlarni ko‘rish"
-
-msgid "Все"
-msgstr "Barchasi"
-
-#, fuzzy
-#| msgid "Фильтры (визуальные)"
-msgid "Фильтры каталога"
-msgstr "Filtrlar (vizual)"
-
-msgid "Фильтры"
-msgstr "Filtrlar"
-
-msgid "Настройте подбор"
-msgstr "Tanlovni sozlang"
-
-msgid "Категория"
-msgstr "Toifa"
-
-msgid "Все категории"
-msgstr "Barcha toifalar"
-
-#, fuzzy
-#| msgid "Цена, ₽"
-msgid "Цена, сум"
-msgstr "Narx, ₽"
-
-msgid "Диапазон цены"
-msgstr "Narx oralig‘i"
-
-msgid "от"
-msgstr "dan"
-
-msgid "0"
-msgstr "0"
-
-msgid "до"
-msgstr "gacha"
-
-msgid "Размер"
-msgstr "O‘lcham"
-
-msgid "например S или XL"
-msgstr "masalan, S yoki XL"
-
-msgid "Цвет (код или название)"
-msgstr "Rang (kod yoki nom)"
-
-msgid "Цвет"
-msgstr "Rang"
-
-msgid "#000000 или Черный"
-msgstr "#000000 yoki Qora"
-
-msgid "Поиск"
-msgstr "Qidiruv"
-
-msgid "Название или описание"
-msgstr "Nomi yoki tavsifi"
-
-msgid "Сбросить"
-msgstr "Qayta o‘rnatish"
-
-msgid "Применить"
-msgstr "Qo‘llash"
-
-msgid "Найдено:"
-msgstr "Topildi:"
-
-msgid "товаров"
-msgstr "mahsulot"
-
-msgid "Сортировка"
-msgstr "Saralash"
-
-msgid "Сортировать"
-msgstr "Saralash"
-
-msgid "Сначала новинки"
-msgstr "Avval yangilari"
-
-#, fuzzy
-#| msgid "Популярно сегодня"
-msgid "По популярности"
-msgstr "Bugun ommabop"
-
-msgid "Сначала дешевле"
-msgstr "Avval arzonlari"
-
-msgid "Сначала дороже"
-msgstr "Avval qimmatroqlari"
-
-msgid "Акция"
-msgstr "Aksiya"
-
-msgid "Подробнее"
-msgstr "Batafsil"
-
-#, fuzzy
-#| msgid "от"
+#: .\store\spa_ui_strings.py:50
 msgid "Хит"
-msgstr "Xit"
+msgstr "Bestseller"
 
-msgid "Товары скоро появятся в каталоге."
-msgstr "Mahsulotlar tez orada katalogda paydo bo‘ladi."
+#: .\store\spa_ui_strings.py:54
+msgid "Что нас определяет"
+msgstr "What defines us"
 
-msgid "Пагинация"
+#: .\store\spa_ui_strings.py:55
+msgid "Наши ценности"
+msgstr "Our values"
+
+#: .\store\spa_ui_strings.py:56
+msgid "От замысла до вашего дома"
+msgstr "From idea to your home"
+
+#: .\store\spa_ui_strings.py:57
+msgid "Как создаётся изделие"
+msgstr "How a piece is made"
+
+#: .\store\spa_ui_strings.py:58
+msgid "Готовы выбрать своё изделие?"
+msgstr "Ready to choose your piece?"
+
+#: .\store\spa_ui_strings.py:60
+msgid ""
+"Загляните в каталог — ассортимент формируется из актуальных позиций в базе "
+"магазина."
 msgstr ""
+"Browse the catalog — the assortment reflects current items in the store "
+"database."
 
-msgid "Предыдущая страница"
-msgstr ""
+#: .\store\spa_ui_strings.py:64
+msgid "Замысел"
+msgstr "Concept"
 
-msgid "Назад"
-msgstr ""
+#: .\store\spa_ui_strings.py:65
+msgid "Каждое изделие начинается с идеи."
+msgstr "Every piece starts with an idea."
 
-msgid "Следующая страница"
-msgstr ""
+#: .\store\spa_ui_strings.py:66
+msgid "Глина"
+msgstr "Clay"
 
-msgid "Далее"
-msgstr ""
+#: .\store\spa_ui_strings.py:67
+msgid "Глина вымешивается вручную."
+msgstr "Clay is wedged by hand."
 
-#, fuzzy, python-format
-#| msgid "Контакты"
-msgid "Контакты %(store_name)s."
-msgstr "Kontaktlar"
+#: .\store\spa_ui_strings.py:68
+msgid "Формование"
+msgstr "Shaping"
 
-msgid "Телефон, почта и форма обратной связи."
-msgstr "Telefon, email va aloqa formasi."
+#: .\store\spa_ui_strings.py:69
+msgid "Форма на круге или вручную."
+msgstr "Shaped on the wheel or by hand."
 
-msgid "Телефон"
-msgstr "Telefon"
+#: .\store\spa_ui_strings.py:70
+msgid "Мастерство"
+msgstr "Craftsmanship"
 
-msgid "Почта"
-msgstr "Email"
+#: .\store\spa_ui_strings.py:71
+msgid "Только опытные мастера."
+msgstr "Only experienced artisans."
 
-msgid "Адрес"
-msgstr "Manzil"
+#: .\store\spa_ui_strings.py:72
+msgid "Уникальность"
+msgstr "Uniqueness"
 
-msgid "Время"
-msgstr "Vaqt"
+#: .\store\spa_ui_strings.py:73
+msgid "Каждое изделие уникально."
+msgstr "Every piece is unique."
 
-msgid "Ошибка отправки"
-msgstr "Yuborishda xatolik"
+#: .\store\spa_ui_strings.py:74
+msgid "Экология"
+msgstr "Sustainability"
 
-msgid "Сообщение отправлено. Спасибо!"
-msgstr "Xabar yuborildi. Rahmat!"
+#: .\store\spa_ui_strings.py:75
+msgid "Природные материалы."
+msgstr "Natural materials."
 
-msgid "Не удалось отправить"
-msgstr "Yuborib bo‘lmadi"
+#: .\store\spa_ui_strings.py:76
+msgid "Честность"
+msgstr "Honesty"
 
-#, fuzzy
-#| msgid "Время"
-msgid "Имя"
-msgstr "Vaqt"
+#: .\store\spa_ui_strings.py:77
+msgid "Ручной труд без преувеличений."
+msgstr "Handwork without exaggeration."
 
-msgid "Ваше имя"
-msgstr "Ismingiz"
+#: .\store\spa_ui_strings.py:78
+msgid "Наша коллекция"
+msgstr "Our collection"
 
+#: .\store\spa_ui_strings.py:80
+msgid "Товары не найдены"
+msgstr "No products found"
+
+#: .\store\spa_ui_strings.py:81
+msgid "По умолчанию"
+msgstr "Default"
+
+#: .\store\spa_ui_strings.py:82
+msgid "Цена: дешевле"
+msgstr "Price: low to high"
+
+#: .\store\spa_ui_strings.py:83
+msgid "Цена: дороже"
+msgstr "Price: high to low"
+
+#: .\store\spa_ui_strings.py:84
+msgid "изделие"
+msgstr "piece"
+
+#: .\store\spa_ui_strings.py:85
+msgid "изделия"
+msgstr "pieces"
+
+#: .\store\spa_ui_strings.py:86 .\store\spa_ui_strings.py:87
+msgid "изделий"
+msgstr "pieces"
+
+#: .\store\spa_ui_strings.py:88
+msgid "ручной работы"
+msgstr "handmade"
+
+#: .\store\spa_ui_strings.py:89
+msgid "Товар не найден"
+msgstr "Product not found"
+
+#: .\store\spa_ui_strings.py:90
+msgid "Вернуться в каталог"
+msgstr "Back to catalog"
+
+#: .\store\spa_ui_strings.py:92
+msgid "Материал"
+msgstr "Material"
+
+#: .\store\spa_ui_strings.py:93
+msgid "Размеры"
+msgstr "Dimensions"
+
+#: .\store\spa_ui_strings.py:94
+msgid "Категория"
+msgstr "Category"
+
+#: .\store\spa_ui_strings.py:95
+msgid "Наличие"
+msgstr "Availability"
+
+#: .\store\spa_ui_strings.py:96
+msgid "В наличии"
+msgstr "In stock"
+
+#: .\store\spa_ui_strings.py:97
+msgid "Под заказ"
+msgstr "Made to order"
+
+#: .\store\spa_ui_strings.py:98
+msgid "Добавить в корзину"
+msgstr "Add to cart"
+
+#: .\store\spa_ui_strings.py:99
+msgid "Добавлено"
+msgstr "Added"
+
+#: .\store\spa_ui_strings.py:100
+msgid "В корзине"
+msgstr "In cart"
+
+#: .\store\spa_ui_strings.py:101
+msgid "Перейти в корзину"
+msgstr "Go to cart"
+
+#: .\store\spa_ui_strings.py:102
+msgid "Доставка 3–7 дней"
+msgstr "Delivery in 3–7 days"
+
+#: .\store\spa_ui_strings.py:103
+msgid "Гарантия качества"
+msgstr "Quality guarantee"
+
+#: .\store\spa_ui_strings.py:104
+msgid "Возврат 14 дней"
+msgstr "14-day returns"
+
+#: .\store\spa_ui_strings.py:105
+msgid "Из той же коллекции"
+msgstr "From the same collection"
+
+#: .\store\spa_ui_strings.py:106
+msgid "Похожие изделия"
+msgstr "You may also like"
+
+#: .\store\spa_ui_strings.py:107
+msgid "шт."
+msgstr "pc."
+
+#: .\store\spa_ui_strings.py:108
+msgid "Пусто"
+msgstr "Empty"
+
+#: .\store\spa_ui_strings.py:109
+msgid "Корзина пуста"
+msgstr "Your cart is empty"
+
+#: .\store\spa_ui_strings.py:110
+msgid "Загляните в каталог — там есть что-то для вас"
+msgstr "Browse the catalog — there is something for you."
+
+#: .\store\spa_ui_strings.py:111
+msgid "В каталог"
+msgstr "To catalog"
+
+#: .\store\spa_ui_strings.py:112
+msgid "Ваш выбор"
+msgstr "Your selection"
+
+#: .\store\spa_ui_strings.py:114
+msgid "Продолжить покупки"
+msgstr "Continue shopping"
+
+#: .\store\spa_ui_strings.py:115
+msgid "Итого"
+msgstr "Total"
+
+#: .\store\spa_ui_strings.py:116 .\store\spa_ui_strings.py:173
+msgid "Доставка"
+msgstr "Delivery"
+
+#: .\store\spa_ui_strings.py:117
+msgid "При оформлении"
+msgstr "At checkout"
+
+#: .\store\spa_ui_strings.py:118
+msgid "К оплате"
+msgstr "To pay"
+
+#: .\store\spa_ui_strings.py:119
+msgid "Оформить заказ"
+msgstr "Checkout"
+
+#: .\store\spa_ui_strings.py:120
+msgid ""
+"Безопасная оплата · Возврат 14 дней · Бережная упаковка каждого изделия"
+msgstr "Secure payment · 14-day returns · Careful packaging for every piece"
+
+#: .\store\spa_ui_strings.py:121
+#, python-format
+msgid "Товары (%(count)s шт.)"
+msgstr "Items (%(count)s pc.)"
+
+#: .\store\spa_ui_strings.py:122
+msgid "Помощь"
+msgstr "Help"
+
+#: .\store\spa_ui_strings.py:123
+msgid "Часто задаваемые"
+msgstr "Frequently asked"
+
+#: .\store\spa_ui_strings.py:124
+msgid "вопросы"
+msgstr "questions"
+
+#: .\store\spa_ui_strings.py:125
+msgid "Частые вопросы"
+msgstr "Common questions"
+
+#: .\store\spa_ui_strings.py:126
+msgid "Остались вопросы?"
+msgstr "Still have questions?"
+
+#: .\store\spa_ui_strings.py:127
+msgid "Мы всегда на связи"
+msgstr "We are always here"
+
+#: .\store\spa_ui_strings.py:129
+msgid ""
+"Напишите нам или позвоните — ответим в течение нескольких часов в рабочее "
+"время."
+msgstr "Email or call us — we reply within a few hours during business hours."
+
+#: .\store\spa_ui_strings.py:131
 msgid "Email"
 msgstr "Email"
 
-msgid "Телефон (необязательно)"
-msgstr "Telefon (ixtiyoriy)"
+#: .\store\spa_ui_strings.py:132
+msgid "Телефон"
+msgstr "Phone"
 
-msgid "Тема"
-msgstr "Mavzu"
+#: .\store\spa_ui_strings.py:133
+msgid "Режим работы"
+msgstr "Opening hours"
 
-msgid "Тема сообщения"
-msgstr "Xabar mavzusi"
+#: .\store\spa_ui_strings.py:134
+msgid "Смотреть каталог →"
+msgstr "View catalog →"
 
-#, fuzzy
-#| msgid "Вопросы и ответы"
-msgid "Вопрос по заказу"
-msgstr "Savol-javoblar"
+#: .\store\spa_ui_strings.py:135
+msgid "Страница не найдена"
+msgstr "Page not found"
 
-#, fuzzy
-#| msgid "Вопросы и ответы"
-msgid "Вопрос по товару"
-msgstr "Savol-javoblar"
+#: .\store\spa_ui_strings.py:136
+msgid "Такой страницы не существует"
+msgstr "This page does not exist"
 
-#, fuzzy
-#| msgid "Доставка и оплата"
-msgid "Доставка"
-msgstr "Yetkazib berish va to‘lov"
-
-msgid "Возврат"
-msgstr "Qaytarish"
-
-msgid "Другое"
-msgstr "Boshqa"
-
-msgid "Сообщение"
-msgstr "Xabar"
-
-msgid "Отправить"
-msgstr "Yuborish"
-
-msgid "Карта"
-msgstr "Xarita"
-
-msgid "Доставка и оплата"
-msgstr "Yetkazib berish va to‘lov"
-
+#: .\store\spa_ui_strings.py:137
 msgid ""
-"Общие условия. Точные сроки и стоимость уточняйте при оформлении заказа."
-msgstr ""
-"Umumiy shartlar. Aniq muddat va narxni buyurtma rasmiylashtirishda "
-"aniqlashtiring."
+"Возможно, вы перешли по устаревшей ссылке или допустили опечатку в адресе."
+msgstr "The link may be outdated or the address may contain a typo."
 
-msgid ""
-"Отправка после подтверждения заказа. По городу и регионам — курьером или "
-"службой доставки. Сроки зависят от выбранного способа."
-msgstr ""
-"Buyurtma tasdiqlangandan so‘ng jo‘natiladi. Shahar va hududlar bo‘yicha — "
-"kuryer yoki yetkazib berish xizmati orqali. Muddat tanlangan usulga bog‘liq."
-
-msgid "Оплата"
-msgstr "To‘lov"
-
-msgid ""
-"Способы оплаты согласовываются с менеджером: предоплата или оплата при "
-"получении — в зависимости от региона и состава заказа."
-msgstr ""
-"To‘lov usullari menejer bilan kelishiladi: oldindan to‘lov yoki yetkazib "
-"berilganda to‘lov — hudud va buyurtma tarkibiga qarab."
-
-msgid "Упаковка"
-msgstr "Qadoqlash"
-
-msgid ""
-"Заказы упаковываем так, чтобы товары доехали без повреждений. Крупногабарит "
-"— по согласованию."
-msgstr ""
-"Buyurtmalarni mahsulotlar shikastlanmasdan yetib borishi uchun qadoqlaymiz. "
-"Katta o‘lchamdagilar — kelishuv asosida."
-
-msgid "Нужны точные условия?"
-msgstr "Aniq shartlar kerakmi?"
-
-msgid "Напишите адрес и состав заказа — подскажем варианты и стоимость."
-msgstr "Manzil va buyurtma tarkibini yozing — variantlar va narxni aytamiz."
-
-msgid "Связаться"
-msgstr "Bog‘lanish"
-
-msgid "Частые вопросы"
-msgstr "Ko‘p so‘raladigan savollar"
-
-#, python-format
-msgid "Если не нашли ответ — <a href=\"%(contact_url)s\">напишите нам</a>."
-msgstr "Agar javob topilmasa — <a href=\"%(contact_url)s\">bizga yozing</a>."
-
-msgid ""
-"Пока нет опубликованных вопросов. Загляните позже или свяжитесь с поддержкой."
-msgstr ""
-"Hozircha e’lon qilingan savollar yo‘q. Keyinroq yana kirib ko‘ring yoki "
-"qo‘llab-quvvatlash bilan bog‘laning."
-
-msgid "Почему именно мы"
-msgstr "Nega aynan biz"
-
-msgid "Преимущества"
-msgstr "Afzalliklar"
-
-msgid "доставка по городу"
-msgstr "shahar bo‘ylab yetkazish"
-
-msgid "оценка покупателей"
-msgstr "mijozlar bahosi"
-
-msgid "готовых идей"
-msgstr "tayyor g‘oyalar"
-
-msgid "Популярно сегодня"
-msgstr "Bugun ommabop"
-
-msgid "Смотреть"
-msgstr "Ko‘rish"
-
-msgid "Категории товаров"
-msgstr "Mahsulot toifalari"
-
-msgid "Выберите направление — мы подскажем набор под вашу задачу."
-msgstr "Yo‘nalishni tanlang — vazifangizga mos to‘plamni tavsiya qilamiz."
-
-msgid "Смотреть товары в категории"
-msgstr "Toifadagi mahsulotlarni ko‘rish"
-
-msgid "Популярные товары"
-msgstr "Ommabop mahsulotlar"
-
-msgid "Подобрали то, что чаще всего покупают для работы и обучения."
-msgstr "Ish va o‘rganish uchun eng ko‘p olinadiganlarini tanladik."
-
-msgid "Фильтры (визуальные)"
-msgstr "Filtrlar (vizual)"
-
-msgid "Наборы"
-msgstr "To‘plamlar"
-
-msgid "Стамески"
-msgstr "Kesgichlar"
-
-msgid "Заготовки"
-msgstr "Tayyor blankalar"
-
-msgid "Быстрый путь к уверенной первой работе."
-msgstr "Birinchi ishingizni ishonch bilan boshlash uchun tez yo‘l."
-
-msgid "Определите технику"
-msgstr "Texnikani tanlang"
-
-msgid "Плоская резьба, контуры, объем или орнаменты — подбираем форму резца."
-msgstr ""
-"Yassi o‘ymakorlik, kontur, hajm yoki naqsh — mos kesgich shaklini tanlang."
-
-msgid "Смотрите на размер"
-msgstr "O‘lchamga qarang"
-
-msgid ""
-"Ширина и радиус влияют на чистоту линии: начните с универсальных размеров."
-msgstr ""
-"Kenglik va radius chiziq sifatiga ta’sir qiladi: universal o‘lchamlardan "
-"boshlang."
-
-msgid "Добавьте финиш"
-msgstr "Yakuniy ishlov bering"
-
-msgid ""
-"Шлифовка и масло/лак дают красивый рисунок волокон и защиту поверхности."
-msgstr "Silliqlash va moy/lak tolalar naqshini ochadi va yuzani himoya qiladi."
-
-msgid "Хотите подбор под ваш проект?"
-msgstr "Loyihangiz uchun to‘plam kerakmi?"
-
-msgid "Оставьте сообщение — мы предложим наборы под задачу и уровень навыков."
-msgstr ""
-"Xabar qoldiring — vazifa va tajribangizga mos to‘plamlarni tavsiya qilamiz."
-
-msgid ""
-"Ответим по выбору инструмента, наличию и доставке. Можно просто написать "
-"«что хочу сделать»."
-msgstr ""
-"Asbob tanlash, mavjudlik va yetkazib berish bo‘yicha yordam beramiz. "
-"Shunchaki “nimani qilmoqchiman” deb yozing."
-
-msgid "Пн–Пт: 10:00–19:00"
-msgstr "Du–Ju: 10:00–19:00"
-
-msgid "Полная форма обратной связи и карта — на странице контактов."
-msgstr "To‘liq aloqa formasi va xarita kontaktlar sahifasida."
-
-msgid "Перейти к содержимому"
-msgstr "Kontentga o‘tish"
-
+#: .\store\spa_ui_strings.py:138
 msgid "На главную"
-msgstr "Bosh sahifaga"
+msgstr "Back to home"
 
-msgid "Основная навигация"
-msgstr "Asosiy navigatsiya"
+#: .\store\spa_ui_strings.py:139
+msgid "сўм"
+msgstr "so'm"
 
-msgid "Открыть меню"
-msgstr "Menyuni ochish"
+#: .\store\spa_ui_strings.py:147
+msgid "Заказ и оплата"
+msgstr "Orders & payment"
 
-msgid "Главная"
-msgstr "Bosh sahifa"
+#: .\store\spa_ui_strings.py:150
+msgid "Как оформить заказ?"
+msgstr "How do I place an order?"
 
-msgid "О нас"
-msgstr "Biz haqimizda"
-
-msgid "Быстрые действия"
-msgstr "Tezkor amallar"
-
-msgid "Переключение языка"
-msgstr "Tilni almashtirish"
-
-msgid "Язык"
-msgstr "Til"
-
-msgid "Нижний колонтитул"
-msgstr "Pastki qism"
-
-msgid "интернет-магазин"
-msgstr "onlayn do‘kon"
-
-msgid "Разделы"
-msgstr "Bo‘limlar"
-
-msgid "Поддержка"
-msgstr "Yordam"
-
-msgid "Помощь с подбором"
-msgstr "Tanlashda yordam"
-
-msgid "Вопросы и ответы"
-msgstr "Savol-javoblar"
-
-msgid "Хлебные крошки"
-msgstr "Navigatsiya yo‘li"
-
-msgid "Миниатюры"
-msgstr "Miniatyuralar"
-
-msgid "Основное фото"
-msgstr "Asosiy rasm"
-
-#, python-format
-msgid "Фото %(forloop.counter)s"
-msgstr "%(forloop.counter)s-rasm"
-
-msgid "Выберите миниатюру для смены фото."
-msgstr "Rasmni almashtirish uchun miniatyurani tanlang."
-
-msgid "В наличии"
-msgstr "Mavjud"
-
-msgid "Нет в наличии"
-msgstr "Mavjud emas"
-
-#, fuzzy
-#| msgid "Корзина"
-msgid "В корзину"
-msgstr "Savat"
-
-#, fuzzy
-#| msgid "Каталог"
-msgid "В каталог"
-msgstr "Katalog"
-
-msgid "Размер и цвет учитываются при добавлении в корзину."
-msgstr "Savatga qo‘shishda o‘lcham va rang hisobga olinadi."
-
-#, fuzzy
-#| msgid "Быстрые действия"
-msgid "Быстрые факты"
-msgstr "Tezkor amallar"
-
-msgid "Рейтинг"
-msgstr "Reyting"
-
-#, python-format
-msgid "%(rating)s (%(reviews)s отзывов)"
-msgstr "%(rating)s (%(reviews)s ta fikr)"
-
-msgid "Не уверены?"
-msgstr "Ishonchingiz komil emasmi?"
-
-#, fuzzy
-#| msgid "Помощь с подбором"
-msgid "Напишите — подберём"
-msgstr "Tanlashda yordam"
-
-msgid "Описание и характеристики"
-msgstr "Tavsif va xususiyatlar"
-
-#, fuzzy
-#| msgid "Написать нам"
-msgid "Описание"
-msgstr "Bizga yozing"
-
-msgid "Особенности"
-msgstr "Xususiyatlar"
-
-msgid "О товаре"
-msgstr "Mahsulot haqida"
-
-msgid "Дополнительные характеристики можно уточнить у поддержки."
-msgstr ""
-"Qo‘shimcha xususiyatlarni qo‘llab-quvvatlashdan aniqlashtirishingiz mumkin."
-
+#: .\store\spa_ui_strings.py:152
 msgid ""
-"Условия доставки и оплаты — на странице «Доставка». Обычно отправка в "
-"течение 1–2 рабочих дней после подтверждения заказа."
+"Добавьте понравившиеся товары в корзину, перейдите в корзину и нажмите "
+"«Оформить заказ». Заполните данные для доставки и выберите способ оплаты. Мы"
+" свяжемся с вами для подтверждения."
 msgstr ""
-"Yetkazib berish va to‘lov shartlari “Yetkazib berish” sahifasida. Odatda "
-"buyurtma tasdiqlangandan so‘ng 1–2 ish kuni ichida jo‘natiladi."
+"Add items to your cart, open the cart, and tap “Checkout”. Fill in delivery "
+"details and choose a payment method. We will contact you to confirm."
+
+#: .\store\spa_ui_strings.py:157
+msgid "Какие способы оплаты доступны?"
+msgstr "Which payment methods are available?"
+
+#: .\store\spa_ui_strings.py:159
+msgid ""
+"Мы принимаем оплату банковскими картами (Visa, MasterCard, МИР), через "
+"систему быстрых платежей (СБП), а также электронными кошельками ЮMoney и "
+"QIWI."
+msgstr ""
+"We accept bank cards (Visa, MasterCard, Mir), the Faster Payments System "
+"(FPS), and e-wallets such as YuMoney and QIWI."
+
+#: .\store\spa_ui_strings.py:164
+msgid "Можно ли заказать изделие по индивидуальному дизайну?"
+msgstr "Can I order a custom design?"
+
+#: .\store\spa_ui_strings.py:166
+msgid ""
+"Да, мы принимаем индивидуальные заказы. Напишите нам на info@argillia.ru с "
+"описанием идеи и предпочтительными размерами. Мы обсудим детали и стоимость "
+"в течение 1–2 рабочих дней."
+msgstr ""
+"Yes. Email us at info@argillia.ru with your idea and preferred dimensions. "
+"We will discuss details and pricing within 1–2 business days."
+
+#: .\store\spa_ui_strings.py:176
+msgid "Сколько времени занимает доставка?"
+msgstr "How long does delivery take?"
+
+#: .\store\spa_ui_strings.py:178
+msgid ""
+"По Москве и МО — 1–2 рабочих дня. По России — 3–7 рабочих дней в зависимости"
+" от региона. Мы используем СДЭК, Почту России и курьерские службы. Все "
+"хрупкие изделия упакованы с тройной защитой."
+msgstr ""
+"Moscow & Moscow region: 1–2 business days. Russia: 3–7 business days "
+"depending on the region. We use CDEK, Russian Post, and courier services. "
+"Fragile items are packed with triple protection."
+
+#: .\store\spa_ui_strings.py:183
+msgid "Как упаковываются изделия?"
+msgstr "How are items packed?"
+
+#: .\store\spa_ui_strings.py:185
+msgid ""
+"Каждое изделие обёртывается в несколько слоёв пузырчатой плёнки, затем "
+"помещается в коробку с наполнителем из переработанного картона. Сверху — "
+"фирменная крафт-бумага и открытка от мастера."
+msgstr ""
+"Each piece is wrapped in several layers of bubble wrap, then placed in a box"
+" with recycled-cardboard padding. Branded kraft paper and a maker’s note "
+"card on top."
+
+#: .\store\spa_ui_strings.py:190
+msgid "Можно ли самовывоз?"
+msgstr "Is pickup available?"
+
+#: .\store\spa_ui_strings.py:192
+msgid ""
+"Да, наша мастерская и шоу-рум находятся в Москве (ул. Мастеров, 12). "
+"Самовывоз возможен по предварительной записи в будни с 10:00 до 18:00."
+msgstr ""
+"Yes. Our workshop and showroom are in Moscow (12 Masters St.). Pickup by "
+"appointment on weekdays from 10:00 to 18:00."
+
+#: .\store\spa_ui_strings.py:199
+msgid "Товары и качество"
+msgstr "Products & quality"
+
+#: .\store\spa_ui_strings.py:202
+msgid "Все ли изделия сделаны вручную?"
+msgstr "Are all pieces handmade?"
+
+#: .\store\spa_ui_strings.py:204
+msgid ""
+"Абсолютно все. Мы принципиально не используем промышленное тиражирование. "
+"Каждое изделие создаётся мастером от начала до конца — от замеса глины до "
+"финального обжига."
+msgstr ""
+"Absolutely. We do not use industrial mass production. Each piece is made by "
+"an artisan from start to finish—from clay to final firing."
+
+#: .\store\spa_ui_strings.py:209
+msgid "Безопасны ли изделия для использования с пищей?"
+msgstr "Are pieces food-safe?"
+
+#: .\store\spa_ui_strings.py:211
+msgid ""
+"Да. Мы используем только сертифицированные пищевые глазури, не содержащие "
+"свинца и кадмия. Все изделия соответствуют российским санитарным нормам для "
+"пищевой посуды."
+msgstr ""
+"Yes. We use certified food-safe glazes without lead or cadmium. All pieces "
+"meet Russian sanitary standards for tableware."
+
+#: .\store\spa_ui_strings.py:216
+msgid "Как ухаживать за керамикой и фарфором?"
+msgstr "How do I care for ceramics and porcelain?"
+
+#: .\store\spa_ui_strings.py:218
+msgid ""
+"Рекомендуем мыть вручную тёплой водой с мягким средством. Большинство "
+"изделий можно мыть в посудомоечной машине, но ручная мойка продлит жизнь "
+"росписи. Избегайте резких перепадов температур."
+msgstr ""
+"Hand-wash with warm water and mild detergent. Most pieces are dishwasher-"
+"safe, but hand-washing extends the life of the decoration. Avoid sudden "
+"temperature changes."
+
+#: .\store\spa_ui_strings.py:223
+msgid "Предоставляете ли вы гарантию?"
+msgstr "Do you offer a warranty?"
+
+#: .\store\spa_ui_strings.py:225
+msgid ""
+"Мы гарантируем качество каждого изделия. Если вы обнаружили скрытый брак "
+"(трещина, отслоение глазури, дефект обжига) — свяжитесь с нами в течение 30 "
+"дней. Мы заменим товар или вернём деньги."
+msgstr ""
+"We stand behind every piece. If you find a hidden defect (crack, glaze "
+"flaking, firing defect), contact us within 30 days. We will replace the item"
+" or refund you."
+
+#: .\store\spa_ui_strings.py:232
+msgid "Возврат"
+msgstr "Returns"
+
+#: .\store\spa_ui_strings.py:235
+msgid "Можно ли вернуть товар?"
+msgstr "Can I return an item?"
+
+#: .\store\spa_ui_strings.py:237
+msgid ""
+"Да, в течение 14 дней с момента получения, если изделие не использовалось и "
+"сохранена оригинальная упаковка. Товары с браком принимаем в течение 30 дней"
+" без каких-либо условий."
+msgstr ""
+"Yes, within 14 days of receipt if the piece is unused and the original "
+"packaging is intact. Defective items are accepted within 30 days without "
+"conditions."
+
+#: .\store\spa_ui_strings.py:242
+msgid "Что делать, если изделие повредилось при доставке?"
+msgstr "What if an item was damaged in transit?"
+
+#: .\store\spa_ui_strings.py:244
+msgid ""
+"Сфотографируйте повреждение, не выбрасывая упаковку, и напишите нам на "
+"info@argillia.ru в течение 48 часов. Мы немедленно вышлем замену или вернём "
+"деньги — полностью."
+msgstr ""
+"Photograph the damage without discarding the packaging, and email "
+"info@argillia.ru within 48 hours. We will send a replacement or a full "
+"refund immediately."
+
+#: .\templates\admin\unified_config.html:8
+#: .\templates\admin\unified_config.html:169
+msgid "Home"
+msgstr ""
+
+#~ msgid "₽"
+#~ msgstr "RUB"
+
+#~ msgid "Добро пожаловать в наш магазин."
+#~ msgstr "Do‘konimizga xush kelibsiz."
+
+#~ msgid "Написать нам"
+#~ msgstr "Bizga yozing"
+
+#~ msgid "Показатели"
+#~ msgstr "Ko‘rsatkichlar"
+
+#~ msgid "внимание к деталям"
+#~ msgstr "detallarga e’tibor"
 
 #, fuzzy
-#| msgid "оценка покупателей"
-msgid "С этим покупают"
-msgstr "mijozlar bahosi"
+#~ msgid "онлайн-каталог"
+#~ msgstr "Katalog"
+
+#~ msgid "качество сервиса"
+#~ msgstr "xizmat sifati"
+
+#~ msgid "Миссия"
+#~ msgstr "Missiya"
+
+#~ msgid "Как мы работаем каждый день."
+#~ msgstr "Har kuni qanday ishlaymiz."
+
+#~ msgid "Наши принципы."
+#~ msgstr "Bizning tamoyillarimiz."
+
+#~ msgid "Часть философии"
+#~ msgstr "Falsafamizning bir qismi"
+
+#~ msgid "Отбор товаров и понятные карточки."
+#~ msgstr "Tanlab olingan mahsulotlar va tushunarli kartochkalar."
+
+#~ msgid "Сервис"
+#~ msgstr "Xizmat"
+
+#~ msgid "Помогаем с выбором и доставкой."
+#~ msgstr "Tanlash va yetkazib berishda yordam beramiz."
+
+#~ msgid "Миссия и видение"
+#~ msgstr "Missiya va qarash"
+
+#~ msgid "Видение"
+#~ msgstr "Qarash"
+
+#~ msgid "Свяжитесь с нами"
+#~ msgstr "Biz bilan bog‘laning"
+
+#~ msgid "Вопросы по ассортименту, опту и сотрудничеству."
+#~ msgstr "Assortiment, ulgurji savdo va hamkorlik bo‘yicha savollar."
+
+#~ msgid "Проверьте состав и количество. Изменения сохраняются автоматически."
+#~ msgstr "Tarkib va miqdorni tekshiring. O‘zgarishlar avtomatik saqlanadi."
 
 #, fuzzy
-#| msgid "Товары скоро появятся в каталоге."
-msgid "Похожие товары появятся позже."
-msgstr "Mahsulotlar tez orada katalogda paydo bo‘ladi."
+#~ msgid "Список товаров в корзине"
+#~ msgstr "Toifadagi mahsulotlarni ko‘rish"
+
+#~ msgid "Размер:"
+#~ msgstr "O‘lcham:"
+
+#~ msgid "Цвет:"
+#~ msgstr "Rang:"
+
+#~ msgid "Удалить"
+#~ msgstr "O‘chirish"
 
 #, fuzzy
-#| msgid "Популярные товары"
-msgid "Похожие товары"
-msgstr "Ommabop mahsulotlar"
+#~ msgid "Количество"
+#~ msgstr "Afzalliklar"
 
-msgid "Из той же категории и популярное рядом."
-msgstr "Xuddi shu toifadan va yonida ommaboplari."
-
-#, fuzzy
-#| msgid "Категории товаров"
-msgid "Пока нет похожих товаров."
-msgstr "Mahsulot toifalari"
+#~ msgid "Уменьшить"
+#~ msgstr "Kamaytirish"
 
 #, fuzzy
-#| msgid "Помощь с подбором"
-msgid "Нужна помощь с подбором?"
-msgstr "Tanlashda yordam"
+#~ msgid "Количество товара"
+#~ msgstr "Mahsulot toifalari"
 
-msgid "Опишите задачу — подскажем комплектацию."
-msgstr "Vazifani yozing — mos to‘plamni tavsiya qilamiz."
+#~ msgid "Увеличить"
+#~ msgstr "Ko‘paytirish"
+
+#~ msgid "Сумма"
+#~ msgstr "Summa"
+
+#~ msgid "Доставка уточняется при оформлении."
+#~ msgstr "Yetkazib berish tafsilotlari rasmiylashtirishda aniqlanadi."
+
+#~ msgid "Товары"
+#~ msgstr "Mahsulotlar"
 
 #, fuzzy
-#| msgid "Написать нам"
-msgid "Написать"
-msgstr "Bizga yozing"
+#~ msgid "Ваше имя *"
+#~ msgstr "Ismingiz"
 
-msgid "Товар добавлен в корзину."
-msgstr "Mahsulot savatga qo‘shildi."
+#, fuzzy
+#~ msgid "Телефон *"
+#~ msgstr "Telefon"
 
-msgid "Не удалось добавить в корзину"
-msgstr "Savatga qo‘shib bo‘lmadi"
+#, fuzzy
+#~ msgid "Адрес *"
+#~ msgstr "Manzil"
+
+#, fuzzy
+#~ msgid "Комментарий к заказу (необязательно)"
+#~ msgstr "Telefon (ixtiyoriy)"
+
+#~ msgid ""
+#~ "Для оплаты и доставки свяжитесь с нами или уточните детали в сообщении."
+#~ msgstr ""
+#~ "To‘lov va yetkazib berish uchun biz bilan bog‘laning yoki xabarda "
+#~ "tafsilotlarni aniqlashtiring."
+
+#, fuzzy
+#~ msgid "Нужна помощь с выбором?"
+#~ msgstr "Tanlashda yordam"
+
+#, fuzzy
+#~ msgid "Напишите нам"
+#~ msgstr "Bizga yozing"
+
+#, fuzzy
+#~ msgid "Заполните все обязательные поля."
+#~ msgstr "Telefon (ixtiyoriy)"
+
+#, fuzzy
+#~ msgid "Заказ отправлен. Спасибо!"
+#~ msgstr "Xabar yuborildi. Rahmat!"
+
+#, fuzzy
+#~ msgid "Не удалось отправить заказ. Попробуйте ещё раз."
+#~ msgstr "Savatga qo‘shib bo‘lmadi"
+
+#, fuzzy
+#~ msgid "Каталог товаров"
+#~ msgstr "Mahsulot toifalari"
+
+#~ msgid "Фильтры и сортировка — данные из каталога магазина."
+#~ msgstr "Filtrlar va saralash — do‘kon katalogi ma’lumotlari asosida."
+
+#, fuzzy
+#~ msgid "Быстрые фильтры по категории"
+#~ msgstr "Toifadagi mahsulotlarni ko‘rish"
+
+#~ msgid "Фильтры"
+#~ msgstr "Filtrlar"
+
+#~ msgid "Настройте подбор"
+#~ msgstr "Tanlovni sozlang"
+
+#~ msgid "Все категории"
+#~ msgstr "Barcha toifalar"
+
+#, fuzzy
+#~ msgid "Цена, сум"
+#~ msgstr "Narx, ₽"
+
+#~ msgid "Диапазон цены"
+#~ msgstr "Narx oralig‘i"
+
+#~ msgid "от"
+#~ msgstr "dan"
+
+#~ msgid "0"
+#~ msgstr "0"
+
+#~ msgid "до"
+#~ msgstr "gacha"
+
+#~ msgid "например S или XL"
+#~ msgstr "masalan, S yoki XL"
+
+#~ msgid "Цвет (код или название)"
+#~ msgstr "Rang (kod yoki nom)"
+
+#~ msgid "Цвет"
+#~ msgstr "Rang"
+
+#~ msgid "#000000 или Черный"
+#~ msgstr "#000000 yoki Qora"
+
+#~ msgid "Поиск"
+#~ msgstr "Qidiruv"
+
+#~ msgid "Название или описание"
+#~ msgstr "Nomi yoki tavsifi"
+
+#~ msgid "Сбросить"
+#~ msgstr "Qayta o‘rnatish"
+
+#~ msgid "Применить"
+#~ msgstr "Qo‘llash"
+
+#~ msgid "Найдено:"
+#~ msgstr "Topildi:"
+
+#~ msgid "товаров"
+#~ msgstr "mahsulot"
+
+#~ msgid "Сортировка"
+#~ msgstr "Saralash"
+
+#~ msgid "Сортировать"
+#~ msgstr "Saralash"
+
+#~ msgid "Акция"
+#~ msgstr "Aksiya"
+
+#~ msgid "Подробнее"
+#~ msgstr "Batafsil"
+
+#~ msgid "Товары скоро появятся в каталоге."
+#~ msgstr "Mahsulotlar tez orada katalogda paydo bo‘ladi."
+
+#, fuzzy, python-format
+#~ msgid "Контакты %(store_name)s."
+#~ msgstr "Kontaktlar"
+
+#~ msgid "Телефон, почта и форма обратной связи."
+#~ msgstr "Telefon, email va aloqa formasi."
+
+#~ msgid "Почта"
+#~ msgstr "Email"
+
+#~ msgid "Адрес"
+#~ msgstr "Manzil"
+
+#~ msgid "Время"
+#~ msgstr "Vaqt"
+
+#~ msgid "Ошибка отправки"
+#~ msgstr "Yuborishda xatolik"
+
+#~ msgid "Сообщение отправлено. Спасибо!"
+#~ msgstr "Xabar yuborildi. Rahmat!"
+
+#~ msgid "Не удалось отправить"
+#~ msgstr "Yuborib bo‘lmadi"
+
+#, fuzzy
+#~ msgid "Имя"
+#~ msgstr "Vaqt"
+
+#~ msgid "Ваше имя"
+#~ msgstr "Ismingiz"
+
+#~ msgid "Телефон (необязательно)"
+#~ msgstr "Telefon (ixtiyoriy)"
+
+#~ msgid "Тема"
+#~ msgstr "Mavzu"
+
+#~ msgid "Тема сообщения"
+#~ msgstr "Xabar mavzusi"
+
+#, fuzzy
+#~ msgid "Вопрос по заказу"
+#~ msgstr "Savol-javoblar"
+
+#, fuzzy
+#~ msgid "Вопрос по товару"
+#~ msgstr "Savol-javoblar"
+
+#~ msgid "Другое"
+#~ msgstr "Boshqa"
+
+#~ msgid "Сообщение"
+#~ msgstr "Xabar"
+
+#~ msgid "Отправить"
+#~ msgstr "Yuborish"
+
+#~ msgid "Карта"
+#~ msgstr "Xarita"
+
+#~ msgid ""
+#~ "Общие условия. Точные сроки и стоимость уточняйте при оформлении заказа."
+#~ msgstr ""
+#~ "Umumiy shartlar. Aniq muddat va narxni buyurtma rasmiylashtirishda "
+#~ "aniqlashtiring."
+
+#~ msgid ""
+#~ "Отправка после подтверждения заказа. По городу и регионам — курьером или "
+#~ "службой доставки. Сроки зависят от выбранного способа."
+#~ msgstr ""
+#~ "Buyurtma tasdiqlangandan so‘ng jo‘natiladi. Shahar va hududlar bo‘yicha — "
+#~ "kuryer yoki yetkazib berish xizmati orqali. Muddat tanlangan usulga bog‘liq."
+
+#~ msgid ""
+#~ "Способы оплаты согласовываются с менеджером: предоплата или оплата при "
+#~ "получении — в зависимости от региона и состава заказа."
+#~ msgstr ""
+#~ "To‘lov usullari menejer bilan kelishiladi: oldindan to‘lov yoki yetkazib "
+#~ "berilganda to‘lov — hudud va buyurtma tarkibiga qarab."
+
+#~ msgid "Упаковка"
+#~ msgstr "Qadoqlash"
+
+#~ msgid ""
+#~ "Заказы упаковываем так, чтобы товары доехали без повреждений. Крупногабарит "
+#~ "— по согласованию."
+#~ msgstr ""
+#~ "Buyurtmalarni mahsulotlar shikastlanmasdan yetib borishi uchun qadoqlaymiz. "
+#~ "Katta o‘lchamdagilar — kelishuv asosida."
+
+#~ msgid "Нужны точные условия?"
+#~ msgstr "Aniq shartlar kerakmi?"
+
+#~ msgid "Напишите адрес и состав заказа — подскажем варианты и стоимость."
+#~ msgstr "Manzil va buyurtma tarkibini yozing — variantlar va narxni aytamiz."
+
+#~ msgid "Связаться"
+#~ msgstr "Bog‘lanish"
+
+#, python-format
+#~ msgid "Если не нашли ответ — <a href=\"%(contact_url)s\">напишите нам</a>."
+#~ msgstr "Agar javob topilmasa — <a href=\"%(contact_url)s\">bizga yozing</a>."
+
+#~ msgid ""
+#~ "Пока нет опубликованных вопросов. Загляните позже или свяжитесь с "
+#~ "поддержкой."
+#~ msgstr ""
+#~ "Hozircha e’lon qilingan savollar yo‘q. Keyinroq yana kirib ko‘ring yoki "
+#~ "qo‘llab-quvvatlash bilan bog‘laning."
+
+#~ msgid "Почему именно мы"
+#~ msgstr "Nega aynan biz"
+
+#~ msgid "Преимущества"
+#~ msgstr "Afzalliklar"
+
+#~ msgid "доставка по городу"
+#~ msgstr "shahar bo‘ylab yetkazish"
+
+#~ msgid "оценка покупателей"
+#~ msgstr "mijozlar bahosi"
+
+#~ msgid "готовых идей"
+#~ msgstr "tayyor g‘oyalar"
+
+#~ msgid "Популярно сегодня"
+#~ msgstr "Bugun ommabop"
+
+#~ msgid "Категории товаров"
+#~ msgstr "Mahsulot toifalari"
+
+#~ msgid "Выберите направление — мы подскажем набор под вашу задачу."
+#~ msgstr "Yo‘nalishni tanlang — vazifangizga mos to‘plamni tavsiya qilamiz."
+
+#~ msgid "Смотреть товары в категории"
+#~ msgstr "Toifadagi mahsulotlarni ko‘rish"
+
+#~ msgid "Популярные товары"
+#~ msgstr "Ommabop mahsulotlar"
+
+#~ msgid "Подобрали то, что чаще всего покупают для работы и обучения."
+#~ msgstr "Ish va o‘rganish uchun eng ko‘p olinadiganlarini tanladik."
+
+#~ msgid "Фильтры (визуальные)"
+#~ msgstr "Filtrlar (vizual)"
+
+#~ msgid "Наборы"
+#~ msgstr "To‘plamlar"
+
+#~ msgid "Стамески"
+#~ msgstr "Kesgichlar"
+
+#~ msgid "Заготовки"
+#~ msgstr "Tayyor blankalar"
+
+#~ msgid "Быстрый путь к уверенной первой работе."
+#~ msgstr "Birinchi ishingizni ishonch bilan boshlash uchun tez yo‘l."
+
+#~ msgid "Определите технику"
+#~ msgstr "Texnikani tanlang"
+
+#~ msgid "Плоская резьба, контуры, объем или орнаменты — подбираем форму резца."
+#~ msgstr ""
+#~ "Yassi o‘ymakorlik, kontur, hajm yoki naqsh — mos kesgich shaklini tanlang."
+
+#~ msgid ""
+#~ "Ширина и радиус влияют на чистоту линии: начните с универсальных размеров."
+#~ msgstr ""
+#~ "Kenglik va radius chiziq sifatiga ta’sir qiladi: universal o‘lchamlardan "
+#~ "boshlang."
+
+#~ msgid ""
+#~ "Шлифовка и масло/лак дают красивый рисунок волокон и защиту поверхности."
+#~ msgstr ""
+#~ "Silliqlash va moy/lak tolalar naqshini ochadi va yuzani himoya qiladi."
+
+#~ msgid "Хотите подбор под ваш проект?"
+#~ msgstr "Loyihangiz uchun to‘plam kerakmi?"
+
+#~ msgid "Оставьте сообщение — мы предложим наборы под задачу и уровень навыков."
+#~ msgstr ""
+#~ "Xabar qoldiring — vazifa va tajribangizga mos to‘plamlarni tavsiya qilamiz."
+
+#~ msgid ""
+#~ "Ответим по выбору инструмента, наличию и доставке. Можно просто написать "
+#~ "«что хочу сделать»."
+#~ msgstr ""
+#~ "Asbob tanlash, mavjudlik va yetkazib berish bo‘yicha yordam beramiz. "
+#~ "Shunchaki “nimani qilmoqchiman” deb yozing."
+
+#~ msgid "Пн–Пт: 10:00–19:00"
+#~ msgstr "Du–Ju: 10:00–19:00"
+
+#~ msgid "Полная форма обратной связи и карта — на странице контактов."
+#~ msgstr "To‘liq aloqa formasi va xarita kontaktlar sahifasida."
+
+#~ msgid "Перейти к содержимому"
+#~ msgstr "Kontentga o‘tish"
+
+#~ msgid "Открыть меню"
+#~ msgstr "Menyuni ochish"
+
+#~ msgid "Быстрые действия"
+#~ msgstr "Tezkor amallar"
+
+#~ msgid "Переключение языка"
+#~ msgstr "Tilni almashtirish"
+
+#~ msgid "Нижний колонтитул"
+#~ msgstr "Pastki qism"
+
+#~ msgid "интернет-магазин"
+#~ msgstr "onlayn do‘kon"
+
+#~ msgid "Поддержка"
+#~ msgstr "Yordam"
+
+#~ msgid "Помощь с подбором"
+#~ msgstr "Tanlashda yordam"
+
+#~ msgid "Вопросы и ответы"
+#~ msgstr "Savol-javoblar"
+
+#~ msgid "Хлебные крошки"
+#~ msgstr "Navigatsiya yo‘li"
+
+#~ msgid "Миниатюры"
+#~ msgstr "Miniatyuralar"
+
+#~ msgid "Основное фото"
+#~ msgstr "Asosiy rasm"
+
+#, python-format
+#~ msgid "Фото %(forloop.counter)s"
+#~ msgstr "%(forloop.counter)s-rasm"
+
+#~ msgid "Выберите миниатюру для смены фото."
+#~ msgstr "Rasmni almashtirish uchun miniatyurani tanlang."
+
+#~ msgid "Нет в наличии"
+#~ msgstr "Mavjud emas"
+
+#~ msgid "Размер и цвет учитываются при добавлении в корзину."
+#~ msgstr "Savatga qo‘shishda o‘lcham va rang hisobga olinadi."
+
+#, fuzzy
+#~ msgid "Быстрые факты"
+#~ msgstr "Tezkor amallar"
+
+#~ msgid "Рейтинг"
+#~ msgstr "Reyting"
+
+#, python-format
+#~ msgid "%(rating)s (%(reviews)s отзывов)"
+#~ msgstr "%(rating)s (%(reviews)s ta fikr)"
+
+#~ msgid "Не уверены?"
+#~ msgstr "Ishonchingiz komil emasmi?"
+
+#, fuzzy
+#~ msgid "Напишите — подберём"
+#~ msgstr "Tanlashda yordam"
+
+#~ msgid "Описание и характеристики"
+#~ msgstr "Tavsif va xususiyatlar"
+
+#~ msgid "Особенности"
+#~ msgstr "Xususiyatlar"
+
+#~ msgid "О товаре"
+#~ msgstr "Mahsulot haqida"
+
+#~ msgid "Дополнительные характеристики можно уточнить у поддержки."
+#~ msgstr ""
+#~ "Qo‘shimcha xususiyatlarni qo‘llab-quvvatlashdan aniqlashtirishingiz mumkin."
+
+#~ msgid ""
+#~ "Условия доставки и оплаты — на странице «Доставка». Обычно отправка в "
+#~ "течение 1–2 рабочих дней после подтверждения заказа."
+#~ msgstr ""
+#~ "Yetkazib berish va to‘lov shartlari “Yetkazib berish” sahifasida. Odatda "
+#~ "buyurtma tasdiqlangandan so‘ng 1–2 ish kuni ichida jo‘natiladi."
+
+#, fuzzy
+#~ msgid "С этим покупают"
+#~ msgstr "mijozlar bahosi"
+
+#, fuzzy
+#~ msgid "Похожие товары появятся позже."
+#~ msgstr "Mahsulotlar tez orada katalogda paydo bo‘ladi."
+
+#~ msgid "Из той же категории и популярное рядом."
+#~ msgstr "Xuddi shu toifadan va yonida ommaboplari."
+
+#, fuzzy
+#~ msgid "Пока нет похожих товаров."
+#~ msgstr "Mahsulot toifalari"
+
+#, fuzzy
+#~ msgid "Нужна помощь с подбором?"
+#~ msgstr "Tanlashda yordam"
+
+#~ msgid "Опишите задачу — подскажем комплектацию."
+#~ msgstr "Vazifani yozing — mos to‘plamni tavsiya qilamiz."
+
+#, fuzzy
+#~ msgid "Написать"
+#~ msgstr "Bizga yozing"
+
+#~ msgid "Товар добавлен в корзину."
+#~ msgstr "Mahsulot savatga qo‘shildi."

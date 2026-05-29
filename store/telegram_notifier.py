@@ -1,5 +1,9 @@
 """
-Модуль для отправки уведомлений в Telegram через бота
+Legacy Telegram notifier (synchronous, single group chat).
+
+Новая схема: `store.notification_enqueue` + `NotificationOutbox` + Celery
+`store.tasks.process_notification_outbox`. Этот модуль оставлен для совместимости
+импортов и не используется основным кодом.
 """
 import telebot
 from django.conf import settings

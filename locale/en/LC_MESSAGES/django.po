@@ -1,8 +1,9 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: fashionstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-30 01:28+0500\n"
+"POT-Creation-Date: 2026-05-30 01:03+0500\n"
 "PO-Revision-Date: 2026-04-21 00:00+0000\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -10,808 +11,1173 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "О магазине"
-msgstr "About the store"
-
-msgid "Добро пожаловать в наш магазин."
-msgstr "Welcome to our store."
-
-msgid "Написать нам"
-msgstr "Message us"
-
-msgid "Наши ценности"
-msgstr "Our values"
-
-msgid "Показатели"
-msgstr "Key metrics"
-
-msgid "внимание к деталям"
-msgstr "attention to detail"
-
-#, fuzzy
-#| msgid "Каталог"
-msgid "онлайн-каталог"
-msgstr "Catalog"
-
-msgid "качество сервиса"
-msgstr "service quality"
-
-msgid "Миссия"
-msgstr "Mission"
-
-msgid "Сервис и качество."
-msgstr "Service and quality."
-
-msgid "Ценности"
-msgstr "Values"
-
-msgid "Как мы работаем каждый день."
-msgstr "How we work every day."
-
-msgid "Наши принципы."
-msgstr "Our principles."
-
-msgid "Часть философии"
-msgstr "Part of our philosophy"
-
-#, fuzzy
-#| msgid "Преимущества"
-msgid "Качество"
-msgstr "Benefits"
-
-msgid "Отбор товаров и понятные карточки."
-msgstr "Curated products and clear product pages."
-
-msgid "Сервис"
-msgstr "Service"
-
-msgid "Помогаем с выбором и доставкой."
-msgstr "We help with selection and delivery."
-
-msgid "Миссия и видение"
-msgstr "Mission and vision"
-
-msgid "Видение"
-msgstr "Vision"
-
-msgid "Свяжитесь с нами"
-msgstr "Contact us"
-
-msgid "Вопросы по ассортименту, опту и сотрудничеству."
-msgstr "Questions about assortment, wholesale, and partnerships."
-
-msgid "Контакты"
-msgstr "Contact"
-
-msgid "Django site admin"
-msgstr ""
-
-msgid "Home"
-msgstr ""
-
-msgid "Catalog"
-msgstr ""
-
-msgid "About"
-msgstr ""
-
-msgid "Contacts"
-msgstr ""
-
-msgid "Корзина"
-msgstr "Cart"
-
-msgid "For Customers"
-msgstr ""
-
-msgid "Delivery and Payment"
-msgstr ""
-
-msgid "Product Return"
-msgstr ""
-
-msgid "Size Chart"
-msgstr ""
-
-msgid "FAQ"
-msgstr "FAQ"
-
-msgid "About Company"
-msgstr ""
-
-msgid "About Us"
-msgstr ""
-
-msgid "Careers"
-msgstr ""
-
-msgid "Partners"
-msgstr ""
-
-msgid ""
-"Error: Product ID is not specified. This product cannot be added to cart."
-msgstr ""
-
-msgid "Error: event not found"
-msgstr ""
-
-msgid "Failed to add product to cart. Please refresh the page and try again."
-msgstr ""
-
-msgid "Error: cart function not loaded. Please refresh the page."
-msgstr ""
-
-msgid "Success"
-msgstr ""
-
-msgid "Error"
-msgstr ""
-
-msgid "Warning"
-msgstr ""
-
-msgid "Information"
-msgstr ""
-
-msgid "Проверьте состав и количество. Изменения сохраняются автоматически."
-msgstr "Check items and quantities. Changes are saved automatically."
-
-#, fuzzy
-#| msgid "Смотреть товары в категории"
-msgid "Список товаров в корзине"
-msgstr "View products in category"
-
-msgid "Размер:"
-msgstr "Size:"
-
-msgid "Цвет:"
-msgstr "Color:"
-
-#, fuzzy
-#| msgid "Популярные товары"
-msgid "Удалить товар"
-msgstr "Popular products"
-
-msgid "Удалить"
-msgstr "Remove"
-
-#, fuzzy
-#| msgid "Преимущества"
-msgid "Количество"
-msgstr "Benefits"
-
-msgid "Уменьшить"
-msgstr "Decrease"
-
-#, fuzzy
-#| msgid "Категории товаров"
-msgid "Количество товара"
-msgstr "Product categories"
-
-msgid "Увеличить"
-msgstr "Increase"
-
-msgid "сум"
-msgstr ""
-
-msgid "шт."
-msgstr "pcs."
-
-#, fuzzy
-#| msgid "Корзина"
-msgid "Корзина пуста."
-msgstr "Cart"
-
-#, fuzzy
-#| msgid "Перейти к содержимому"
-msgid "Перейти в каталог"
-msgstr "Skip to content"
-
-msgid "Итоги заказа"
-msgstr "Order summary"
-
-msgid "Сумма"
-msgstr "Subtotal"
-
-msgid "Доставка уточняется при оформлении."
-msgstr "Delivery will be confirmed at checkout."
-
-msgid "Товары"
-msgstr "Items"
-
-msgid "Итого"
-msgstr "Total"
-
-msgid "Оформить заказ"
-msgstr "Place order"
-
-#, fuzzy
-#| msgid "Оформить заказ"
-msgid "Форма оформления заказа"
-msgstr "Place order"
-
-#, fuzzy
-#| msgid "Ваше имя"
-msgid "Ваше имя *"
-msgstr "Your name"
-
-#, fuzzy
-#| msgid "Телефон"
-msgid "Телефон *"
-msgstr "Phone"
-
-msgid "Город *"
-msgstr ""
-
-#, fuzzy
-#| msgid "Адрес"
-msgid "Адрес *"
-msgstr "Address"
-
-#, fuzzy
-#| msgid "Телефон (необязательно)"
-msgid "Комментарий к заказу (необязательно)"
-msgstr "Phone (optional)"
-
-#, fuzzy
-#| msgid "Оформить заказ"
-msgid "Отправить заказ"
-msgstr "Place order"
-
-msgid "После отправки мы получим заказ в Telegram и свяжемся с вами."
-msgstr ""
-
-msgid "Для оплаты и доставки свяжитесь с нами или уточните детали в сообщении."
-msgstr ""
-"For payment and delivery, contact us or clarify the details in a message."
-
-#, fuzzy
-#| msgid "Помощь с подбором"
-msgid "Нужна помощь с выбором?"
-msgstr "Help choosing"
-
-#, fuzzy
-#| msgid "Написать нам"
-msgid "Напишите нам"
-msgstr "Message us"
-
-#, fuzzy
-#| msgid "Телефон (необязательно)"
-msgid "Заполните все обязательные поля."
-msgstr "Phone (optional)"
-
-#, fuzzy
-#| msgid "Сообщение отправлено. Спасибо!"
-msgid "Заказ отправлен. Спасибо!"
-msgstr "Message sent. Thank you!"
-
-#, fuzzy
-#| msgid "Не удалось добавить в корзину"
-msgid "Не удалось отправить заказ. Попробуйте ещё раз."
-msgstr "Couldn’t add to cart"
-
-msgid "Каталог"
-msgstr "Catalog"
-
-#, fuzzy
-#| msgid "Категории товаров"
-msgid "Каталог товаров"
-msgstr "Product categories"
-
-msgid "Фильтры и сортировка — данные из каталога магазина."
-msgstr "Filters and sorting — powered by the store catalog."
-
-#, fuzzy
-#| msgid "Смотреть товары в категории"
-msgid "Быстрые фильтры по категории"
-msgstr "View products in category"
-
+#: .\store\spa_bootstrap.py:55 .\store\spa_ui_strings.py:24
+msgid "Магазин"
+msgstr "Store"
+
+#: .\store\spa_bootstrap.py:227
 msgid "Все"
 msgstr "All"
 
-#, fuzzy
-#| msgid "Фильтры (визуальные)"
-msgid "Фильтры каталога"
-msgstr "Filters (visual)"
-
-msgid "Фильтры"
-msgstr "Filters"
-
-msgid "Настройте подбор"
-msgstr "Adjust selection"
-
-msgid "Категория"
-msgstr "Category"
-
-msgid "Все категории"
-msgstr "All categories"
-
-#, fuzzy
-#| msgid "Цена, ₽"
-msgid "Цена, сум"
-msgstr "Price, ₽"
-
-msgid "Диапазон цены"
-msgstr "Price range"
-
-msgid "от"
-msgstr "from"
-
-msgid "0"
-msgstr "0"
-
-msgid "до"
-msgstr "to"
-
-msgid "Размер"
-msgstr "Size"
-
-msgid "например S или XL"
-msgstr "e.g. S or XL"
-
-msgid "Цвет (код или название)"
-msgstr "Color (code or name)"
-
-msgid "Цвет"
-msgstr "Color"
-
-msgid "#000000 или Черный"
-msgstr "#000000 or Black"
-
-msgid "Поиск"
-msgstr "Search"
-
-msgid "Название или описание"
-msgstr "Name or description"
-
-msgid "Сбросить"
-msgstr "Reset"
-
-msgid "Применить"
-msgstr "Apply"
-
-msgid "Найдено:"
-msgstr "Found:"
-
-msgid "товаров"
-msgstr "products"
-
-msgid "Сортировка"
-msgstr "Sorting"
-
-msgid "Сортировать"
-msgstr "Sort"
-
-msgid "Сначала новинки"
-msgstr "Newest first"
-
-#, fuzzy
-#| msgid "Популярно сегодня"
-msgid "По популярности"
-msgstr "Popular today"
-
-msgid "Сначала дешевле"
-msgstr "Cheapest first"
-
-msgid "Сначала дороже"
-msgstr "Most expensive first"
-
-msgid "Акция"
-msgstr "Sale"
-
-msgid "Подробнее"
-msgstr "Details"
-
-#, fuzzy
-#| msgid "от"
-msgid "Хит"
-msgstr "from"
-
-msgid "Товары скоро появятся в каталоге."
-msgstr "Products will appear in the catalog soon."
-
-msgid "Пагинация"
-msgstr ""
-
-msgid "Предыдущая страница"
-msgstr ""
-
-msgid "Назад"
-msgstr ""
-
-msgid "Следующая страница"
-msgstr ""
-
-msgid "Далее"
-msgstr ""
-
-#, fuzzy, python-format
-#| msgid "Контакты"
-msgid "Контакты %(store_name)s."
-msgstr "Contact"
-
-msgid "Телефон, почта и форма обратной связи."
-msgstr "Phone, email, and a contact form."
-
-msgid "Телефон"
-msgstr "Phone"
-
-msgid "Почта"
-msgstr "Email"
-
-msgid "Адрес"
-msgstr "Address"
-
-msgid "Время"
-msgstr "Hours"
-
-msgid "Ошибка отправки"
-msgstr "Send error"
-
-msgid "Сообщение отправлено. Спасибо!"
-msgstr "Message sent. Thank you!"
-
-msgid "Не удалось отправить"
-msgstr "Failed to send"
-
-#, fuzzy
-#| msgid "Время"
-msgid "Имя"
-msgstr "Hours"
-
-msgid "Ваше имя"
-msgstr "Your name"
-
-msgid "Email"
-msgstr "Email"
-
-msgid "Телефон (необязательно)"
-msgstr "Phone (optional)"
-
-msgid "Тема"
-msgstr "Subject"
-
-msgid "Тема сообщения"
-msgstr "Message subject"
-
-#, fuzzy
-#| msgid "Вопросы и ответы"
-msgid "Вопрос по заказу"
-msgstr "Q&A"
-
-#, fuzzy
-#| msgid "Вопросы и ответы"
-msgid "Вопрос по товару"
-msgstr "Q&A"
-
-#, fuzzy
-#| msgid "Доставка и оплата"
-msgid "Доставка"
-msgstr "Delivery & payment"
-
-msgid "Возврат"
-msgstr "Returns"
-
-msgid "Другое"
-msgstr "Other"
-
-msgid "Сообщение"
-msgstr "Message"
-
-msgid "Отправить"
-msgstr "Send"
-
-msgid "Карта"
-msgstr "Map"
-
-msgid "Доставка и оплата"
-msgstr "Delivery & payment"
-
-msgid ""
-"Общие условия. Точные сроки и стоимость уточняйте при оформлении заказа."
-msgstr "General terms. Please confirm exact timing and cost during checkout."
-
-msgid ""
-"Отправка после подтверждения заказа. По городу и регионам — курьером или "
-"службой доставки. Сроки зависят от выбранного способа."
-msgstr ""
-"Shipping after order confirmation. Within the city and regions — by courier "
-"or delivery service. Timing depends on the chosen method."
-
-msgid "Оплата"
-msgstr "Payment"
-
-msgid ""
-"Способы оплаты согласовываются с менеджером: предоплата или оплата при "
-"получении — в зависимости от региона и состава заказа."
-msgstr ""
-"Payment methods are agreed with the manager: prepayment or pay on delivery — "
-"depending on region and order details."
-
-msgid "Упаковка"
-msgstr "Packaging"
-
-msgid ""
-"Заказы упаковываем так, чтобы товары доехали без повреждений. Крупногабарит "
-"— по согласованию."
-msgstr ""
-"We pack orders so items arrive without damage. Bulky items — by agreement."
-
-msgid "Нужны точные условия?"
-msgstr "Need exact terms?"
-
-msgid "Напишите адрес и состав заказа — подскажем варианты и стоимость."
-msgstr "Send your address and order details — we’ll suggest options and cost."
-
-msgid "Связаться"
-msgstr "Contact"
-
-msgid "Частые вопросы"
+#: .\store\spa_bootstrap.py:242
+#, python-format
+msgid "О %(name)s"
+msgstr "About %(name)s"
+
+#: .\store\spa_bootstrap.py:244 .\store\spa_ui_strings.py:26
+#: .\store\spa_ui_strings.py:51
+msgid "О мастерской"
+msgstr "About the workshop"
+
+#: .\store\spa_ui_strings.py:12 .\store\spa_ui_strings.py:79
+#: .\store\spa_ui_strings.py:91
+msgid "Каталог"
+msgstr "Catalog"
+
+#: .\store\spa_ui_strings.py:13 .\store\spa_ui_strings.py:34
+#: .\store\spa_ui_strings.py:52 .\store\spa_ui_strings.py:63
+msgid "О нас"
+msgstr "About us"
+
+#: .\store\spa_ui_strings.py:14
+msgid "FAQ"
 msgstr "FAQ"
 
-#, python-format
-msgid "Если не нашли ответ — <a href=\"%(contact_url)s\">напишите нам</a>."
-msgstr ""
-"If you didn’t find an answer — <a href=\"%(contact_url)s\">message us</a>."
-
-msgid ""
-"Пока нет опубликованных вопросов. Загляните позже или свяжитесь с поддержкой."
-msgstr ""
-"No questions have been published yet. Check back later or contact support."
-
-msgid "Почему именно мы"
-msgstr "Why choose us"
-
-msgid "Преимущества"
-msgstr "Benefits"
-
-msgid "доставка по городу"
-msgstr "city delivery"
-
-msgid "оценка покупателей"
-msgstr "customer rating"
-
-msgid "готовых идей"
-msgstr "ready ideas"
-
-msgid "Популярно сегодня"
-msgstr "Popular today"
-
-msgid "Смотреть"
-msgstr "View"
-
-msgid "Категории товаров"
-msgstr "Product categories"
-
-msgid "Выберите направление — мы подскажем набор под вашу задачу."
-msgstr "Choose a direction — we’ll suggest a set for your task."
-
-msgid "Смотреть товары в категории"
-msgstr "View products in category"
-
-msgid "Популярные товары"
-msgstr "Popular products"
-
-msgid "Подобрали то, что чаще всего покупают для работы и обучения."
-msgstr "A selection of what’s most often bought for work and learning."
-
-msgid "Фильтры (визуальные)"
-msgstr "Filters (visual)"
-
-msgid "Наборы"
-msgstr "Sets"
-
-msgid "Стамески"
-msgstr "Chisels"
-
-msgid "Заготовки"
-msgstr "Blanks"
-
-msgid "Быстрый путь к уверенной первой работе."
-msgstr "A quick path to your first confident project."
-
-msgid "Определите технику"
-msgstr "Choose a technique"
-
-msgid "Плоская резьба, контуры, объем или орнаменты — подбираем форму резца."
-msgstr ""
-"Flat carving, contours, volume or ornaments — pick the right cutter shape."
-
-msgid "Смотрите на размер"
-msgstr "Look at size"
-
-msgid ""
-"Ширина и радиус влияют на чистоту линии: начните с универсальных размеров."
-msgstr "Width and radius affect line quality: start with universal sizes."
-
-msgid "Добавьте финиш"
-msgstr "Add a finish"
-
-msgid ""
-"Шлифовка и масло/лак дают красивый рисунок волокон и защиту поверхности."
-msgstr "Sanding and oil/varnish reveal grain and protect the surface."
-
-msgid "Хотите подбор под ваш проект?"
-msgstr "Need a set for your project?"
-
-msgid "Оставьте сообщение — мы предложим наборы под задачу и уровень навыков."
-msgstr "Leave a message — we’ll suggest sets for your task and skill level."
-
-msgid ""
-"Ответим по выбору инструмента, наличию и доставке. Можно просто написать "
-"«что хочу сделать»."
-msgstr ""
-"We’ll help with selection, availability and delivery. You can simply write "
-"“what I want to make”."
-
-msgid "Пн–Пт: 10:00–19:00"
-msgstr "Mon–Fri: 10:00–19:00"
-
-msgid "Полная форма обратной связи и карта — на странице контактов."
-msgstr "Full contact form and map are on the contacts page."
-
-msgid "Перейти к содержимому"
-msgstr "Skip to content"
-
-msgid "На главную"
-msgstr "Go to homepage"
-
-msgid "Основная навигация"
-msgstr "Main navigation"
-
-msgid "Открыть меню"
-msgstr "Open menu"
-
+#: .\store\spa_ui_strings.py:15
 msgid "Главная"
 msgstr "Home"
 
-msgid "О нас"
-msgstr "About"
+#: .\store\spa_ui_strings.py:16 .\store\spa_ui_strings.py:113
+msgid "Корзина"
+msgstr "Cart"
 
-msgid "Быстрые действия"
-msgstr "Quick actions"
+#: .\store\spa_ui_strings.py:17
+msgid "Навигация"
+msgstr "Navigation"
 
-msgid "Переключение языка"
-msgstr "Language switch"
+#: .\store\spa_ui_strings.py:18
+msgid "Контакты"
+msgstr "Contacts"
 
+#: .\store\spa_ui_strings.py:19
+msgid "Все права защищены."
+msgstr "All rights reserved."
+
+#: .\store\spa_ui_strings.py:20
+msgid "Сделано с любовью к ремеслу"
+msgstr "Made with love for the craft"
+
+#: .\store\spa_ui_strings.py:21
 msgid "Язык"
 msgstr "Language"
 
-msgid "Нижний колонтитул"
-msgstr "Footer"
+#: .\store\spa_ui_strings.py:22
+msgid "Язык сайта"
+msgstr "Site language"
 
-msgid "интернет-магазин"
-msgstr "online store"
+#: .\store\spa_ui_strings.py:23
+msgid "Выбор языка"
+msgstr "Choose language"
 
-msgid "Разделы"
-msgstr "Sections"
+#: .\store\spa_ui_strings.py:25 .\store\spa_ui_strings.py:62
+msgid "Смотреть каталог"
+msgstr "View catalog"
 
-msgid "Поддержка"
-msgstr "Support"
+#: .\store\spa_ui_strings.py:27
+msgid "SCROLL"
+msgstr "SCROLL"
 
-msgid "Помощь с подбором"
-msgstr "Help choosing"
+#: .\store\spa_ui_strings.py:28
+msgid "Популярное"
+msgstr "Popular"
 
-msgid "Вопросы и ответы"
-msgstr "Q&A"
+#: .\store\spa_ui_strings.py:29
+msgid "Хиты коллекции"
+msgstr "Collection highlights"
 
-msgid "Хлебные крошки"
-msgstr "Breadcrumbs"
+#: .\store\spa_ui_strings.py:30
+msgid "Весь каталог"
+msgstr "Full catalog"
 
-msgid "Миниатюры"
-msgstr "Thumbnails"
+#: .\store\spa_ui_strings.py:31
+msgid "Смотреть всё"
+msgstr "View all"
 
-msgid "Основное фото"
-msgstr "Main photo"
+#: .\store\spa_ui_strings.py:32
+msgid "Только появились"
+msgstr "Just arrived"
 
-#, python-format
-msgid "Фото %(forloop.counter)s"
-msgstr "Photo %(forloop.counter)s"
+#: .\store\spa_ui_strings.py:33
+msgid "Новинки"
+msgstr "New arrivals"
 
-msgid "Выберите миниатюру для смены фото."
-msgstr "Select a thumbnail to change the photo."
+#: .\store\spa_ui_strings.py:35 .\store\spa_ui_strings.py:53
+msgid "Наша история"
+msgstr "Our story"
 
+#: .\store\spa_ui_strings.py:36
+msgid "Индивидуальный заказ"
+msgstr "Custom order"
+
+#: .\store\spa_ui_strings.py:37
+msgid "Хотите что-то"
+msgstr "Want something"
+
+#: .\store\spa_ui_strings.py:38
+msgid "по-настоящему уникальное?"
+msgstr "truly one of a kind?"
+
+#: .\store\spa_ui_strings.py:40
+msgid ""
+"Мы создаём изделия по индивидуальным эскизам. Ваш размер, ваши цвета, ваша "
+"история."
+msgstr ""
+"We create pieces from custom sketches. Your size, your colors, your story."
+
+#: .\store\spa_ui_strings.py:42
+msgid "Узнать больше"
+msgstr "Learn more"
+
+#: .\store\spa_ui_strings.py:43
+msgid "Ручная работа"
+msgstr "Handmade"
+
+#: .\store\spa_ui_strings.py:44
+msgid "Каждое изделие создаётся вручную опытными мастерами."
+msgstr "Each piece is crafted by hand by experienced artisans."
+
+#: .\store\spa_ui_strings.py:45
+msgid "Живые материалы"
+msgstr "Natural materials"
+
+#: .\store\spa_ui_strings.py:46
+msgid "Только природная глина и проверенные глазури."
+msgstr "Only natural clay and trusted glazes."
+
+#: .\store\spa_ui_strings.py:47
+msgid "Доставка без потерь"
+msgstr "Safe delivery"
+
+#: .\store\spa_ui_strings.py:48
+msgid "Бережная упаковка каждого изделия."
+msgstr "Careful packaging for every piece."
+
+#: .\store\spa_ui_strings.py:49
+msgid "Новинка"
+msgstr "New"
+
+#: .\store\spa_ui_strings.py:50
+msgid "Хит"
+msgstr "Bestseller"
+
+#: .\store\spa_ui_strings.py:54
+msgid "Что нас определяет"
+msgstr "What defines us"
+
+#: .\store\spa_ui_strings.py:55
+msgid "Наши ценности"
+msgstr "Our values"
+
+#: .\store\spa_ui_strings.py:56
+msgid "От замысла до вашего дома"
+msgstr "From idea to your home"
+
+#: .\store\spa_ui_strings.py:57
+msgid "Как создаётся изделие"
+msgstr "How a piece is made"
+
+#: .\store\spa_ui_strings.py:58
+msgid "Готовы выбрать своё изделие?"
+msgstr "Ready to choose your piece?"
+
+#: .\store\spa_ui_strings.py:60
+msgid ""
+"Загляните в каталог — ассортимент формируется из актуальных позиций в базе "
+"магазина."
+msgstr ""
+"Browse the catalog — the assortment reflects current items in the store "
+"database."
+
+#: .\store\spa_ui_strings.py:64
+msgid "Замысел"
+msgstr "Concept"
+
+#: .\store\spa_ui_strings.py:65
+msgid "Каждое изделие начинается с идеи."
+msgstr "Every piece starts with an idea."
+
+#: .\store\spa_ui_strings.py:66
+msgid "Глина"
+msgstr "Clay"
+
+#: .\store\spa_ui_strings.py:67
+msgid "Глина вымешивается вручную."
+msgstr "Clay is wedged by hand."
+
+#: .\store\spa_ui_strings.py:68
+msgid "Формование"
+msgstr "Shaping"
+
+#: .\store\spa_ui_strings.py:69
+msgid "Форма на круге или вручную."
+msgstr "Shaped on the wheel or by hand."
+
+#: .\store\spa_ui_strings.py:70
+msgid "Мастерство"
+msgstr "Craftsmanship"
+
+#: .\store\spa_ui_strings.py:71
+msgid "Только опытные мастера."
+msgstr "Only experienced artisans."
+
+#: .\store\spa_ui_strings.py:72
+msgid "Уникальность"
+msgstr "Uniqueness"
+
+#: .\store\spa_ui_strings.py:73
+msgid "Каждое изделие уникально."
+msgstr "Every piece is unique."
+
+#: .\store\spa_ui_strings.py:74
+msgid "Экология"
+msgstr "Sustainability"
+
+#: .\store\spa_ui_strings.py:75
+msgid "Природные материалы."
+msgstr "Natural materials."
+
+#: .\store\spa_ui_strings.py:76
+msgid "Честность"
+msgstr "Honesty"
+
+#: .\store\spa_ui_strings.py:77
+msgid "Ручной труд без преувеличений."
+msgstr "Handwork without exaggeration."
+
+#: .\store\spa_ui_strings.py:78
+msgid "Наша коллекция"
+msgstr "Our collection"
+
+#: .\store\spa_ui_strings.py:80
+msgid "Товары не найдены"
+msgstr "No products found"
+
+#: .\store\spa_ui_strings.py:81
+msgid "По умолчанию"
+msgstr "Default"
+
+#: .\store\spa_ui_strings.py:82
+msgid "Цена: дешевле"
+msgstr "Price: low to high"
+
+#: .\store\spa_ui_strings.py:83
+msgid "Цена: дороже"
+msgstr "Price: high to low"
+
+#: .\store\spa_ui_strings.py:84
+msgid "изделие"
+msgstr "piece"
+
+#: .\store\spa_ui_strings.py:85
+msgid "изделия"
+msgstr "pieces"
+
+#: .\store\spa_ui_strings.py:86 .\store\spa_ui_strings.py:87
+msgid "изделий"
+msgstr "pieces"
+
+#: .\store\spa_ui_strings.py:88
+msgid "ручной работы"
+msgstr "handmade"
+
+#: .\store\spa_ui_strings.py:89
+msgid "Товар не найден"
+msgstr "Product not found"
+
+#: .\store\spa_ui_strings.py:90
+msgid "Вернуться в каталог"
+msgstr "Back to catalog"
+
+#: .\store\spa_ui_strings.py:92
+msgid "Материал"
+msgstr "Material"
+
+#: .\store\spa_ui_strings.py:93
+msgid "Размеры"
+msgstr "Dimensions"
+
+#: .\store\spa_ui_strings.py:94
+msgid "Категория"
+msgstr "Category"
+
+#: .\store\spa_ui_strings.py:95
+msgid "Наличие"
+msgstr "Availability"
+
+#: .\store\spa_ui_strings.py:96
 msgid "В наличии"
 msgstr "In stock"
 
-msgid "Нет в наличии"
-msgstr "Out of stock"
+#: .\store\spa_ui_strings.py:97
+msgid "Под заказ"
+msgstr "Made to order"
 
-#, fuzzy
-#| msgid "Корзина"
-msgid "В корзину"
-msgstr "Cart"
+#: .\store\spa_ui_strings.py:98
+msgid "Добавить в корзину"
+msgstr "Add to cart"
 
-#, fuzzy
-#| msgid "Каталог"
+#: .\store\spa_ui_strings.py:99
+msgid "Добавлено"
+msgstr "Added"
+
+#: .\store\spa_ui_strings.py:100
+msgid "В корзине"
+msgstr "In cart"
+
+#: .\store\spa_ui_strings.py:101
+msgid "Перейти в корзину"
+msgstr "Go to cart"
+
+#: .\store\spa_ui_strings.py:102
+msgid "Доставка 3–7 дней"
+msgstr "Delivery in 3–7 days"
+
+#: .\store\spa_ui_strings.py:103
+msgid "Гарантия качества"
+msgstr "Quality guarantee"
+
+#: .\store\spa_ui_strings.py:104
+msgid "Возврат 14 дней"
+msgstr "14-day returns"
+
+#: .\store\spa_ui_strings.py:105
+msgid "Из той же коллекции"
+msgstr "From the same collection"
+
+#: .\store\spa_ui_strings.py:106
+msgid "Похожие изделия"
+msgstr "You may also like"
+
+#: .\store\spa_ui_strings.py:107
+msgid "шт."
+msgstr "pc."
+
+#: .\store\spa_ui_strings.py:108
+msgid "Пусто"
+msgstr "Empty"
+
+#: .\store\spa_ui_strings.py:109
+msgid "Корзина пуста"
+msgstr "Your cart is empty"
+
+#: .\store\spa_ui_strings.py:110
+msgid "Загляните в каталог — там есть что-то для вас"
+msgstr "Browse the catalog — there is something for you."
+
+#: .\store\spa_ui_strings.py:111
 msgid "В каталог"
-msgstr "Catalog"
+msgstr "To catalog"
 
-msgid "Размер и цвет учитываются при добавлении в корзину."
-msgstr "Size and color are included when adding to cart."
+#: .\store\spa_ui_strings.py:112
+msgid "Ваш выбор"
+msgstr "Your selection"
+
+#: .\store\spa_ui_strings.py:114
+msgid "Продолжить покупки"
+msgstr "Continue shopping"
+
+#: .\store\spa_ui_strings.py:115
+msgid "Итого"
+msgstr "Total"
+
+#: .\store\spa_ui_strings.py:116 .\store\spa_ui_strings.py:173
+msgid "Доставка"
+msgstr "Delivery"
+
+#: .\store\spa_ui_strings.py:117
+msgid "При оформлении"
+msgstr "At checkout"
+
+#: .\store\spa_ui_strings.py:118
+msgid "К оплате"
+msgstr "To pay"
+
+#: .\store\spa_ui_strings.py:119
+msgid "Оформить заказ"
+msgstr "Checkout"
+
+#: .\store\spa_ui_strings.py:120
+msgid ""
+"Безопасная оплата · Возврат 14 дней · Бережная упаковка каждого изделия"
+msgstr "Secure payment · 14-day returns · Careful packaging for every piece"
+
+#: .\store\spa_ui_strings.py:121
+#, python-format
+msgid "Товары (%(count)s шт.)"
+msgstr "Items (%(count)s pc.)"
+
+#: .\store\spa_ui_strings.py:122
+msgid "Помощь"
+msgstr "Help"
+
+#: .\store\spa_ui_strings.py:123
+msgid "Часто задаваемые"
+msgstr "Frequently asked"
+
+#: .\store\spa_ui_strings.py:124
+msgid "вопросы"
+msgstr "questions"
+
+#: .\store\spa_ui_strings.py:125
+msgid "Частые вопросы"
+msgstr "Common questions"
+
+#: .\store\spa_ui_strings.py:126
+msgid "Остались вопросы?"
+msgstr "Still have questions?"
+
+#: .\store\spa_ui_strings.py:127
+msgid "Мы всегда на связи"
+msgstr "We are always here"
+
+#: .\store\spa_ui_strings.py:129
+msgid ""
+"Напишите нам или позвоните — ответим в течение нескольких часов в рабочее "
+"время."
+msgstr "Email or call us — we reply within a few hours during business hours."
+
+#: .\store\spa_ui_strings.py:131
+msgid "Email"
+msgstr "Email"
+
+#: .\store\spa_ui_strings.py:132
+msgid "Телефон"
+msgstr "Phone"
+
+#: .\store\spa_ui_strings.py:133
+msgid "Режим работы"
+msgstr "Opening hours"
+
+#: .\store\spa_ui_strings.py:134
+msgid "Смотреть каталог →"
+msgstr "View catalog →"
+
+#: .\store\spa_ui_strings.py:135
+msgid "Страница не найдена"
+msgstr "Page not found"
+
+#: .\store\spa_ui_strings.py:136
+msgid "Такой страницы не существует"
+msgstr "This page does not exist"
+
+#: .\store\spa_ui_strings.py:137
+msgid ""
+"Возможно, вы перешли по устаревшей ссылке или допустили опечатку в адресе."
+msgstr "The link may be outdated or the address may contain a typo."
+
+#: .\store\spa_ui_strings.py:138
+msgid "На главную"
+msgstr "Back to home"
+
+#: .\store\spa_ui_strings.py:139
+msgid "сўм"
+msgstr "so'm"
+
+#: .\store\spa_ui_strings.py:147
+msgid "Заказ и оплата"
+msgstr "Orders & payment"
+
+#: .\store\spa_ui_strings.py:150
+msgid "Как оформить заказ?"
+msgstr "How do I place an order?"
+
+#: .\store\spa_ui_strings.py:152
+msgid ""
+"Добавьте понравившиеся товары в корзину, перейдите в корзину и нажмите "
+"«Оформить заказ». Заполните данные для доставки и выберите способ оплаты. Мы"
+" свяжемся с вами для подтверждения."
+msgstr ""
+"Add items to your cart, open the cart, and tap “Checkout”. Fill in delivery "
+"details and choose a payment method. We will contact you to confirm."
+
+#: .\store\spa_ui_strings.py:157
+msgid "Какие способы оплаты доступны?"
+msgstr "Which payment methods are available?"
+
+#: .\store\spa_ui_strings.py:159
+msgid ""
+"Мы принимаем оплату банковскими картами (Visa, MasterCard, МИР), через "
+"систему быстрых платежей (СБП), а также электронными кошельками ЮMoney и "
+"QIWI."
+msgstr ""
+"We accept bank cards (Visa, MasterCard, Mir), the Faster Payments System "
+"(FPS), and e-wallets such as YuMoney and QIWI."
+
+#: .\store\spa_ui_strings.py:164
+msgid "Можно ли заказать изделие по индивидуальному дизайну?"
+msgstr "Can I order a custom design?"
+
+#: .\store\spa_ui_strings.py:166
+msgid ""
+"Да, мы принимаем индивидуальные заказы. Напишите нам на info@argillia.ru с "
+"описанием идеи и предпочтительными размерами. Мы обсудим детали и стоимость "
+"в течение 1–2 рабочих дней."
+msgstr ""
+"Yes. Email us at info@argillia.ru with your idea and preferred dimensions. "
+"We will discuss details and pricing within 1–2 business days."
+
+#: .\store\spa_ui_strings.py:176
+msgid "Сколько времени занимает доставка?"
+msgstr "How long does delivery take?"
+
+#: .\store\spa_ui_strings.py:178
+msgid ""
+"По Москве и МО — 1–2 рабочих дня. По России — 3–7 рабочих дней в зависимости"
+" от региона. Мы используем СДЭК, Почту России и курьерские службы. Все "
+"хрупкие изделия упакованы с тройной защитой."
+msgstr ""
+"Moscow & Moscow region: 1–2 business days. Russia: 3–7 business days "
+"depending on the region. We use CDEK, Russian Post, and courier services. "
+"Fragile items are packed with triple protection."
+
+#: .\store\spa_ui_strings.py:183
+msgid "Как упаковываются изделия?"
+msgstr "How are items packed?"
+
+#: .\store\spa_ui_strings.py:185
+msgid ""
+"Каждое изделие обёртывается в несколько слоёв пузырчатой плёнки, затем "
+"помещается в коробку с наполнителем из переработанного картона. Сверху — "
+"фирменная крафт-бумага и открытка от мастера."
+msgstr ""
+"Each piece is wrapped in several layers of bubble wrap, then placed in a box"
+" with recycled-cardboard padding. Branded kraft paper and a maker’s note "
+"card on top."
+
+#: .\store\spa_ui_strings.py:190
+msgid "Можно ли самовывоз?"
+msgstr "Is pickup available?"
+
+#: .\store\spa_ui_strings.py:192
+msgid ""
+"Да, наша мастерская и шоу-рум находятся в Москве (ул. Мастеров, 12). "
+"Самовывоз возможен по предварительной записи в будни с 10:00 до 18:00."
+msgstr ""
+"Yes. Our workshop and showroom are in Moscow (12 Masters St.). Pickup by "
+"appointment on weekdays from 10:00 to 18:00."
+
+#: .\store\spa_ui_strings.py:199
+msgid "Товары и качество"
+msgstr "Products & quality"
+
+#: .\store\spa_ui_strings.py:202
+msgid "Все ли изделия сделаны вручную?"
+msgstr "Are all pieces handmade?"
+
+#: .\store\spa_ui_strings.py:204
+msgid ""
+"Абсолютно все. Мы принципиально не используем промышленное тиражирование. "
+"Каждое изделие создаётся мастером от начала до конца — от замеса глины до "
+"финального обжига."
+msgstr ""
+"Absolutely. We do not use industrial mass production. Each piece is made by "
+"an artisan from start to finish—from clay to final firing."
+
+#: .\store\spa_ui_strings.py:209
+msgid "Безопасны ли изделия для использования с пищей?"
+msgstr "Are pieces food-safe?"
+
+#: .\store\spa_ui_strings.py:211
+msgid ""
+"Да. Мы используем только сертифицированные пищевые глазури, не содержащие "
+"свинца и кадмия. Все изделия соответствуют российским санитарным нормам для "
+"пищевой посуды."
+msgstr ""
+"Yes. We use certified food-safe glazes without lead or cadmium. All pieces "
+"meet Russian sanitary standards for tableware."
+
+#: .\store\spa_ui_strings.py:216
+msgid "Как ухаживать за керамикой и фарфором?"
+msgstr "How do I care for ceramics and porcelain?"
+
+#: .\store\spa_ui_strings.py:218
+msgid ""
+"Рекомендуем мыть вручную тёплой водой с мягким средством. Большинство "
+"изделий можно мыть в посудомоечной машине, но ручная мойка продлит жизнь "
+"росписи. Избегайте резких перепадов температур."
+msgstr ""
+"Hand-wash with warm water and mild detergent. Most pieces are dishwasher-"
+"safe, but hand-washing extends the life of the decoration. Avoid sudden "
+"temperature changes."
+
+#: .\store\spa_ui_strings.py:223
+msgid "Предоставляете ли вы гарантию?"
+msgstr "Do you offer a warranty?"
+
+#: .\store\spa_ui_strings.py:225
+msgid ""
+"Мы гарантируем качество каждого изделия. Если вы обнаружили скрытый брак "
+"(трещина, отслоение глазури, дефект обжига) — свяжитесь с нами в течение 30 "
+"дней. Мы заменим товар или вернём деньги."
+msgstr ""
+"We stand behind every piece. If you find a hidden defect (crack, glaze "
+"flaking, firing defect), contact us within 30 days. We will replace the item"
+" or refund you."
+
+#: .\store\spa_ui_strings.py:232
+msgid "Возврат"
+msgstr "Returns"
+
+#: .\store\spa_ui_strings.py:235
+msgid "Можно ли вернуть товар?"
+msgstr "Can I return an item?"
+
+#: .\store\spa_ui_strings.py:237
+msgid ""
+"Да, в течение 14 дней с момента получения, если изделие не использовалось и "
+"сохранена оригинальная упаковка. Товары с браком принимаем в течение 30 дней"
+" без каких-либо условий."
+msgstr ""
+"Yes, within 14 days of receipt if the piece is unused and the original "
+"packaging is intact. Defective items are accepted within 30 days without "
+"conditions."
+
+#: .\store\spa_ui_strings.py:242
+msgid "Что делать, если изделие повредилось при доставке?"
+msgstr "What if an item was damaged in transit?"
+
+#: .\store\spa_ui_strings.py:244
+msgid ""
+"Сфотографируйте повреждение, не выбрасывая упаковку, и напишите нам на "
+"info@argillia.ru в течение 48 часов. Мы немедленно вышлем замену или вернём "
+"деньги — полностью."
+msgstr ""
+"Photograph the damage without discarding the packaging, and email "
+"info@argillia.ru within 48 hours. We will send a replacement or a full "
+"refund immediately."
+
+#: .\templates\admin\unified_config.html:8
+#: .\templates\admin\unified_config.html:169
+msgid "Home"
+msgstr ""
+
+#~ msgid "₽"
+#~ msgstr "RUB"
+
+#~ msgid "Добро пожаловать в наш магазин."
+#~ msgstr "Welcome to our store."
+
+#~ msgid "Написать нам"
+#~ msgstr "Message us"
+
+#~ msgid "Показатели"
+#~ msgstr "Key metrics"
+
+#~ msgid "внимание к деталям"
+#~ msgstr "attention to detail"
 
 #, fuzzy
-#| msgid "Быстрые действия"
-msgid "Быстрые факты"
-msgstr "Quick actions"
+#~ msgid "онлайн-каталог"
+#~ msgstr "Catalog"
 
-msgid "Рейтинг"
-msgstr "Rating"
+#~ msgid "качество сервиса"
+#~ msgstr "service quality"
+
+#~ msgid "Миссия"
+#~ msgstr "Mission"
+
+#~ msgid "Как мы работаем каждый день."
+#~ msgstr "How we work every day."
+
+#~ msgid "Наши принципы."
+#~ msgstr "Our principles."
+
+#~ msgid "Часть философии"
+#~ msgstr "Part of our philosophy"
+
+#~ msgid "Отбор товаров и понятные карточки."
+#~ msgstr "Curated products and clear product pages."
+
+#~ msgid "Сервис"
+#~ msgstr "Service"
+
+#~ msgid "Помогаем с выбором и доставкой."
+#~ msgstr "We help with selection and delivery."
+
+#~ msgid "Миссия и видение"
+#~ msgstr "Mission and vision"
+
+#~ msgid "Видение"
+#~ msgstr "Vision"
+
+#~ msgid "Свяжитесь с нами"
+#~ msgstr "Contact us"
+
+#~ msgid "Вопросы по ассортименту, опту и сотрудничеству."
+#~ msgstr "Questions about assortment, wholesale, and partnerships."
+
+#~ msgid "Проверьте состав и количество. Изменения сохраняются автоматически."
+#~ msgstr "Check items and quantities. Changes are saved automatically."
+
+#, fuzzy
+#~ msgid "Список товаров в корзине"
+#~ msgstr "View products in category"
+
+#~ msgid "Размер:"
+#~ msgstr "Size:"
+
+#~ msgid "Цвет:"
+#~ msgstr "Color:"
+
+#~ msgid "Удалить"
+#~ msgstr "Remove"
+
+#, fuzzy
+#~ msgid "Количество"
+#~ msgstr "Benefits"
+
+#~ msgid "Уменьшить"
+#~ msgstr "Decrease"
+
+#, fuzzy
+#~ msgid "Количество товара"
+#~ msgstr "Product categories"
+
+#~ msgid "Увеличить"
+#~ msgstr "Increase"
+
+#~ msgid "Сумма"
+#~ msgstr "Subtotal"
+
+#~ msgid "Доставка уточняется при оформлении."
+#~ msgstr "Delivery will be confirmed at checkout."
+
+#~ msgid "Товары"
+#~ msgstr "Items"
+
+#, fuzzy
+#~ msgid "Ваше имя *"
+#~ msgstr "Your name"
+
+#, fuzzy
+#~ msgid "Телефон *"
+#~ msgstr "Phone"
+
+#, fuzzy
+#~ msgid "Адрес *"
+#~ msgstr "Address"
+
+#, fuzzy
+#~ msgid "Комментарий к заказу (необязательно)"
+#~ msgstr "Phone (optional)"
+
+#~ msgid ""
+#~ "Для оплаты и доставки свяжитесь с нами или уточните детали в сообщении."
+#~ msgstr ""
+#~ "For payment and delivery, contact us or clarify the details in a message."
+
+#, fuzzy
+#~ msgid "Нужна помощь с выбором?"
+#~ msgstr "Help choosing"
+
+#, fuzzy
+#~ msgid "Напишите нам"
+#~ msgstr "Message us"
+
+#, fuzzy
+#~ msgid "Заполните все обязательные поля."
+#~ msgstr "Phone (optional)"
+
+#, fuzzy
+#~ msgid "Заказ отправлен. Спасибо!"
+#~ msgstr "Message sent. Thank you!"
+
+#, fuzzy
+#~ msgid "Не удалось отправить заказ. Попробуйте ещё раз."
+#~ msgstr "Couldn’t add to cart"
+
+#, fuzzy
+#~ msgid "Каталог товаров"
+#~ msgstr "Product categories"
+
+#~ msgid "Фильтры и сортировка — данные из каталога магазина."
+#~ msgstr "Filters and sorting — powered by the store catalog."
+
+#, fuzzy
+#~ msgid "Быстрые фильтры по категории"
+#~ msgstr "View products in category"
+
+#~ msgid "Фильтры"
+#~ msgstr "Filters"
+
+#~ msgid "Настройте подбор"
+#~ msgstr "Adjust selection"
+
+#~ msgid "Все категории"
+#~ msgstr "All categories"
+
+#, fuzzy
+#~ msgid "Цена, сум"
+#~ msgstr "Price, ₽"
+
+#~ msgid "Диапазон цены"
+#~ msgstr "Price range"
+
+#~ msgid "от"
+#~ msgstr "from"
+
+#~ msgid "0"
+#~ msgstr "0"
+
+#~ msgid "до"
+#~ msgstr "to"
+
+#~ msgid "например S или XL"
+#~ msgstr "e.g. S or XL"
+
+#~ msgid "Цвет (код или название)"
+#~ msgstr "Color (code or name)"
+
+#~ msgid "Цвет"
+#~ msgstr "Color"
+
+#~ msgid "#000000 или Черный"
+#~ msgstr "#000000 or Black"
+
+#~ msgid "Поиск"
+#~ msgstr "Search"
+
+#~ msgid "Название или описание"
+#~ msgstr "Name or description"
+
+#~ msgid "Сбросить"
+#~ msgstr "Reset"
+
+#~ msgid "Применить"
+#~ msgstr "Apply"
+
+#~ msgid "Найдено:"
+#~ msgstr "Found:"
+
+#~ msgid "товаров"
+#~ msgstr "products"
+
+#~ msgid "Сортировка"
+#~ msgstr "Sorting"
+
+#~ msgid "Сортировать"
+#~ msgstr "Sort"
+
+#~ msgid "Акция"
+#~ msgstr "Sale"
+
+#~ msgid "Подробнее"
+#~ msgstr "Details"
+
+#~ msgid "Товары скоро появятся в каталоге."
+#~ msgstr "Products will appear in the catalog soon."
+
+#, fuzzy, python-format
+#~ msgid "Контакты %(store_name)s."
+#~ msgstr "Contact"
+
+#~ msgid "Телефон, почта и форма обратной связи."
+#~ msgstr "Phone, email, and a contact form."
+
+#~ msgid "Почта"
+#~ msgstr "Email"
+
+#~ msgid "Адрес"
+#~ msgstr "Address"
+
+#~ msgid "Время"
+#~ msgstr "Hours"
+
+#~ msgid "Ошибка отправки"
+#~ msgstr "Send error"
+
+#~ msgid "Сообщение отправлено. Спасибо!"
+#~ msgstr "Message sent. Thank you!"
+
+#~ msgid "Не удалось отправить"
+#~ msgstr "Failed to send"
+
+#, fuzzy
+#~ msgid "Имя"
+#~ msgstr "Hours"
+
+#~ msgid "Ваше имя"
+#~ msgstr "Your name"
+
+#~ msgid "Телефон (необязательно)"
+#~ msgstr "Phone (optional)"
+
+#~ msgid "Тема"
+#~ msgstr "Subject"
+
+#~ msgid "Тема сообщения"
+#~ msgstr "Message subject"
+
+#, fuzzy
+#~ msgid "Вопрос по заказу"
+#~ msgstr "Q&A"
+
+#, fuzzy
+#~ msgid "Вопрос по товару"
+#~ msgstr "Q&A"
+
+#~ msgid "Другое"
+#~ msgstr "Other"
+
+#~ msgid "Сообщение"
+#~ msgstr "Message"
+
+#~ msgid "Отправить"
+#~ msgstr "Send"
+
+#~ msgid "Карта"
+#~ msgstr "Map"
+
+#~ msgid ""
+#~ "Общие условия. Точные сроки и стоимость уточняйте при оформлении заказа."
+#~ msgstr "General terms. Please confirm exact timing and cost during checkout."
+
+#~ msgid ""
+#~ "Отправка после подтверждения заказа. По городу и регионам — курьером или "
+#~ "службой доставки. Сроки зависят от выбранного способа."
+#~ msgstr ""
+#~ "Shipping after order confirmation. Within the city and regions — by courier "
+#~ "or delivery service. Timing depends on the chosen method."
+
+#~ msgid ""
+#~ "Способы оплаты согласовываются с менеджером: предоплата или оплата при "
+#~ "получении — в зависимости от региона и состава заказа."
+#~ msgstr ""
+#~ "Payment methods are agreed with the manager: prepayment or pay on delivery —"
+#~ " depending on region and order details."
+
+#~ msgid "Упаковка"
+#~ msgstr "Packaging"
+
+#~ msgid ""
+#~ "Заказы упаковываем так, чтобы товары доехали без повреждений. Крупногабарит "
+#~ "— по согласованию."
+#~ msgstr ""
+#~ "We pack orders so items arrive without damage. Bulky items — by agreement."
+
+#~ msgid "Нужны точные условия?"
+#~ msgstr "Need exact terms?"
+
+#~ msgid "Напишите адрес и состав заказа — подскажем варианты и стоимость."
+#~ msgstr "Send your address and order details — we’ll suggest options and cost."
+
+#~ msgid "Связаться"
+#~ msgstr "Contact"
 
 #, python-format
-msgid "%(rating)s (%(reviews)s отзывов)"
-msgstr "%(rating)s (%(reviews)s reviews)"
+#~ msgid "Если не нашли ответ — <a href=\"%(contact_url)s\">напишите нам</a>."
+#~ msgstr ""
+#~ "If you didn’t find an answer — <a href=\"%(contact_url)s\">message us</a>."
 
-msgid "Не уверены?"
-msgstr "Not sure?"
+#~ msgid ""
+#~ "Пока нет опубликованных вопросов. Загляните позже или свяжитесь с "
+#~ "поддержкой."
+#~ msgstr ""
+#~ "No questions have been published yet. Check back later or contact support."
+
+#~ msgid "Почему именно мы"
+#~ msgstr "Why choose us"
+
+#~ msgid "Преимущества"
+#~ msgstr "Benefits"
+
+#~ msgid "доставка по городу"
+#~ msgstr "city delivery"
+
+#~ msgid "оценка покупателей"
+#~ msgstr "customer rating"
+
+#~ msgid "готовых идей"
+#~ msgstr "ready ideas"
+
+#~ msgid "Популярно сегодня"
+#~ msgstr "Popular today"
+
+#~ msgid "Категории товаров"
+#~ msgstr "Product categories"
+
+#~ msgid "Выберите направление — мы подскажем набор под вашу задачу."
+#~ msgstr "Choose a direction — we’ll suggest a set for your task."
+
+#~ msgid "Смотреть товары в категории"
+#~ msgstr "View products in category"
+
+#~ msgid "Популярные товары"
+#~ msgstr "Popular products"
+
+#~ msgid "Подобрали то, что чаще всего покупают для работы и обучения."
+#~ msgstr "A selection of what’s most often bought for work and learning."
+
+#~ msgid "Фильтры (визуальные)"
+#~ msgstr "Filters (visual)"
+
+#~ msgid "Наборы"
+#~ msgstr "Sets"
+
+#~ msgid "Стамески"
+#~ msgstr "Chisels"
+
+#~ msgid "Заготовки"
+#~ msgstr "Blanks"
+
+#~ msgid "Быстрый путь к уверенной первой работе."
+#~ msgstr "A quick path to your first confident project."
+
+#~ msgid "Определите технику"
+#~ msgstr "Choose a technique"
+
+#~ msgid "Плоская резьба, контуры, объем или орнаменты — подбираем форму резца."
+#~ msgstr ""
+#~ "Flat carving, contours, volume or ornaments — pick the right cutter shape."
+
+#~ msgid ""
+#~ "Ширина и радиус влияют на чистоту линии: начните с универсальных размеров."
+#~ msgstr "Width and radius affect line quality: start with universal sizes."
+
+#~ msgid ""
+#~ "Шлифовка и масло/лак дают красивый рисунок волокон и защиту поверхности."
+#~ msgstr "Sanding and oil/varnish reveal grain and protect the surface."
+
+#~ msgid "Хотите подбор под ваш проект?"
+#~ msgstr "Need a set for your project?"
+
+#~ msgid "Оставьте сообщение — мы предложим наборы под задачу и уровень навыков."
+#~ msgstr "Leave a message — we’ll suggest sets for your task and skill level."
+
+#~ msgid ""
+#~ "Ответим по выбору инструмента, наличию и доставке. Можно просто написать "
+#~ "«что хочу сделать»."
+#~ msgstr ""
+#~ "We’ll help with selection, availability and delivery. You can simply write "
+#~ "“what I want to make”."
+
+#~ msgid "Пн–Пт: 10:00–19:00"
+#~ msgstr "Mon–Fri: 10:00–19:00"
+
+#~ msgid "Полная форма обратной связи и карта — на странице контактов."
+#~ msgstr "Full contact form and map are on the contacts page."
+
+#~ msgid "Перейти к содержимому"
+#~ msgstr "Skip to content"
+
+#~ msgid "Открыть меню"
+#~ msgstr "Open menu"
+
+#~ msgid "Быстрые действия"
+#~ msgstr "Quick actions"
+
+#~ msgid "Переключение языка"
+#~ msgstr "Language switch"
+
+#~ msgid "Нижний колонтитул"
+#~ msgstr "Footer"
+
+#~ msgid "интернет-магазин"
+#~ msgstr "online store"
+
+#~ msgid "Поддержка"
+#~ msgstr "Support"
+
+#~ msgid "Помощь с подбором"
+#~ msgstr "Help choosing"
+
+#~ msgid "Вопросы и ответы"
+#~ msgstr "Q&A"
+
+#~ msgid "Хлебные крошки"
+#~ msgstr "Breadcrumbs"
+
+#~ msgid "Миниатюры"
+#~ msgstr "Thumbnails"
+
+#~ msgid "Основное фото"
+#~ msgstr "Main photo"
+
+#, python-format
+#~ msgid "Фото %(forloop.counter)s"
+#~ msgstr "Photo %(forloop.counter)s"
+
+#~ msgid "Выберите миниатюру для смены фото."
+#~ msgstr "Select a thumbnail to change the photo."
+
+#~ msgid "Нет в наличии"
+#~ msgstr "Out of stock"
+
+#~ msgid "Размер и цвет учитываются при добавлении в корзину."
+#~ msgstr "Size and color are included when adding to cart."
 
 #, fuzzy
-#| msgid "Помощь с подбором"
-msgid "Напишите — подберём"
-msgstr "Help choosing"
+#~ msgid "Быстрые факты"
+#~ msgstr "Quick actions"
 
-msgid "Описание и характеристики"
-msgstr "Description and specs"
+#~ msgid "Рейтинг"
+#~ msgstr "Rating"
 
-#, fuzzy
-#| msgid "Написать нам"
-msgid "Описание"
-msgstr "Message us"
+#, python-format
+#~ msgid "%(rating)s (%(reviews)s отзывов)"
+#~ msgstr "%(rating)s (%(reviews)s reviews)"
 
-msgid "Особенности"
-msgstr "Features"
-
-msgid "О товаре"
-msgstr "About"
-
-msgid "Дополнительные характеристики можно уточнить у поддержки."
-msgstr "Additional specs can be clarified with support."
-
-msgid ""
-"Условия доставки и оплаты — на странице «Доставка». Обычно отправка в "
-"течение 1–2 рабочих дней после подтверждения заказа."
-msgstr ""
-"Delivery and payment terms are on the “Delivery” page. Usually ships within "
-"1–2 business days after order confirmation."
+#~ msgid "Не уверены?"
+#~ msgstr "Not sure?"
 
 #, fuzzy
-#| msgid "оценка покупателей"
-msgid "С этим покупают"
-msgstr "customer rating"
+#~ msgid "Напишите — подберём"
+#~ msgstr "Help choosing"
+
+#~ msgid "Описание и характеристики"
+#~ msgstr "Description and specs"
+
+#~ msgid "Особенности"
+#~ msgstr "Features"
+
+#~ msgid "О товаре"
+#~ msgstr "About"
+
+#~ msgid "Дополнительные характеристики можно уточнить у поддержки."
+#~ msgstr "Additional specs can be clarified with support."
+
+#~ msgid ""
+#~ "Условия доставки и оплаты — на странице «Доставка». Обычно отправка в "
+#~ "течение 1–2 рабочих дней после подтверждения заказа."
+#~ msgstr ""
+#~ "Delivery and payment terms are on the “Delivery” page. Usually ships within "
+#~ "1–2 business days after order confirmation."
 
 #, fuzzy
-#| msgid "Товары скоро появятся в каталоге."
-msgid "Похожие товары появятся позже."
-msgstr "Products will appear in the catalog soon."
+#~ msgid "С этим покупают"
+#~ msgstr "customer rating"
 
 #, fuzzy
-#| msgid "Популярные товары"
-msgid "Похожие товары"
-msgstr "Popular products"
+#~ msgid "Похожие товары появятся позже."
+#~ msgstr "Products will appear in the catalog soon."
 
-msgid "Из той же категории и популярное рядом."
-msgstr "From the same category — plus popular items nearby."
-
-#, fuzzy
-#| msgid "Категории товаров"
-msgid "Пока нет похожих товаров."
-msgstr "Product categories"
+#~ msgid "Из той же категории и популярное рядом."
+#~ msgstr "From the same category — plus popular items nearby."
 
 #, fuzzy
-#| msgid "Помощь с подбором"
-msgid "Нужна помощь с подбором?"
-msgstr "Help choosing"
-
-msgid "Опишите задачу — подскажем комплектацию."
-msgstr "Describe your needs — we’ll suggest the right set."
+#~ msgid "Пока нет похожих товаров."
+#~ msgstr "Product categories"
 
 #, fuzzy
-#| msgid "Написать нам"
-msgid "Написать"
-msgstr "Message us"
+#~ msgid "Нужна помощь с подбором?"
+#~ msgstr "Help choosing"
 
-msgid "Товар добавлен в корзину."
-msgstr "Item added to cart."
+#~ msgid "Опишите задачу — подскажем комплектацию."
+#~ msgstr "Describe your needs — we’ll suggest the right set."
 
-msgid "Не удалось добавить в корзину"
-msgstr "Couldn’t add to cart"
+#, fuzzy
+#~ msgid "Написать"
+#~ msgstr "Message us"
+
+#~ msgid "Товар добавлен в корзину."
+#~ msgstr "Item added to cart."

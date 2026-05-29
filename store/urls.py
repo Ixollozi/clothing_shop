@@ -16,7 +16,10 @@ router.register(r'cart', CartViewSet, basename='cart')
 router.register(r'orders', OrderViewSet, basename='order')
 
 # API URLs - только для /api/
+from .bind_views import telegram_registrar_bind
+
 urlpatterns = [
     path('', include(router.urls)),
     path('contact/submit/', submit_contact_message, name='submit_contact_message'),
+    path('internal/telegram-bind/', telegram_registrar_bind, name='telegram_registrar_bind'),
 ]

@@ -3,7 +3,7 @@ from store.models import Category, Product, ProductImage, Feature, ProductFeatur
 
 
 class Command(BaseCommand):
-    help = 'Загружает примерные данные в базу'
+    help = 'Загружает примерные данные: категории (в т.ч. национальная одежда), товары с image_url, блоки витрины.'
 
     def handle(self, *args, **options):
         # Создание категорий
@@ -12,6 +12,7 @@ class Command(BaseCommand):
             {'name': 'Женская одежда', 'slug': 'womens-clothing'},
             {'name': 'Детская одежда', 'slug': 'kids-clothing'},
             {'name': 'Аксессуары', 'slug': 'accessories'},
+            {'name': 'Национальная одежда', 'slug': 'national-wear'},
         ]
 
         categories = {}
@@ -121,6 +122,91 @@ class Command(BaseCommand):
                 'available_sizes': 'L',
                 'available_colors': 'Черный, Серый, Синий',
                 'stock': 28,
+            },
+            # ——— Дополнительные примеры (национальный стиль / витрина) ———
+            {
+                'name': 'Атласный платок с орнаментом',
+                'slug': 'atlas-scarf-ornament',
+                'description': 'Лёгкий атласный платок с традиционным узором. Подойдёт к платью или пальто.',
+                'price': 18.50,
+                'old_price': 22.00,
+                'category': 'accessories',
+                'image_url': 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=600',
+                'available_sizes': '',
+                'available_colors': 'Бордовый, Изумрудный, Золотой',
+                'stock': 45,
+            },
+            {
+                'name': 'Вышитый чимён',
+                'slug': 'embroidered-chapan',
+                'description': 'Хлопковый чимён с ручной вышивкой по вороту и манжетам. Свободный крой, удобная длина.',
+                'price': 120.00,
+                'old_price': 145.00,
+                'category': 'national-wear',
+                'image_url': 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600',
+                'available_sizes': 'M, L, XL',
+                'available_colors': 'Тёмно-синий, Коричневый',
+                'stock': 12,
+            },
+            {
+                'name': 'Платье «Атлас» midi',
+                'slug': 'atlas-midi-dress',
+                'description': 'Платье из мягкого атласа, запах или потайная молния. Для праздника и фотосессии.',
+                'price': 72.00,
+                'old_price': None,
+                'category': 'national-wear',
+                'image_url': 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600',
+                'available_sizes': 'S, M, L',
+                'available_colors': 'Изумрудный, Чёрный, Пудра',
+                'stock': 18,
+            },
+            {
+                'name': 'Детский жилет с узором',
+                'slug': 'kids-patterned-vest',
+                'description': 'Тёплый жилет на подкладке для детей 4–10 лет. Застёжки-кнопки, карманы.',
+                'price': 34.00,
+                'old_price': None,
+                'category': 'kids-clothing',
+                'image_url': 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600',
+                'available_sizes': 'S, M',
+                'available_colors': 'Бежевый, Серый',
+                'stock': 22,
+            },
+            {
+                'name': 'Кожаный ремень ручной работы',
+                'slug': 'handmade-leather-belt',
+                'description': 'Полноценная кожа, матовая пряжка. Ширина 3,5 см, длина под заказ.',
+                'price': 29.00,
+                'old_price': 35.00,
+                'category': 'accessories',
+                'image_url': 'https://images.unsplash.com/photo-1624378515193-66bd0545ee43?w=600',
+                'available_sizes': '',
+                'available_colors': 'Чёрный, Коньяк',
+                'stock': 60,
+            },
+            {
+                'name': 'Тюбетейка шёлковая',
+                'slug': 'silk-skullcap',
+                'description': 'Лёгкая тюбетейка из шёлковой смеси, комфорт в жаркую погоду.',
+                'price': 14.00,
+                'old_price': None,
+                'category': 'accessories',
+                'image_url': 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600',
+                'available_sizes': '',
+                'available_colors': 'Белый, Чёрный, Тёмно-синий',
+                'stock': 80,
+            },
+            {
+                'name': 'Льняная рубаха «Термез»',
+                'slug': 'linen-shirt-termiz',
+                'description': 'Плотный лён, свободный крой, пуговицы из кокоса. Для повседневной носки и путешествий.',
+                'price': 44.00,
+                'old_price': None,
+                'category': 'mens-clothing',
+                'image_url': 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600',
+                'available_sizes': 'M, L, XL, XXL',
+                'available_colors': 'Натуральный лён, Белый',
+                'stock': 33,
             },
         ]
 
