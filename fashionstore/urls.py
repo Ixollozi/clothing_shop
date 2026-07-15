@@ -6,8 +6,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from store.admin_context import get_admin_index_context
-from store.views_frontend import (
-    index, catalog, product_detail, cart, about, contact, delivery, faq
+from store.platform.theme_views import (
+    about,
+    cart,
+    catalog,
+    contact,
+    delivery,
+    faq,
+    index,
+    product_detail,
 )
 from store.admin_config import unified_config_view
 
@@ -17,8 +24,11 @@ _original_admin_index = admin.site.index
 
 def admin_index_view(request, extra_context=None):
     extra_context = extra_context or {}
-    extra_context.update(get_admin_index_context())
-    # Вызываем оригинальный метод, а не переопределенный
+    try:
+        extra_context.update(get_admin_index_context())
+    except Exception:
+        # Migrations / empty DB must not blank the admin shell
+        pass
     return _original_admin_index(request, extra_context)
 
 admin.site.index = admin_index_view
@@ -27,8 +37,8 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('admin/config/', admin.site.admin_view(unified_config_view), name='admin_unified_config'),
     path('admin/', admin.site.urls),
-    path('api/', include('store.urls')),  # API endpoints
-    # Frontend pages
+    path('api/', include('store.urls')),
+    # Frontend (classic theme OR ceramics SPA depending on site.theme)
     path('', index, name='index'),
     path('catalog/', catalog, name='catalog'),
     path('catalog/<slug:slug>/', product_detail, name='product'),
@@ -42,7 +52,21 @@ urlpatterns = [
 
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    from django.urls import re_path
+    from django.contrib.staticfiles.views import serve as staticfiles_serve
 
+    if getattr(settings, 'PLATFORM_MODE', False):
+        from store.platform.media_views import site_media_serve
+
+        urlpatterns += [
+            re_path(r'^media/(?P<path>.*)$', site_media_serve),
+        ]
+    else:
+        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    # Serve via finders (store/static + theme) — not empty STATIC_ROOT.
+    # runserver also uses SiteAwareStaticFilesHandler; this covers Test Client / WSGI DEBUG.
+    urlpatterns += [
+        re_path(r'^static/(?P<path>.*)$', staticfiles_serve, kwargs={'insecure': True}),
+    ]
 

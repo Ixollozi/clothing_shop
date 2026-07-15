@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load translation_tags %}
+
+{% block meta_description %}{% trans "Интернет-магазин национальной одежды Узбекистана: современный стиль, традиционные ткани, понятный выбор моделей." %}{% endblock %}
+
+{% block title %}{{ store_title|default:store_name }}{% endblock %}
+
+{% block content %}
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <div class="hero-badges" aria-label="{% trans 'Преимущества' %}">
+              <span class="badge">{% trans "Ручная работа" %}</span>
+              <span class="badge badge-accent">{% trans "Хлопок и шелк" %}</span>
+              <span class="badge">{% trans "Доставка по Узбекистану" %}</span>
+            </div>
+
+            <h1 class="hero-title">{% trans "Национальная одежда Узбекистана - современно и красиво" %}</h1>
+            <p class="hero-lead">
+              {% trans "Подберите образ для праздника или повседневной жизни. Акцент на ткани, аккуратный крой и понятный выбор моделей." %}
+            </p>
+
+            <div class="hero-ctas">
+              <a class="btn btn-primary" href="#featured">{% trans "Смотреть витрину" %}</a>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="pattern-card">
+              <div class="pattern-top">
+                <span class="pattern-chip">{% trans "Сейчас в тренде" %}</span>
+                {% with hero_product=products.0 %}
+                  {% if hero_product %}
+                    <span class="pattern-title">{{ hero_product.name }}</span>
+                  {% else %}
+                    <span class="pattern-title">{% trans "Товар дня" %}</span>
+                  {% endif %}
+                {% endwith %}
+              </div>
+              <div class="pattern-art" aria-label="{% trans 'Товар дня' %}">
+                {% with hero_product=products.0 %}
+                  {% if hero_product %}
+                    <a class="hero-product" href="{% url 'product_detail' slug=hero_product.slug %}">
+                      <div class="hero-product-media" aria-hidden="true">
+                        {% if hero_product.image %}
+                          <img class="hero-product-img" src="{{ hero_product.image.url }}" alt="" loading="lazy" />
+                        {% elif hero_product.image_url %}
+                          <img class="hero-product-img" src="{{ hero_product.image_url }}" alt="" loading="lazy" />
+                        {% else %}
+                          <div class="hero-product-fallback"></div>
+                        {% endif %}
+                      </div>
+                      <div class="hero-product-body">
+                        <div class="hero-product-title">{% trans "Товар дня" %}</div>
+                        <div class="hero-product-price">
+                          <span class="price">{{ hero_product.price|format_price }}</span>
+                          <span class="currency">сум</span>
+                        </div>
+                      </div>
+                    </a>
+                  {% else %}
+                    <div class="hero-product-empty">{% trans "Товар скоро появится." %}</div>
+                  {% endif %}
+                {% endwith %}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-featured" id="featured">
+        <div class="container">
+          <div class="section-head section-head-wide">
+            <div>
+              <h2 class="section-title">{% trans "Витрина товаров" %}</h2>
+              <p class="section-sub">{% trans "Подборка популярных моделей с красивыми фактурами." %}</p>
+            </div>
+
+            <div class="filter-row" aria-label="{% trans 'Фильтры' %}">
+              <span class="filter-label">{% trans "Категории:" %}</span>
+              <a class="chip chip-active" href="{% url 'catalog' %}#products">Все</a>
+              {% for category in categories %}
+                <a class="chip" href="{% url 'catalog' %}?category={{ category.slug }}#products">{{ category.name }}</a>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="product-grid">
+            {% for product in products %}
+              {% cycle '1' '2' '3' '4' '5' '6' as bg silent %}
+              <article class="product">
+                <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                  <div class="product-media" aria-hidden="true">
+                    {% if product.image %}
+                      <img class="product-img" src="{{ product.image.url }}" alt="" loading="lazy" />
+                    {% elif product.image_url %}
+                      <img class="product-img" src="{{ product.image_url }}" alt="" loading="lazy" />
+                    {% else %}
+                      <div class="product-bg product-bg-{{ bg }}"></div>
+                    {% endif %}
+                    <span class="product-tag">{% trans "Хит" %}</span>
+                  </div>
+                </a>
+                <div class="product-body">
+                  <h3 class="product-title">
+                    <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                      {{ product.name }}
+                    </a>
+                  </h3>
+                  <div class="product-rating">
+                    <div class="stars" aria-label="{% blocktrans with r=product.rating|default:0 %}Рейтинг {{ r }} из 5{% endblocktrans %}">
+                      <span class="stars-fill" style="--fill: {% widthratio product.rating|default:0 5 100 %}%"></span>
+                    </div>
+                    <span class="rating-text">{{ product.rating|default:"—" }}</span>
+                  </div>
+                  <div class="product-bottom">
+                    <div class="product-price">
+                      <span class="price">{{ product.price|format_price }}</span>
+                      <span class="currency">сум</span>
+                    </div>
+                    {% if product.id %}
+                      <a
+                        class="btn btn-cart js-add-to-cart"
+                        href="{% url 'cart' %}"
+                        data-product-id="{{ product.id }}"
+                        data-quantity="1"
+                      >{% trans "В корзину" %}</a>
+                    {% else %}
+                      <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">{% trans "Подробнее" %}</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </article>
+            {% empty %}
+              <div class="section-sub">{% trans "Товары скоро появятся." %}</div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-why">
+        <div class="container">
+          <div class="why-grid">
+            <div class="why-copy">
+              <h2 class="section-title">{% trans "Почему покупают у нас" %}</h2>
+              <p class="section-sub">
+                {% trans "Упор на ткань, аккуратный крой и понятный сервис, чтобы выбрать модель было легко." %}
+              </p>
+              <div class="why-list">
+                <div class="why-item">
+                  <span class="why-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M12 2L20 6V14C20 18 16.5 21.5 12 22C7.5 21.5 4 18 4 14V6L12 2Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M9.2 12.2L11.1 14.1L15.3 9.9"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <div class="why-title">{% trans "Проверенные материалы" %}</div>
+                    <div class="why-sub">{% trans "Подбираем ткани, приятные к телу." %}</div>
+                  </div>
+                </div>
+                <div class="why-item">
+                  <span class="why-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3 12H21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                      <path
+                        d="M14 7L19 12L14 17"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M10 7L5 12L10 17"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <div class="why-title">{% trans "Удобная покупка" %}</div>
+                    <div class="why-sub">{% trans "Карточки и фильтры, чтобы не запутаться." %}</div>
+                  </div>
+                </div>
+                <div class="why-item">
+                  <span class="why-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                      />
+                      <path
+                        d="M12 7V12L15 14"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <div>
+                    <div class="why-title">{% trans "Быстрая доставка" %}</div>
+                    <div class="why-sub">{% trans "Оперативно и бережно упаковываем." %}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="why-panel">
+              <div class="panel-card">
+                <div class="panel-kicker">{% trans "Готовые подборки" %}</div>
+                <div class="panel-title">{% trans "Образы под повод и сезон" %}</div>
+                <div class="panel-rows">
+                  <div class="panel-row">
+                    <span class="dot dot-1" aria-hidden="true"></span>
+                    <span class="panel-row-text">{% trans "Праздник и торжество" %}</span>
+                  </div>
+                  <div class="panel-row">
+                    <span class="dot dot-2" aria-hidden="true"></span>
+                    <span class="panel-row-text">{% trans "Повседневный стиль" %}</span>
+                  </div>
+                  <div class="panel-row">
+                    <span class="dot dot-3" aria-hidden="true"></span>
+                    <span class="panel-row-text">{% trans "Теплый сезон" %}</span>
+                  </div>
+                </div>
+                <a class="btn btn-primary btn-full" href="#featured">{% trans "Выбрать образ" %}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.js-add-to-cart').forEach(function (el) {
+        el.addEventListener('click', async function (e) {
+          e.preventDefault();
+          const productId = this.getAttribute('data-product-id');
+          const quantity = Number(this.getAttribute('data-quantity') || 1);
+          if (!productId) return;
+
+          const res = await window.StoreApi.json('/api/cart/add_item/', {
+            method: 'POST',
+            body: { product_id: Number(productId), quantity: quantity, size: '', color: '' },
+          });
+
+          if (res.ok) {
+            await window.StoreApi.updateCartBadge();
+          } else {
+            // fallback: просто открыть корзину, чтобы пользователь увидел проблему
+            window.location.href = this.getAttribute('href') || '{% url "cart" %}';
+          }
+        });
+      });
+    });
+  </script>
+{% endblock %}
+

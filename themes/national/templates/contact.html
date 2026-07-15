@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_description %}{% trans "Контакты: вопросы по заказам, товарам и доставке." %}{% endblock %}
+
+{% block title %}{% trans "Контакты" %} | {{ store_name|default:"Fashion Store" }}{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="container">
+      <div class="catalog-crumbs" aria-label="Хлебные крошки">
+        <a href="{% url 'index' %}">{% trans "Главная" %}</a>
+        <span aria-hidden="true">/</span>
+        <span>{% trans "Контакты" %}</span>
+      </div>
+
+      <div class="section-head">
+        <h1 class="section-title" style="margin: 0;">{% trans "Контакты" %}</h1>
+        <p class="section-sub">{% trans "Напишите нам — мы ответим и поможем подобрать модель." %}</p>
+      </div>
+
+      <div class="catalog-layout" style="grid-template-columns: 1fr 360px;">
+        <section class="catalog-main" aria-label="{% trans 'Форма обратной связи' %}">
+          <div class="panel-card" style="border-radius: var(--radius2);">
+            <div class="panel-title">{% trans "Сообщение" %}</div>
+            <div class="panel-rows" style="margin-top: 14px;">
+              <form id="contact-form" class="newsletter-form" aria-label="{% trans 'Форма контактов' %}">
+                {% csrf_token %}
+                <div class="newsletter-row" style="grid-template-columns: 1fr 1fr;">
+                  <input id="name" class="newsletter-input" type="text" placeholder="{% trans 'Ваше имя *' %}" required />
+                  <input id="email" class="newsletter-input" type="email" placeholder="{% trans 'Email *' %}" required />
+                </div>
+                <div class="newsletter-row" style="grid-template-columns: 1fr 1fr;">
+                  <input id="phone" class="newsletter-input" type="tel" placeholder="{% trans 'Телефон' %}" />
+                  <select id="subject" class="newsletter-input" required aria-label="{% trans 'Тема сообщения' %}">
+                    <option value="" disabled selected>{% trans "Тема *" %}</option>
+                    <option value="order">{% trans "Вопрос по заказу" %}</option>
+                    <option value="product">{% trans "Вопрос по товару" %}</option>
+                    <option value="delivery">{% trans "Доставка" %}</option>
+                    <option value="return">{% trans "Возврат" %}</option>
+                    <option value="other">{% trans "Другое" %}</option>
+                  </select>
+                </div>
+                <div class="newsletter-row" style="grid-template-columns: 1fr;">
+                  <textarea
+                    id="message"
+                    class="newsletter-input"
+                    placeholder="{% trans 'Сообщение *' %}"
+                    required
+                    rows="6"
+                    style="resize: vertical; min-height: 140px;"
+                  ></textarea>
+                </div>
+
+                <div class="newsletter-row" style="grid-template-columns: 1fr auto;">
+                  <div class="newsletter-privacy" id="contact-status" aria-live="polite"></div>
+                  <button class="btn btn-primary" type="submit" id="contact-submit">{% trans "Отправить" %}</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <aside class="catalog-sidebar" aria-label="{% trans 'Контактная информация' %}">
+          <div class="filter-details" style="padding: 14px 0 0;">
+            <div class="filter-summary" style="cursor: default;">{% trans "Связаться" %}</div>
+            <div class="filter-body" style="margin-top: 12px;">
+              <div class="catalog-check" style="cursor: default;">
+                <span>{% trans "Телефон" %}</span>
+                <span style="margin-left: auto;">{{ contact_info.phone|default:"+998 (__) ___-__-__" }}</span>
+              </div>
+              <div class="catalog-check" style="cursor: default;">
+                <span>Email</span>
+                <span style="margin-left: auto;">{{ contact_info.email|default:"support@uzbekfolk.example" }}</span>
+              </div>
+              <div class="catalog-check" style="cursor: default;">
+                <span>{% trans "Адрес" %}</span>
+                <span style="margin-left: auto;">{{ contact_info.address.full|default:"Ташкент, Узбекистан" }}</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <div
+    id="i18n-contact"
+    hidden
+    data-required="{% trans 'Заполните все поля со звёздочкой.' %}"
+    data-sending="{% trans 'Отправка...' %}"
+    data-send-failed="{% trans 'Не удалось отправить сообщение' %}"
+    data-success="{% trans 'Сообщение отправлено. Спасибо!' %}"
+    data-generic-error="{% trans 'Ошибка при отправке.' %}"
+  ></div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const i18n = document.getElementById('i18n-contact');
+      const t = i18n ? i18n.dataset : {};
+      const form = document.getElementById('contact-form');
+      const submit = document.getElementById('contact-submit');
+      const status = document.getElementById('contact-status');
+
+      function setStatus(text, kind) {
+        if (!status) return;
+        status.textContent = text || '';
+        status.style.color = kind === 'error' ? '#b91c1c' : kind === 'success' ? '#166534' : '';
+      }
+
+      if (!form) return;
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        setStatus('', 'info');
+
+        const payload = {
+          name: document.getElementById('name')?.value || '',
+          email: document.getElementById('email')?.value || '',
+          phone: document.getElementById('phone')?.value || '',
+          subject: document.getElementById('subject')?.value || '',
+          message: document.getElementById('message')?.value || '',
+        };
+
+        if (!payload.name || !payload.email || !payload.subject || !payload.message) {
+          setStatus(t.required || '', 'error');
+          return;
+        }
+
+        submit.disabled = true;
+        const old = submit.textContent;
+        submit.textContent = t.sending || old;
+
+        try {
+          const res = await window.StoreApi.json('/api/contact/submit/', { method: 'POST', body: payload });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok || !data.success) {
+            throw new Error(data.error || t.sendFailed || '');
+          }
+          form.reset();
+          setStatus(t.success || '', 'success');
+        } catch (err) {
+          setStatus(err.message || t.genericError || '', 'error');
+        } finally {
+          submit.disabled = false;
+          submit.textContent = old;
+        }
+      });
+    });
+  </script>
+{% endblock %}

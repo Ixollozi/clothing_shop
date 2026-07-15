@@ -1,0 +1,157 @@
+﻿{% load static i18n %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'ru' }}">
+<!-- theme:national -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="{% block meta_description %}{% firstof store_description seo_config.meta_description '' %}{% endblock %}" />
+    <meta name="keywords" content="{% block meta_keywords %}{% firstof seo_config.meta_keywords '' %}{% endblock %}" />
+    {% block meta %}{% endblock %}
+    <title>{% block title %}{{ store_title|default:store_name }}{% endblock %}</title>
+    <meta name="csrf-token" content="{{ csrf_token }}" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{% trans "Перейти к содержимому" %}</a>
+
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="logo" href="{% url 'index' %}" aria-label="{% trans 'На главную' %}">
+          <span class="logo-text">
+            <span class="logo-title">{{ store_name|default:'Fashion Store' }}</span>
+            <span class="logo-sub">{{ store_title|default:store_name }}</span>
+          </span>
+        </a>
+
+        <nav class="nav-desktop" aria-label="{% trans 'Основная навигация' %}">
+          <a class="nav-link" href="{% url 'catalog' %}#products">{% trans "Каталог" %}</a>
+          <a class="nav-link" href="{% url 'about' %}">{% trans "О нас" %}</a>
+          <a class="nav-link" href="{% url 'faq' %}">FAQ</a>
+          <a class="nav-link" href="{% url 'contact' %}">{% trans "Контакты" %}</a>
+        </nav>
+
+        <div class="top-actions">
+          <form class="lang-switch" action="{% url 'set_language' %}" method="post" aria-label="{% trans 'Переключение языка' %}">
+            {% csrf_token %}
+            {% get_current_language as CURRENT_LANGUAGE %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+            <label class="sr-only" for="lang">{% trans "Язык" %}</label>
+            <select id="lang" name="language" class="sort-select" onchange="this.form.submit()">
+              {% get_available_languages as LANGUAGES %}
+              {% for lang_code, lang_name in LANGUAGES %}
+                <option value="{{ lang_code }}"{% if lang_code == CURRENT_LANGUAGE %} selected{% endif %}>{{ lang_code|upper }}</option>
+              {% endfor %}
+            </select>
+          </form>
+
+          <a class="cart" href="{% url 'cart' %}" aria-label="{% trans 'Корзина' %}">
+            <span id="cart-badge" class="cart-badge" aria-hidden="true" style="display: none;">0</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.7 9.2L6 5H3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+              <path
+                d="M6.9 9.2H20.7L19.3 17.3C19.2 18 18.6 18.6 17.8 18.6H8.1C7.3 18.6 6.7 18 6.6 17.3L5.2 10.5C5.1 9.9 5.6 9.2 6.2 9.2H6.9Z"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M9.2 21C9.6 20.4 10.3 20 11.1 20C11.9 20 12.6 20.4 13.1 21"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">{% block content %}{% endblock %}</main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-left">
+          <div class="footer-logo">{{ store_name|default:'Fashion Store' }}</div>
+          <div class="footer-sub">{{ store_description|default:'' }}</div>
+          <div class="footer-meta">© {% now "Y" %}.</div>
+        </div>
+
+        <div class="footer-cols">
+          <div class="footer-col">
+            <div class="footer-col-title">{% trans "Покупателям" %}</div>
+            <a class="footer-link" href="{% url 'catalog' %}#products">{% trans "Каталог" %}</a>
+            <a class="footer-link" href="{% url 'delivery' %}">{% trans "Доставка" %}</a>
+            <a class="footer-link" href="{% url 'faq' %}">FAQ</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">{% trans "Компания" %}</div>
+            <a class="footer-link" href="{% url 'about' %}">{% trans "О магазине" %}</a>
+            <a class="footer-link" href="{% url 'contact' %}">{% trans "Контакты" %}</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">{% trans "Контакты" %}</div>
+            <div class="footer-text">{{ contact_info.email|default:"support@example.com" }}</div>
+            <div class="footer-text">{{ contact_info.address.full|default:"" }}</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + '=') {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      function getCsrfToken() {
+        return getCookie('csrftoken') || (document.querySelector('meta[name=\"csrf-token\"]') || {}).content || '';
+      }
+
+      async function updateCartBadge() {
+        const badge = document.getElementById('cart-badge');
+        if (!badge) return;
+        try {
+          const res = await fetch('/api/cart/current/', { credentials: 'same-origin' });
+          if (!res.ok) return;
+          const data = await res.json();
+          const count = Number(data.items_count || 0);
+          badge.textContent = String(count);
+          badge.style.display = count > 0 ? 'inline-flex' : 'none';
+        } catch (_) {}
+      }
+
+      window.StoreApi = {
+        getCsrfToken,
+        async json(url, { method = 'GET', body } = {}) {
+          const headers = { 'Content-Type': 'application/json' };
+          const csrf = getCsrfToken();
+          if (csrf && method !== 'GET' && method !== 'HEAD' && method !== 'OPTIONS') {
+            headers['X-CSRFToken'] = csrf;
+          }
+          const res = await fetch(url, {
+            method,
+            headers,
+            body: body ? JSON.stringify(body) : undefined,
+            credentials: 'same-origin',
+          });
+          return res;
+        },
+        updateCartBadge,
+      };
+
+      document.addEventListener('DOMContentLoaded', updateCartBadge);
+    </script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

@@ -279,12 +279,13 @@ def submit_contact_message(request):
 
         # Отправка уведомления в Telegram
         try:
-            from .telegram_notifier import telegram_notifier
-            telegram_notifier.notify_contact_message(contact_message)
+            from .notification_enqueue import enqueue_contact_message
+
+            enqueue_contact_message(contact_message.id)
         except Exception as e:
             import logging
             logger = logging.getLogger(__name__)
-            logger.error(f"Ошибка отправки уведомления о сообщении из контактов в Telegram: {e}")
+            logger.error(f'Ошибка постановки уведомления о сообщении из контактов в очередь: {e}')
 
         return Response(
             {'success': True, 'message': 'Сообщение успешно отправлено'},

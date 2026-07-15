@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load translation_tags %}
+
+{% block meta_description %}{% trans "Карточка товара: чапан, платья, костюмы и аксессуары." %}{% endblock %}
+
+{% block title %}{% trans "Товар" as str_product %}{{ product.name|default:str_product }} | {{ store_name|default:"Fashion Store" }}{% endblock %}
+
+{% block content %}{% trans "Товар" as str_product %}{% trans "Описание скоро появится." as str_no_description %}
+      <section class="section">
+        <div class="container">
+          <div class="product-crumbs" aria-label="{% trans 'Хлебные крошки' %}">
+            <a href="{% url 'index' %}">{% trans "Главная" %}</a>
+            <span aria-hidden="true">/</span>
+            <a href="{% url 'catalog' %}#products">{% trans "Каталог" %}</a>
+            <span aria-hidden="true">/</span>
+            <span>{{ product.name|default:str_product }}</span>
+          </div>
+
+          <div class="product-layout">
+            <div class="product-main">
+              <div class="product-gallery">
+                <div class="product-media-large" aria-hidden="true">
+                  {% if product.image %}
+                    <img class="product-img" src="{{ product.image.url }}" alt="{{ product.name|default:str_product }}" loading="lazy" />
+                  {% elif product.image_url %}
+                    <img class="product-img" src="{{ product.image_url }}" alt="{{ product.name|default:str_product }}" loading="lazy" />
+                  {% elif product.images.all %}
+                    {% with first_img=product.images.all.0 %}
+                      {% if first_img %}
+                        <img class="product-img" src="{{ first_img.image.url }}" alt="{{ product.name|default:str_product }}" loading="lazy" />
+                      {% else %}
+                        <div class="product-bg product-bg-4"></div>
+                      {% endif %}
+                    {% endwith %}
+                  {% else %}
+                    <div class="product-bg product-bg-4"></div>
+                  {% endif %}
+                </div>
+
+                {% if product.images.all and product.images.all|length > 1 %}
+                  <div class="product-thumbs" aria-label="{% trans 'Миниатюры' %}">
+                    {% for img in product.images.all %}
+                      <a class="thumb" href="#" aria-label="{% blocktrans with n=forloop.counter %}Фото {{ n }}{% endblocktrans %}">
+                        <img class="product-img" src="{{ img.image.url }}" alt="{% blocktrans with n=forloop.counter %}Фото {{ n }}{% endblocktrans %}" loading="lazy" />
+                      </a>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="product-info">
+                <h1 class="product-page-title">{{ product.name|default:str_product }}</h1>
+                <div class="product-page-sub">
+                  <div class="product-rating">
+                    <div class="stars" aria-label="{% blocktrans with r=product.rating|default:0 %}Рейтинг {{ r }} из 5{% endblocktrans %}">
+                      <span class="stars-fill" style="--fill: {% widthratio product.rating|default:0 5 100 %}%"></span>
+                    </div>
+                    <span class="rating-text">{{ product.rating|default:"—" }}</span>
+                  </div>
+                  <span class="product-page-sold">{% trans "Отзывы:" %} {{ product.reviews_count|default:0 }}</span>
+                </div>
+
+                <div class="product-badges">
+                  <span class="badge">{% trans "Хлопок" %}</span>
+                  <span class="badge badge-accent">{% trans "Ручная работа" %}</span>
+                  <span class="badge">{% trans "Доставка по Узбекистану" %}</span>
+                </div>
+
+                <div class="product-tabs" aria-label="{% trans 'Описание и характеристики' %}">
+                  <details class="tab" open>
+                    <summary class="tab-summary">{% trans "Описание" %}</summary>
+                    <div class="tab-body">
+                      {{ product.description|default:str_no_description|linebreaksbr }}
+                    </div>
+                  </details>
+
+                  <details class="tab">
+                    <summary class="tab-summary">{% trans "Характеристики" %}</summary>
+                    <div class="tab-body">
+                      {% if product_features %}
+                        {% for f in product_features %}
+                          <div><strong>{{ f.title }}</strong>{% if f.text %}: {{ f.text }}{% endif %}</div>
+                        {% endfor %}
+                      {% else %}
+                        {% trans "Характеристики скоро появятся." %}
+                      {% endif %}
+                    </div>
+                  </details>
+
+                  <details class="tab">
+                    <summary class="tab-summary">{% trans "Уход" %}</summary>
+                    <div class="tab-body">
+                      {% trans "Рекомендуется бережная стирка. Не перегревать при сушке и гладить по ткани." %}
+                    </div>
+                  </details>
+                </div>
+              </div>
+            </div>
+
+            <aside class="product-buy" aria-label="{% trans 'Покупка' %}">
+              <div class="buy-card">
+                <div class="buy-price">
+                  <span class="price">{{ product.price|default:"—"|format_price }}</span>
+                  <span class="currency">{% trans "сум" %}</span>
+                </div>
+
+                <div class="buy-row">
+                  <div class="buy-label">{% trans "Количество" %}</div>
+                  <div class="qty" aria-label="{% trans 'Количество' %}">
+                    <button class="qty-btn" type="button" aria-label="{% trans 'Уменьшить' %}">-</button>
+                    <input class="qty-input" id="qty" type="number" value="1" min="1" aria-label="{% trans 'Количество' %}" />
+                    <button class="qty-btn" type="button" aria-label="{% trans 'Увеличить' %}">+</button>
+                  </div>
+                </div>
+
+                {% if product.id %}
+                  <a
+                    class="btn btn-primary btn-full js-add-to-cart"
+                    href="{% url 'cart' %}"
+                    aria-label="{% trans 'Добавить в корзину' %}"
+                    data-product-id="{{ product.id }}"
+                  >
+                    {% trans "В корзину" %}
+                  </a>
+                {% else %}
+                  <a class="btn btn-soft btn-full" href="{% url 'catalog' %}#products">{% trans "Перейти в каталог" %}</a>
+                {% endif %}
+
+                <div class="buy-note">
+                  {% trans "Если нужна консультация по модели — напишите нам, мы поможем." %}
+                </div>
+              </div>
+
+              <div class="buy-service" aria-label="{% trans 'Сервис' %}">
+                <div class="service-item">
+                  <div class="service-icon" aria-hidden="true">✓</div>
+                  <div>
+                    <div class="service-title">{% trans "Качество" %}</div>
+                    <div class="service-sub">{% trans "Аккуратная сборка и приятная ткань" %}</div>
+                  </div>
+                </div>
+                <div class="service-item">
+                  <div class="service-icon" aria-hidden="true">↻</div>
+                  <div>
+                    <div class="service-title">{% trans "Удобно" %}</div>
+                    <div class="service-sub">{% trans "Понятный каталог и удобный заказ" %}</div>
+                  </div>
+                </div>
+                <div class="service-item">
+                  <div class="service-icon" aria-hidden="true">🚚</div>
+                  <div>
+                    <div class="service-title">{% trans "Доставка" %}</div>
+                    <div class="service-sub">{% trans "Доставляем по Узбекистану" %}</div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+
+          <div class="product-related" aria-label="{% trans 'Похожие товары' %}">
+            <div class="related-head">
+              <div class="section-title">{% trans "Похожие товары" %}</div>
+              <div class="section-sub">{% trans "Ещё варианты в том же стиле" %}</div>
+            </div>
+
+            <div class="product-grid">
+              {% for p in related_products %}
+                {% cycle '1' '2' '3' as rbg silent %}
+                <article class="product">
+                  <a href="{% url 'product_detail' slug=p.slug %}" style="text-decoration: none; color: inherit;">
+                    <div class="product-media" aria-hidden="true">
+                      {% if p.image %}
+                        <img class="product-img" src="{{ p.image.url }}" alt="{{ p.name }}" loading="lazy" />
+                      {% elif p.image_url %}
+                        <img class="product-img" src="{{ p.image_url }}" alt="{{ p.name }}" loading="lazy" />
+                      {% else %}
+                        <div class="product-bg product-bg-{{ rbg }}"></div>
+                      {% endif %}
+                      <span class="product-tag">{% trans "Товар" %}</span>
+                    </div>
+                  </a>
+                  <div class="product-body">
+                    <h3 class="product-title">
+                      <a href="{% url 'product_detail' slug=p.slug %}" style="text-decoration: none; color: inherit;">{{ p.name }}</a>
+                    </h3>
+                    <div class="product-bottom">
+                      <div class="product-price">
+                        <span class="price">{{ p.price|format_price }}</span>
+                        <span class="currency">{% trans "сум" %}</span>
+                      </div>
+                      {% if p.id %}
+                        <a class="btn btn-cart js-add-to-cart" href="{% url 'cart' %}" data-product-id="{{ p.id }}" data-quantity="1">{% trans "В корзину" %}</a>
+                      {% else %}
+                        <a class="btn btn-cart" href="{% url 'product_detail' slug=p.slug %}">{% trans "Подробнее" %}</a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </article>
+              {% empty %}
+                <div class="section-sub">{% trans "Похожие товары скоро появятся." %}</div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // qty controls
+      document.querySelectorAll('.qty').forEach(function (root) {
+        const input = root.querySelector('.qty-input');
+        const minus = root.querySelectorAll('.qty-btn')[0];
+        const plus = root.querySelectorAll('.qty-btn')[1];
+        if (!input || !minus || !plus) return;
+        minus.addEventListener('click', function () {
+          const v = Math.max(1, Number(input.value || 1) - 1);
+          input.value = String(v);
+        });
+        plus.addEventListener('click', function () {
+          const v = Math.max(1, Number(input.value || 1) + 1);
+          input.value = String(v);
+        });
+      });
+
+      // add to cart
+      document.querySelectorAll('.js-add-to-cart').forEach(function (el) {
+        el.addEventListener('click', async function (e) {
+          e.preventDefault();
+          const productId = this.getAttribute('data-product-id');
+          const qtyInput = document.getElementById('qty');
+          const quantity = qtyInput ? Math.max(1, Number(qtyInput.value || 1)) : 1;
+          if (!productId) return;
+
+          const res = await window.StoreApi.json('/api/cart/add_item/', {
+            method: 'POST',
+            body: { product_id: Number(productId), quantity: quantity, size: '', color: '' },
+          });
+
+          if (res.ok) {
+            await window.StoreApi.updateCartBadge();
+          } else {
+            window.location.href = this.getAttribute('href') || '{% url "cart" %}';
+          }
+        });
+      });
+    });
+  </script>
+{% endblock %}
+

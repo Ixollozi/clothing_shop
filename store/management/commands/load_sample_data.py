@@ -1,12 +1,22 @@
 from django.core.management.base import BaseCommand
-from store.models import Category, Product, ProductImage, Feature, ProductFeatureConfig
+
+from store.models import (
+    Category,
+    ContactMessage,
+    FAQ,
+    Feature,
+    Order,
+    OrderItem,
+    Partner,
+    Product,
+    ProductFeatureConfig,
+)
 
 
 class Command(BaseCommand):
     help = 'Загружает примерные данные в базу'
 
     def handle(self, *args, **options):
-        # Создание категорий
         categories_data = [
             {'name': 'Мужская одежда', 'slug': 'mens-clothing'},
             {'name': 'Женская одежда', 'slug': 'womens-clothing'},
@@ -18,231 +28,200 @@ class Command(BaseCommand):
         for cat_data in categories_data:
             category, created = Category.objects.get_or_create(
                 slug=cat_data['slug'],
-                defaults={'name': cat_data['name']}
+                defaults={'name': cat_data['name']},
             )
             categories[cat_data['slug']] = category
             if created:
-                self.stdout.write(self.style.SUCCESS(f'Создана категория: {category.name}'))
+                self.stdout.write(self.style.SUCCESS(f'Категория: {category.name}'))
 
-        # Создание товаров
         products_data = [
             {
                 'name': 'Классическая футболка',
                 'slug': 'classic-t-shirt',
-                'description': 'Классическая футболка из высококачественного хлопка. Идеально подходит для повседневной носки.',
-                'price': 20.00,
-                'old_price': 25.00,
+                'description': 'Классическая футболка из хлопка.',
+                'price': 189000,
+                'old_price': 220000,
                 'category': 'mens-clothing',
                 'image_url': 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400',
-                'available_sizes': 'M',
+                'available_sizes': 'S, M, L, XL',
                 'available_colors': 'Черный, Белый, Синий',
                 'stock': 50,
             },
             {
                 'name': 'Джинсы классические',
                 'slug': 'classic-jeans',
-                'description': 'Классические джинсы из качественного денима. Удобные и стильные.',
-                'price': 35.00,
+                'description': 'Классические джинсы из денима.',
+                'price': 349000,
                 'old_price': None,
                 'category': 'mens-clothing',
-                'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
-                'available_sizes': 'L',
+                'image_url': 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400',
+                'available_sizes': 'M, L, XL',
                 'available_colors': 'Синий, Черный',
                 'stock': 30,
             },
             {
                 'name': 'Элегантное платье',
                 'slug': 'elegant-dress',
-                'description': 'Элегантное платье для особых случаев. Красивая и стильная модель.',
-                'price': 50.00,
+                'description': 'Платье для особых случаев.',
+                'price': 459000,
                 'old_price': None,
                 'category': 'womens-clothing',
-                'image_url': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
-                'available_sizes': 'M',
-                'available_colors': 'Черный, Красный, Синий',
+                'image_url': 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400',
+                'available_sizes': 'S, M, L',
+                'available_colors': 'Черный, Красный',
                 'stock': 25,
             },
             {
                 'name': 'Демисезонная куртка',
                 'slug': 'demiseason-jacket',
-                'description': 'Демисезонная куртка для прохладной погоды. Стильная и практичная.',
-                'price': 60.00,
-                'old_price': None,
+                'description': 'Куртка для прохладной погоды.',
+                'price': 620000,
+                'old_price': 690000,
                 'category': 'mens-clothing',
                 'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
-                'available_sizes': 'L',
+                'available_sizes': 'M, L, XL',
                 'available_colors': 'Черный, Серый',
                 'stock': 20,
             },
             {
                 'name': 'Рубашка офисная',
                 'slug': 'office-shirt',
-                'description': 'Офисная рубашка из качественной ткани. Идеальна для делового стиля.',
-                'price': 25.00,
+                'description': 'Офисная рубашка.',
+                'price': 245000,
                 'old_price': None,
                 'category': 'mens-clothing',
-                'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
-                'available_sizes': 'M',
+                'image_url': 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400',
+                'available_sizes': 'S, M, L',
                 'available_colors': 'Белый, Голубой',
                 'stock': 40,
             },
             {
                 'name': 'Свитшот уютный',
                 'slug': 'cozy-sweatshirt',
-                'description': 'Уютный свитшот для комфортной носки. Мягкий и теплый.',
-                'price': 40.00,
-                'old_price': None,
-                'category': 'mens-clothing',
-                'image_url': 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
-                'available_sizes': 'L',
-                'available_colors': 'Серый, Черный',
-                'stock': 35,
-            },
-            {
-                'name': 'Юбка миди',
-                'slug': 'midi-skirt',
-                'description': 'Стильная юбка миди длины. Подходит для офиса и повседневной носки.',
-                'price': 28.00,
-                'old_price': None,
-                'category': 'womens-clothing',
-                'image_url': 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400',
-                'available_sizes': 'M',
-                'available_colors': 'Черный, Серый',
-                'stock': 30,
-            },
-            {
-                'name': 'Брюки классические',
-                'slug': 'classic-pants',
-                'description': 'Классические брюки для делового стиля. Качественная ткань и отличный крой.',
-                'price': 33.00,
+                'description': 'Мягкий свитшот.',
+                'price': 275000,
                 'old_price': None,
                 'category': 'mens-clothing',
                 'image_url': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
-                'available_sizes': 'L',
-                'available_colors': 'Черный, Серый, Синий',
-                'stock': 28,
+                'available_sizes': 'M, L, XL',
+                'available_colors': 'Серый, Черный',
+                'stock': 35,
             },
         ]
 
+        products = []
         for product_data in products_data:
             category = categories[product_data.pop('category')]
             image_url = product_data.pop('image_url', '')
-            
-            # Используем внешние URL изображений для примера
             product, created = Product.objects.get_or_create(
                 slug=product_data['slug'],
                 defaults={
                     **product_data,
                     'category': category,
-                    'rating': 4.0,
+                    'rating': 4.5,
                     'reviews_count': 12,
-                    'image_url': image_url,  # Используем внешний URL
-                }
-            )
-            
-            if created:
-                self.stdout.write(self.style.SUCCESS(f'Создан товар: {product.name}'))
-                # Сохраняем URL изображения в комментарии или отдельном поле
-                # В реальном проекте используйте загрузку файлов
-            else:
-                self.stdout.write(self.style.WARNING(f'Товар уже существует: {product.name}'))
-
-        # Создание features (особенностей магазина)
-        features_data = [
-            {
-                'icon': 'fas fa-shipping-fast',
-                'title': 'Быстрая доставка',
-                'description': 'Доставка по всему Узбекистану за 2-5 дней',
-                'order': 0,
-            },
-            {
-                'icon': 'fas fa-undo',
-                'title': 'Легкий возврат',
-                'description': 'Возврат товара в течение 14 дней',
-                'order': 1,
-            },
-            {
-                'icon': 'fas fa-shield-alt',
-                'title': 'Гарантия качества',
-                'description': 'Только оригинальные товары',
-                'order': 2,
-            },
-            {
-                'icon': 'fas fa-headset',
-                'title': 'Поддержка 24/7',
-                'description': 'Наша служба поддержки всегда доступна',
-                'order': 3,
-            },
-        ]
-
-        for feature_data in features_data:
-            feature, created = Feature.objects.get_or_create(
-                title=feature_data['title'],
-                defaults={
-                    'icon': feature_data['icon'],
-                    'description': feature_data['description'],
-                    'order': feature_data['order'],
+                    'image_url': image_url,
                     'is_active': True,
-                }
+                },
             )
+            if not created and product.price < 1000:
+                product.price = product_data['price']
+                product.old_price = product_data.get('old_price')
+                product.save(update_fields=['price', 'old_price'])
+            products.append(product)
             if created:
-                self.stdout.write(self.style.SUCCESS(f'Создана особенность: {feature.title}'))
-            else:
-                # Обновляем существующую запись
-                feature.icon = feature_data['icon']
-                feature.description = feature_data['description']
-                feature.order = feature_data['order']
-                feature.is_active = True
-                feature.save()
-                self.stdout.write(self.style.WARNING(f'Обновлена особенность: {feature.title}'))
+                self.stdout.write(self.style.SUCCESS(f'Товар: {product.name}'))
 
-        # Создаем примерные features товара, если их нет
+        for feature_data in [
+            {'icon': 'fas fa-shipping-fast', 'title': 'Быстрая доставка', 'description': '2–5 дней', 'order': 0},
+            {'icon': 'fas fa-undo', 'title': 'Лёгкий возврат', 'description': '14 дней', 'order': 1},
+            {'icon': 'fas fa-shield-alt', 'title': 'Гарантия качества', 'description': 'Проверенные товары', 'order': 2},
+        ]:
+            Feature.objects.get_or_create(
+                title=feature_data['title'],
+                defaults={**feature_data, 'is_active': True},
+            )
+
         if not ProductFeatureConfig.objects.exists():
-            # Feature 1: Бесплатная доставка
-            feature1 = ProductFeatureConfig.objects.create(
+            ProductFeatureConfig.objects.create(
                 title='Бесплатная доставка',
-                title_ru='Бесплатная доставка',
-                title_en='Free delivery',
-                title_uz='Bepul yetkazib berish',
                 icon='fas fa-shipping-fast',
-                text='Бесплатная доставка от 300 000 сум',
-                text_ru='Бесплатная доставка от 300 000 сум',
-                text_en='Free delivery from 300 000 сум',
-                text_uz='300 000 so\'mdan bepul yetkazib berish',
+                text='От 300 000 сум',
                 order=1,
-                is_active=True
+                is_active=True,
             )
-            
-            # Feature 2: Возврат
-            feature2 = ProductFeatureConfig.objects.create(
-                title='Возврат',
-                title_ru='Возврат',
-                title_en='Return',
-                title_uz='Qaytarish',
-                icon='fas fa-undo',
-                text='Возврат в течение 14 дней',
-                text_ru='Возврат в течение 14 дней',
-                text_en='Return within 14 days',
-                text_uz='14 kun ichida qaytarish',
-                order=2,
-                is_active=True
-            )
-            
-            # Feature 3: Гарантия качества
-            feature3 = ProductFeatureConfig.objects.create(
-                title='Гарантия качества',
-                title_ru='Гарантия качества',
-                title_en='Quality guarantee',
-                title_uz='Sifat kafolati',
-                icon='fas fa-shield-alt',
-                text='Гарантия качества',
-                text_ru='Гарантия качества',
-                text_en='Quality guarantee',
-                text_uz='Sifat kafolati',
-                order=3,
-                is_active=True
-            )
-            self.stdout.write(self.style.SUCCESS('Созданы примерные features товара с переводами'))
 
-        self.stdout.write(self.style.SUCCESS('Данные успешно загружены!'))
+        for p in [
+            {'name': 'Click', 'icon': 'fas fa-credit-card', 'order': 0},
+            {'name': 'Payme', 'icon': 'fas fa-wallet', 'order': 1},
+            {'name': 'UzPost', 'icon': 'fas fa-truck', 'order': 2},
+        ]:
+            Partner.objects.get_or_create(name=p['name'], defaults={**p, 'is_active': True})
 
+        for i, (q, a) in enumerate([
+            ('Как оформить заказ?', 'Добавьте товары в корзину и оформите заказ.'),
+            ('Сроки доставки?', 'Ташкент 1–2 дня, регионы 2–5 дней.'),
+            ('Можно вернуть товар?', 'Да, в течение 14 дней.'),
+        ]):
+            FAQ.objects.get_or_create(
+                question=q,
+                defaults={'answer': a, 'order': i, 'is_active': True},
+            )
+
+        if not ContactMessage.objects.exists():
+            ContactMessage.objects.create(
+                name='Дилшод',
+                email='dilshod@example.com',
+                phone='+998901112233',
+                subject='delivery',
+                message='Есть доставка в Самарканд?',
+                is_read=False,
+            )
+            ContactMessage.objects.create(
+                name='Малика',
+                email='malika@example.com',
+                phone='+998907778899',
+                subject='product',
+                message='Платье есть в размере S?',
+                is_read=False,
+            )
+            self.stdout.write(self.style.SUCCESS('Сообщения созданы'))
+
+        if not Order.objects.exists() and len(products) >= 6:
+            demos = [
+                ('Алишер', 'Каримов', 'pending', 'card', [(0, 2, 'M', 'Черный')]),
+                ('Нигора', 'Рахимова', 'processing', 'cash', [(2, 1, 'S', 'Черный')]),
+                ('Жавлон', 'Усманов', 'delivered', 'wallet', [(1, 1, 'L', 'Синий'), (4, 1, 'M', 'Белый')]),
+                ('Сара', 'Исмоилова', 'cancelled', 'card', [(5, 1, 'L', 'Серый')]),
+            ]
+            for first, last, status, pay, items in demos:
+                lines = []
+                total = 0
+                for idx, qty, size, color in items:
+                    product = products[idx]
+                    lines.append((product, qty, size, color))
+                    total += product.price * qty
+                order = Order.objects.create(
+                    session_key='demo-seed',
+                    first_name=first,
+                    last_name=last,
+                    email=f'{first.lower()}@example.com',
+                    phone='+998901234567',
+                    address='ул. Навои, 12',
+                    city='Ташкент',
+                    total=total,
+                    status=status,
+                    payment_method=pay,
+                )
+                for product, qty, size, color in lines:
+                    OrderItem.objects.create(
+                        order=order,
+                        product=product,
+                        quantity=qty,
+                        price=product.price,
+                        size=size,
+                        color=color,
+                    )
+                self.stdout.write(self.style.SUCCESS(f'Заказ #{order.id} ({status})'))
+
+        self.stdout.write(self.style.SUCCESS('Тестовые данные готовы.'))

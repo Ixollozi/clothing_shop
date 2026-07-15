@@ -1,0 +1,7 @@
+{
+  "slug": "main",
+  "label": "Default main storefront theme",
+  "template_dirs": ["templates"],
+  "static_dirs": ["static"],
+  "locale_dirs": ["locale"]
+}

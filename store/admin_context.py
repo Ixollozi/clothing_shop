@@ -1,27 +1,41 @@
-"""
-Контекст для кастомного индекса админки
-"""
-from django.db.models import Sum
-from .models import Product, Order, Category, Cart, Partner
+from django.db.models import Count, Q, Sum
+
+from .models import Category, ContactMessage, Order, Partner, Product
 
 
 def get_admin_index_context():
-    """Возвращает контекст для кастомного индекса админки"""
+    """Dashboard stats with a small number of queries."""
+    order_stats = Order.objects.aggregate(
+        total=Count('id'),
+        pending=Count('id', filter=Q(status='pending')),
+        processing=Count('id', filter=Q(status='processing')),
+        delivered=Count('id', filter=Q(status='delivered')),
+        cancelled=Count('id', filter=Q(status='cancelled')),
+    )
+    revenue = (
+        Order.objects.filter(status__in=['delivered', 'shipped', 'processing'])
+        .aggregate(total=Sum('total'))['total']
+        or 0
+    )
+    partner_stats = Partner.objects.aggregate(
+        total=Count('id'),
+        active=Count('id', filter=Q(is_active=True)),
+    )
+    total_orders = order_stats['total'] or 0
+
     return {
         'total_products': Product.objects.count(),
-        'total_orders': Order.objects.count(),
+        'total_orders': total_orders,
         'total_categories': Category.objects.count(),
-        'total_carts': Cart.objects.count(),
-        'total_partners': Partner.objects.count(),
-        'active_partners': Partner.objects.filter(is_active=True).count(),
-        'latest_orders': Order.objects.select_related().order_by('-created_at')[:5],
-        'latest_products': Product.objects.select_related('category').order_by('-created_at')[:5],
-        'latest_partners': Partner.objects.order_by('-created_at')[:5],
-        'pending_orders': Order.objects.filter(status='pending').count(),
-        'processing_orders': Order.objects.filter(status='processing').count(),
-        'delivered_orders': Order.objects.filter(status='delivered').count(),
-        'cancelled_orders': Order.objects.filter(status='cancelled').count(),
-        'total_revenue': f"{Order.objects.filter(status__in=['delivered', 'shipped', 'processing']).aggregate(total=Sum('total'))['total'] or 0:.2f}",
+        'total_partners': partner_stats['total'] or 0,
+        'active_partners': partner_stats['active'] or 0,
+        'latest_orders': list(Order.objects.order_by('-created_at')[:6]),
+        'latest_products': list(Product.objects.order_by('-created_at')[:6]),
+        'pending_orders': order_stats['pending'] or 0,
+        'processing_orders': order_stats['processing'] or 0,
+        'delivered_orders': order_stats['delivered'] or 0,
+        'cancelled_orders': order_stats['cancelled'] or 0,
+        'unread_messages': ContactMessage.objects.filter(is_read=False).count(),
+        'total_revenue': f'{revenue:.0f}',
+        'orders_denom': max(total_orders, 1),
     }
-
-

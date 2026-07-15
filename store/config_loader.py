@@ -9,6 +9,19 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+def get_active_base_dir() -> Path:
+    """Project root in single-site mode, site folder in platform mode."""
+    try:
+        from store.platform.context import get_current_site
+
+        site = get_current_site()
+        if site is not None:
+            return site.root
+    except Exception:
+        pass
+    return BASE_DIR
+
+
 def load_config_from_models():
     """
     Загружает конфигурацию из отдельных моделей (StoreConfig, ContactConfig и т.д.)
@@ -203,7 +216,7 @@ def load_config_from_file():
     """
     Загружает конфигурацию из config.json
     """
-    config_path = BASE_DIR / 'config.json'
+    config_path = get_active_base_dir() / 'config.json'
     
     if not config_path.exists():
         return None

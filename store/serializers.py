@@ -179,23 +179,19 @@ class CreateOrderSerializer(serializers.ModelSerializer):
         
         # Обновляем заказ из БД, чтобы убедиться, что товары связаны
         order.refresh_from_db()
-
-        # Отправка уведомления в Telegram о новом заказе
         try:
-            import logging
-            logger = logging.getLogger(__name__)
-            logger.info(f"Попытка отправить уведомление о заказе #{order.id} в Telegram")
-            from .telegram_notifier import telegram_notifier
-            result = telegram_notifier.notify_new_order(order)
-            if result:
-                logger.info(f"Уведомление о заказе #{order.id} успешно отправлено")
-            else:
-                logger.warning(f"Не удалось отправить уведомление о заказе #{order.id} (вернулось False)")
+            from .notification_enqueue import enqueue_order_placed
+
+            enqueue_order_placed(order.id)
         except Exception as e:
-            # Логируем ошибку, но не прерываем создание заказа
             import logging
-            logger = logging.getLogger(__name__)
-            logger.error(f"Ошибка отправки уведомления в Telegram для заказа #{order.id}: {e}", exc_info=True)
+
+            logging.getLogger(__name__).error(
+                'Ошибка постановки уведомления о заказе #%s в очередь: %s',
+                order.id,
+                e,
+                exc_info=True,
+            )
 
         return order
 

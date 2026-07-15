@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}FAQ • {{ store_title|default:store_name }}{% endblock %}
+{% block meta_description %}Частые вопросы — {{ store_name }}.{% endblock %}
+
+{% block content %}
+      <section class="section" aria-labelledby="faq-page-title">
+        <div class="container">
+          <div class="section-head">
+            <h1 id="faq-page-title">{% trans "Частые вопросы" %}</h1>
+            <p class="section-subtitle">
+              {% url 'contact' as contact_url %}
+              {% blocktrans trimmed %}Если не нашли ответ — <a href="{{ contact_url }}">напишите нам</a>.{% endblocktrans %}
+            </p>
+          </div>
+
+          <div class="grid grid-3">
+            {% for faq in faqs %}
+            <div class="card" style="padding:16px;">
+              <details>
+                <summary style="cursor:pointer; font-weight:900;">{{ faq.question }}</summary>
+                <div class="card-text" style="margin-top:10px;">{{ faq.answer|linebreaks }}</div>
+              </details>
+            </div>
+            {% empty %}
+            <p class="section-subtitle">{% trans "Пока нет опубликованных вопросов. Загляните позже или свяжитесь с поддержкой." %}</p>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+{% endblock %}

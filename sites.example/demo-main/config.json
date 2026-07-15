@@ -1,0 +1,16 @@
+{
+  "store": {
+    "name": "Demo Main Shop",
+    "title": "Demo Main Shop",
+    "description": "Theme: main"
+  },
+  "contact": {
+    "phone": "+998(90) 111-11-11",
+    "email": "info@demo-main.localhost",
+    "address": { "city": "Tashkent", "street": "", "full": "Tashkent" }
+  },
+  "django": {
+    "debug": true,
+    "allowed_hosts": ["demo-main.localhost", "demo-alpha.localhost"]
+  }
+}

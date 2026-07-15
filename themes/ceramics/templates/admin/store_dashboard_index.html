@@ -1,0 +1,193 @@
+{% extends "admin/index.html" %}
+{% load static translation_tags %}
+
+{% comment %}
+  Кастомный дашборд: colM = полная ширина, без «Недавних действий» справа.
+  Контекст подмешивается через store.admin.py / _admin_index_with_dashboard.
+{% endcomment %}
+{% block coltype %}colM{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block content_title %}{% endblock %}
+{% block content_subtitle %}{% endblock %}
+
+{% block content %}
+<div class="fs-dash">
+
+  {# ── Быстрые действия ─────────────────────────────────────────────── #}
+  <section class="fs-section">
+    <p class="fs-section-title">Быстрые действия</p>
+    <div class="fs-quick-btns">
+      <a href="{% url 'admin:store_product_add' %}"   class="fs-quick-btn">+ Товар</a>
+      <a href="{% url 'admin:store_category_add' %}"  class="fs-quick-btn">+ Категория</a>
+      <a href="{% url 'admin:store_partner_add' %}"   class="fs-quick-btn">+ Партнёр</a>
+      <a href="{% url 'admin:store_order_changelist' %}" class="fs-quick-btn fs-quick-btn--alt">Все заказы</a>
+      <a href="{% url 'admin_unified_config' %}"      class="fs-quick-btn fs-quick-btn--alt">⚙ Конфигурация</a>
+    </div>
+  </section>
+
+  {# ── Статистика ───────────────────────────────────────────────────── #}
+  <section class="fs-section">
+    <p class="fs-section-title">Статистика</p>
+    <div class="fs-stats-grid">
+
+      <a class="fs-stat" href="{% url 'admin:store_product_changelist' %}">
+        <div class="fs-stat-value">{{ total_products|default:0 }}</div>
+        <div class="fs-stat-label">Товары</div>
+        <span class="fs-stat-cta">Открыть →</span>
+      </a>
+
+      <a class="fs-stat" href="{% url 'admin:store_order_changelist' %}">
+        <div class="fs-stat-value">{{ total_orders|default:0 }}</div>
+        <div class="fs-stat-label">Заказы</div>
+        <span class="fs-stat-cta">Открыть →</span>
+      </a>
+
+      <a class="fs-stat" href="{% url 'admin:store_category_changelist' %}">
+        <div class="fs-stat-value">{{ total_categories|default:0 }}</div>
+        <div class="fs-stat-label">Категории</div>
+        <span class="fs-stat-cta">Открыть →</span>
+      </a>
+
+      <a class="fs-stat" href="{% url 'admin:store_cart_changelist' %}">
+        <div class="fs-stat-value">{{ total_carts|default:0 }}</div>
+        <div class="fs-stat-label">Корзины</div>
+        <span class="fs-stat-cta">Открыть →</span>
+      </a>
+
+      <a class="fs-stat" href="{% url 'admin:store_partner_changelist' %}">
+        <div class="fs-stat-value">{{ total_partners|default:0 }}</div>
+        <div class="fs-stat-label">Партнёры</div>
+        <div class="fs-stat-sub">активных: {{ active_partners|default:0 }}</div>
+        <span class="fs-stat-cta">Открыть →</span>
+      </a>
+
+    </div>
+  </section>
+
+  {# ── Последние записи ─────────────────────────────────────────────── #}
+  <section class="fs-section">
+    <p class="fs-section-title">Последние записи</p>
+    <div class="fs-recent-grid">
+
+      <div class="fs-recent-card">
+        <div class="fs-recent-head">
+          <span class="fs-recent-head-title">Заказы</span>
+          <a class="fs-recent-head-link" href="{% url 'admin:store_order_changelist' %}">Все →</a>
+        </div>
+        <div class="fs-recent-body">
+          <ul class="fs-recent-list">
+            {% for order in latest_orders %}
+            <li class="fs-recent-item">
+              <a href="{% url 'admin:store_order_change' order.id %}">
+                <span class="fs-recent-item-meta">{{ order.get_status_display }}</span>
+                №{{ order.id }} — {{ order.first_name }} {{ order.last_name }}
+              </a>
+            </li>
+            {% empty %}
+            <li class="fs-recent-empty">Заказов пока нет</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="fs-recent-card">
+        <div class="fs-recent-head">
+          <span class="fs-recent-head-title">Товары</span>
+          <a class="fs-recent-head-link" href="{% url 'admin:store_product_changelist' %}">Все →</a>
+        </div>
+        <div class="fs-recent-body">
+          <ul class="fs-recent-list">
+            {% for product in latest_products %}
+            <li class="fs-recent-item">
+              <a href="{% url 'admin:store_product_change' product.id %}">
+                <span class="fs-recent-item-meta">{{ product.price|format_price }} сум</span>
+                {{ product.name }}
+              </a>
+            </li>
+            {% empty %}
+            <li class="fs-recent-empty">Товаров пока нет</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="fs-recent-card">
+        <div class="fs-recent-head">
+          <span class="fs-recent-head-title">Партнёры</span>
+          <a class="fs-recent-head-link" href="{% url 'admin:store_partner_changelist' %}">Все →</a>
+        </div>
+        <div class="fs-recent-body">
+          <ul class="fs-recent-list">
+            {% for partner in latest_partners %}
+            <li class="fs-recent-item">
+              <a href="{% url 'admin:store_partner_change' partner.id %}">
+                {% if partner.is_active %}
+                  <span class="fs-badge fs-badge--on">активен</span>
+                {% else %}
+                  <span class="fs-badge fs-badge--off">неактивен</span>
+                {% endif %}
+                {{ partner.name }}
+              </a>
+            </li>
+            {% empty %}
+            <li class="fs-recent-empty">Партнёров пока нет</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {# ── Аналитика заказов ────────────────────────────────────────────── #}
+  <section class="fs-section">
+    <p class="fs-section-title">Аналитика заказов</p>
+    <div class="fs-info-grid">
+
+      <div class="fs-info-card">
+        <div class="fs-info-head">
+          <span class="fs-info-head-title">Статусы</span>
+        </div>
+        <div class="fs-info-body">
+          <div class="fs-status-list">
+            <div class="fs-status-item fs-status-item--pending">
+              <span class="fs-status-label">Ожидают обработки</span>
+              <span class="fs-status-value">{{ pending_orders|default:0 }}</span>
+            </div>
+            <div class="fs-status-item fs-status-item--proc">
+              <span class="fs-status-label">В обработке</span>
+              <span class="fs-status-value">{{ processing_orders|default:0 }}</span>
+            </div>
+            <div class="fs-status-item fs-status-item--shipped">
+              <span class="fs-status-label">Отправлены</span>
+              <span class="fs-status-value">{{ shipped_orders|default:0 }}</span>
+            </div>
+            <div class="fs-status-item fs-status-item--done">
+              <span class="fs-status-label">Доставлены</span>
+              <span class="fs-status-value">{{ delivered_orders|default:0 }}</span>
+            </div>
+            <div class="fs-status-item fs-status-item--cancel">
+              <span class="fs-status-label">Отменены</span>
+              <span class="fs-status-value">{{ cancelled_orders|default:0 }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fs-info-card">
+        <div class="fs-info-head">
+          <span class="fs-info-head-title">Выручка (оценка)</span>
+        </div>
+        <div class="fs-info-body fs-revenue">
+          <div class="fs-revenue-amount">
+            {{ total_revenue|default:0|format_price }}<span class="fs-revenue-currency">сум</span>
+          </div>
+          <p class="fs-revenue-note">По заказам со статусами: в обработке, отправлен, доставлен.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+{% endblock %}

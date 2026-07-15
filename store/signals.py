@@ -33,7 +33,8 @@ def notify_order_status_change(sender, instance, created, **kwargs):
     old_status = getattr(instance, '_old_status', None)
     if old_status and old_status != instance.status:
         try:
-            from .telegram_notifier import telegram_notifier
-            telegram_notifier.notify_status_change(instance, old_status=old_status)
+            from .notification_enqueue import enqueue_order_status_changed
+
+            enqueue_order_status_changed(instance.pk, old_status)
         except Exception as e:
-            logger.error(f"Ошибка отправки уведомления об изменении статуса в Telegram: {e}")
+            logger.error(f'Ошибка постановки уведомления об изменении статуса в очередь: {e}')

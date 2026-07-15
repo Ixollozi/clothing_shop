@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_description %}{% trans "О магазине: национальная одежда Узбекистана, ручная работа, забота о качестве и удобный сервис." %}{% endblock %}
+
+{% block title %}{% trans "О нас" %} | {{ store_name|default:"Fashion Store" }}{% endblock %}
+
+{% block content %}
+      <section class="section">
+        <div class="container">
+          <div class="about-crumbs" aria-label="Хлебные крошки">
+            <a href="{% url 'index' %}">{% trans "Главная" %}</a>
+            <span aria-hidden="true">/</span>
+            <span>{% trans "О нас" %}</span>
+          </div>
+
+          <div class="about-hero">
+            <h1 class="about-title">
+              {{ about_config.title|default:"Мы делаем современную национальную одежду" }}
+            </h1>
+            <p class="about-lead">
+              {{ about_config.description|default:"Uzbek Folk - это магазин национальной одежды Узбекистана. Мы бережно относимся к традициям и превращаем их в удобные повседневные и праздничные образы." }}
+            </p>
+          </div>
+
+          <div class="about-grid">
+            {% if features %}
+              {% for f in features|slice:":3" %}
+                <div class="about-card">
+                  <div class="about-card-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M12 2L20 6V14C20 18 16.5 21.5 12 22C7.5 21.5 4 18 4 14V6L12 2Z"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M9.2 12.2L11.1 14.1L15.3 9.9"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div class="about-card-title">{{ f.title }}</div>
+                  <div class="about-card-sub">{{ f.description }}</div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="about-card">
+                <div class="about-card-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M12 2L20 6V14C20 18 16.5 21.5 12 22C7.5 21.5 4 18 4 14V6L12 2Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M9.2 12.2L11.1 14.1L15.3 9.9"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="about-card-title">{% trans "Качество в каждой детали" %}</div>
+                <div class="about-card-sub">{% trans "Материалы подбираем так, чтобы ткань была приятной к телу и служила долго." %}</div>
+              </div>
+
+              <div class="about-card">
+                <div class="about-card-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 12H21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    <path
+                      d="M14 7L19 12L14 17"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M10 7L5 12L10 17"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="about-card-title">{% trans "Понятный сервис" %}</div>
+                <div class="about-card-sub">{% trans "В каталоге легко фильтровать, а карточки помогают выбрать подходящую модель." %}</div>
+              </div>
+
+              <div class="about-card">
+                <div class="about-card-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="M12 7V12L15 14"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="about-card-title">{% trans "Доставка и поддержка" %}</div>
+                <div class="about-card-sub">{% trans "Оперативно упаковываем и отвечаем на вопросы, чтобы вы покупали спокойно." %}</div>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="about-split">
+            <div class="about-timeline" aria-label="{% trans 'Как мы развиваемся' %}">
+              <div class="about-section-title">{% trans "Наша миссия" %}</div>
+              <div class="timeline">
+                {% if about_config and about_config.mission %}
+                  <div class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="timeline-body">
+                      <div class="timeline-year">{% trans "Миссия" %}</div>
+                      <div class="timeline-text">{{ about_config.mission }}</div>
+                    </div>
+                  </div>
+                {% endif %}
+
+                {% if about_config and about_config.vision %}
+                  <div class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="timeline-body">
+                      <div class="timeline-year">{% trans "Видение" %}</div>
+                      <div class="timeline-text">{{ about_config.vision }}</div>
+                    </div>
+                  </div>
+                {% endif %}
+
+                {% if not about_config %}
+                  <div class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="timeline-body">
+                      <div class="timeline-year">1</div>
+                      <div class="timeline-text">{% trans "Создаём современную национальную одежду с уважением к традициям." %}</div>
+                    </div>
+                  </div>
+                  <div class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="timeline-body">
+                      <div class="timeline-year">2</div>
+                      <div class="timeline-text">{% trans "Подбираем ткани и фурнитуру так, чтобы вещам было комфортно каждый день." %}</div>
+                    </div>
+                  </div>
+                  <div class="timeline-item">
+                    <div class="timeline-dot" aria-hidden="true"></div>
+                    <div class="timeline-body">
+                      <div class="timeline-year">3</div>
+                      <div class="timeline-text">{% trans "Делаем сервис понятным: помогаем с выбором, отвечаем и бережно доставляем." %}</div>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="about-faq" aria-label="{% trans 'Частые вопросы' %}">
+              <div class="about-section-title">{% trans "Наши ценности" %}</div>
+              {% if about_values %}
+                <div class="values-list" aria-label="{% trans 'Список ценностей' %}">
+                  {% for v in about_values %}
+                    <div class="value-item">
+                      <span class="value-dot" aria-hidden="true"></span>
+                      <div class="value-text">{{ v }}</div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="section-sub">{% trans "Ценности скоро появятся." %}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock %}
+

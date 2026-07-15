@@ -1,0 +1,354 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load translation_tags %}
+
+{% block meta_description %}{% trans "Корзина: товары национальной одежды Узбекистана." %}{% endblock %}
+
+{% block title %}{% trans "Корзина" %} | {{ store_name|default:"Fashion Store" }}{% endblock %}
+
+{% block content %}
+      <section class="section">
+        <div class="container">
+          <div class="cart-crumbs" aria-label="Хлебные крошки">
+            <a href="{% url 'index' %}">{% trans "Главная" %}</a>
+            <span aria-hidden="true">/</span>
+            <span>{% trans "Корзина" %}</span>
+          </div>
+
+          <div class="cart-head">
+            <h1 class="about-title" style="margin: 0;">{% trans "Ваша корзина" %}</h1>
+            <p class="section-sub" style="margin-top: 10px;">
+              {% trans "Здесь отображаются реальные товары из вашей сессии." %}
+            </p>
+          </div>
+
+          <div class="cart-layout">
+            <section class="cart-items" aria-label="{% trans 'Товары в корзине' %}">
+              <div class="cart-items-list">
+                {% for item in cart_items %}
+                  {% cycle '4' '1' '2' '3' '6' '5' as cbg silent %}
+                  <article
+                    class="cart-item"
+                    data-item-id="{{ item.id }}"
+                    data-product-id="{{ item.product.id }}"
+                    data-color="{{ item.color|default:'' }}"
+                  >
+                    <div class="cart-item-media" aria-hidden="true">
+                      {% if item.product.image %}
+                        <img class="product-img" src="{{ item.product.image.url }}" alt="" loading="lazy" />
+                      {% elif item.product.image_url %}
+                        <img class="product-img" src="{{ item.product.image_url }}" alt="" loading="lazy" />
+                      {% else %}
+                        <div class="product-bg product-bg-{{ cbg }}"></div>
+                      {% endif %}
+                    </div>
+
+                    <div class="cart-item-body">
+                      <h3 class="product-title">
+                        <a href="{% url 'product_detail' slug=item.product.slug %}" style="text-decoration: none; color: inherit;">
+                          {{ item.product.name }}
+                        </a>
+                      </h3>
+                      <div class="cart-item-meta">
+                        <span class="cart-item-sub">
+                          {% if item.color %}{% trans "Цвет:" %} {{ item.color }}{% endif %}
+                        </span>
+                        <a class="cart-item-remove js-remove" href="#remove" data-item-id='{{ item.id }}'>{% trans "Удалить" %}</a>
+                      </div>
+
+                      <div class="cart-item-bottom">
+                        <div class="qty" aria-label="{% trans 'Количество' %}">
+                          <button class="qty-btn js-qty" type="button" aria-label="{% trans 'Уменьшить' %}" data-delta="-1" data-item-id="{{ item.id }}">-</button>
+                          <input class="qty-input" type="number" value="{{ item.quantity }}" min="1" aria-label="{% trans 'Количество' %}" data-item-id="{{ item.id }}" />
+                          <button class="qty-btn js-qty" type="button" aria-label="{% trans 'Увеличить' %}" data-delta="1" data-item-id="{{ item.id }}">+</button>
+                        </div>
+
+                        <div class="cart-item-price">
+                          <span class="price">{{ item.product.price|format_price }}</span>
+                          <span class="currency">сум</span>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                {% empty %}
+                  <div class="section-sub">{% trans "Корзина пуста." %}</div>
+                {% endfor %}
+              </div>
+
+              <div class="cart-actions">
+                <a class="btn btn-soft" href="{% url 'catalog' %}#products">{% trans "Продолжить покупки" %}</a>
+                <a class="btn btn-primary js-clear" href="#clear">{% trans "Очистить корзину" %}</a>
+              </div>
+            </section>
+
+            <aside class="cart-summary" aria-label="{% trans 'Итог' %}">
+              <div class="summary-card">
+                <div class="summary-row">
+                  <span class="summary-label">{% trans "Подытог" %}</span>
+                  <span class="summary-value"><span id="cart-subtotal">—</span> сум</span>
+                </div>
+                <div class="summary-row">
+                  <span class="summary-label">{% trans "Доставка" %}</span>
+                  <span class="summary-value">{% trans "по городу" %}</span>
+                </div>
+                <div class="summary-divider" role="separator" aria-hidden="true"></div>
+                <div class="summary-row summary-total">
+                  <span class="summary-label">{% trans "Итого" %}</span>
+                  <span class="summary-value"><span id="cart-total">—</span> сум</span>
+                </div>
+                <button class="btn btn-primary btn-full js-checkout" type="button">{% trans "Оформить заказ" %}</button>
+                <form id="checkout-form" class="checkout-form" style="margin-top: 12px; display: none;" aria-label="{% trans 'Оформление заказа' %}">
+                  <div class="range-row" style="margin-top: 10px;">
+                    <input class="range-input" name="first_name" type="text" placeholder="{% trans 'Имя *' %}" required />
+                    <input class="range-input" name="last_name" type="text" placeholder="{% trans 'Фамилия *' %}" required />
+                  </div>
+                  <div class="range-row" style="margin-top: 10px;">
+                    <input class="range-input" name="phone" type="tel" placeholder="{% trans 'Телефон *' %}" required />
+                    <input class="range-input" name="email" type="email" placeholder="{% trans 'Email (необязательно)' %}" />
+                  </div>
+                  <div class="range-row" style="margin-top: 10px;">
+                    <input class="range-input" name="address" type="text" placeholder="{% trans 'Адрес *' %}" required />
+                  </div>
+                  <div class="range-row" style="margin-top: 10px;">
+                    <input class="range-input" name="city" type="text" placeholder="{% trans 'Город' %}" value="{% trans 'Ташкент' %}" />
+                    <input class="range-input" name="postal_code" type="text" placeholder="{% trans 'Индекс' %}" />
+                  </div>
+                  <div class="range-row" style="margin-top: 10px;">
+                    <select class="sort-select" name="payment_method" aria-label="{% trans 'Способ оплаты' %}">
+                      <option value="cash">{% trans "Наличными" %}</option>
+                      <option value="card">{% trans "Картой" %}</option>
+                      <option value="wallet">{% trans "Электронный кошелёк" %}</option>
+                      <option value="bank">{% trans "Банковский перевод" %}</option>
+                    </select>
+                  </div>
+                  <div class="range-row" style="margin-top: 10px;">
+                    <input class="range-input" name="notes" type="text" placeholder="{% trans 'Комментарий к заказу' %}" />
+                  </div>
+                  <div class="range-row" style="margin-top: 10px; justify-content: flex-end;">
+                    <button class="btn btn-soft" type="button" id="checkout-cancel">{% trans "Отмена" %}</button>
+                    <button class="btn btn-primary" type="submit" id="checkout-submit">{% trans "Подтвердить" %}</button>
+                  </div>
+                  <div class="section-sub" id="checkout-status" style="margin-top: 8px;" aria-live="polite"></div>
+                </form>
+                <div class="summary-note">
+                  {% trans "Демо: оформление заказа можно подключить следующим шагом." %}
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+{% endblock %}
+
+{% block extra_js %}
+  <div
+    id="i18n-cart"
+    hidden
+    data-empty-checkout="{% trans 'Корзина пуста. Добавьте товары, чтобы оформить заказ.' %}"
+    data-required-fields="{% trans 'Заполните обязательные поля (имя, фамилия, телефон, адрес).' %}"
+    data-sending="{% trans 'Отправка...' %}"
+    data-order-failed="{% trans 'Не удалось оформить заказ' %}"
+    data-order-success="{% trans 'Заказ оформлен. Мы свяжемся с вами.' %}"
+    data-order-generic-error="{% trans 'Ошибка при оформлении.' %}"
+    data-city-default="{% trans 'Ташкент' %}"
+  ></div>
+  <script>
+    function parsePrice(text) {
+      const raw = String(text || '').trim();
+      // Django may render decimals with comma (e.g. 20,00) → normalize to dot.
+      const normalized = raw.replace(/\s/g, '').replace(',', '.').replace(/[^\d.]/g, '');
+      const v = Number(normalized);
+      return Number.isFinite(v) ? v : 0;
+    }
+
+    function recalcTotals() {
+      let subtotal = 0;
+      document.querySelectorAll('.cart-item').forEach(function (row) {
+        const priceEl = row.querySelector('.cart-item-price .price');
+        const qtyEl = row.querySelector('.qty-input');
+        const price = priceEl ? parsePrice(priceEl.textContent) : 0;
+        const qty = qtyEl ? Math.max(1, Number(qtyEl.value || 1)) : 1;
+        subtotal += price * qty;
+      });
+      const sub = document.getElementById('cart-subtotal');
+      const total = document.getElementById('cart-total');
+      if (sub) sub.textContent = String(Math.round(subtotal));
+      if (total) total.textContent = String(Math.round(subtotal));
+    }
+
+    async function removeItem(itemId) {
+      const res = await window.StoreApi.json('/api/cart/remove_item/?item_id=' + encodeURIComponent(itemId), {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        const row = document.querySelector('.cart-item[data-item-id=\"' + itemId + '\"]');
+        if (row) row.remove();
+        recalcTotals();
+        await window.StoreApi.updateCartBadge();
+      }
+    }
+
+    async function updateItem(itemId, quantity) {
+      const res = await window.StoreApi.json('/api/cart/update_item/', {
+        method: 'PUT',
+        body: { item_id: Number(itemId), quantity: Number(quantity) },
+      });
+      if (res.ok) {
+        recalcTotals();
+        await window.StoreApi.updateCartBadge();
+      }
+    }
+
+    async function clearCart() {
+      const res = await window.StoreApi.json('/api/cart/clear/', { method: 'DELETE' });
+      if (res.ok) {
+        document.querySelectorAll('.cart-item').forEach(function (row) {
+          row.remove();
+        });
+        recalcTotals();
+        await window.StoreApi.updateCartBadge();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const i18n = document.getElementById('i18n-cart');
+      const t = i18n ? i18n.dataset : {};
+      recalcTotals();
+
+      function setCheckoutStatus(text, kind) {
+        const el = document.getElementById('checkout-status');
+        if (!el) return;
+        el.textContent = text || '';
+        el.style.color = kind === 'error' ? '#b91c1c' : kind === 'success' ? '#166534' : '';
+      }
+
+      const checkoutBtn = document.querySelector('.js-checkout');
+      const checkoutForm = document.getElementById('checkout-form');
+      const checkoutCancel = document.getElementById('checkout-cancel');
+      const checkoutSubmit = document.getElementById('checkout-submit');
+
+      function toggleCheckout(show) {
+        if (!checkoutForm) return;
+        checkoutForm.style.display = show ? 'block' : 'none';
+        if (!show) setCheckoutStatus('', 'info');
+        if (checkoutBtn) checkoutBtn.style.display = show ? 'none' : 'inline-flex';
+      }
+
+      if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', function () {
+          toggleCheckout(true);
+        });
+      }
+      if (checkoutCancel) {
+        checkoutCancel.addEventListener('click', function () {
+          toggleCheckout(false);
+        });
+      }
+
+      if (checkoutForm) {
+        checkoutForm.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          setCheckoutStatus('', 'info');
+
+          const rows = Array.from(document.querySelectorAll('.cart-item'));
+          const items = rows
+            .map(function (row) {
+              const productId = row.getAttribute('data-product-id');
+              const qtyEl = row.querySelector('.qty-input');
+              const qty = qtyEl ? Math.max(1, Number(qtyEl.value || 1)) : 1;
+              const color = row.getAttribute('data-color') || '';
+              if (!productId) return null;
+              return { product_id: Number(productId), quantity: qty, size: '', color: color };
+            })
+            .filter(Boolean);
+
+          if (!items.length) {
+            setCheckoutStatus(t.emptyCheckout || '', 'error');
+            return;
+          }
+
+          const fd = new FormData(checkoutForm);
+          const payload = {
+            first_name: String(fd.get('first_name') || '').trim(),
+            last_name: String(fd.get('last_name') || '').trim(),
+            email: String(fd.get('email') || '').trim(),
+            phone: String(fd.get('phone') || '').trim(),
+            address: String(fd.get('address') || '').trim(),
+            city: String(fd.get('city') || t.cityDefault || '').trim(),
+            postal_code: String(fd.get('postal_code') || '').trim(),
+            payment_method: String(fd.get('payment_method') || 'cash'),
+            notes: String(fd.get('notes') || '').trim(),
+            items: items,
+          };
+
+          if (!payload.first_name || !payload.last_name || !payload.phone || !payload.address) {
+            setCheckoutStatus(t.requiredFields || '', 'error');
+            return;
+          }
+
+          checkoutSubmit.disabled = true;
+          const oldText = checkoutSubmit.textContent;
+          checkoutSubmit.textContent = t.sending || oldText;
+
+          try {
+            const res = await window.StoreApi.json('/api/orders/', { method: 'POST', body: payload });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+              const msg = (data && (data.detail || data.error))
+                ? String(data.detail || data.error)
+                : (t.orderFailed || '');
+              throw new Error(msg);
+            }
+            setCheckoutStatus(t.orderSuccess || '', 'success');
+            // API очищает корзину; обновим UI
+            await window.StoreApi.updateCartBadge();
+            window.location.reload();
+          } catch (err) {
+            setCheckoutStatus(err.message || t.orderGenericError || '', 'error');
+          } finally {
+            checkoutSubmit.disabled = false;
+            checkoutSubmit.textContent = oldText;
+          }
+        });
+      }
+
+      document.querySelectorAll('.js-remove').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          const itemId = this.getAttribute('data-item-id');
+          if (itemId) removeItem(itemId);
+        });
+      });
+
+      document.querySelectorAll('.js-qty').forEach(function (btn) {
+        btn.addEventListener('click', async function () {
+          const itemId = this.getAttribute('data-item-id');
+          const delta = Number(this.getAttribute('data-delta') || 0);
+          const input = document.querySelector('.qty-input[data-item-id=\"' + itemId + '\"]');
+          if (!itemId || !input) return;
+          const v = Math.max(1, Number(input.value || 1) + delta);
+          input.value = String(v);
+          await updateItem(itemId, v);
+        });
+      });
+
+      document.querySelectorAll('.qty-input').forEach(function (input) {
+        input.addEventListener('change', async function () {
+          const itemId = this.getAttribute('data-item-id');
+          const v = Math.max(1, Number(this.value || 1));
+          this.value = String(v);
+          if (itemId) await updateItem(itemId, v);
+        });
+      });
+
+      const clearBtn = document.querySelector('.js-clear');
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          clearCart();
+        });
+      }
+    });
+  </script>
+{% endblock %}
+

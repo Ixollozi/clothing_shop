@@ -576,3 +576,109 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
+
+
+class TelegramNotificationSettings(models.Model):
+    """Per-site Telegram toggles and optional bot token override."""
+
+    bot_token = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name='Токен бота',
+        help_text='От @BotFather. Если пусто — используется TELEGRAM_BOT_TOKEN из окружения.',
+    )
+    is_active = models.BooleanField(
+        default=False,
+        verbose_name='Включить уведомления в Telegram',
+    )
+    notify_new_orders = models.BooleanField(default=True, verbose_name='Сообщать о новых заказах')
+    notify_status_changes = models.BooleanField(default=True, verbose_name='Сообщать о смене статуса заказа')
+    notify_contact_messages = models.BooleanField(default=True, verbose_name='Сообщать о сообщениях с формы «Контакты»')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Telegram — настройки'
+        verbose_name_plural = 'Telegram — настройки'
+
+    def __str__(self):
+        return 'Telegram: активен' if self.is_active else 'Telegram: выключен'
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            TelegramNotificationSettings.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def get_active(cls):
+        return cls.objects.filter(is_active=True).first()
+
+    def resolved_bot_token(self) -> str:
+        from django.conf import settings as dj_settings
+
+        db_token = (self.bot_token or '').strip()
+        if db_token:
+            return db_token
+        return (getattr(dj_settings, 'TELEGRAM_BOT_TOKEN', None) or '').strip()
+
+
+class TelegramSubscriber(models.Model):
+    """Private chat recipients for this site database."""
+
+    telegram_chat_id = models.BigIntegerField(
+        verbose_name='ID чата в Telegram',
+        db_index=True,
+        help_text='Число из @userinfobot или после привязки бота.',
+    )
+    telegram_username = models.CharField(max_length=255, blank=True, verbose_name='Ник в Telegram')
+    display_name = models.CharField(max_length=255, blank=True, verbose_name='Как подписать в списке')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Telegram — получатель'
+        verbose_name_plural = 'Telegram — кому слать'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.display_name or self.telegram_username or str(self.telegram_chat_id)
+
+
+class NotificationOutbox(models.Model):
+    """Transactional outbox for async Telegram delivery."""
+
+    class EventType(models.TextChoices):
+        ORDER_PLACED = 'order_placed', 'Новый заказ'
+        ORDER_STATUS_CHANGED = 'order_status_changed', 'Смена статуса'
+        CONTACT_MESSAGE = 'contact_message', 'Контакты'
+
+    class Status(models.TextChoices):
+        PENDING = 'pending', 'В очереди'
+        PROCESSING = 'processing', 'Обработка'
+        SENT = 'sent', 'Отправлено'
+        FAILED = 'failed', 'Ошибка'
+
+    event_type = models.CharField(max_length=64, choices=EventType.choices, verbose_name='Событие')
+    payload = models.JSONField(default=dict, verbose_name='Payload')
+    status = models.CharField(
+        max_length=32,
+        choices=Status.choices,
+        default=Status.PENDING,
+        verbose_name='Статус',
+        db_index=True,
+    )
+    attempts = models.PositiveIntegerField(default=0, verbose_name='Попытки')
+    last_error = models.TextField(blank=True, verbose_name='Последняя ошибка')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+
+    class Meta:
+        verbose_name = 'Очередь Telegram'
+        verbose_name_plural = 'Очередь Telegram'
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['status', 'created_at']),
+        ]
+
+    def __str__(self):
+        return f'{self.event_type} #{self.pk} ({self.status})'

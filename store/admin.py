@@ -7,7 +7,8 @@ from modeltranslation.translator import translator
 from .models import (
     Category, Product, ProductImage, Cart, CartItem, Order, OrderItem, Partner, Config,
     StoreConfig, ContactConfig, SocialConfig, HeroConfig, Feature, AboutConfig, SEOConfig, ThemeConfig,
-    ProductFeatureConfig, AboutStat, TelegramConfig, ContactMessage, FAQ
+    ProductFeatureConfig, AboutStat, TelegramConfig, ContactMessage, FAQ,
+    TelegramNotificationSettings, TelegramSubscriber, NotificationOutbox,
 )
 
 
@@ -299,10 +300,57 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 
 # Настройка админ-сайта
-admin.site.site_header = "Администрирование"
+admin.site.site_header = "Панель магазина"
 admin.site.site_title = "Admin"
-admin.site.index_title = "Панель управления"
+admin.site.index_title = "Обзор"
 admin.site.index_template = 'admin/index.html'
+
+# Практичный порядок в сайдбаре: сначала продажи и каталог
+_ADMIN_MODEL_ORDER = {
+    'order': 10,
+    'orderitem': 11,
+    'product': 20,
+    'category': 21,
+    'productimage': 22,
+    'contactmessage': 30,
+    'faq': 31,
+    'partner': 32,
+    'telegramnotificationsettings': 40,
+    'telegramsubscriber': 41,
+    'notificationoutbox': 42,
+    'storeconfig': 50,
+    'contactconfig': 51,
+    'socialconfig': 52,
+    'heroconfig': 53,
+    'feature': 54,
+    'aboutconfig': 55,
+    'aboutstat': 56,
+    'seoconfig': 57,
+    'themeconfig': 58,
+    'productfeatureconfig': 59,
+    'config': 60,
+    'cart': 90,
+    'cartitem': 91,
+}
+
+_original_get_app_list = admin.site.get_app_list
+
+
+def _sorted_admin_app_list(request, app_label=None):
+    app_list = _original_get_app_list(request, app_label)
+    for app in app_list:
+        if app.get('app_label') != 'store':
+            continue
+        app['models'].sort(
+            key=lambda m: (
+                _ADMIN_MODEL_ORDER.get(str(m.get('object_name', '')).lower(), 80),
+                m.get('name', ''),
+            )
+        )
+    return app_list
+
+
+admin.site.get_app_list = _sorted_admin_app_list
 
 
 @admin.register(Partner)
@@ -681,89 +729,10 @@ class ProductFeatureConfigAdmin(TabbedTranslationAdmin):
 
 @admin.register(TelegramConfig)
 class TelegramConfigAdmin(admin.ModelAdmin):
-    # def has_module_permission(self, request):
-    #     """Скрываем из списка админки, но оставляем доступ к редактированию"""
-    #     return False
-    
-    list_display = ['is_active', 'notify_new_orders', 'notify_status_changes', 'notify_contact_messages', 'bot_token_preview', 'group_chat_id', 'updated_at']
-    readonly_fields = ['updated_at', 'test_connection']
-    fieldsets = (
-        ('Основные настройки', {
-            'fields': ('is_active', 'bot_token', 'group_chat_id'),
-            'description': 'Для получения токена бота обратитесь к @BotFather в Telegram. Для получения ID группы используйте бота @userinfobot или добавьте бота в группу и отправьте любое сообщение, затем используйте getUpdates API.'
-        }),
-        ('Типы уведомлений', {
-            'fields': ('notify_new_orders', 'notify_status_changes', 'notify_contact_messages')
-        }),
-        ('Тестирование', {
-            'fields': ('test_connection',),
-            'description': 'Проверьте подключение к Telegram боту'
-        }),
-        ('Даты', {
-            'fields': ('updated_at',),
-            'classes': ('collapse',)
-        }),
-    )
+    """Legacy Telegram settings. Prefer TelegramNotificationSettings."""
 
-    def bot_token_preview(self, obj):
-        """Показывает частично скрытый токен"""
-        if obj.bot_token:
-            if len(obj.bot_token) > 20:
-                return f"{obj.bot_token[:10]}...{obj.bot_token[-10:]}"
-            return obj.bot_token
-        return "Не указан"
-    bot_token_preview.short_description = 'Токен бота'
-
-    def test_connection(self, obj):
-        """Кнопка для тестирования подключения"""
-        if not obj.pk:
-            return "Сохраните конфигурацию для тестирования"
-        
-        if not obj.bot_token or not obj.group_chat_id:
-            return mark_safe(
-                '<span style="color: #f44336;">⚠️ Укажите токен бота и ID группы</span>'
-            )
-        
-        try:
-            import telebot
-            bot = telebot.TeleBot(obj.bot_token)
-            # Пытаемся получить информацию о боте
-            bot_info = bot.get_me()
-            bot_name = bot_info.username if bot_info else "Неизвестно"
-            
-            # Пытаемся отправить тестовое сообщение
-            try:
-                test_message = "✅ Тестовое сообщение от Fashion Store. Бот работает корректно!"
-                bot.send_message(chat_id=obj.group_chat_id, text=test_message)
-                return format_html(
-                    '<div style="background: #4caf50; color: white; padding: 10px; border-radius: 5px; margin: 10px 0;">'
-                    '✅ <strong>Подключение успешно!</strong><br>'
-                    'Бот: @{}<br>'
-                    'Тестовое сообщение отправлено в группу.'
-                    '</div>',
-                    bot_name
-                )
-            except telebot.apihelper.ApiTelegramException as e:
-                error_msg = str(e)
-                return format_html(
-                    '<div style="background: #ff9800; color: white; padding: 10px; border-radius: 5px; margin: 10px 0;">'
-                    '⚠️ <strong>Бот инициализирован, но не может отправить сообщение</strong><br>'
-                    'Ошибка: {}<br>'
-                    'Проверьте, что бот добавлен в группу и имеет права на отправку сообщений.'
-                    '</div>',
-                    error_msg
-                )
-        except Exception as e:
-            error_msg = str(e)
-            return format_html(
-                '<div style="background: #f44336; color: white; padding: 10px; border-radius: 5px; margin: 10px 0;">'
-                '❌ <strong>Ошибка подключения</strong><br>'
-                'Ошибка: {}<br>'
-                'Проверьте правильность токена бота.'
-                '</div>',
-                error_msg
-            )
-    test_connection.short_description = 'Тест подключения'
+    def has_module_permission(self, request):
+        return False
 
 
 @admin.register(ContactMessage)
@@ -785,11 +754,11 @@ class ContactMessageAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-    
+
     def subject_display(self, obj):
         return obj.get_subject_display()
     subject_display.short_description = 'Тема'
-    
+
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.select_related()
@@ -802,7 +771,7 @@ class FAQAdmin(TabbedTranslationAdmin):
     search_fields = ('question', 'answer')
     list_editable = ('order', 'is_active')
     ordering = ('order', 'created_at')
-    
+
     fieldsets = (
         ('Основная информация', {
             'fields': ('question', 'answer', 'order', 'is_active')
@@ -812,5 +781,142 @@ class FAQAdmin(TabbedTranslationAdmin):
             'classes': ('collapse',)
         }),
     )
-    
+
     readonly_fields = ('created_at', 'updated_at')
+
+
+@admin.register(TelegramNotificationSettings)
+class TelegramNotificationSettingsAdmin(admin.ModelAdmin):
+    list_display = (
+        'is_active',
+        'bot_token_preview',
+        'notify_new_orders',
+        'notify_status_changes',
+        'notify_contact_messages',
+        'updated_at',
+    )
+    readonly_fields = ('updated_at', 'test_connection', 'env_token_hint')
+
+    def has_add_permission(self, request):
+        # Одна запись настроек на сайт
+        if TelegramNotificationSettings.objects.exists():
+            return False
+        return super().has_add_permission(request)
+
+    def changelist_view(self, request, extra_context=None):
+        obj = TelegramNotificationSettings.objects.first()
+        if obj:
+            from django.shortcuts import redirect
+            return redirect(
+                reverse('admin:store_telegramnotificationsettings_change', args=[obj.pk])
+            )
+        return super().changelist_view(request, extra_context)
+
+    fieldsets = (
+        (
+            'Токен бота',
+            {
+                'fields': ('bot_token', 'env_token_hint'),
+                'description': (
+                    'Токен от @BotFather. Можно указать здесь для сайта, '
+                    'или оставить пустым и задать TELEGRAM_BOT_TOKEN в .env / окружении.'
+                ),
+            },
+        ),
+        (
+            'Уведомления',
+            {
+                'fields': (
+                    'is_active',
+                    'notify_new_orders',
+                    'notify_status_changes',
+                    'notify_contact_messages',
+                ),
+            },
+        ),
+        (
+            'Проверка',
+            {
+                'fields': ('test_connection',),
+                'description': 'Сначала добавьте получателя в «Telegram — кому слать».',
+            },
+        ),
+        ('Даты', {'fields': ('updated_at',), 'classes': ('collapse',)}),
+    )
+
+    def bot_token_preview(self, obj):
+        if obj.bot_token:
+            token = obj.bot_token
+            if len(token) > 20:
+                return f'{token[:10]}...{token[-6:]}'
+            return token
+        return 'Из TELEGRAM_BOT_TOKEN / .env'
+
+    bot_token_preview.short_description = 'Токен бота'
+
+    def env_token_hint(self, obj):
+        from django.conf import settings as dj_settings
+
+        token = (getattr(dj_settings, 'TELEGRAM_BOT_TOKEN', None) or '').strip()
+        if token:
+            return mark_safe(
+                f'<span style="color:#2e7d32;">.env TELEGRAM_BOT_TOKEN задан '
+                f'({token[:6]}…{token[-4:]})</span>'
+            )
+        return mark_safe(
+            '<span style="color:#c62828;">TELEGRAM_BOT_TOKEN в .env пустой — '
+            'укажите токен здесь или в .env</span>'
+        )
+
+    env_token_hint.short_description = 'Токен из окружения'
+
+    def test_connection(self, obj):
+        """Hint only — never call Telegram on page render (was making admin crawl)."""
+        if not obj or not obj.pk:
+            return 'Сохраните настройки, затем добавьте получателя и проверьте токен через бота.'
+
+        token = obj.resolved_bot_token()
+        if not token:
+            return mark_safe(
+                '<span style="color:#b91c1c;">Нет токена: заполните поле выше или TELEGRAM_BOT_TOKEN в .env</span>'
+            )
+
+        has_sub = TelegramSubscriber.objects.filter(is_active=True).exists()
+        if not has_sub:
+            return mark_safe(
+                '<span style="color:#b45309;">Добавьте получателя в «Telegram — кому слать». '
+                'Тест уйдёт автоматически при новом заказе.</span>'
+            )
+
+        return mark_safe(
+            '<span style="color:#15803d;">Токен и получатель заданы. '
+            'Создайте тестовый заказ — уведомление придёт в Telegram.</span>'
+        )
+
+    test_connection.short_description = 'Готовность'
+
+
+@admin.register(TelegramSubscriber)
+class TelegramSubscriberAdmin(admin.ModelAdmin):
+    list_display = ('telegram_chat_id', 'telegram_username', 'display_name', 'is_active', 'updated_at')
+    list_filter = ('is_active',)
+    search_fields = ('telegram_username', 'display_name', 'telegram_chat_id')
+    readonly_fields = ('created_at', 'updated_at')
+    fieldsets = (
+        (
+            None,
+            {
+                'fields': ('telegram_chat_id', 'telegram_username', 'display_name', 'is_active'),
+                'description': 'ID чата — число из @userinfobot. Можно и личный chat, и group id.',
+            },
+        ),
+        ('Даты', {'fields': ('created_at', 'updated_at'), 'classes': ('collapse',)}),
+    )
+
+
+@admin.register(NotificationOutbox)
+class NotificationOutboxAdmin(admin.ModelAdmin):
+    list_display = ('id', 'event_type', 'status', 'attempts', 'created_at', 'last_error')
+    list_filter = ('status', 'event_type')
+    search_fields = ('last_error',)
+    readonly_fields = ('event_type', 'payload', 'status', 'attempts', 'last_error', 'created_at', 'updated_at')

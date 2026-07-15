@@ -1,0 +1,56 @@
+{
+  "themes": {
+    "main": {
+      "template_dirs": ["themes/main/templates"],
+      "static_dirs": ["themes/main/static"],
+      "locale_dirs": ["locale"]
+    },
+    "front2": {
+      "template_dirs": ["themes/front2/templates"],
+      "static_dirs": ["themes/front2/static"],
+      "locale_dirs": ["locale"]
+    },
+    "wood": {
+      "template_dirs": ["themes/wood/templates"],
+      "static_dirs": ["themes/wood/static"],
+      "locale_dirs": ["locale"]
+    },
+    "national": {
+      "template_dirs": ["themes/national/templates"],
+      "static_dirs": ["themes/national/static"],
+      "locale_dirs": ["locale"]
+    },
+    "ceramics": {
+      "template_dirs": ["themes/ceramics/templates"],
+      "static_dirs": ["themes/ceramics/static"],
+      "locale_dirs": ["locale"]
+    }
+  },
+  "sites": {
+    "demo-main": {
+      "title": "Demo Main Shop",
+      "theme": "main",
+      "hosts": ["demo-main.localhost", "demo-alpha.localhost"]
+    },
+    "demo-front2": {
+      "title": "Demo Front2 Shop",
+      "theme": "front2",
+      "hosts": ["demo-front2.localhost", "demo-beta.localhost"]
+    },
+    "demo-wood": {
+      "title": "Demo Wood Shop",
+      "theme": "wood",
+      "hosts": ["demo-wood.localhost", "demo-gamma.localhost"]
+    },
+    "demo-national": {
+      "title": "Demo National Shop",
+      "theme": "national",
+      "hosts": ["demo-national.localhost"]
+    },
+    "demo-ceramics": {
+      "title": "Demo Ceramics Shop",
+      "theme": "ceramics",
+      "hosts": ["demo-ceramics.localhost"]
+    }
+  }
+}

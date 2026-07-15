@@ -1,0 +1,16 @@
+{
+  "store": {
+    "name": "Demo Ceramics Shop",
+    "title": "Demo Ceramics Shop",
+    "description": "Theme: ceramics SPA"
+  },
+  "contact": {
+    "phone": "+998(90) 555-55-55",
+    "email": "info@demo-ceramics.localhost",
+    "address": { "city": "Bukhara", "street": "", "full": "Bukhara" }
+  },
+  "django": {
+    "debug": true,
+    "allowed_hosts": ["demo-ceramics.localhost"]
+  }
+}

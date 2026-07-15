@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}{% if about_config %}{{ about_config.title }}{% else %}О нас{% endif %} • {{ store_title|default:store_name }}{% endblock %}
+{% block meta_description %}{% if about_config %}{{ about_config.description|striptags|truncatechars:200 }}{% else %}{{ store_description|truncatechars:200 }}{% endif %}{% endblock %}
+
+{% block content %}
+      <section class="hero" aria-labelledby="about-title">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <div class="hero-badges">
+              <span class="badge badge-wood">{{ store_name }}</span>
+              <span class="badge badge-ghost">{% trans "О магазине" %}</span>
+            </div>
+
+            <h1 id="about-title">{% if about_config %}{{ about_config.title }}{% else %}О нас{% endif %}</h1>
+            <p class="hero-lead">
+              {% if about_config %}{{ about_config.description|striptags|truncatewords:50 }}{% else %}{{ store_description|default:_("Добро пожаловать в наш магазин.") }}{% endif %}
+            </p>
+
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="{% url 'contact' %}">{% trans "Написать нам" %}</a>
+              <a class="btn btn-secondary" href="#values">{% trans "Наши ценности" %}</a>
+            </div>
+
+            <div class="hero-stats" role="list" aria-label="{% trans 'Показатели' %}">
+              {% for st in about_stats|slice:":3" %}
+              <div class="stat" role="listitem">
+                <div class="stat-num">{{ st.value }}</div>
+                <div class="stat-label">{{ st.label }}</div>
+              </div>
+              {% empty %}
+              <div class="stat" role="listitem">
+                <div class="stat-num">100%</div>
+                <div class="stat-label">{% trans "внимание к деталям" %}</div>
+              </div>
+              <div class="stat" role="listitem">
+                <div class="stat-num">24/7</div>
+                <div class="stat-label">{% trans "онлайн-каталог" %}</div>
+              </div>
+              <div class="stat" role="listitem">
+                <div class="stat-num">★</div>
+                <div class="stat-label">{% trans "качество сервиса" %}</div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="hero-art" aria-hidden="true">
+            <div class="hero-wood"{% if about_config and about_config.image %} style="background-image:url('{{ about_config.image.url }}');background-size:cover;background-position:center;"{% elif about_config and about_config.image_url %} style="background-image:url('{{ about_config.image_url }}');background-size:cover;background-position:center;"{% endif %}></div>
+            <div class="hero-overlay">
+              <div class="mini-card">
+                <div class="mini-card-top">
+                  <span class="dot dot-green"></span>
+                  <span class="mini-card-title">{% trans "Миссия" %}</span>
+                </div>
+                <p class="card-text" style="margin:0;font-size:14px;">{% if about_config %}{{ about_config.mission|truncatewords:24 }}{% else %}{% trans "Сервис и качество." %}{% endif %}</p>
+              </div>
+              <div class="shape-ring"></div>
+              <div class="shape-triangle"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="values" aria-labelledby="values-title">
+        <div class="container">
+          <div class="section-head">
+            <h2 id="values-title">{% trans "Ценности" %}</h2>
+            <p class="section-subtitle">{% if about_config %}{% trans "Как мы работаем каждый день." %}{% else %}{% trans "Наши принципы." %}{% endif %}</p>
+          </div>
+
+          <div class="grid grid-4">
+            {% for v in about_values|slice:":4" %}
+            <div class="card category-card" style="padding:18px;">
+              <span class="card-title">{{ v }}</span>
+              <span class="card-text">{% trans "Часть философии" %} {{ store_name }}.</span>
+            </div>
+            {% empty %}
+            <div class="card category-card" style="padding:18px;">
+              <span class="card-title">{% trans "Качество" %}</span>
+              <span class="card-text">{% trans "Отбор товаров и понятные карточки." %}</span>
+            </div>
+            <div class="card category-card" style="padding:18px;">
+              <span class="card-title">{% trans "Сервис" %}</span>
+              <span class="card-text">{% trans "Помогаем с выбором и доставкой." %}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      {% if about_config %}
+      <section class="section section-muted" aria-labelledby="mission-title">
+        <div class="container">
+          <div class="section-head">
+            <h2 id="mission-title">{% trans "Миссия и видение" %}</h2>
+          </div>
+          <div class="grid grid-3">
+            <div class="card" style="padding:18px;">
+              <h3 class="card-title">{% trans "Миссия" %}</h3>
+              <p class="card-text">{{ about_config.mission }}</p>
+            </div>
+            <div class="card" style="padding:18px;">
+              <h3 class="card-title">{% trans "Видение" %}</h3>
+              <p class="card-text">{{ about_config.vision }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      {% endif %}
+
+      <section class="section section-muted" aria-labelledby="final-cta-title">
+        <div class="container">
+          <div class="callout">
+            <div class="callout-left">
+              <h2 class="callout-title" id="final-cta-title">{% trans "Свяжитесь с нами" %}</h2>
+              <p class="callout-text">{% trans "Вопросы по ассортименту, опту и сотрудничеству." %}</p>
+            </div>
+            <a class="btn btn-primary" href="{% url 'contact' %}">{% trans "Контакты" %}</a>
+          </div>
+        </div>
+      </section>
+{% endblock %}

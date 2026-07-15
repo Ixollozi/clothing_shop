@@ -5,13 +5,35 @@ Django settings for fashionstore project.
 from pathlib import Path
 import os
 
+
+def _load_dotenv(path: Path) -> None:
+    """Load KEY=VALUE pairs from .env into os.environ (setdefault)."""
+    if not path.exists():
+        return
+    try:
+        for raw in path.read_text(encoding='utf-8').splitlines():
+            line = raw.strip()
+            if not line or line.startswith('#') or '=' not in line:
+                continue
+            key, value = line.split('=', 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            if key:
+                os.environ.setdefault(key, value)
+    except OSError:
+        pass
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+_load_dotenv(BASE_DIR / '.env')
+
+PLATFORM_MODE = os.environ.get('PLATFORM_MODE', '').strip().lower() in ('1', 'true', 'yes')
 
 # Загружаем настройки Django из config.json
 try:
     from store.config_loader import get_django_config
-    DJANGO_CONFIG = get_django_config()
+    DJANGO_CONFIG = {} if PLATFORM_MODE else get_django_config()
 except ImportError:
     # Если импорт не удался (например, при миграциях), используем значения по умолчанию
     DJANGO_CONFIG = {}
@@ -265,4 +287,13 @@ if email_config.get('password'):
     EMAIL_HOST_PASSWORD = email_config.get('password')
 EMAIL_FROM = email_config.get('from_email', 'noreply@fashionstore.ru')
 
+
+if PLATFORM_MODE:
+    from store.platform.bootstrap import apply_platform_settings
+
+    apply_platform_settings(globals())
+else:
+    from store.platform.bootstrap import _configure_celery
+
+    _configure_celery(globals())
 

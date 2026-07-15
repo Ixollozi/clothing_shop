@@ -42,5 +42,6 @@ def store_config(request):
         'seo_config': config.get('seo', {}),
         'theme_config': config.get('theme', {}),
         'cart_items_count': cart_items_count,
+        'current_site': getattr(request, 'site', None),
     }
 

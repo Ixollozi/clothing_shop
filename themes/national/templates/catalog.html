@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load translation_tags %}
+
+{% block meta_description %}{% trans "Каталог национальной одежды Узбекистана: чапаны, платья, костюмы и аксессуары." %}{% endblock %}
+
+{% block title %}{% trans "Каталог" %} | {{ store_name|default:"Fashion Store" }}{% endblock %}
+
+{% block content %}
+      <section class="section">
+        <div class="container">
+          <div class="catalog-crumbs" aria-label="Хлебные крошки">
+            <a href="{% url 'index' %}">{% trans "Главная" %}</a>
+            <span aria-hidden="true">/</span>
+            <span>{% trans "Каталог" %}</span>
+          </div>
+
+          <div class="catalog-head">
+            <div class="catalog-head-left">
+              <h1 class="hero-title" style="margin: 0;">{% trans "Каталог национальной одежды" %}</h1>
+              <p class="section-sub" style="margin-top: 10px;">
+                {% trans "От чапанов до аксессуаров: выберите стиль, чтобы быстро оформить заказ." %}
+              </p>
+            </div>
+
+            <div class="catalog-toolbar" aria-label="{% trans 'Панель управления каталогом' %}">
+              <div class="catalog-count">
+                {% blocktrans with count=products|length %}Показано {{ count }} товаров{% endblocktrans %}
+              </div>
+              <div class="catalog-sort">
+                <span class="sort-label">{% trans "Сортировка" %}</span>
+                <form method="get" action="{% url 'catalog' %}">
+                  <input type="hidden" name="category" value="{{ current_category|default:'' }}" />
+                  <input type="hidden" name="search" value="{{ current_search|default:'' }}" />
+                  <input type="hidden" name="min_price" value="{{ min_price|default:'' }}" />
+                  <input type="hidden" name="max_price" value="{{ max_price|default:'' }}" />
+                  <input type="hidden" name="color" value="{{ current_color|default:'' }}" />
+                  <select class="sort-select" aria-label="{% trans 'Сортировка' %}" name="sort" onchange="this.form.submit()">
+                    <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>{% trans "Сначала новые" %}</option>
+                    <option value="popularity" {% if current_sort == 'popularity' %}selected{% endif %}>{% trans "Популярные" %}</option>
+                    <option value="price_low" {% if current_sort == 'price_low' %}selected{% endif %}>{% trans "Сначала дешевле" %}</option>
+                    <option value="price_high" {% if current_sort == 'price_high' %}selected{% endif %}>{% trans "Сначала дороже" %}</option>
+                  </select>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="catalog-quickbar" aria-label="{% trans 'Быстрые фильтры' %}">
+            <a class="chip {% if not current_category %}chip-active{% endif %}" href="{% url 'catalog' %}#products">{% trans "Все" %}</a>
+            {% for cat in categories %}
+              <a
+                class="chip {% if current_category == cat.slug %}chip-active{% endif %}"
+                href="{% url 'catalog' %}?category={{ cat.slug }}{% if current_search %}&search={{ current_search|urlencode }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}#products"
+              >{{ cat.name }}</a>
+            {% endfor %}
+          </div>
+
+          <div class="catalog-layout">
+            <section class="catalog-main" aria-label="{% trans 'Список товаров' %}">
+              <div class="catalog-products-top" id="products" aria-label="{% trans 'Заголовок результатов' %}">
+                <div class="catalog-products-title">{% trans "Результаты" %}</div>
+                <div class="catalog-products-sub">{% trans "Подборка моделей по популярности и отзывам" %}</div>
+              </div>
+
+              <div class="product-grid">
+                {% if products %}
+                  {% for product in products %}
+                    {% cycle '1' '2' '3' '4' '5' '6' as bg silent %}
+                    <article class="product">
+                      <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                        <div class="product-media" aria-hidden="true">
+                          {% if product.image %}
+                            <img class="product-img" src="{{ product.image.url }}" alt="" loading="lazy" />
+                          {% elif product.image_url %}
+                            <img class="product-img" src="{{ product.image_url }}" alt="" loading="lazy" />
+                          {% else %}
+                            <div class="product-bg product-bg-{{ bg }}"></div>
+                          {% endif %}
+                          <span class="product-tag">{% trans "Товар" %}</span>
+                        </div>
+                      </a>
+                      <div class="product-body">
+                        <h3 class="product-title">
+                          <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                            {{ product.name }}
+                          </a>
+                        </h3>
+                        <div class="product-rating">
+                          <div class="stars" aria-label="{% blocktrans with r=product.rating|default:0 %}Рейтинг {{ r }} из 5{% endblocktrans %}">
+                            <span class="stars-fill" style="--fill: {% widthratio product.rating|default:0 5 100 %}%"></span>
+                          </div>
+                          <span class="rating-text">{{ product.rating|default:"—" }}</span>
+                        </div>
+                        <div class="product-bottom">
+                          <div class="product-price">
+                            <span class="price">{{ product.price|format_price }}</span>
+                            <span class="currency">сум</span>
+                          </div>
+                          {% if product.id %}
+                            <a
+                              class="btn btn-cart js-add-to-cart"
+                              href="{% url 'cart' %}"
+                              data-product-id="{{ product.id }}"
+                              data-quantity="1"
+                            >{% trans "В корзину" %}</a>
+                          {% else %}
+                            <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">{% trans "Подробнее" %}</a>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </article>
+                  {% endfor %}
+                {% elif dummy_products %}
+                  {% for product in dummy_products %}
+                    {% cycle '1' '2' '3' '4' '5' '6' as bg silent %}
+                    <article class="product">
+                      <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                        <div class="product-media" aria-hidden="true">
+                          {% if product.image %}
+                            <img class="product-img" src="{{ product.image.url }}" alt="" loading="lazy" />
+                          {% elif product.image_url %}
+                            <img class="product-img" src="{{ product.image_url }}" alt="" loading="lazy" />
+                          {% else %}
+                            <div class="product-bg product-bg-{{ bg }}"></div>
+                          {% endif %}
+                          <span class="product-tag">{% trans "Товар" %}</span>
+                        </div>
+                      </a>
+                      <div class="product-body">
+                        <h3 class="product-title">
+                          <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
+                            {{ product.name }}
+                          </a>
+                        </h3>
+                        <div class="product-bottom">
+                          <div class="product-price">
+                            <span class="price">{{ product.price|format_price }}</span>
+                            <span class="currency">сум</span>
+                          </div>
+                          <a class="btn btn-cart" href="{% url 'product_detail' slug=product.slug %}">{% trans "Подробнее" %}</a>
+                        </div>
+                      </div>
+                    </article>
+                  {% endfor %}
+                {% else %}
+                  <div class="section-sub">{% trans "Товары скоро появятся." %}</div>
+                {% endif %}
+              </div>
+
+              <div class="catalog-pagination" aria-label="{% trans 'Пагинация' %}">
+                {% if products.has_previous %}
+                  <a class="chip" href="?page={{ products.previous_page_number }}{% if pagination_query %}&{{ pagination_query }}{% endif %}#products">←</a>
+                {% endif %}
+
+                {% for num in products.paginator.page_range %}
+                  {% if num == products.number %}
+                    <a class="chip chip-active" href="?page={{ num }}{% if pagination_query %}&{{ pagination_query }}{% endif %}#products">{{ num }}</a>
+                  {% else %}
+                    <a class="chip" href="?page={{ num }}{% if pagination_query %}&{{ pagination_query }}{% endif %}#products">{{ num }}</a>
+                  {% endif %}
+                {% endfor %}
+
+                {% if products.has_next %}
+                  <a class="chip" href="?page={{ products.next_page_number }}{% if pagination_query %}&{{ pagination_query }}{% endif %}#products">→</a>
+                {% endif %}
+              </div>
+            </section>
+
+            <aside class="catalog-sidebar" aria-label="{% trans 'Фильтры' %}">
+              <form method="get" action="{% url 'catalog' %}">
+                <details open class="filter-details">
+                  <summary class="filter-summary">{% trans "Категория" %}</summary>
+                  <div class="filter-body">
+                    <label class="catalog-check">
+                      <input type="radio" name="category" value="" {% if not current_category %}checked{% endif %} />
+                      <span>{% trans "Все" %}</span>
+                    </label>
+                    {% for cat in categories %}
+                      <label class="catalog-check">
+                        <input type="radio" name="category" value="{{ cat.slug }}" {% if current_category == cat.slug %}checked{% endif %} />
+                        <span>{{ cat.name }}</span>
+                      </label>
+                    {% endfor %}
+                  </div>
+                </details>
+
+                <details class="filter-details">
+                  <summary class="filter-summary">{% trans "Цена" %}</summary>
+                  <div class="filter-body">
+                    <div class="range-row">
+                      <input class="range-input" type="number" name="min_price" placeholder="{% trans 'от' %}" value="{{ min_price|default:'' }}" />
+                      <span class="range-dash">—</span>
+                      <input class="range-input" type="number" name="max_price" placeholder="{% trans 'до' %}" value="{{ max_price|default:'' }}" />
+                    </div>
+                  </div>
+                </details>
+
+                <details class="filter-details">
+                  <summary class="filter-summary">{% trans "Цвет" %}</summary>
+                  <div class="filter-body">
+                    <div class="range-row">
+                      <input class="range-input" type="text" name="color" placeholder="#000000 или Черный" value="{{ current_color|default:'' }}" />
+                    </div>
+                  </div>
+                </details>
+
+                <input type="hidden" name="search" value="{{ current_search|default:'' }}" />
+                <input type="hidden" name="sort" value="{{ current_sort|default:'newest' }}" />
+                <button class="btn btn-soft btn-full" type="submit">{% trans "Применить" %}</button>
+              </form>
+            </aside>
+          </div>
+        </div>
+      </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.js-add-to-cart').forEach(function (el) {
+        el.addEventListener('click', async function (e) {
+          e.preventDefault();
+          const productId = this.getAttribute('data-product-id');
+          const quantity = Number(this.getAttribute('data-quantity') || 1);
+          if (!productId) return;
+
+          const res = await window.StoreApi.json('/api/cart/add_item/', {
+            method: 'POST',
+            body: { product_id: Number(productId), quantity: quantity, size: '', color: '' },
+          });
+
+          if (res.ok) {
+            await window.StoreApi.updateCartBadge();
+          } else {
+            window.location.href = this.getAttribute('href') || '{% url "cart" %}';
+          }
+        });
+      });
+    });
+  </script>
+{% endblock %}
+
