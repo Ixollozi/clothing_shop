@@ -1,0 +1,22 @@
+{% load static %}
+{% if board.slots %}
+<div class="ag-organic ag-organic--{{ board.kind }}" aria-label="Categories">
+  <div class="ag-organic__frame">
+    <svg class="ag-organic__svg" viewBox="{{ board.viewBox|default:'0 0 1000 1000' }}" role="img" aria-hidden="true">
+      <defs>
+        {% for s in board.slots %}
+        <clipPath id="{{ s.clip_id }}"><path d="{{ s.path }}"/></clipPath>
+        {% endfor %}
+      </defs>
+      {% for s in board.slots %}
+      <a class="ag-organic__link" href="{% url 'catalog' %}?category={{ s.slug }}" aria-label="{{ s.label }}">
+        <image href="{{ s.image_url }}" x="{{ s.x }}" y="{{ s.y }}" width="{{ s.w }}" height="{{ s.h }}" preserveAspectRatio="xMidYMid slice" clip-path="url(#{{ s.clip_id }})"/>
+      </a>
+      {% endfor %}
+    </svg>
+    {% for s in board.slots %}
+    <span class="ag-organic__pill ag-organic__pill--{{ s.pill_mod }}">{{ s.label }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}

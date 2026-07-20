@@ -1,56 +1,158 @@
 {
   "themes": {
     "main": {
-      "template_dirs": ["themes/main/templates"],
-      "static_dirs": ["themes/main/static"],
-      "locale_dirs": ["locale"]
+      "template_dirs": [
+        "themes/main/templates"
+      ],
+      "static_dirs": [
+        "themes/main/static"
+      ],
+      "locale_dirs": [
+        "locale"
+      ]
     },
     "front2": {
-      "template_dirs": ["themes/front2/templates"],
-      "static_dirs": ["themes/front2/static"],
-      "locale_dirs": ["locale"]
+      "template_dirs": [
+        "themes/front2/templates"
+      ],
+      "static_dirs": [
+        "themes/front2/static"
+      ],
+      "locale_dirs": [
+        "locale"
+      ]
+    },
+    "eshop": {
+      "template_dirs": [
+        "themes/eshop/templates"
+      ],
+      "static_dirs": [
+        "themes/eshop/static"
+      ],
+      "locale_dirs": [
+        "locale"
+      ]
+    },
+    "hero": {
+      "template_dirs": [
+        "themes/hero/templates"
+      ],
+      "static_dirs": [
+        "themes/hero/static"
+      ],
+      "locale_dirs": [
+        "locale"
+      ]
     },
     "wood": {
-      "template_dirs": ["themes/wood/templates"],
-      "static_dirs": ["themes/wood/static"],
-      "locale_dirs": ["locale"]
+      "template_dirs": [
+        "themes/wood/templates"
+      ],
+      "static_dirs": [
+        "themes/wood/static"
+      ],
+      "locale_dirs": [
+        "locale"
+      ]
     },
     "national": {
-      "template_dirs": ["themes/national/templates"],
-      "static_dirs": ["themes/national/static"],
-      "locale_dirs": ["locale"]
+      "template_dirs": [
+        "themes/national/templates"
+      ],
+      "static_dirs": [
+        "themes/national/static"
+      ],
+      "locale_dirs": [
+        "locale"
+      ]
     },
     "ceramics": {
-      "template_dirs": ["themes/ceramics/templates"],
-      "static_dirs": ["themes/ceramics/static"],
-      "locale_dirs": ["locale"]
+      "template_dirs": [
+        "themes/ceramics/templates"
+      ],
+      "static_dirs": [
+        "themes/ceramics/static"
+      ],
+      "locale_dirs": [
+        "locale"
+      ]
+    },
+    "meridian": {
+      "template_dirs": [
+        "themes/meridian/templates"
+      ],
+      "static_dirs": [
+        "themes/meridian/static"
+      ],
+      "locale_dirs": [
+        "locale"
+      ]
     }
   },
   "sites": {
     "demo-main": {
       "title": "Demo Main Shop",
       "theme": "main",
-      "hosts": ["demo-main.localhost", "demo-alpha.localhost"]
+      "hosts": [
+        "demo-main.localhost",
+        "demo-alpha.localhost"
+      ]
     },
     "demo-front2": {
       "title": "Demo Front2 Shop",
       "theme": "front2",
-      "hosts": ["demo-front2.localhost", "demo-beta.localhost"]
+      "hosts": [
+        "demo-front2.localhost",
+        "demo-beta.localhost"
+      ]
+    },
+    "demo-eshop": {
+      "title": "Apex Goods",
+      "theme": "eshop",
+      "hosts": [
+        "demo-eshop.localhost",
+        "demo-gamma2.localhost",
+        "demo-front3.localhost"
+      ]
+    },
+    "demo-hero": {
+      "title": "HERO",
+      "theme": "hero",
+      "hosts": [
+        "demo-hero.localhost",
+        "demo-delta.localhost",
+        "demo-front4.localhost"
+      ]
     },
     "demo-wood": {
       "title": "Demo Wood Shop",
       "theme": "wood",
-      "hosts": ["demo-wood.localhost", "demo-gamma.localhost"]
+      "hosts": [
+        "demo-wood.localhost",
+        "demo-gamma.localhost"
+      ]
     },
     "demo-national": {
       "title": "Demo National Shop",
       "theme": "national",
-      "hosts": ["demo-national.localhost"]
+      "hosts": [
+        "demo-national.localhost"
+      ]
     },
     "demo-ceramics": {
       "title": "Demo Ceramics Shop",
       "theme": "ceramics",
-      "hosts": ["demo-ceramics.localhost"]
+      "hosts": [
+        "demo-ceramics.localhost"
+      ]
+    },
+    "demo-meridian": {
+      "title": "Meridian Lookbook",
+      "theme": "meridian",
+      "hosts": [
+        "demo-meridian.localhost",
+        "demo-epsilon.localhost"
+      ]
     }
   }
 }

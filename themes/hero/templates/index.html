@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ store_title }} — Elevated Everyday{% endblock %}
+{% block body_class %}page-home{% endblock %}
+
+{% block content %}
+{# SVG clip paths — objectBoundingBox, from blueprint organic gutters #}
+<svg class="clip-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="clip-cat-home" clipPathUnits="objectBoundingBox">
+      <path d="M0.00 0.28 C0.00 0.06 0.08 0.00 0.30 0.00 H0.88 C0.96 0.00 1.00 0.08 0.97 0.22 C0.92 0.48 0.88 0.68 0.84 0.86 C0.82 0.95 0.74 1.00 0.62 1.00 H0.26 C0.06 1.00 0.00 0.94 0.00 0.74 Z"/>
+    </clipPath>
+    <clipPath id="clip-cat-apparel" clipPathUnits="objectBoundingBox">
+      <path d="M0.06 0.00 C0.02 0.00 0.00 0.10 0.00 0.24 V0.58 C0.00 0.78 0.10 0.90 0.28 0.98 C0.48 0.82 0.68 0.78 0.90 0.86 C0.97 0.90 1.00 0.78 1.00 0.58 V0.16 C1.00 0.04 0.94 0.00 0.80 0.00 Z"/>
+    </clipPath>
+    <clipPath id="clip-cat-accessories" clipPathUnits="objectBoundingBox">
+      <path d="M0.16 0.02 C0.40 0.16 0.62 0.20 0.88 0.06 C0.96 0.02 1.00 0.12 1.00 0.30 V0.80 C1.00 0.95 0.90 1.00 0.70 1.00 H0.18 C0.05 1.00 0.00 0.90 0.00 0.70 V0.30 C0.00 0.10 0.05 0.00 0.16 0.02 Z"/>
+    </clipPath>
+    <clipPath id="clip-featured" clipPathUnits="objectBoundingBox">
+      <path d="M0.00 0.06 C0.00 0.02 0.03 0.00 0.08 0.00 H0.82 C0.92 0.00 1.00 0.10 1.00 0.22 L0.88 1.00 H0.00 Z"/>
+    </clipPath>
+  </defs>
+</svg>
+
+<section class="hero">
+  <div class="hero__stage">
+    <img class="hero__img" src="{% static 'img/hero.jpg' %}" alt="Curated ceramics still life" width="1600" height="900">
+    <h1 class="hero__title">Elevated<br>Everyday.</h1>
+    <a class="hero__cta" href="{% url 'catalog' %}">Explore Curated Goods</a>
+    <div class="hero__badge" aria-hidden="true">
+      <span class="hero__badge-fabric">
+        <img src="{% static 'img/badge-core.jpg' %}" alt="">
+      </span>
+      <div class="hero__badge-disk">
+        <svg class="hero__badge-ring" viewBox="0 0 200 200">
+          <defs>
+            <path id="ringPath" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/>
+          </defs>
+          <text><textPath href="#ringPath">NEW · M24 · NEW · M24 · NEW · M24 · </textPath></text>
+        </svg>
+        <span class="hero__badge-star">✦</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span>Free Shipping Over $150</span><i>•</i>
+    <span>New Arrivals Weekly</span><i>•</i>
+    <span>Sustainable Sourcing</span><i>•</i>
+    <span>Free Shipping Over $150</span><i>•</i>
+    <span>New Arrivals Weekly</span><i>•</i>
+    <span>Sustainable Sourcing</span><i>•</i>
+    <span>Free Shipping Over $150</span><i>•</i>
+    <span>New Arrivals Weekly</span><i>•</i>
+    <span>Sustainable Sourcing</span><i>•</i>
+  </div>
+</div>
+
+<section class="cats">
+  <div class="cats__olive" aria-hidden="true"></div>
+  <a class="cat cat--home" href="{% url 'catalog' %}">
+    <img src="{% static 'img/home-goods.jpg' %}" alt="">
+    <span>Home Goods</span>
+  </a>
+  <a class="cat cat--apparel" href="{% url 'catalog' %}">
+    <img src="{% static 'img/apparel.jpg' %}" alt="">
+    <span>Apparel</span>
+  </a>
+  <a class="cat cat--accessories" href="{% url 'catalog' %}">
+    <img src="{% static 'img/accessories.jpg' %}" alt="">
+    <span>Accessories</span>
+  </a>
+</section>
+
+<section class="sellers">
+  <div class="sec-head">
+    <h2>Best Sellers</h2>
+    <a href="{% url 'catalog' %}">Scroll <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+  </div>
+  <div class="sellers__row">
+    <div class="sellers__track" id="sellersTrack">
+      <article class="pcard">
+        <div class="pcard__media">
+          <img src="{% static 'img/product-1.jpg' %}" alt="The Artisan Brewer">
+          <em>70%</em>
+          <span class="pcard__peek"><img src="{% static 'img/product-1.jpg' %}" alt=""></span>
+        </div>
+        <div class="pcard__meta"><h3>The Artisan Brewer</h3><strong>$85</strong></div>
+      </article>
+      <article class="pcard">
+        <div class="pcard__media">
+          <img src="{% static 'img/product-2.jpg' %}" alt="Wool Throw Blanket">
+          <span class="pcard__peek"><img src="{% static 'img/product-2.jpg' %}" alt=""></span>
+        </div>
+        <div class="pcard__meta"><h3>Wool Throw Blanket</h3><strong>$120</strong></div>
+      </article>
+      <article class="pcard">
+        <div class="pcard__media">
+          <img src="{% static 'img/product-3.jpg' %}" alt="Oak Ceramic Vase">
+          <em>70%</em>
+          <span class="pcard__peek"><img src="{% static 'img/product-3.jpg' %}" alt=""></span>
+        </div>
+        <div class="pcard__meta"><h3>Oak Ceramic Vase</h3><strong>$85</strong></div>
+      </article>
+      <article class="pcard">
+        <div class="pcard__media">
+          <img src="{% static 'img/product-4.jpg' %}" alt="Minimal Desk Lamp">
+          <span class="pcard__peek"><img src="{% static 'img/product-4.jpg' %}" alt=""></span>
+        </div>
+        <div class="pcard__meta"><h3>Minimal Desk Lamp</h3><strong>$95</strong></div>
+      </article>
+      <article class="pcard">
+        <div class="pcard__media">
+          <img src="{% static 'img/product-5.jpg' %}" alt="Everyday Eyewear">
+          <em>70%</em>
+          <span class="pcard__peek"><img src="{% static 'img/product-5.jpg' %}" alt=""></span>
+        </div>
+        <div class="pcard__meta"><h3>Everyday Eyewear</h3><strong>$78</strong></div>
+      </article>
+    </div>
+    <button type="button" class="round-nav" id="sellersNext" aria-label="Next">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+</section>
+
+<section class="quote">
+  <p>“We believe in the beauty of obvious things done well.”</p>
+</section>
+
+<section class="values">
+  <div class="value">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18v18h20V18"/><path d="M10 18h28"/><path d="M24 10v8"/><path d="M18 36V26h12v10"/></svg>
+    <h3>Crafted to Last</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+  </div>
+  <div class="value">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40c9-7 14-13 14-21a14 14 0 1 0-28 0c0 8 5 14 14 21z"/><path d="M24 25a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>
+    <h3>Ethically Sourced</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+  </div>
+  <div class="value">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="15"/><path d="M9 24h30M24 9c4.5 5 7 10 7 15s-2.5 10-7 15c-4.5-5-7-10-7-15s2.5-10 7-15z"/></svg>
+    <h3>Global Curation</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+  </div>
+</section>
+
+<section class="featured">
+  <div class="featured__media">
+    <img src="{% static 'img/featured.jpg' %}" alt="The Oak Ceramic Vase">
+  </div>
+  <div class="featured__copy">
+    <h2>The Oak Ceramic Vase</h2>
+    <p class="featured__price">$85</p>
+    <p class="featured__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+    <a class="featured__cta" href="{% url 'catalog' %}">
+      Add to Cart
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<section class="ig">
+  <div class="sec-head">
+    <h2>Instagram</h2>
+    <span>Scroll</span>
+  </div>
+  <div class="ig__row">
+    <div class="ig__track" id="igTrack">
+      <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-1.jpg' %}" alt=""></a>
+      <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-2.jpg' %}" alt=""></a>
+      <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-3.jpg' %}" alt=""></a>
+      <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-4.jpg' %}" alt=""></a>
+      <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-5.jpg' %}" alt=""></a>
+      <a href="{% url 'catalog' %}"><img src="{% static 'img/home-goods.jpg' %}" alt=""></a>
+    </div>
+    <button type="button" class="round-nav" id="igNext" aria-label="Next">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+</section>
+{% endblock %}

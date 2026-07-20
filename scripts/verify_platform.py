@@ -21,15 +21,19 @@ from store.platform.registry import get_site, load_registry
 assert settings.PLATFORM_MODE
 themes, sites = load_registry()
 print('themes:', sorted(themes))
-assert set(themes) == {'main', 'front2', 'wood', 'national', 'ceramics'}
+assert set(themes) == {'main', 'front2', 'eshop', 'hero', 'meridian', 'wood', 'national', 'ceramics'}
 
 expected = {
     'demo-main': 'main',
     'demo-front2': 'front2',
+    'demo-eshop': 'eshop',
+    'demo-hero': 'hero',
+    'demo-meridian': 'meridian',
     'demo-wood': 'wood',
     'demo-national': 'national',
     'demo-ceramics': 'ceramics',
 }
+
 for slug, theme in expected.items():
     assert sites[slug].theme == theme, (slug, sites[slug].theme, theme)
 print('sites themes OK')
@@ -38,6 +42,10 @@ client = Client()
 checks = [
     ('demo-main.localhost', 'main', 'Demo Main Shop', False),
     ('demo-front2.localhost', 'front2', 'Demo Front2 Shop', False),
+    ('demo-eshop.localhost', 'eshop', 'Apex Goods', False),
+    ('demo-hero.localhost', 'hero', 'HERO', False),
+
+    ('demo-meridian.localhost', 'meridian', 'Meridian', False),
     ('demo-wood.localhost', 'wood', 'Demo Wood Shop', False),
     ('demo-national.localhost', 'national', 'Demo National Shop', False),
     ('demo-ceramics.localhost', 'ceramics', 'Demo Ceramics Shop', True),
@@ -97,4 +105,4 @@ for host, theme, shop, is_spa in checks:
     print(f'OK admin {host}')
     client.logout()
 
-print('\nALL 5 THEMES + ADMIN PASSED')
+print('\nALL THEMES + ADMIN PASSED')

@@ -77,29 +77,73 @@ def get_dummy_products():
 
 def get_dummy_categories():
     """Возвращает заглушки категорий"""
+    from django.templatetags.static import static
+
     return [
         {
             'name': "Men's Clothing",
             'slug': 'mens-clothing',
-            'image_url': 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
+            'image_url': static('img/gallery-1.jpg'),
             'image': None,
         },
         {
             'name': "Women's Clothing",
             'slug': 'womens-clothing',
-            'image_url': 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400',
+            'image_url': static('img/gallery-2.jpg'),
             'image': None,
         },
         {
             'name': "Kids' Clothing",
             'slug': 'kids-clothing',
-            'image_url': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400',
+            'image_url': static('img/gallery-3.jpg'),
             'image': None,
         },
         {
             'name': 'Accessories',
             'slug': 'accessories',
-            'image_url': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400',
+            'image_url': static('img/gallery-4.jpg'),
+            'image': None,
+        },
+        {
+            'name': 'Home Hygge',
+            'slug': 'home-hygge',
+            'image_url': static('img/organic-row3-l.jpg'),
+            'image': None,
+        },
+        {
+            'name': 'Notebooks',
+            'slug': 'notebooks',
+            'image_url': static('img/organic-row3-m.jpg'),
+            'image': None,
+        },
+        {
+            'name': 'Reusable Bottles',
+            'slug': 'reusable-bottles',
+            'image_url': static('img/organic-row3-r.jpg'),
+            'image': None,
+        },
+        {
+            'name': 'Candles',
+            'slug': 'candles',
+            'image_url': static('img/gallery-1.jpg'),
+            'image': None,
+        },
+        {
+            'name': 'Tech Refined',
+            'slug': 'tech-refined',
+            'image_url': static('img/organic-tech-tl.jpg'),
+            'image': None,
+        },
+        {
+            'name': 'Phones',
+            'slug': 'phones',
+            'image_url': static('img/organic-tech-tr.jpg'),
+            'image': None,
+        },
+        {
+            'name': 'Watches',
+            'slug': 'watches',
+            'image_url': static('img/organic-tech-br.jpg'),
             'image': None,
         },
     ]
@@ -108,27 +152,19 @@ def get_dummy_categories():
 def index(request):
     """Главная страница"""
     from .models import HeroConfig
-    # Получаем товары из БД, если есть - иначе заглушки
-    products = list(
-        Product.objects.filter(is_active=True)
-        .exclude(category__slug='demo')
-        .order_by('-rating', '-reviews_count', '-created_at')[:8]
-    )
-    if not products:
-        products = get_dummy_products()
-    
-    # Получаем категории из БД, если есть - иначе заглушки
-    categories = list(Category.objects.all().order_by('name')[:4])
+    from .organic_bento import MAX_CATEGORIES, build_organic_boards
+
+    categories = list(Category.objects.all().order_by('name')[:MAX_CATEGORIES])
     if not categories:
         categories = get_dummy_categories()
-    
-    # Получаем HeroConfig напрямую из БД для доступа к изображению
+
+    organic_boards = build_organic_boards(categories)
     hero_config_obj = HeroConfig.objects.filter(is_active=True).first()
-    
+
     context = {
-        'products': products,
         'categories': categories,
-        'hero_config_obj': hero_config_obj,  # Объект модели для прямого доступа
+        'organic_boards': organic_boards,
+        'hero_config_obj': hero_config_obj,
     }
     return render(request, 'index.html', context)
 

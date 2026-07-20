@@ -79,12 +79,13 @@ def check_sites_layout() -> None:
     reg = json.loads((example / 'registry.json').read_text(encoding='utf-8'))
     site_slugs = sorted(reg.get('sites', {}))
     theme_slugs = sorted(reg.get('themes', {}))
-    if theme_slugs != ['ceramics', 'front2', 'main', 'national', 'wood']:
+    if theme_slugs != ['ceramics', 'eshop', 'front2', 'hero', 'main', 'meridian', 'national', 'wood']:
         fail(f'themes in example registry unexpected: {theme_slugs}')
     else:
         ok(f'example themes: {theme_slugs}')
 
-    expected = ['demo-ceramics', 'demo-front2', 'demo-main', 'demo-national', 'demo-wood']
+    expected = ['demo-ceramics', 'demo-eshop', 'demo-front2', 'demo-hero', 'demo-main', 'demo-meridian', 'demo-national', 'demo-wood']
+
     if site_slugs != expected:
         fail(f'example sites unexpected: {site_slugs}')
     else:
@@ -128,15 +129,18 @@ def check_platform() -> None:
     ok('PLATFORM_MODE on')
 
     themes, sites = load_registry()
-    if set(themes) != {'main', 'front2', 'wood', 'national', 'ceramics'}:
+    if set(themes) != {'main', 'front2', 'eshop', 'hero', 'meridian', 'wood', 'national', 'ceramics'}:
         fail(f'themes {sorted(themes)}')
     else:
-        ok('5 themes loaded')
+        ok('8 themes loaded')
 
     client = Client()
     hosts = [
         ('demo-main.localhost', 'main'),
         ('demo-front2.localhost', 'front2'),
+        ('demo-eshop.localhost', 'eshop'),
+        ('demo-hero.localhost', 'hero'),
+        ('demo-meridian.localhost', 'meridian'),
         ('demo-wood.localhost', 'wood'),
         ('demo-national.localhost', 'national'),
         ('demo-ceramics.localhost', 'ceramics'),

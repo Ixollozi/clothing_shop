@@ -29,9 +29,13 @@ if (-not (Test-Path 'sites\registry.json')) {
 }
 
 Write-Host ''
-Write-Host '=== 5 themes / 5 domains ==='
+Write-Host '=== themes / domains ==='
 Write-Host '  http://demo-main.localhost:8000/       theme=main'
 Write-Host '  http://demo-front2.localhost:8000/     theme=front2'
+Write-Host '  http://demo-eshop.localhost:8000/       theme=eshop (Apex Goods / ESHOP)'
+Write-Host '  http://demo-hero.localhost:8000/       theme=hero (HERO)'
+
+Write-Host '  http://demo-meridian.localhost:8000/    theme=meridian (Meridian Lookbook)'
 Write-Host '  http://demo-wood.localhost:8000/       theme=wood'
 Write-Host '  http://demo-national.localhost:8000/   theme=national'
 Write-Host '  http://demo-ceramics.localhost:8000/   theme=ceramics (React SPA)'

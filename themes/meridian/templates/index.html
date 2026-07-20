@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load i18n static humanize translation_tags %}
+
+{% block title %}{{ store_name }} — {% trans "Fashion Store - Online Clothing Store" %}{% endblock %}
+{% block body_class %}is-home{% endblock %}
+
+{% block content %}
+{% static 'img/hero.jpg' as fallback_hero %}
+
+<section class="lb-hero" id="home"
+    style="--hero-img: url('{% if hero_config_obj.background_image %}{{ hero_config_obj.background_image.url }}{% elif hero_config_obj.background_image_url %}{{ hero_config_obj.background_image_url }}{% elif hero_config.background_image %}{{ hero_config.background_image }}{% else %}{{ fallback_hero }}{% endif %}')">
+    <div class="lb-hero-media" aria-hidden="true"></div>
+    <div class="lb-hero-scrim" aria-hidden="true"></div>
+
+    <div class="lb-hero-content">
+        <p class="lb-kicker" data-hero="kicker">{% trans "Collection" %} 26</p>
+        <h1 class="lb-brand" data-hero="brand">
+            <span class="lb-mask"><span>{{ store_name }}</span></span>
+        </h1>
+        <p class="lb-hero-line" data-hero="line">
+            {% if hero_config.title %}{{ hero_config.title }}{% else %}{% trans "New Collection" %}{% endif %}
+            <em>—</em>
+            {% if hero_config.subtitle %}{{ hero_config.subtitle }}{% else %}{% trans "Discover style and comfort" %}{% endif %}
+        </p>
+        <div class="lb-hero-cta" data-hero="cta">
+            <a href="{% url 'catalog' %}" class="btn btn-primary">
+                {% if hero_config.button_text %}{{ hero_config.button_text }}{% else %}{% trans "View Catalog" %}{% endif %}
+            </a>
+        </div>
+    </div>
+</section>
+
+{% if categories %}
+<section class="lb-marquee" aria-label="{% trans 'Categories' %}">
+    <div class="lb-marquee-track">
+        {% for category in categories %}
+            <a href="{% url 'catalog' %}{% if category.slug %}?category={{ category.slug }}{% endif %}">{{ category.name }}</a>
+            <span aria-hidden="true">✦</span>
+        {% endfor %}
+        {% for category in categories %}
+            <a href="{% url 'catalog' %}{% if category.slug %}?category={{ category.slug }}{% endif %}">{{ category.name }}</a>
+            <span aria-hidden="true">✦</span>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if categories %}
+<section class="lb-looks">
+    <div class="lb-section-head">
+        <h2>{% trans "Categories" %}</h2>
+        <a class="lb-link" href="{% url 'catalog' %}">{% trans "View Catalog" %}</a>
+    </div>
+    <div class="lb-looks-grid">
+        {% for category in categories %}
+        <a class="lb-look reveal" href="{% url 'catalog' %}{% if category.slug %}?category={{ category.slug }}{% endif %}">
+            <div class="lb-look-img">
+                {% if category.image %}
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}" loading="lazy">
+                {% elif category.image_url %}
+                    <img src="{{ category.image_url }}" alt="{{ category.name }}" loading="lazy">
+                {% elif forloop.counter0|divisibleby:4 %}
+                    <img src="{% static 'img/look1.jpg' %}" alt="{{ category.name }}" loading="lazy">
+                {% elif forloop.counter0|add:1|divisibleby:4 %}
+                    <img src="{% static 'img/look2.jpg' %}" alt="{{ category.name }}" loading="lazy">
+                {% elif forloop.counter0|add:2|divisibleby:4 %}
+                    <img src="{% static 'img/look3.jpg' %}" alt="{{ category.name }}" loading="lazy">
+                {% else %}
+                    <img src="{% static 'img/look4.jpg' %}" alt="{{ category.name }}" loading="lazy">
+                {% endif %}
+            </div>
+            <div class="lb-look-meta">
+                <span>0{{ forloop.counter }}</span>
+                <h3>{{ category.name }}</h3>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if products %}
+<section class="lb-shop" id="products">
+    <div class="lb-section-head">
+        <h2>{% trans "Popular Products" %}</h2>
+        <p class="lb-section-note">{% trans "Shop" %}</p>
+    </div>
+    <div class="lb-products">
+        {% for product in products %}
+        <article class="product-card reveal">
+            <div class="product-media">
+                <a class="product-image" href="{% if product.slug %}{% url 'product' product.slug %}{% else %}{% url 'catalog' %}{% endif %}">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                    {% elif product.image_url %}
+                        <img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy">
+                    {% else %}
+                        <div class="product-image-placeholder" aria-hidden="true"></div>
+                    {% endif %}
+                </a>
+                {% if product.id %}
+                <button class="btn btn-add-cart product-quick-add" type="button" data-product-id="{{ product.id }}" data-product-name="{{ product.name|escapejs }}">{% trans "Add to Cart" %}</button>
+                {% endif %}
+            </div>
+            <div class="product-info">
+                <div class="product-info-top">
+                    <h3 class="product-name">
+                        <a href="{% if product.slug %}{% url 'product' product.slug %}{% else %}{% url 'catalog' %}{% endif %}">{{ product.name }}</a>
+                    </h3>
+                    <p class="product-price">
+                        {{ product.price|format_price }} сум
+                        {% if product.old_price and product.old_price > product.price %}
+                            <span class="old-price">{{ product.old_price|format_price }} сум</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section class="lb-story reveal">
+    <div class="lb-story-copy">
+        <p class="lb-kicker">{% trans "About" %}</p>
+        <h2>{% if about_config.title %}{{ about_config.title }}{% else %}{{ store_name }}{% endif %}</h2>
+        <p>
+            {% if about_config.description %}
+                {{ about_config.description }}
+            {% else %}
+                {% trans "Fashion Store is a modern online clothing store that offers a wide range of quality and stylish clothing for the whole family." %}
+            {% endif %}
+        </p>
+        <a href="{% url 'about' %}" class="btn btn-ghost">{% trans "About Us" %}</a>
+    </div>
+    <div class="lb-story-visual">
+        <img src="{% static 'img/look2.jpg' %}" alt="" loading="lazy">
+    </div>
+</section>
+{% endblock %}

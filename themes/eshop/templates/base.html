@@ -1,0 +1,194 @@
+{% load static %}
+{% load i18n %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE }}">
+<!-- theme:eshop -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>{% block title %}{{ store_title }}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <div class="ag-blobs" aria-hidden="true">
+      <svg class="ag-blobs__shape ag-blobs__shape--1" viewBox="0 0 800 600" preserveAspectRatio="none">
+        <path fill="currentColor" d="M120 280C40 210 30 90 140 50C260 8 380 70 490 40C620 6 740 70 760 180C782 300 700 360 640 430C570 510 460 560 340 540C200 516 190 360 120 280Z"/>
+      </svg>
+      <svg class="ag-blobs__shape ag-blobs__shape--2" viewBox="0 0 800 600" preserveAspectRatio="none">
+        <path fill="currentColor" d="M180 320C90 250 110 120 230 80C360 34 480 90 590 60C710 26 790 120 770 240C748 370 680 420 600 480C500 556 360 580 250 520C130 450 260 380 180 320Z"/>
+      </svg>
+      <svg class="ag-blobs__shape ag-blobs__shape--3" viewBox="0 0 700 500" preserveAspectRatio="none">
+        <path fill="currentColor" d="M80 260C20 180 50 60 160 40C280 16 370 90 480 70C600 48 690 120 680 230C668 350 580 400 500 450C400 510 280 490 180 440C70 380 140 330 80 260Z"/>
+      </svg>
+    </div>
+
+    <header class="ag-header">
+        <div class="ag-wrap ag-header__inner">
+            <a class="ag-logo" href="{% url 'index' %}">
+                <span class="ag-logo__mark" aria-hidden="true">A</span>
+                <span class="ag-logo__text">{{ store_name|default:"Apex Goods" }}</span>
+            </a>
+            <button class="ag-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Menu">
+                <span></span><span></span>
+            </button>
+            <nav class="ag-nav" id="navMenu">
+                <a href="{% url 'index' %}" class="{% if request.resolver_match.url_name == 'index' %}is-active{% endif %}">Discover</a>
+                <a href="{% url 'catalog' %}">Categories</a>
+            </nav>
+            <div class="ag-utils">
+                <a class="ag-account" href="{% url 'contact' %}">Account</a>
+                <a href="{% url 'catalog' %}" class="ag-icon-btn" aria-label="Search"><i class="fas fa-search"></i></a>
+                <a href="{% url 'cart' %}" class="ag-icon-btn ag-cart" aria-label="Cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-icon-count" class="ag-cart-badge" style="display:none;">0</span>
+                </a>
+                <div class="language-switcher">
+                    <button class="language-btn" id="languageBtn" type="button">
+                        <span class="current-lang">{{ CURRENT_LANGUAGE|upper }}</span>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="language" value="ru">
+                            <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+                            <button type="submit" class="lang-option {% if CURRENT_LANGUAGE == 'ru' %}active{% endif %}">Русский</button>
+                        </form>
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="language" value="en">
+                            <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+                            <button type="submit" class="lang-option {% if CURRENT_LANGUAGE == 'en' %}active{% endif %}">English</button>
+                        </form>
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="language" value="uz">
+                            <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+                            <button type="submit" class="lang-option {% if CURRENT_LANGUAGE == 'uz' %}active{% endif %}">O'zbek</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <div id="notification-container" class="notification-container"></div>
+
+    <footer class="ag-footer">
+        <div class="ag-wrap">
+            <div class="ag-footer__grid">
+                <div class="ag-footer__brand">
+                    <a class="ag-logo ag-logo--footer" href="{% url 'index' %}">
+                        <span class="ag-logo__mark" aria-hidden="true">A</span>
+                        <span class="ag-logo__text">{{ store_name|default:"Apex Goods" }}</span>
+                    </a>
+                    <p>{{ store_description|default:"Curated finds for modern living." }}</p>
+                    <div class="ag-social">
+                        {% if social_links.twitter %}<a href="{{ social_links.twitter }}" aria-label="X"><i class="fab fa-x-twitter"></i></a>{% else %}<a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>{% endif %}
+                        {% if social_links.facebook %}<a href="{{ social_links.facebook }}" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>{% else %}<a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>{% endif %}
+                        {% if social_links.instagram %}<a href="{{ social_links.instagram }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>{% else %}<a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>{% endif %}
+                        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="ag-footer__col">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'delivery' %}">Return Policy</a></li>
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+                        <li><a href="{% url 'contact' %}">Account</a></li>
+                    </ul>
+                </div>
+                <div class="ag-footer__col">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'about' %}">Blog</a></li>
+                        <li><a href="{% url 'catalog' %}">Preview Status</a></li>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="ag-footer__news">
+                    <h4>Stay Inspired</h4>
+                    <p>Sign up for our most awaited newsletter.</p>
+                    <form class="ag-news" action="{% url 'contact' %}" method="get">
+                        <input type="email" name="email" placeholder="Enter your email address" aria-label="Email" required>
+                        <button type="submit">Sign Now</button>
+                    </form>
+                </div>
+            </div>
+            <div class="ag-footer__bottom">
+                <span>www.apexgoods.website.com</span>
+                <a href="{% url 'faq' %}">Terms Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        function getCsrfToken() {
+            return getCookie('csrftoken') || document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        }
+        function updateCartIcon() {
+            fetch('/api/cart/current/')
+                .then((r) => r.json())
+                .then((data) => {
+                    const el = document.getElementById('cart-icon-count');
+                    if (!el) return;
+                    const count = data.items_count || 0;
+                    el.textContent = count;
+                    el.style.display = count > 0 ? 'flex' : 'none';
+                })
+                .catch(() => {});
+        }
+        window.addToCart = async function (event, productId) {
+            const button = event?.target?.closest('button') || event?.target;
+            if (!button || !productId) return;
+            const original = button.textContent;
+            button.disabled = true;
+            try {
+                const csrftoken = getCsrfToken();
+                const response = await fetch('/api/cart/add_item/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({ product_id: parseInt(productId, 10), quantity: 1, size: '', color: '' }),
+                });
+                if (!response.ok) throw new Error('fail');
+                button.textContent = 'Added';
+                updateCartIcon();
+                setTimeout(() => { button.textContent = original; button.disabled = false; }, 1600);
+            } catch (e) {
+                button.textContent = 'Error';
+                setTimeout(() => { button.textContent = original; button.disabled = false; }, 1600);
+            }
+        };
+        document.addEventListener('DOMContentLoaded', updateCartIcon);
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
