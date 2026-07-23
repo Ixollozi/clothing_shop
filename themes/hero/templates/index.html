@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
+{% load humanize %}
+{% load translation_tags %}
 
-{% block title %}{{ store_title }} — Elevated Everyday{% endblock %}
+{% block title %}{% if seo_config.meta_title %}{{ seo_config.meta_title }}{% else %}{{ store_title }} — {% trans "Elevated Everyday" %}{% endif %}{% endblock %}
 {% block body_class %}page-home{% endblock %}
 
 {% block content %}
-{# SVG clip paths — objectBoundingBox, from blueprint organic gutters #}
 <svg class="clip-defs" width="0" height="0" aria-hidden="true" focusable="false">
   <defs>
     <clipPath id="clip-cat-home" clipPathUnits="objectBoundingBox">
@@ -26,9 +27,19 @@
 
 <section class="hero">
   <div class="hero__stage">
-    <img class="hero__img" src="{% static 'img/hero.jpg' %}" alt="Curated ceramics still life" width="1600" height="900">
-    <h1 class="hero__title">Elevated<br>Everyday.</h1>
-    <a class="hero__cta" href="{% url 'catalog' %}">Explore Curated Goods</a>
+    <img class="hero__img"
+      src="{% if hero_config_obj and hero_config_obj.background_image %}{{ hero_config_obj.background_image.url }}{% elif hero_config_obj and hero_config_obj.background_image_url %}{{ hero_config_obj.background_image_url }}{% elif hero_config.background_image %}{{ hero_config.background_image }}{% else %}{% static 'img/hero.jpg' %}{% endif %}"
+      alt="{{ store_name|default:'HERO' }}"
+      width="1600" height="900" decoding="async" fetchpriority="high">
+    <div class="hero__copy">
+      <h1 class="hero__title">{% if hero_config_obj and hero_config_obj.title %}{{ hero_config_obj.title|linebreaksbr }}{% elif hero_config.title %}{{ hero_config.title|linebreaksbr }}{% else %}{% trans "Elevated" %}<br>{% trans "Everyday." %}{% endif %}</h1>
+      {% if hero_config_obj and hero_config_obj.subtitle %}
+        <p class="hero__lede">{{ hero_config_obj.subtitle }}</p>
+      {% elif hero_config.subtitle %}
+        <p class="hero__lede">{{ hero_config.subtitle }}</p>
+      {% endif %}
+    </div>
+    <a class="hero__cta" href="{% url 'catalog' %}">{% if hero_config_obj and hero_config_obj.button_text %}{{ hero_config_obj.button_text }}{% elif hero_config.button_text %}{{ hero_config.button_text }}{% else %}{% trans "Explore Curated Goods" %}{% endif %}</a>
     <div class="hero__badge" aria-hidden="true">
       <span class="hero__badge-fabric">
         <img src="{% static 'img/badge-core.jpg' %}" alt="">
@@ -38,7 +49,7 @@
           <defs>
             <path id="ringPath" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/>
           </defs>
-          <text><textPath href="#ringPath">NEW · M24 · NEW · M24 · NEW · M24 · </textPath></text>
+          <text><textPath href="#ringPath">{% trans "NEW · M24 · " %}{% trans "NEW · M24 · " %}{% trans "NEW · M24 · " %}</textPath></text>
         </svg>
         <span class="hero__badge-star">✦</span>
       </div>
@@ -48,138 +59,205 @@
 
 <div class="ticker" aria-hidden="true">
   <div class="ticker__track">
-    <span>Free Shipping Over $150</span><i>•</i>
-    <span>New Arrivals Weekly</span><i>•</i>
-    <span>Sustainable Sourcing</span><i>•</i>
-    <span>Free Shipping Over $150</span><i>•</i>
-    <span>New Arrivals Weekly</span><i>•</i>
-    <span>Sustainable Sourcing</span><i>•</i>
-    <span>Free Shipping Over $150</span><i>•</i>
-    <span>New Arrivals Weekly</span><i>•</i>
-    <span>Sustainable Sourcing</span><i>•</i>
+    {% if features %}
+      {% for feature in features %}
+        <span>{{ feature.title }}</span><i>•</i>
+      {% endfor %}
+      {% for feature in features %}
+        <span>{{ feature.title }}</span><i>•</i>
+      {% endfor %}
+      {% for feature in features %}
+        <span>{{ feature.title }}</span><i>•</i>
+      {% endfor %}
+    {% else %}
+      <span>{% trans "Free shipping from 500 000 sum" %}</span><i>•</i>
+      <span>{% trans "New arrivals weekly" %}</span><i>•</i>
+      <span>{% trans "Sustainable sourcing" %}</span><i>•</i>
+      <span>{% trans "Free shipping from 500 000 sum" %}</span><i>•</i>
+      <span>{% trans "New arrivals weekly" %}</span><i>•</i>
+      <span>{% trans "Sustainable sourcing" %}</span><i>•</i>
+      <span>{% trans "Free shipping from 500 000 sum" %}</span><i>•</i>
+      <span>{% trans "New arrivals weekly" %}</span><i>•</i>
+      <span>{% trans "Sustainable sourcing" %}</span><i>•</i>
+    {% endif %}
   </div>
 </div>
 
-<section class="cats">
+<section class="cats" aria-label="{% trans 'Categories' %}">
   <div class="cats__olive" aria-hidden="true"></div>
-  <a class="cat cat--home" href="{% url 'catalog' %}">
-    <img src="{% static 'img/home-goods.jpg' %}" alt="">
-    <span>Home Goods</span>
-  </a>
-  <a class="cat cat--apparel" href="{% url 'catalog' %}">
-    <img src="{% static 'img/apparel.jpg' %}" alt="">
-    <span>Apparel</span>
-  </a>
-  <a class="cat cat--accessories" href="{% url 'catalog' %}">
-    <img src="{% static 'img/accessories.jpg' %}" alt="">
-    <span>Accessories</span>
-  </a>
+  {% for category in home_tiles %}
+    {% if forloop.counter0 == 0 %}
+      <a class="cat cat--home" href="{% url 'catalog' %}?category={{ category.slug }}">
+        {% if category.image %}<img src="{{ category.image.url }}" alt="">{% else %}<img src="{% static 'img/home-goods.jpg' %}" alt="">{% endif %}
+        <span>{{ category.name }}</span>
+      </a>
+    {% elif forloop.counter0 == 1 %}
+      <a class="cat cat--apparel" href="{% url 'catalog' %}?category={{ category.slug }}">
+        {% if category.image %}<img src="{{ category.image.url }}" alt="">{% else %}<img src="{% static 'img/apparel.jpg' %}" alt="">{% endif %}
+        <span>{{ category.name }}</span>
+      </a>
+    {% elif forloop.counter0 == 2 %}
+      <a class="cat cat--accessories" href="{% url 'catalog' %}?category={{ category.slug }}">
+        {% if category.image %}<img src="{{ category.image.url }}" alt="">{% else %}<img src="{% static 'img/accessories.jpg' %}" alt="">{% endif %}
+        <span>{{ category.name }}</span>
+      </a>
+    {% endif %}
+  {% empty %}
+    <a class="cat cat--home" href="{% url 'catalog' %}">
+      <img src="{% static 'img/home-goods.jpg' %}" alt="">
+      <span>{% trans "Home Goods" %}</span>
+    </a>
+    <a class="cat cat--apparel" href="{% url 'catalog' %}">
+      <img src="{% static 'img/apparel.jpg' %}" alt="">
+      <span>{% trans "Apparel" %}</span>
+    </a>
+    <a class="cat cat--accessories" href="{% url 'catalog' %}">
+      <img src="{% static 'img/accessories.jpg' %}" alt="">
+      <span>{% trans "Accessories" %}</span>
+    </a>
+  {% endfor %}
 </section>
 
 <section class="sellers">
   <div class="sec-head">
-    <h2>Best Sellers</h2>
-    <a href="{% url 'catalog' %}">Scroll <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+    <h2>{% trans "Best Sellers" %}</h2>
+    <a href="{% url 'catalog' %}">{% trans "View all" %} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
   </div>
   <div class="sellers__row">
     <div class="sellers__track" id="sellersTrack">
-      <article class="pcard">
-        <div class="pcard__media">
-          <img src="{% static 'img/product-1.jpg' %}" alt="The Artisan Brewer">
-          <em>70%</em>
-          <span class="pcard__peek"><img src="{% static 'img/product-1.jpg' %}" alt=""></span>
-        </div>
-        <div class="pcard__meta"><h3>The Artisan Brewer</h3><strong>$85</strong></div>
-      </article>
-      <article class="pcard">
-        <div class="pcard__media">
-          <img src="{% static 'img/product-2.jpg' %}" alt="Wool Throw Blanket">
-          <span class="pcard__peek"><img src="{% static 'img/product-2.jpg' %}" alt=""></span>
-        </div>
-        <div class="pcard__meta"><h3>Wool Throw Blanket</h3><strong>$120</strong></div>
-      </article>
-      <article class="pcard">
-        <div class="pcard__media">
-          <img src="{% static 'img/product-3.jpg' %}" alt="Oak Ceramic Vase">
-          <em>70%</em>
-          <span class="pcard__peek"><img src="{% static 'img/product-3.jpg' %}" alt=""></span>
-        </div>
-        <div class="pcard__meta"><h3>Oak Ceramic Vase</h3><strong>$85</strong></div>
-      </article>
-      <article class="pcard">
-        <div class="pcard__media">
-          <img src="{% static 'img/product-4.jpg' %}" alt="Minimal Desk Lamp">
-          <span class="pcard__peek"><img src="{% static 'img/product-4.jpg' %}" alt=""></span>
-        </div>
-        <div class="pcard__meta"><h3>Minimal Desk Lamp</h3><strong>$95</strong></div>
-      </article>
-      <article class="pcard">
-        <div class="pcard__media">
-          <img src="{% static 'img/product-5.jpg' %}" alt="Everyday Eyewear">
-          <em>70%</em>
-          <span class="pcard__peek"><img src="{% static 'img/product-5.jpg' %}" alt=""></span>
-        </div>
-        <div class="pcard__meta"><h3>Everyday Eyewear</h3><strong>$78</strong></div>
-      </article>
+      {% if featured_products %}
+        {% for product in featured_products %}
+        <article class="pcard">
+          <a class="pcard__link" href="{% url 'product' product.slug %}">
+            <div class="pcard__media">
+              {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+              {% elif product.image_url %}
+                <img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy">
+              {% else %}
+                <img src="{% static 'img/product-1.jpg' %}" alt="{{ product.name }}" loading="lazy">
+              {% endif %}
+              <span class="pcard__peek">
+                {% if product.image %}<img src="{{ product.image.url }}" alt="">{% elif product.image_url %}<img src="{{ product.image_url }}" alt="">{% else %}<img src="{% static 'img/product-1.jpg' %}" alt="">{% endif %}
+              </span>
+            </div>
+            <div class="pcard__meta">
+              <h3>{{ product.name }}</h3>
+              <strong>{{ product.price|format_price }} {% trans "sum" %}</strong>
+            </div>
+          </a>
+          <button type="button" class="pcard__cart btn-add-cart" data-product-id="{{ product.id }}" data-product-name="{{ product.name }}" aria-label="{% trans 'Add to cart' %}">
+            <i class="fas fa-plus"></i>
+          </button>
+        </article>
+        {% endfor %}
+      {% else %}
+        <article class="pcard">
+          <a class="pcard__link" href="{% url 'catalog' %}">
+            <div class="pcard__media">
+              <img src="{% static 'img/product-1.jpg' %}" alt="">
+            </div>
+            <div class="pcard__meta"><h3>{% trans "Browse the catalog" %}</h3><strong>—</strong></div>
+          </a>
+        </article>
+      {% endif %}
     </div>
-    <button type="button" class="round-nav" id="sellersNext" aria-label="Next">
+    <button type="button" class="round-nav" id="sellersNext" aria-label="{% trans 'Next' %}">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
     </button>
   </div>
 </section>
 
 <section class="quote">
-  <p>“We believe in the beauty of obvious things done well.”</p>
+  <p>“{% trans "We believe in the beauty of obvious things done well." %}”</p>
 </section>
 
 <section class="values">
+  {% if features %}
+    {% for feature in features|slice:":3" %}
+    <div class="value">
+      {% if feature.icon %}<i class="{{ feature.icon }}" aria-hidden="true"></i>{% endif %}
+      <h3>{{ feature.title }}</h3>
+      <p>{{ feature.description }}</p>
+    </div>
+    {% endfor %}
+  {% else %}
   <div class="value">
     <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18v18h20V18"/><path d="M10 18h28"/><path d="M24 10v8"/><path d="M18 36V26h12v10"/></svg>
-    <h3>Crafted to Last</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+    <h3>{% trans "Crafted to Last" %}</h3>
+    <p>{% trans "Materials and finishes chosen for years of daily use — not a single season." %}</p>
   </div>
   <div class="value">
     <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40c9-7 14-13 14-21a14 14 0 1 0-28 0c0 8 5 14 14 21z"/><path d="M24 25a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>
-    <h3>Ethically Sourced</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+    <h3>{% trans "Ethically Sourced" %}</h3>
+    <p>{% trans "Transparent makers, fair supply chains, and quieter consumption." %}</p>
   </div>
   <div class="value">
     <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="15"/><path d="M9 24h30M24 9c4.5 5 7 10 7 15s-2.5 10-7 15c-4.5-5-7-10-7-15s2.5-10 7-15z"/></svg>
-    <h3>Global Curation</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor.</p>
+    <h3>{% trans "Global Curation" %}</h3>
+    <p>{% trans "A tight edit of home, apparel, and objects from studios we trust." %}</p>
   </div>
+  {% endif %}
 </section>
 
+{% with featured=featured_products.0 %}
 <section class="featured">
   <div class="featured__media">
-    <img src="{% static 'img/featured.jpg' %}" alt="The Oak Ceramic Vase">
+    {% if featured and featured.image %}
+      <img src="{{ featured.image.url }}" alt="{{ featured.name }}">
+    {% elif featured and featured.image_url %}
+      <img src="{{ featured.image_url }}" alt="{{ featured.name }}">
+    {% else %}
+      <img src="{% static 'img/featured.jpg' %}" alt="">
+    {% endif %}
   </div>
   <div class="featured__copy">
-    <h2>The Oak Ceramic Vase</h2>
-    <p class="featured__price">$85</p>
-    <p class="featured__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-    <a class="featured__cta" href="{% url 'catalog' %}">
-      Add to Cart
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-    </a>
+    <h2>{% if featured %}{{ featured.name }}{% else %}{% trans "Featured piece" %}{% endif %}</h2>
+    {% if featured %}
+      <p class="featured__price">{{ featured.price|format_price }} {% trans "sum" %}</p>
+      <p class="featured__text">{% if featured.description %}{{ featured.description|truncatewords:36 }}{% else %}{{ store_description }}{% endif %}</p>
+      <div class="featured__actions">
+        <a class="featured__cta" href="{% url 'product' featured.slug %}">
+          {% trans "View product" %}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <button type="button" class="featured__cta featured__cta--ghost btn-add-cart" data-product-id="{{ featured.id }}" data-product-name="{{ featured.name }}">
+          {% trans "Add to Cart" %}
+        </button>
+      </div>
+    {% else %}
+      <p class="featured__price">—</p>
+      <p class="featured__text">{{ store_description }}</p>
+      <a class="featured__cta" href="{% url 'catalog' %}">{% trans "Explore catalog" %}</a>
+    {% endif %}
   </div>
 </section>
+{% endwith %}
 
 <section class="ig">
   <div class="sec-head">
-    <h2>Instagram</h2>
-    <span>Scroll</span>
+    <h2>{% trans "Gallery" %}</h2>
+    <a href="{% url 'catalog' %}">{% trans "Shop" %}</a>
   </div>
   <div class="ig__row">
     <div class="ig__track" id="igTrack">
-      <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-1.jpg' %}" alt=""></a>
-      <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-2.jpg' %}" alt=""></a>
-      <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-3.jpg' %}" alt=""></a>
-      <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-4.jpg' %}" alt=""></a>
-      <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-5.jpg' %}" alt=""></a>
-      <a href="{% url 'catalog' %}"><img src="{% static 'img/home-goods.jpg' %}" alt=""></a>
+      {% if featured_products %}
+        {% for product in featured_products %}
+          <a href="{% url 'product' product.slug %}">
+            {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+            {% elif product.image_url %}<img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy">
+            {% else %}<img src="{% static 'img/ig-1.jpg' %}" alt="" loading="lazy">{% endif %}
+          </a>
+        {% endfor %}
+      {% else %}
+        <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-1.jpg' %}" alt=""></a>
+        <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-2.jpg' %}" alt=""></a>
+        <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-3.jpg' %}" alt=""></a>
+        <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-4.jpg' %}" alt=""></a>
+        <a href="{% url 'catalog' %}"><img src="{% static 'img/ig-5.jpg' %}" alt=""></a>
+      {% endif %}
     </div>
-    <button type="button" class="round-nav" id="igNext" aria-label="Next">
+    <button type="button" class="round-nav" id="igNext" aria-label="{% trans 'Next' %}">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
     </button>
   </div>

@@ -835,3 +835,150 @@ msgstr "Mahsulotni savatga qo'shib bo'lmadi. Iltimos, sahifani yangilang va qayt
 
 #~ msgid "Classic Pants"
 #~ msgstr "Klassik shim"
+
+msgid "Elevated Everyday"
+msgstr "Yuksak kundalik"
+
+msgid "Elevated"
+msgstr "Yuksak"
+
+msgid "Everyday."
+msgstr "kundalik."
+
+msgid "NEW · M24 · "
+msgstr "NEW · M24 · "
+
+msgid "Free shipping from 500 000 sum"
+msgstr "500 000 so'mdan bepul yetkazib berish"
+
+msgid "New arrivals weekly"
+msgstr "Har hafta yangiliklar"
+
+msgid "Sustainable sourcing"
+msgstr "Barqaror ta'minot"
+
+msgid "sum"
+msgstr "so'm"
+
+msgid "Tashkent"
+msgstr "Toshkent"
+
+msgid "Failed to place order"
+msgstr "Buyurtmani rasmiylashtirib bo'lmadi"
+
+msgid "0 sum — 250 000 sum"
+msgstr "0 so'm — 250 000 so'm"
+
+msgid "250 000 sum — 500 000 sum"
+msgstr "250 000 so'm — 500 000 so'm"
+
+msgid "500 000 sum — 1 000 000 sum"
+msgstr "500 000 so'm — 1 000 000 so'm"
+
+msgid "1 000 000 sum — 2 000 000 sum"
+msgstr "1 000 000 so'm — 2 000 000 so'm"
+
+msgid "Best Sellers"
+msgstr "Eng ko'p sotilganlar"
+
+msgid "View all"
+msgstr "Barchasini ko'rish"
+
+msgid "Gallery"
+msgstr "Galereya"
+
+msgid "Shop"
+msgstr "Do'kon"
+
+msgid "Explore Curated Goods"
+msgstr "Tanlangan tovarlarni ko'rish"
+
+msgid "Crafted to Last"
+msgstr "Uzoqqa mo'ljallangan"
+
+msgid "Ethically Sourced"
+msgstr "Axloqiy ta'minot"
+
+msgid "Global Curation"
+msgstr "Global kuratsiya"
+
+msgid "Materials and finishes chosen for years of daily use — not a single season."
+msgstr "Yillab kundalik foydalanish uchun materiallar — bir mavsum uchun emas."
+
+msgid "Transparent makers, fair supply chains, and quieter consumption."
+msgstr "Shaffof ishlab chiqaruvchilar, adolatli ta'minot va ongli iste'mol."
+
+msgid "A tight edit of home, apparel, and objects from studios we trust."
+msgstr "Ishonchli studiyalardan uy, kiyim va buyumlarning qat'iy tanlovi."
+
+msgid "We believe in the beauty of obvious things done well."
+msgstr "Biz yaxshi qilingan oddiy narsalar go'zalligiga ishonamiz."
+
+msgid "View product"
+msgstr "Mahsulotni ko'rish"
+
+msgid "Featured piece"
+msgstr "Tanlangan mahsulot"
+
+msgid "Explore catalog"
+msgstr "Katalogni ochish"
+
+msgid "Browse the catalog"
+msgstr "Katalogga o'tish"
+
+msgid "Add to cart"
+msgstr "Savatga"
+
+msgid "Skip to content"
+msgstr "Tarkibga o'tish"
+
+msgid "Main navigation"
+msgstr "Asosiy navigatsiya"
+
+msgid "Your email for updates"
+msgstr "Yangiliklar uchun email"
+
+msgid "Newsletter"
+msgstr "Axborotnoma"
+
+msgid "Subscribe"
+msgstr "Obuna bo'lish"
+
+msgid "Shop the edit"
+msgstr "Tanlovni ko'rish"
+
+msgid "Get in touch"
+msgstr "Bog'lanish"
+
+msgid "Why shop with us"
+msgstr "Nima uchun biz"
+
+msgid "We are happy to help with orders, delivery, and product advice."
+msgstr "Buyurtma, yetkazib berish va mahsulot bo'yicha yordam beramiz."
+
+msgid "Elevated everyday — curated goods for modern living."
+msgstr "Yuksak kundalik — zamonaviy hayot uchun tanlangan tovarlar."
+
+msgid "We curate lasting objects — materials, makers, and finishes chosen for years of quiet daily use."
+msgstr "Biz uzoq muddatli buyumlarni tanlaymiz — tinch kundalik foydalanish uchun."
+
+msgid "A calm storefront for home, apparel, and accessories — fewer things, better made, thoughtfully sourced."
+msgstr "Uy, kiyim va aksessuarlar uchun tinch do'kon — kamroq, lekin yaxshiroq."
+
+msgid "Quality — pieces that earn their place"
+msgstr "Sifat — o'z o'rnini topadigan buyumlar"
+
+msgid "Honesty — clear pricing and conditions"
+msgstr "Halollik — ochiq narx va shartlar"
+
+msgid "Care — real help with orders and advice"
+msgstr "G'amxo'rlik — buyurtmalarda haqiqiy yordam"
+
+msgid "Curation — a tight edit, not endless noise"
+msgstr "Kuratsiya — qat'iy tanlov, shovqinsiz"
+
+msgid "Search products…"
+msgstr "Mahsulotlarni qidirish…"
+
+msgid "Added"
+msgstr "Qo'shildi"

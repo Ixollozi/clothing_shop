@@ -72,9 +72,9 @@
                     </div>
                     
                     <div class="product-price-large">
-                        <span class="current-price">{{ product.price|format_price }} сум</span>
+                        <span class="current-price">{{ product.price|format_price }} {% trans "sum" %}</span>
                         {% if product.old_price %}
-                            <span class="old-price">{{ product.old_price|format_price }} сум</span>
+                            <span class="old-price">{{ product.old_price|format_price }} {% trans "sum" %}</span>
                             {% if discount %}
                                 <span class="discount">-{{ discount }}%</span>
                             {% endif %}
@@ -221,9 +221,9 @@
                             <h3 class="product-name">{{ related_product.name }}</h3>
                         </a>
                         <p class="product-price">
-                            {{ related_product.price|format_price }} сум
+                            {{ related_product.price|format_price }} {% trans "sum" %}
                             {% if related_product.old_price %}
-                                <span style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-left: 0.5rem;">{{ related_product.old_price|format_price }} сум</span>
+                                <span style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-left: 0.5rem;">{{ related_product.old_price|format_price }} {% trans "sum" %}</span>
                             {% endif %}
                         </p>
                         {% if related_product.id %}

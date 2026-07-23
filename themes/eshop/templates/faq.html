@@ -4,7 +4,6 @@
 {% block title %}{% trans "FAQ" %} - {{ store_name }}{% endblock %}
 
 {% block content %}
-    <!-- Page Header -->
     <section class="page-header">
         <div class="container">
             <h1>{% trans "FAQ" %}</h1>
@@ -14,29 +13,28 @@
         </div>
     </section>
 
-    <!-- FAQ Content -->
-    <section class="faq-section" style="padding: 3rem 0;">
+    <section class="faq-section">
         <div class="container">
-            <div class="faq-content" style="max-width: 900px; margin: 0 auto;">
+            <div class="faq-content">
                 {% if faqs %}
                     <div class="faq-list">
                         {% for faq in faqs %}
-                            <div class="faq-item" style="margin-bottom: 1.5rem; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
-                                <div class="faq-question" style="padding: 1.25rem; background: #f8f9fa; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.3s;" onclick="toggleFaq({{ forloop.counter0 }})">
-                                    <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600; color: #333; flex: 1;">{{ faq.question }}</h3>
-                                    <span class="faq-icon" id="faq-icon-{{ forloop.counter0 }}" style="font-size: 1.2rem; color: #666; transition: transform 0.3s;">+</span>
-                                </div>
-                                <div class="faq-answer" id="faq-answer-{{ forloop.counter0 }}" style="padding: 0 1.25rem; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s;">
-                                    <div style="padding: 1.25rem 0; color: #666; line-height: 1.6;">
-                                        {{ faq.answer|linebreaks }}
-                                    </div>
+                            <div class="faq-item">
+                                <button type="button" class="faq-question" aria-expanded="false" data-faq-toggle="{{ forloop.counter0 }}">
+                                    <span>{{ faq.question }}</span>
+                                    <span class="faq-icon" aria-hidden="true">+</span>
+                                </button>
+                                <div class="faq-answer" id="faq-answer-{{ forloop.counter0 }}" hidden>
+                                    <div class="faq-answer__inner">{{ faq.answer|linebreaks }}</div>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div style="text-align: center; padding: 3rem 0;">
-                        <p style="font-size: 1.1rem; color: #666;">{% trans "No questions yet. Check back soon!" %}</p>
+                    <div class="catalog-empty">
+                        <i class="fas fa-circle-question" aria-hidden="true"></i>
+                        <p>{% trans "No questions yet. Check back soon!" %}</p>
+                        <a href="{% url 'contact' %}" class="btn btn-primary">{% trans "Contact Us" %}</a>
                     </div>
                 {% endif %}
             </div>
@@ -46,40 +44,29 @@
 
 {% block extra_js %}
 <script>
-    function toggleFaq(index) {
-        const answer = document.getElementById('faq-answer-' + index);
-        const icon = document.getElementById('faq-icon-' + index);
-        const question = answer.previousElementSibling;
-        
-        // Закрываем все другие FAQ
-        const allAnswers = document.querySelectorAll('.faq-answer');
-        const allIcons = document.querySelectorAll('.faq-icon');
-        const allQuestions = document.querySelectorAll('.faq-question');
-        
-        allAnswers.forEach((item, i) => {
-            if (i !== index) {
-                item.style.maxHeight = '0';
-                item.style.padding = '0 1.25rem';
-                allIcons[i].textContent = '+';
-                allIcons[i].style.transform = 'rotate(0deg)';
-                allQuestions[i].style.background = '#f8f9fa';
+    document.querySelectorAll('[data-faq-toggle]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const index = btn.getAttribute('data-faq-toggle');
+            const answer = document.getElementById('faq-answer-' + index);
+            const icon = btn.querySelector('.faq-icon');
+            const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+            document.querySelectorAll('[data-faq-toggle]').forEach((other) => {
+                const otherIndex = other.getAttribute('data-faq-toggle');
+                const otherAnswer = document.getElementById('faq-answer-' + otherIndex);
+                other.setAttribute('aria-expanded', 'false');
+                other.classList.remove('is-open');
+                otherAnswer.hidden = true;
+                other.querySelector('.faq-icon').textContent = '+';
+            });
+
+            if (!isOpen) {
+                btn.setAttribute('aria-expanded', 'true');
+                btn.classList.add('is-open');
+                answer.hidden = false;
+                icon.textContent = '−';
             }
         });
-        
-        // Переключаем текущий FAQ
-        if (answer.style.maxHeight === '0px' || answer.style.maxHeight === '') {
-            answer.style.maxHeight = answer.scrollHeight + 'px';
-            answer.style.padding = '0 1.25rem';
-            icon.textContent = '−';
-            icon.style.transform = 'rotate(180deg)';
-            question.style.background = '#e8f4f8';
-        } else {
-            answer.style.maxHeight = '0';
-            answer.style.padding = '0 1.25rem';
-            icon.textContent = '+';
-            icon.style.transform = 'rotate(0deg)';
-            question.style.background = '#f8f9fa';
-        }
-    }
+    });
 </script>
 {% endblock %}

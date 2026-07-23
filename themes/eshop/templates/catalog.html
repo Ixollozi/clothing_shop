@@ -3,7 +3,7 @@
 {% load humanize %}
 {% load translation_tags %}
 
-{% block title %}{% trans "Catalog" %} - Fashion Store{% endblock %}
+{% block title %}{% trans "Catalog" %} - {{ store_name }}{% endblock %}
 
 {% block content %}
     <!-- Page Header -->
@@ -21,8 +21,11 @@
         <div class="container">
             <div class="catalog-layout">
                 <!-- Sidebar Filters -->
-                <aside class="filters-sidebar">
-                    <h3>{% trans "Filters" %}</h3>
+                <aside class="filters-sidebar" id="filtersSidebar">
+                    <div class="filters-sidebar__head">
+                        <h3>{% trans "Filters" %}</h3>
+                        <button type="button" class="filters-close" id="filtersClose" aria-label="{% trans 'Close filters' %}"><i class="fas fa-times"></i></button>
+                    </div>
                     
                     <div class="filter-group">
                         <h4>{% trans "Category" %}</h4>
@@ -33,40 +36,17 @@
                             </label>
                             {% endfor %}
                         {% else %}
-                            <label class="filter-checkbox">
-                                <input type="checkbox"> {% trans "Men's Clothing" %}
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox"> {% trans "Women's Clothing" %}
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox"> {% trans "Kids' Clothing" %}
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox"> {% trans "Accessories" %}
-                            </label>
+                            <p class="filter-empty">{% trans "No categories yet" %}</p>
                         {% endif %}
                     </div>
 
                     <div class="filter-group">
                         <h4>{% trans "Price" %}</h4>
                         <div class="price-buttons">
-                            <button class="price-btn" data-min="0" data-max="250000">0 сум - 250 000 сум</button>
-                            <button class="price-btn" data-min="250000" data-max="500000">250 000 сум - 500 000 сум</button>
-                            <button class="price-btn" data-min="500000" data-max="1000000">500 000 сум - 1 000 000 сум</button>
-                            <button class="price-btn" data-min="1000000" data-max="2000000">1 000 000 сум - 2 000 000 сум</button>
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4>{% trans "Color" %}</h4>
-                        <div class="color-options">
-                            <span class="color-option" data-color="#000" {% if current_color == '#000' or current_color == '#000000' %}data-active="true"{% endif %} style="background: #000;"></span>
-                            <span class="color-option" data-color="#fff" {% if current_color == '#fff' or current_color == '#ffffff' %}data-active="true"{% endif %} style="background: #fff; border: 1px solid #ddd;"></span>
-                            <span class="color-option" data-color="#e74c3c" {% if current_color == '#e74c3c' %}data-active="true"{% endif %} style="background: #e74c3c;"></span>
-                            <span class="color-option" data-color="#3498db" {% if current_color == '#3498db' %}data-active="true"{% endif %} style="background: #3498db;"></span>
-                            <span class="color-option" data-color="#2ecc71" {% if current_color == '#2ecc71' %}data-active="true"{% endif %} style="background: #2ecc71;"></span>
-                            <span class="color-option" data-color="#f39c12" {% if current_color == '#f39c12' %}data-active="true"{% endif %} style="background: #f39c12;"></span>
+                            <button type="button" class="price-btn" data-min="0" data-max="250000">0 сум - 250 000 сум</button>
+                            <button type="button" class="price-btn" data-min="250000" data-max="500000">250 000 сум - 500 000 сум</button>
+                            <button type="button" class="price-btn" data-min="500000" data-max="1000000">500 000 сум - 1 000 000 сум</button>
+                            <button type="button" class="price-btn" data-min="1000000" data-max="2000000">1 000 000 сум - 2 000 000 сум</button>
                         </div>
                     </div>
 
@@ -77,9 +57,22 @@
                 <!-- Products Grid -->
                 <div class="products-container">
                     <div class="catalog-toolbar">
-                        <p>{% trans "Products found" %}: <strong>{% if products %}{{ products.paginator.count }}{% else %}0{% endif %}</strong></p>
+                        <div class="catalog-toolbar__left">
+                            <button type="button" class="btn btn-secondary filters-toggle" id="filtersToggle">
+                                <i class="fas fa-sliders-h"></i> {% trans "Filters" %}
+                            </button>
+                            <p class="catalog-count">{% trans "Products found" %}: <strong>{% if products %}{{ products.paginator.count }}{% else %}0{% endif %}</strong></p>
+                        </div>
+                        <form class="catalog-search" action="{% url 'catalog' %}" method="get" role="search">
+                            {% if current_category %}<input type="hidden" name="category" value="{{ current_category }}">{% endif %}
+                            {% if current_sort %}<input type="hidden" name="sort" value="{{ current_sort }}">{% endif %}
+                            {% if min_price %}<input type="hidden" name="min_price" value="{{ min_price }}">{% endif %}
+                            {% if max_price %}<input type="hidden" name="max_price" value="{{ max_price }}">{% endif %}
+                            <input type="search" name="search" value="{{ current_search|default:'' }}" placeholder="{% trans 'Search products...' %}" aria-label="{% trans 'Search products' %}">
+                            <button type="submit" class="ag-icon-btn" aria-label="{% trans 'Search' %}"><i class="fas fa-search"></i></button>
+                        </form>
                         <div class="sort-options">
-                            <label>{% trans "Sort by" %}:</label>
+                            <label for="sortSelect">{% trans "Sort by" %}:</label>
                             <select class="sort-select" id="sortSelect">
                                 <option value="popularity" {% if current_sort == 'popularity' %}selected{% endif %}>{% trans "By popularity" %}</option>
                                 <option value="price_low" {% if current_sort == 'price_low' %}selected{% endif %}>{% trans "Price: low to high" %}</option>
@@ -134,8 +127,10 @@
                                 </div>
                             </div>
                         {% empty %}
-                            <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 0;">
-                                <p style="font-size: 1.2rem; color: #666;">{% trans "Nothing found" %}</p>
+                            <div class="catalog-empty">
+                                <i class="fas fa-box-open" aria-hidden="true"></i>
+                                <p>{% trans "Nothing found" %}</p>
+                                <a href="{% url 'catalog' %}" class="btn btn-primary">{% trans "View all products" %}</a>
                             </div>
                         {% endfor %}
                     </div>
@@ -144,7 +139,7 @@
                     {% if products and products.paginator.num_pages > 1 %}
                     <div class="pagination">
                         {% if products.has_previous %}
-                            <a href="?page={{ products.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if current_color %}&color={{ current_color }}{% endif %}" class="page-link">
+                            <a href="?page={{ products.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}" class="page-link">
                                 <i class="fas fa-chevron-left"></i>
                             </a>
                         {% else %}
@@ -155,12 +150,12 @@
                             {% if products.number == num %}
                                 <span class="page-link active">{{ num }}</span>
                             {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
-                                <a href="?page={{ num }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if current_color %}&color={{ current_color }}{% endif %}" class="page-link">{{ num }}</a>
+                                <a href="?page={{ num }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}" class="page-link">{{ num }}</a>
                             {% endif %}
                         {% endfor %}
                         
                         {% if products.has_next %}
-                            <a href="?page={{ products.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}{% if current_color %}&color={{ current_color }}{% endif %}" class="page-link">
+                            <a href="?page={{ products.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}" class="page-link">
                                 <i class="fas fa-chevron-right"></i>
                             </a>
                         {% else %}
@@ -172,10 +167,31 @@
             </div>
         </div>
     </section>
+    <div class="filters-backdrop" id="filtersBackdrop" hidden></div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
+    // Mobile filters drawer
+    const filtersToggle = document.getElementById('filtersToggle');
+    const filtersSidebar = document.getElementById('filtersSidebar');
+    const filtersClose = document.getElementById('filtersClose');
+    const filtersBackdrop = document.getElementById('filtersBackdrop');
+
+    function openFilters() {
+        filtersSidebar?.classList.add('is-open');
+        filtersBackdrop?.removeAttribute('hidden');
+        document.body.classList.add('filters-open');
+    }
+    function closeFilters() {
+        filtersSidebar?.classList.remove('is-open');
+        filtersBackdrop?.setAttribute('hidden', '');
+        document.body.classList.remove('filters-open');
+    }
+    filtersToggle?.addEventListener('click', openFilters);
+    filtersClose?.addEventListener('click', closeFilters);
+    filtersBackdrop?.addEventListener('click', closeFilters);
+
     // Price filter buttons
     const priceButtons = document.querySelectorAll('.price-btn');
     priceButtons.forEach(btn => {
@@ -227,7 +243,6 @@
     if (sortSelect) {
         sortSelect.addEventListener('change', function() {
             const sortValue = this.value;
-            console.log('Sort changed to:', sortValue); // Отладка
             
             // Создаем новый URL с базовым путем
             const baseUrl = window.location.origin + window.location.pathname;
@@ -249,46 +264,14 @@
             // Сбрасываем страницу на первую при изменении сортировки
             url.searchParams.set('page', '1');
             
-            console.log('Navigating to:', url.toString()); // Отладка
-            
             // Перезагружаем страницу с новыми параметрами
             window.location.href = url.toString();
         });
     }
 
 
-    // Color filter options
-    const colorOptions = document.querySelectorAll('.color-option');
-    let selectedColor = null;
-    colorOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            // Toggle active state
-            if (this.classList.contains('active')) {
-                this.classList.remove('active');
-                selectedColor = null;
-            } else {
-                // Remove active from all color options
-                colorOptions.forEach(o => o.classList.remove('active'));
-                this.classList.add('active');
-                selectedColor = this.getAttribute('data-color');
-            }
-        });
-    });
-    
-    // Set active color option based on current URL parameters
-    const currentColor = urlParams.get('color');
-    if (currentColor) {
-        colorOptions.forEach(option => {
-            const optionColor = option.getAttribute('data-color');
-            if (optionColor === currentColor || 
-                (currentColor === '#000000' && optionColor === '#000') ||
-                (currentColor === '#ffffff' && optionColor === '#fff')) {
-                option.classList.add('active');
-                selectedColor = optionColor;
-            }
-        });
-    }
-    
+    // Color filter removed — not needed for this storefront
+
     // Category checkboxes
     const categoryCheckboxes = document.querySelectorAll('input[name="category"]');
     let selectedCategories = [];
@@ -307,9 +290,11 @@
     categoryCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             if (this.checked) {
-                if (!selectedCategories.includes(this.value)) {
-                    selectedCategories.push(this.value);
-                }
+                // Single category filter (matches backend)
+                categoryCheckboxes.forEach(cb => {
+                    if (cb !== this) cb.checked = false;
+                });
+                selectedCategories = [this.value];
             } else {
                 selectedCategories = selectedCategories.filter(cat => cat !== this.value);
             }
@@ -317,75 +302,36 @@
     });
 
     function applyFilters() {
-        // Создаем новый URL с базовым путем
         const baseUrl = window.location.origin + window.location.pathname;
         const url = new URL(baseUrl);
         
-        // Сохраняем текущую сортировку
         const currentSort = urlParams.get('sort');
         if (currentSort) {
             url.searchParams.set('sort', currentSort);
         }
         
-        // Применяем фильтр по категории (берем первую выбранную)
         if (selectedCategories.length > 0) {
             url.searchParams.set('category', selectedCategories[0]);
-        } else {
-            url.searchParams.delete('category');
         }
         
-        // Применяем фильтр по цене (уже установлен через кнопки)
         const currentMinPrice = urlParams.get('min_price');
         const currentMaxPrice = urlParams.get('max_price');
-        if (currentMinPrice) {
-            url.searchParams.set('min_price', currentMinPrice);
-        }
-        if (currentMaxPrice) {
-            url.searchParams.set('max_price', currentMaxPrice);
-        }
+        if (currentMinPrice) url.searchParams.set('min_price', currentMinPrice);
+        if (currentMaxPrice) url.searchParams.set('max_price', currentMaxPrice);
         
-        // Применяем фильтр по цвету
-        if (selectedColor) {
-            url.searchParams.set('color', selectedColor);
-        } else {
-            url.searchParams.delete('color');
-        }
-        
-        // Сохраняем поисковый запрос
         const currentSearch = urlParams.get('search');
-        if (currentSearch) {
-            url.searchParams.set('search', currentSearch);
-        }
+        if (currentSearch) url.searchParams.set('search', currentSearch);
         
-        // Сбрасываем страницу на первую
         url.searchParams.set('page', '1');
-        
-        // Перезагружаем страницу с новыми параметрами
         window.location.href = url.toString();
     }
 
     function resetFilters() {
-        // Сбрасываем все фильтры
         const baseUrl = window.location.origin + window.location.pathname;
         const url = new URL(baseUrl);
-        
-        // Сохраняем только сортировку
         const currentSort = urlParams.get('sort');
-        if (currentSort) {
-            url.searchParams.set('sort', currentSort);
-        }
-        
+        if (currentSort) url.searchParams.set('sort', currentSort);
         url.searchParams.set('page', '1');
-        
-        // Убираем активный класс со всех фильтров
-        priceButtons.forEach(btn => btn.classList.remove('active'));
-        colorOptions.forEach(option => option.classList.remove('active'));
-        categoryCheckboxes.forEach(checkbox => checkbox.checked = false);
-        
-        // Сбрасываем выбранные значения
-        selectedColor = null;
-        selectedCategories = [];
-        
         window.location.href = url.toString();
     }
 </script>

@@ -9,7 +9,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token }}">
-    <title>{% block title %}{{ store_title }}{% endblock %}</title>
+    {% if seo_config.meta_description %}<meta name="description" content="{{ seo_config.meta_description }}">{% elif store_description %}<meta name="description" content="{{ store_description }}">{% endif %}
+    {% if seo_config.meta_keywords %}<meta name="keywords" content="{{ seo_config.meta_keywords }}">{% endif %}
+    <title>{% block title %}{% if seo_config.meta_title %}{{ seo_config.meta_title }}{% else %}{{ store_title }}{% endif %}{% endblock %}</title>
+    {% if store_config.store.favicon %}<link rel="icon" href="{{ store_config.store.favicon }}">{% endif %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,28 +21,39 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
+    <a class="skip-link" href="#main">{% trans "Skip to content" %}</a>
     <header class="h-header">
         <div class="h-header__inner">
-            <a class="h-logo" href="{% url 'index' %}">{{ store_name|default:"HERO" }}</a>
-            <button class="h-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+            <a class="h-logo" href="{% url 'index' %}">
+              {% if store_config.store.logo %}
+                <img class="h-logo__img" src="{{ store_config.store.logo }}" alt="{{ store_name|default:'HERO' }}">
+              {% else %}
+                {{ store_name|default:"HERO" }}
+              {% endif %}
+            </a>
+            <button class="h-menu-toggle" id="mobileMenuToggle" type="button" aria-label="{% trans 'Menu' %}" aria-expanded="false" aria-controls="navMenu">
                 <span></span><span></span>
             </button>
-            <nav class="h-nav" id="navMenu">
-                <a href="{% url 'catalog' %}">Collections</a>
-                <a href="{% url 'about' %}">Journal</a>
-                <a href="{% url 'about' %}">About</a>
+            <nav class="h-nav" id="navMenu" aria-label="{% trans 'Main navigation' %}">
+                {% with url_name=request.resolver_match.url_name %}
+                <a href="{% url 'index' %}" class="{% if url_name == 'index' %}is-active{% endif %}">{% trans "Home" %}</a>
+                <a href="{% url 'catalog' %}" class="{% if url_name == 'catalog' or url_name == 'product' or url_name == 'product_detail' %}is-active{% endif %}">{% trans "Catalog" %}</a>
+                <a href="{% url 'about' %}" class="{% if url_name == 'about' %}is-active{% endif %}">{% trans "About" %}</a>
+                <a href="{% url 'faq' %}" class="{% if url_name == 'faq' %}is-active{% endif %}">{% trans "FAQ" %}</a>
+                <a href="{% url 'contact' %}" class="{% if url_name == 'contact' %}is-active{% endif %}">{% trans "Contacts" %}</a>
+                {% endwith %}
             </nav>
             <div class="h-utils">
-                <a href="{% url 'catalog' %}" class="h-icon" aria-label="Search"><i class="fas fa-search"></i></a>
-                <a href="{% url 'cart' %}" class="h-icon h-cart" aria-label="Cart">
+                <a href="{% url 'catalog' %}?focus=search" class="h-icon" aria-label="{% trans 'Search' %}"><i class="fas fa-search"></i></a>
+                <a href="{% url 'cart' %}" class="h-icon h-cart" aria-label="{% trans 'Cart' %}">
                     <i class="fas fa-shopping-bag"></i>
-                    <span id="cart-icon-count" class="h-cart-count" style="display:none;">0</span>
+                    <span id="cart-icon-count" class="h-cart-count"{% if not cart_items_count %} style="display:none;"{% endif %}>{{ cart_items_count|default:0 }}</span>
                 </a>
                 <div class="language-switcher">
-                    <button class="language-btn" id="languageBtn" type="button">
+                    <button class="language-btn" id="languageBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
                         <span class="current-lang">{{ CURRENT_LANGUAGE|upper }}</span>
                     </button>
-                    <div class="language-dropdown" id="languageDropdown">
+                    <div class="language-dropdown" id="languageDropdown" role="listbox">
                         <form action="{% url 'set_language' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="language" value="ru">
@@ -64,58 +78,56 @@
         </div>
     </header>
 
-    <main>{% block content %}{% endblock %}</main>
+    <main id="main">{% block content %}{% endblock %}</main>
 
     <div id="notification-container" class="notification-container"></div>
 
     <footer class="h-footer">
         <div class="h-footer__grid">
             <div class="h-footer__col">
-                <h4>Shop</h4>
+                <h4>{% trans "Shop" %}</h4>
                 <ul>
-                    <li><a href="{% url 'catalog' %}">Shop</a></li>
-                    <li><a href="{% url 'catalog' %}">New</a></li>
-                    <li><a href="{% url 'catalog' %}">Products</a></li>
-                    <li><a href="{% url 'delivery' %}">Links</a></li>
+                    <li><a href="{% url 'catalog' %}">{% trans "Catalog" %}</a></li>
+                    <li><a href="{% url 'cart' %}">{% trans "Shopping Cart" %}</a></li>
+                    <li><a href="{% url 'delivery' %}">{% trans "Delivery and Payment" %}</a></li>
                 </ul>
             </div>
             <div class="h-footer__col">
-                <h4>About</h4>
+                <h4>{% trans "Company" %}</h4>
                 <ul>
-                    <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'about' %}">About us</a></li>
-                    <li><a href="{% url 'contact' %}">Stores</a></li>
-                    <li><a href="{% url 'contact' %}">Press</a></li>
+                    <li><a href="{% url 'about' %}">{% trans "About Us" %}</a></li>
+                    <li><a href="{% url 'contact' %}">{% trans "Contacts" %}</a></li>
+                    <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
                 </ul>
             </div>
             <div class="h-footer__col">
-                <h4>FAQ</h4>
+                <h4>{% trans "Contacts" %}</h4>
                 <ul>
-                    <li><a href="{% url 'faq' %}">FAQ</a></li>
-                    <li><a href="{% url 'contact' %}">Contact</a></li>
-                    <li><a href="{% url 'faq' %}">Help</a></li>
-                    <li><a href="{% url 'catalog' %}">Collections</a></li>
+                    {% if contact_info.phone %}<li><a href="tel:{{ contact_info.phone }}">{{ contact_info.phone }}</a></li>{% endif %}
+                    {% if contact_info.email %}<li><a href="mailto:{{ contact_info.email }}">{{ contact_info.email }}</a></li>{% endif %}
+                    {% if contact_info.address.full %}<li>{{ contact_info.address.full }}</li>{% endif %}
                 </ul>
             </div>
             <div class="h-footer__news">
-                <p class="h-footer__news-title">Newsletter Signup</p>
+                {% if store_description %}<p class="h-footer__blurb">{{ store_description }}</p>{% endif %}
+                <p class="h-footer__news-title">{% trans "Newsletter" %}</p>
                 <form class="h-news-form" action="{% url 'contact' %}" method="get">
-                    <input type="email" name="email" placeholder="JOIN OUR COMMUNITY for updates & inspiration." aria-label="Email">
-                    <button type="submit" aria-label="Subscribe"><i class="fas fa-arrow-right"></i></button>
+                    <input type="email" name="email" placeholder="{% trans 'Your email for updates' %}" aria-label="{% trans 'Email' %}" required>
+                    <button type="submit" aria-label="{% trans 'Subscribe' %}"><i class="fas fa-arrow-right"></i></button>
                 </form>
             </div>
         </div>
         <div class="h-footer__bottom">
             <span>&copy; {% now "Y" %} {{ store_name }}</span>
             <div class="h-footer__social">
-                {% if social_links.instagram %}<a href="{{ social_links.instagram }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>{% endif %}
-                {% if social_links.telegram %}<a href="{{ social_links.telegram }}" aria-label="Telegram"><i class="fab fa-telegram"></i></a>{% endif %}
+                {% if social_links.instagram %}<a href="{{ social_links.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>{% endif %}
+                {% if social_links.telegram %}<a href="{{ social_links.telegram }}" target="_blank" rel="noopener" aria-label="Telegram"><i class="fab fa-telegram"></i></a>{% endif %}
+                {% if social_links.facebook %}<a href="{{ social_links.facebook }}" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>{% endif %}
+                {% if social_links.whatsapp %}<a href="{{ social_links.whatsapp }}" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>{% endif %}
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="{% static 'script.js' %}"></script>
     <script>
         function getCookie(name) {
@@ -167,14 +179,14 @@
                     body: JSON.stringify({ product_id: parseInt(productId), quantity: 1, size: '', color: '' })
                 });
                 if (response.ok) {
-                    button.textContent = 'Added';
+                    button.textContent = '{% trans "Added" %}';
                     updateCartIcon();
                     setTimeout(() => { button.textContent = originalText; button.disabled = false; }, 1600);
                 } else {
                     throw new Error('fail');
                 }
             } catch (e) {
-                button.textContent = 'Error';
+                button.textContent = '{% trans "Error" %}';
                 setTimeout(() => { button.textContent = originalText; button.disabled = false; }, 1600);
             }
         };

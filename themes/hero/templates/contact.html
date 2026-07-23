@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load translation_tags %}
+{% get_current_language as CURRENT_LANGUAGE %}
 
 {% block title %}{% trans "Contacts" %} - {{ store_name }}{% endblock %}
 
@@ -24,62 +25,67 @@
                     <h2>{% trans "Contact Us" %}</h2>
                     <p>{% trans "We are always happy to answer your questions and help you choose products. Contact us in any convenient way." %}</p>
 
+                    {% if contact_info.phone %}
                     <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
+                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
                         <div class="contact-details">
                             <h3>{% trans "Phone" %}</h3>
-                            {% if contact_info.phone %}<p>{{ contact_info.phone }}</p>{% else %}<p>+7 (800) 123-45-67</p>{% endif %}
-                            {% if contact_info.working_hours.weekdays %}<span class="contact-hours">{{ contact_info.working_hours.weekdays }}</span>{% else %}<span class="contact-hours">{% trans "Mon-Sun: 9:00 - 21:00" %}</span>{% endif %}
+                            <p><a href="tel:{{ contact_info.phone }}">{{ contact_info.phone }}</a></p>
+                            {% if contact_info.working_hours.weekdays %}<span class="contact-hours">{{ contact_info.working_hours.weekdays }}</span>{% endif %}
+                            {% if contact_info.working_hours.weekend %}<span class="contact-hours">{{ contact_info.working_hours.weekend }}</span>{% endif %}
                         </div>
                     </div>
+                    {% endif %}
 
+                    {% if contact_info.email %}
                     <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                         <div class="contact-details">
-
                             <h3>{% trans "Email" %}</h3>
-                            {% if contact_info.email %}<p>{{ contact_info.email }}</p>{% else %}<p>info@fashionstore.ru</p>{% endif %}
+                            <p><a href="mailto:{{ contact_info.email }}">{{ contact_info.email }}</a></p>
                             <span class="contact-hours">{% trans "We will respond within 24 hours" %}</span>
                         </div>
                     </div>
+                    {% endif %}
 
+                    {% if contact_info.address.full or contact_info.address.city %}
                     <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                         <div class="contact-details">
                             <h3>{% trans "Address" %}</h3>
-                            {% if contact_info.address.full %}<p>{{ contact_info.address.full }}</p>{% else %}<p>{% trans "Tashkent, Example Street, 1" %}</p>{% endif %}
-                            {% if contact_info.working_hours.weekdays %}<span class="contact-hours">{% trans "Mon-Fri: 10:00 - 19:00" %}</span>{% endif %}
+                            {% if contact_info.address.full %}<p>{{ contact_info.address.full }}</p>{% else %}<p>{{ contact_info.address.city }}{% if contact_info.address.street %}, {{ contact_info.address.street }}{% endif %}</p>{% endif %}
                         </div>
                     </div>
+                    {% endif %}
 
+                    {% if social_links.telegram or social_links.whatsapp or contact_info.phone %}
                     <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-telegram"></i>
-                        </div>
+                        <div class="contact-icon"><i class="fab fa-telegram"></i></div>
                         <div class="contact-details">
                             <h3>{% trans "Messengers" %}</h3>
-                            <p>{% trans "Telegram" %}: @fashionstore</p>
-                            {% if contact_info.phone %}<p>{% trans "WhatsApp" %}: {{ contact_info.phone }}</p>{% else %}<p>{% trans "WhatsApp" %}: +7 (800) 123-45-67</p>{% endif %}
-
+                            {% if social_links.telegram %}<p><a href="{{ social_links.telegram }}" target="_blank" rel="noopener">{% trans "Telegram" %}</a></p>{% endif %}
+                            {% if social_links.whatsapp %}
+                              <p><a href="{{ social_links.whatsapp }}" target="_blank" rel="noopener">{% trans "WhatsApp" %}</a></p>
+                            {% elif contact_info.phone %}
+                              <p><a href="https://wa.me/{{ contact_info.phone|cut:'+'|cut:' '|cut:'('|cut:')'|cut:'-' }}" target="_blank" rel="noopener">{% trans "WhatsApp" %}</a></p>
+                            {% endif %}
                         </div>
                     </div>
+                    {% endif %}
 
+                    {% if social_links.instagram or social_links.facebook or social_links.twitter or social_links.vk or social_links.telegram or social_links.whatsapp %}
                     <div class="social-links-large">
                         <h3>{% trans "We are on social networks" %}</h3>
                         <div class="social-links">
-                            {% if social_links.instagram %}<a href="{{ social_links.instagram }}"><i class="fab fa-instagram"></i></a>{% endif %}
-                            {% if social_links.facebook %}<a href="{{ social_links.facebook }}"><i class="fab fa-facebook"></i></a>{% endif %}
-                            {% if social_links.twitter %}<a href="{{ social_links.twitter }}"><i class="fab fa-twitter"></i></a>{% endif %}
-                            {% if social_links.vk %}<a href="{{ social_links.vk }}"><i class="fab fa-vk"></i></a>{% endif %}
-                            {% if social_links.telegram %}<a href="{{ social_links.telegram }}"><i class="fab fa-telegram"></i></a>{% endif %}
+                            {% if social_links.instagram %}<a href="{{ social_links.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>{% endif %}
+                            {% if social_links.facebook %}<a href="{{ social_links.facebook }}" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook"></i></a>{% endif %}
+                            {% if social_links.twitter %}<a href="{{ social_links.twitter }}" target="_blank" rel="noopener" aria-label="X"><i class="fab fa-twitter"></i></a>{% endif %}
+                            {% if social_links.vk %}<a href="{{ social_links.vk }}" target="_blank" rel="noopener" aria-label="VK"><i class="fab fa-vk"></i></a>{% endif %}
+                            {% if social_links.telegram %}<a href="{{ social_links.telegram }}" target="_blank" rel="noopener" aria-label="Telegram"><i class="fab fa-telegram"></i></a>{% endif %}
+                            {% if social_links.whatsapp %}<a href="{{ social_links.whatsapp }}" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>{% endif %}
                         </div>
                     </div>
+                    {% endif %}
                 </div>
 
                 <!-- Contact Form -->
@@ -125,7 +131,7 @@
                 {% if contact_info.map_url %}
                     <div class="yandex-map-container">
                         <iframe 
-                            src="{{ contact_info.map_url|yandex_map_url }}?lang=ru_RU" 
+                            src="{{ contact_info.map_url|yandex_map_url }}?lang={% if CURRENT_LANGUAGE == 'uz' %}uz_UZ{% elif CURRENT_LANGUAGE == 'en' %}en_US{% else %}ru_RU{% endif %}" 
                             width="100%" 
                             height="400" 
                             frameborder="0" 
@@ -137,7 +143,7 @@
                     <div class="map-placeholder">
                         <i class="fas fa-map-marked-alt"></i>
                         <p>{% trans "Map will be here" %}</p>
-                        {% if contact_info.address.full %}<p class="map-address">{{ contact_info.address.full }}</p>{% else %}<p class="map-address">{% trans "Tashkent, Example Street, 1" %}</p>{% endif %}
+                        {% if contact_info.address.full %}<p class="map-address">{{ contact_info.address.full }}</p>{% elif contact_info.address.city %}<p class="map-address">{{ contact_info.address.city }}</p>{% endif %}
                     </div>
                 {% endif %}
             </div>

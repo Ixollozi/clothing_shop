@@ -32,22 +32,24 @@
     <header class="ag-header">
         <div class="ag-wrap ag-header__inner">
             <a class="ag-logo" href="{% url 'index' %}">
-                <span class="ag-logo__mark" aria-hidden="true">A</span>
                 <span class="ag-logo__text">{{ store_name|default:"Apex Goods" }}</span>
             </a>
-            <button class="ag-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Menu">
+            <button class="ag-menu-toggle" id="mobileMenuToggle" type="button" aria-label="{% trans 'Menu' %}" aria-expanded="false" aria-controls="navMenu">
                 <span></span><span></span>
             </button>
-            <nav class="ag-nav" id="navMenu">
-                <a href="{% url 'index' %}" class="{% if request.resolver_match.url_name == 'index' %}is-active{% endif %}">Discover</a>
-                <a href="{% url 'catalog' %}">Categories</a>
+            <nav class="ag-nav" id="navMenu" aria-label="{% trans 'Main navigation' %}">
+                {% with url_name=request.resolver_match.url_name %}
+                <a href="{% url 'index' %}" class="{% if url_name == 'index' %}is-active{% endif %}">{% trans "Home" %}</a>
+                <a href="{% url 'catalog' %}" class="{% if url_name == 'catalog' or url_name == 'product' or url_name == 'product_detail' %}is-active{% endif %}">{% trans "Catalog" %}</a>
+                <a href="{% url 'about' %}" class="{% if url_name == 'about' %}is-active{% endif %}">{% trans "About" %}</a>
+                <a href="{% url 'faq' %}" class="{% if url_name == 'faq' %}is-active{% endif %}">{% trans "FAQ" %}</a>
+                <a href="{% url 'contact' %}" class="{% if url_name == 'contact' %}is-active{% endif %}">{% trans "Contacts" %}</a>
+                {% endwith %}
             </nav>
             <div class="ag-utils">
-                <a class="ag-account" href="{% url 'contact' %}">Account</a>
-                <a href="{% url 'catalog' %}" class="ag-icon-btn" aria-label="Search"><i class="fas fa-search"></i></a>
-                <a href="{% url 'cart' %}" class="ag-icon-btn ag-cart" aria-label="Cart">
+                <a href="{% url 'cart' %}" class="ag-icon-btn ag-cart" aria-label="{% trans 'Cart' %}">
                     <i class="fas fa-shopping-cart"></i>
-                    <span id="cart-icon-count" class="ag-cart-badge" style="display:none;">0</span>
+                    <span id="cart-icon-count" class="ag-cart-badge"{% if not cart_items_count %} style="display:none;"{% endif %}>{{ cart_items_count|default:0 }}</span>
                 </a>
                 <div class="language-switcher">
                     <button class="language-btn" id="languageBtn" type="button">
@@ -87,47 +89,44 @@
             <div class="ag-footer__grid">
                 <div class="ag-footer__brand">
                     <a class="ag-logo ag-logo--footer" href="{% url 'index' %}">
-                        <span class="ag-logo__mark" aria-hidden="true">A</span>
                         <span class="ag-logo__text">{{ store_name|default:"Apex Goods" }}</span>
                     </a>
                     <p>{{ store_description|default:"Curated finds for modern living." }}</p>
                     <div class="ag-social">
-                        {% if social_links.twitter %}<a href="{{ social_links.twitter }}" aria-label="X"><i class="fab fa-x-twitter"></i></a>{% else %}<a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>{% endif %}
-                        {% if social_links.facebook %}<a href="{{ social_links.facebook }}" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>{% else %}<a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>{% endif %}
-                        {% if social_links.instagram %}<a href="{{ social_links.instagram }}" aria-label="Instagram"><i class="fab fa-instagram"></i></a>{% else %}<a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>{% endif %}
-                        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                        {% if social_links.instagram %}<a href="{{ social_links.instagram }}" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>{% endif %}
+                        {% if social_links.facebook %}<a href="{{ social_links.facebook }}" aria-label="Facebook" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>{% endif %}
+                        {% if social_links.twitter %}<a href="{{ social_links.twitter }}" aria-label="X" target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i></a>{% endif %}
+                        {% if social_links.telegram %}<a href="{{ social_links.telegram }}" aria-label="Telegram" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>{% endif %}
                     </div>
                 </div>
                 <div class="ag-footer__col">
-                    <h4>Links</h4>
+                    <h4>{% trans "Shop" %}</h4>
                     <ul>
-                        <li><a href="{% url 'about' %}">About</a></li>
-                        <li><a href="{% url 'delivery' %}">Return Policy</a></li>
-                        <li><a href="{% url 'faq' %}">FAQ</a></li>
-                        <li><a href="{% url 'contact' %}">Account</a></li>
+                        <li><a href="{% url 'catalog' %}">{% trans "Catalog" %}</a></li>
+                        <li><a href="{% url 'cart' %}">{% trans "Shopping Cart" %}</a></li>
+                        <li><a href="{% url 'delivery' %}">{% trans "Delivery and Payment" %}</a></li>
                     </ul>
                 </div>
                 <div class="ag-footer__col">
-                    <h4>Categories</h4>
+                    <h4>{% trans "Company" %}</h4>
                     <ul>
-                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
-                        <li><a href="{% url 'about' %}">Blog</a></li>
-                        <li><a href="{% url 'catalog' %}">Preview Status</a></li>
-                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'about' %}">{% trans "About Us" %}</a></li>
+                        <li><a href="{% url 'contact' %}">{% trans "Contacts" %}</a></li>
+                        <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
                     </ul>
                 </div>
-                <div class="ag-footer__news">
-                    <h4>Stay Inspired</h4>
-                    <p>Sign up for our most awaited newsletter.</p>
-                    <form class="ag-news" action="{% url 'contact' %}" method="get">
-                        <input type="email" name="email" placeholder="Enter your email address" aria-label="Email" required>
-                        <button type="submit">Sign Now</button>
-                    </form>
+                <div class="ag-footer__col">
+                    <h4>{% trans "Contacts" %}</h4>
+                    <ul class="ag-footer__contact">
+                        {% if contact_info.phone %}<li><i class="fas fa-phone"></i> {{ contact_info.phone }}</li>{% endif %}
+                        {% if contact_info.email %}<li><i class="fas fa-envelope"></i> {{ contact_info.email }}</li>{% endif %}
+                        {% if contact_info.address.full %}<li><i class="fas fa-map-marker-alt"></i> {{ contact_info.address.full }}</li>{% endif %}
+                    </ul>
                 </div>
             </div>
             <div class="ag-footer__bottom">
-                <span>www.apexgoods.website.com</span>
-                <a href="{% url 'faq' %}">Terms Policy</a>
+                <span>&copy; {% now "Y" %} {{ store_name|default:"Apex Goods" }}</span>
+                <a href="{% url 'faq' %}">{% trans "Terms & FAQ" %}</a>
             </div>
         </div>
     </footer>
@@ -166,10 +165,14 @@
                 .catch(() => {});
         }
         window.addToCart = async function (event, productId) {
+            if (!productId || productId === 'None' || productId === '') return;
             const button = event?.target?.closest('button') || event?.target;
-            if (!button || !productId) return;
+            if (!button) return;
             const original = button.textContent;
             button.disabled = true;
+            button.setAttribute('aria-disabled', 'true');
+            button.setAttribute('aria-busy', 'true');
+            button.textContent = '…';
             try {
                 const csrftoken = getCsrfToken();
                 const response = await fetch('/api/cart/add_item/', {
@@ -181,13 +184,58 @@
                 if (!response.ok) throw new Error('fail');
                 button.textContent = 'Added';
                 updateCartIcon();
-                setTimeout(() => { button.textContent = original; button.disabled = false; }, 1600);
+                if (typeof showNotification === 'function') {
+                    showNotification('{% trans "Product added to cart" %}', 'success', '', 2000);
+                }
+                setTimeout(() => {
+                    button.textContent = original;
+                    button.disabled = false;
+                    button.setAttribute('aria-disabled', 'false');
+                    button.removeAttribute('aria-busy');
+                }, 1600);
             } catch (e) {
                 button.textContent = 'Error';
-                setTimeout(() => { button.textContent = original; button.disabled = false; }, 1600);
+                if (typeof showNotification === 'function') {
+                    showNotification('{% trans "Failed to add product to cart" %}', 'error', '', 3000);
+                }
+                setTimeout(() => {
+                    button.textContent = original;
+                    button.disabled = false;
+                    button.setAttribute('aria-disabled', 'false');
+                    button.removeAttribute('aria-busy');
+                }, 1600);
             }
         };
-        document.addEventListener('DOMContentLoaded', updateCartIcon);
+        window.showNotification = function (message, type = 'success', title = '', duration = 4000) {
+            const container = document.getElementById('notification-container');
+            if (!container) return;
+            const note = document.createElement('div');
+            note.className = 'ag-toast ag-toast--' + type;
+            note.setAttribute('role', 'status');
+            note.setAttribute('aria-live', 'polite');
+            note.setAttribute('tabindex', '-1');
+            note.innerHTML = (title ? '<strong>' + title + '</strong> ' : '') + message;
+            container.appendChild(note);
+            setTimeout(() => note.remove(), duration);
+        };
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCartIcon();
+            document.querySelectorAll('.btn-add-cart, .btn-primary.btn-large').forEach((button) => {
+                if (button.disabled) return;
+                const productId = button.getAttribute('data-product-id');
+                const productName = button.getAttribute('data-product-name');
+                const useProductForm = button.getAttribute('data-use-product-form') === 'true';
+                if (!productId || productId === 'None') return;
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (useProductForm && typeof window.addToCartFromProduct === 'function') {
+                        window.addToCartFromProduct(e, productId, productName || '');
+                    } else {
+                        window.addToCart(e, productId);
+                    }
+                });
+            });
+        });
     </script>
     {% block extra_js %}{% endblock %}
 </body>

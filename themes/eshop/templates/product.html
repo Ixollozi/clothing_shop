@@ -14,7 +14,7 @@
             <nav class="breadcrumbs">
                 <a href="{% url 'index' %}">{% trans "Home" %}</a> / 
                 <a href="{% url 'catalog' %}">{% trans "Catalog" %}</a> / 
-                {% if product.category %}<a href="{% url 'catalog' %}">{{ product.category.name }}</a> / {% endif %}
+                {% if product.category %}<a href="{% url 'catalog' %}?category={{ product.category.slug }}">{{ product.category.name }}</a> / {% endif %}
                 <span>{% if product %}{{ product.name }}{% else %}{% trans "Product" %}{% endif %}</span>
             </nav>
         </div>
@@ -37,15 +37,15 @@
                         {% endif %}
                     </div>
                     <div class="thumbnail-images">
-                        {% if product.images.all %}
-                            {% for img in product.images.all %}
-                                <img src="{{ img.image.url }}" alt="{{ product.name }} - {% trans 'View' %} {{ forloop.counter }}" class="thumbnail {% if forloop.first %}active{% endif %}">
+                        {% if product_images %}
+                            {% for img in product_images %}
+                                <img src="{{ img.image.url }}" alt="{{ product.name }} - {% trans 'View' %} {{ forloop.counter }}" class="thumbnail {% if forloop.first %}active{% endif %}" tabindex="0" role="button" aria-label="Thumbnail {{ forloop.counter }}">
                             {% endfor %}
                         {% else %}
                             {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="thumbnail active">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="thumbnail active" tabindex="0" role="button" aria-label="Thumbnail">
                             {% elif product.image_url %}
-                                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="thumbnail active">
+                                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="thumbnail active" tabindex="0" role="button" aria-label="Thumbnail">
                             {% else %}
                                 <div class="product-image-placeholder" aria-hidden="true"></div>
                             {% endif %}
@@ -93,7 +93,7 @@
                             {% for color in colors %}
                                 <span class="color-option-large {% if forloop.first %}active{% endif %}" 
                                       style="background: {{ color.code }}; {% if color.code == '#ffffff' %}border: 2px solid #ddd;{% endif %}" 
-                                      data-color="{{ color.name|lower }}"></span>
+                                      data-color="{{ color.name|lower }}" tabindex="0" role="button" aria-label="{{ color.name|escapejs }}"></span>
                             {% endfor %}
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                         <h3>{% trans "Quantity" %}</h3>
                         <div class="quantity-selector">
                             <button class="qty-btn" id="decreaseQty">-</button>
-                            <input type="number" value="1" min="1" max="{% if product.stock %}{{ product.stock }}{% else %}10{% endif %}" id="quantity" class="qty-input">
+                            <input type="number" step="1" value="1" min="1" max="{% if product.stock %}{{ product.stock }}{% else %}10{% endif %}" id="quantity" class="qty-input" aria-label="{% trans 'Quantity' %}">
                             <button class="qty-btn" id="increaseQty">+</button>
                         </div>
                         {% if product.stock %}
@@ -247,11 +247,20 @@
     const mainImage = document.getElementById('mainImage');
     
     if (thumbnails.length > 0 && mainImage) {
-        thumbnails.forEach(thumb => {
+        const setActive = (thumbEl) => {
+            thumbnails.forEach(t => t.classList.remove('active'));
+            thumbEl.classList.add('active');
+            mainImage.src = thumbEl.src;
+        };
+        thumbnails.forEach((thumb) => {
             thumb.addEventListener('click', function() {
-                thumbnails.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                mainImage.src = this.src;
+                setActive(this);
+            });
+            thumb.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setActive(this);
+                }
             });
         });
     }
@@ -283,6 +292,12 @@
             colorOptions.forEach(o => o.classList.remove('active'));
             this.classList.add('active');
         });
+        option.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
     });
 
     // Tabs
@@ -306,23 +321,25 @@
 
     // Add to Cart functionality
     window.addToCartFromProduct = async function(event, productId, productName) {
-        console.log('addToCartFromProduct called with:', { productId, productName, event });
-        
         if (!productId || productId === 'None' || productId === '') {
-            console.error('Product ID is missing or invalid:', productId);
-            alert('{% trans "Error: Product ID is not specified. This product cannot be added to cart." %}');
+            if (typeof showNotification === 'function') {
+                showNotification('{% trans "Error: Product ID is not specified. This product cannot be added to cart." %}', 'error', '', 5000);
+            }
             return;
         }
         
         if (!event || !event.target) {
-            console.error('Event is missing or invalid');
-            alert('{% trans "Error: event not found" %}');
+            if (typeof showNotification === 'function') {
+                showNotification('{% trans "Error: event not found" %}', 'error', '', 5000);
+            }
             return;
         }
         
         const button = event.target;
         const originalText = button.textContent;
         button.disabled = true;
+        button.setAttribute('aria-disabled', 'true');
+        button.setAttribute('aria-busy', 'true');
         button.textContent = '{% trans "Adding..." %}';
 
         const selectedColor = document.querySelector('.color-option-large.active')?.getAttribute('data-color') || '';
@@ -330,7 +347,6 @@
 
         try {
             const csrftoken = getCsrfToken();
-            console.log('CSRF Token:', csrftoken ? 'Found' : 'Not found');
             
             if (!csrftoken) {
                 throw new Error('{% trans "CSRF token not found. Please refresh the page." %}');
@@ -343,8 +359,6 @@
                 color: selectedColor
             };
             
-            console.log('Sending request to /api/cart/add_item/', requestData);
-
             const response = await fetch('/api/cart/add_item/', {
                 method: 'POST',
                 headers: {
@@ -355,26 +369,28 @@
                 body: JSON.stringify(requestData)
             });
 
-            console.log('Response status:', response.status, response.statusText);
-
             if (response.ok) {
-                const data = await response.json();
-                console.log('Item added successfully:', data);
+                await response.json().catch(() => ({}));
                 button.textContent = '{% trans "Added!" %}';
                 button.style.backgroundColor = '#2ecc71';
                 
                 // Обновляем иконку корзины
                 updateCartIcon();
+
+                if (typeof showNotification === 'function') {
+                    showNotification('{% trans "Product added to cart" %}', 'success', '', 2000);
+                }
                 
                 // Возвращаем исходный текст через 2 секунды
                 setTimeout(() => {
                     button.textContent = originalText;
                     button.style.backgroundColor = '';
                     button.disabled = false;
+                    button.setAttribute('aria-disabled', 'false');
+                    button.removeAttribute('aria-busy');
                 }, 2000);
             } else {
                 const errorData = await response.json().catch(() => ({}));
-                console.error('Failed to add to cart:', response.status, errorData);
                 let errorMessage = '{% trans "Error" %} ' + response.status + ': ';
                 if (errorData.detail) {
                     errorMessage += errorData.detail;
@@ -386,14 +402,18 @@
                 throw new Error(errorMessage);
             }
         } catch (error) {
-            console.error('Error adding to cart:', error);
+            const msg = (error && error.message) ? error.message : '{% trans "Failed to add product to cart. Please refresh the page and try again." %}';
             button.textContent = '{% trans "Error" %}';
             button.style.backgroundColor = '#e74c3c';
-            alert(error.message || '{% trans "Failed to add product to cart. Please refresh the page and try again." %}');
+            if (typeof showNotification === 'function') {
+                showNotification(msg, 'error', '', 3500);
+            }
             setTimeout(() => {
                 button.textContent = originalText;
                 button.style.backgroundColor = '';
                 button.disabled = false;
+                button.setAttribute('aria-disabled', 'false');
+                button.removeAttribute('aria-busy');
             }, 2000);
         }
     }

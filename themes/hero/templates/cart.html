@@ -39,7 +39,7 @@
                                 <p class="cart-item-details">
                                     {% if item.color %}{% trans "Color" %}: {{ item.color }}{% endif %}
                                 </p>
-                                <p class="cart-item-price" data-price="{{ item.product.price }}">{{ item.product.price|format_price }} сум</p>
+                <p class="cart-item-price" data-price="{{ item.product.price }}">{{ item.product.price|format_price }} {% trans "sum" %}</p>
                             </div>
                             <div class="cart-item-quantity">
                                 <button class="qty-btn" onclick="updateQuantity(this, -1, {{ item.id }})">-</button>
@@ -47,7 +47,7 @@
                                 <button class="qty-btn" onclick="updateQuantity(this, 1, {{ item.id }})">+</button>
                             </div>
                             <div class="cart-item-total">
-                                <span class="item-total-price" data-item-id="{{ item.id }}">{{ item.total|format_price }} сум</span>
+                                <span class="item-total-price" data-item-id="{{ item.id }}">{{ item.total|format_price }} {% trans "sum" %}</span>
                             </div>
                             <button class="cart-item-remove" onclick="removeItem({{ item.id }})">
                                 <i class="fas fa-times"></i>
@@ -67,7 +67,7 @@
                     <h2>{% trans "Total" %}</h2>
                     <div class="summary-row">
                         <span>{% trans "Products" %} (<span id="items-count">{{ cart.items_count|default:0 }}</span> {% trans "pcs" %}.)</span>
-                        <span id="subtotal">{{ cart.total|default:0|format_price }} сум</span>
+                        <span id="subtotal">{{ cart.total|default:0|format_price }} {% trans "sum" %}</span>
                     </div>
                     <div class="summary-row">
                         <span>{% trans "Delivery" %}</span>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="summary-row total-row">
                         <span>{% trans "To pay" %}</span>
-                        <span id="total">{{ cart.total|default:0|format_price }} сум</span>
+                        <span id="total">{{ cart.total|default:0|format_price }} {% trans "sum" %}</span>
                     </div>
                     {% if cart_items %}
                     <button class="btn btn-primary btn-large" style="width: 100%; margin-top: 1rem;" onclick="showOrderForm()">
@@ -110,7 +110,8 @@
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label for="city">{% trans "City" %} *</label>
-                    <input type="text" id="city" name="city" value="Ташкент" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    {% trans "Tashkent" as default_city %}
+                    <input type="text" id="city" name="city" value="{% firstof contact_info.address.city default_city %}" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label for="address">{% trans "Delivery Address" %} *</label>
@@ -158,6 +159,7 @@
 <script>
     const API_BASE_URL = '/api/cart/';
     const CSRF_TOKEN = '{{ csrf_token }}';
+    const CURRENCY_LABEL = '{% filter force_escape %}{% trans "sum" %}{% endfilter %}';
 
     function getCookie(name) {
         let cookieValue = null;
@@ -236,7 +238,7 @@
         if (itemElement) {
             const totalElement = itemElement.querySelector('.item-total-price[data-item-id="' + itemId + '"]');
             if (totalElement) {
-                totalElement.textContent = formatPrice(total) + ' сум';
+                totalElement.textContent = formatPrice(total) + ' ' + CURRENCY_LABEL;
             }
         }
     }
@@ -293,8 +295,8 @@
             if (response.ok) {
                 const data = await response.json();
                 const totalFormatted = formatPrice(data.total);
-                document.getElementById('subtotal').textContent = totalFormatted + ' сум';
-                document.getElementById('total').textContent = totalFormatted + ' сум';
+                document.getElementById('subtotal').textContent = totalFormatted + ' ' + CURRENCY_LABEL;
+                document.getElementById('total').textContent = totalFormatted + ' ' + CURRENCY_LABEL;
                 document.getElementById('items-count').textContent = data.items_count || 0;
             }
         } catch (error) {
@@ -464,7 +466,7 @@
             });
             
             if (!orderResponse.ok) {
-                let errorMessage = 'Failed to place order';
+                let errorMessage = '{% filter force_escape %}{% trans "Failed to place order" %}{% endfilter %}';
                 try {
                     const errorData = await orderResponse.json();
                     console.error('Order error response:', errorData);

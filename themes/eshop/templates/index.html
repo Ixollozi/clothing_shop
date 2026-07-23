@@ -11,8 +11,8 @@
     <div class="ag-hero__stage">
       <img
         class="ag-hero__bg"
-        src="{% static 'img/hero.jpg' %}"
-        alt="Still life with ceramic kettle, amber bottle, journal and plant"
+        src="{% if hero_config_obj and hero_config_obj.background_image %}{{ hero_config_obj.background_image.url }}{% elif hero_config_obj and hero_config_obj.background_image_url %}{{ hero_config_obj.background_image_url }}{% elif hero_config.background_image %}{{ hero_config.background_image }}{% else %}{% static 'img/hero.jpg' %}{% endif %}"
+        alt="{{ store_name|default:'Apex Goods' }}"
         width="1536"
         height="1024"
         decoding="async"
@@ -21,10 +21,26 @@
       <div class="ag-hero__veil" aria-hidden="true"></div>
       <div class="ag-hero__content">
         <p class="ag-hero__brand">{{ store_name|default:"Apex Goods" }}</p>
-        <h1 class="ag-hero__title">Objects with<br>quiet intent.</h1>
-        <p class="ag-hero__lede">A calm edit of electronics, home, and everyday pieces.</p>
+        <h1 class="ag-hero__title">
+          {% if hero_config_obj and hero_config_obj.title %}
+            {{ hero_config_obj.title|linebreaksbr }}
+          {% elif hero_config.title %}
+            {{ hero_config.title|linebreaksbr }}
+          {% else %}
+            Objects with<br>quiet intent.
+          {% endif %}
+        </h1>
+        <p class="ag-hero__lede">
+          {% if hero_config_obj and hero_config_obj.subtitle %}
+            {{ hero_config_obj.subtitle }}
+          {% elif hero_config.subtitle %}
+            {{ hero_config.subtitle }}
+          {% else %}
+            {{ store_description|default:"A calm edit of electronics, home, and everyday pieces." }}
+          {% endif %}
+        </p>
         <a class="ag-hero__cta" href="{% url 'catalog' %}">
-          Shop the edit
+          {% if hero_config_obj and hero_config_obj.button_text %}{{ hero_config_obj.button_text }}{% elif hero_config.button_text %}{{ hero_config.button_text }}{% else %}Shop the edit{% endif %}
           <span aria-hidden="true">→</span>
         </a>
       </div>

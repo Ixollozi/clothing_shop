@@ -160,11 +160,48 @@ def index(request):
 
     organic_boards = build_organic_boards(categories)
     hero_config_obj = HeroConfig.objects.filter(is_active=True).first()
+    featured_products = list(
+        Product.objects.filter(is_active=True)
+        .exclude(category__slug='demo')
+        .select_related('category')
+        .order_by('-rating', '-created_at')[:8]
+    )
+
+    # Prefer a balanced trio for the homepage mosaic (home / apparel / accessories)
+    by_slug = {
+        getattr(c, 'slug', None) or (c.get('slug') if isinstance(c, dict) else None): c
+        for c in categories
+    }
+    preferred = [
+        ('home-hygge', 'candles', 'reusable-bottles'),
+        ('mens-clothing', 'womens-clothing', 'kids-clothing'),
+        ('accessories', 'phones', 'tech-refined'),
+    ]
+    home_tiles = []
+    used = set()
+    for group in preferred:
+        picked = None
+        for slug in group:
+            if slug in by_slug and slug not in used:
+                picked = by_slug[slug]
+                used.add(slug)
+                break
+        if picked is None:
+            for c in categories:
+                slug = getattr(c, 'slug', None) or (c.get('slug') if isinstance(c, dict) else None)
+                if slug and slug not in used:
+                    picked = c
+                    used.add(slug)
+                    break
+        if picked is not None:
+            home_tiles.append(picked)
 
     context = {
         'categories': categories,
+        'home_tiles': home_tiles,
         'organic_boards': organic_boards,
         'hero_config_obj': hero_config_obj,
+        'featured_products': featured_products,
     }
     return render(request, 'index.html', context)
 

@@ -1,66 +1,117 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
 
-{% block title %}{% trans "About Us" %} - {{ store_name }}{% endblock %}
+{% block title %}{% if about_config %}{{ about_config.title }}{% else %}{% trans "About Us" %}{% endif %} - {{ store_name }}{% endblock %}
 
 {% block content %}
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1>{% trans "About Us" %}</h1>
-            <nav class="breadcrumbs">
-                <a href="{% url 'index' %}">{% trans "Home" %}</a> / <span>{% trans "About Us" %}</span>
-            </nav>
-        </div>
-    </section>
+<section class="page-header">
+    <div class="container">
+        <h1>{% if about_config %}{{ about_config.title }}{% else %}{% trans "About Us" %}{% endif %}</h1>
+        <nav class="breadcrumbs">
+            <a href="{% url 'index' %}">{% trans "Home" %}</a> / <span>{% trans "About Us" %}</span>
+        </nav>
+    </div>
+</section>
 
-    <!-- About Content -->
-    <section class="about-section">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-intro">
-
-                    <h2>{% if about_config.title %}{{ about_config.title }}{% else %}{% trans "Welcome to Fashion Store" %}{% endif %}</h2>
-                    <p>{% if about_config.description %}{{ about_config.description }}{% else %}{% trans "Fashion Store is a modern online clothing store that offers a wide range of quality and stylish clothing for the whole family. We have been in the market for over 10 years and during this time we have gained the trust of thousands of customers throughout Uzbekistan." %}{% endif %}</p>
-
-                </div>
-
-                {% if about_config.image or about_config.image_url %}
-                <div class="about-image">
-                    {% if about_config.image %}
-                        <img src="{{ about_config.image.url }}" alt="{% trans 'About Us' %}">
-                    {% elif about_config.image_url %}
-                        <img src="{{ about_config.image_url }}" alt="{% trans 'About Us' %}">
-                    {% endif %}
-                </div>
-                {% endif %}
-
-                <div class="about-text">
-                    <h3>{% trans "Our Mission" %}</h3>
-
-                    <p>{% if about_config.mission %}{{ about_config.mission }}{% else %}{% trans "We strive to make quality and fashionable clothing accessible to everyone. Our goal is to help you look stylish and feel confident by offering the best products at fair prices." %}{% endif %}</p>
-
-
-                    <h3>{% trans "Our Vision" %}</h3>
-                    <p>{% if about_config.vision %}{{ about_config.vision }}{% else %}{% trans "Fashion Store was founded in 2014 with a simple idea - to make quality clothing accessible to everyone. Starting with a small store, we have grown into a large online store serving customers throughout the country." %}{% endif %}</p>
-
-                    <h3>{% trans "Our Values" %}</h3>
-                    {% if about_config.values %}
-                    <ul class="values-list">
-                        {% for value in about_config.get_values_list %}
-                        <li><strong>{{ value }}</strong></li>
-                        {% endfor %}
-                    </ul>
+<section class="about-section">
+    <div class="container">
+        <div class="about-hero">
+            <div class="about-hero__copy">
+                <p class="about-kicker">{{ store_name }}</p>
+                <h2>
+                    {% if about_config and about_config.title %}
+                        {{ about_config.title }}
                     {% else %}
-                    <ul class="values-list">
-                        <li><strong>{% trans "Quality" %}</strong> — {% trans "we guarantee high quality of all products" %}</li>
-                        <li><strong>{% trans "Honesty" %}</strong> — {% trans "transparent prices and honest conditions" %}</li>
-                        <li><strong>{% trans "Customer Care" %}</strong> — {% trans "we are always ready to help and answer questions" %}</li>
-                        <li><strong>{% trans "Innovation" %}</strong> — {% trans "we constantly improve service and expand capabilities" %}</li>
-                    </ul>
+                        {% blocktrans with name=store_name %}Welcome to {{ name }}{% endblocktrans %}
                     {% endif %}
+                </h2>
+                <p class="about-lead">
+                    {% if about_config and about_config.description %}
+                        {{ about_config.description }}
+                    {% elif store_description %}
+                        {{ store_description }}
+                    {% else %}
+                        {% trans "Curated finds for modern living." %}
+                    {% endif %}
+                </p>
+                <div class="about-cta">
+                    <a class="btn btn-primary" href="{% url 'catalog' %}">{% trans "Shop the edit" %}</a>
+                    <a class="btn btn-secondary" href="{% url 'contact' %}">{% trans "Contact Us" %}</a>
                 </div>
             </div>
+            {% if about_config and about_config.image %}
+            <div class="about-hero__media">
+                <img src="{{ about_config.image.url }}" alt="{{ about_config.title|default:store_name }}">
+            </div>
+            {% elif about_config and about_config.image_url %}
+            <div class="about-hero__media">
+                <img src="{{ about_config.image_url }}" alt="{{ about_config.title|default:store_name }}">
+            </div>
+            {% endif %}
         </div>
-    </section>
+
+        {% if about_stats %}
+        <div class="about-stats" role="list" aria-label="{% trans 'Stats' %}">
+            {% for st in about_stats %}
+            <div class="about-stat" role="listitem">
+                <span class="about-stat__value">{{ st.value }}</span>
+                <span class="about-stat__label">{{ st.label }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if about_config and about_config.mission or about_config and about_config.vision %}
+        <div class="about-split">
+            {% if about_config.mission %}
+            <article class="about-card">
+                <h3>{% trans "Our Mission" %}</h3>
+                <p>{{ about_config.mission }}</p>
+            </article>
+            {% endif %}
+            {% if about_config.vision %}
+            <article class="about-card">
+                <h3>{% trans "Our Vision" %}</h3>
+                <p>{{ about_config.vision }}</p>
+            </article>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if about_values %}
+        <div class="about-values">
+            <h3>{% trans "Our Values" %}</h3>
+            <ul class="about-values__list">
+                {% for value in about_values %}
+                <li>{{ value }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if features %}
+        <div class="about-features">
+            <h3>{% trans "Why shop with us" %}</h3>
+            <div class="about-features__grid">
+                {% for feature in features %}
+                <article class="about-feature">
+                    {% if feature.icon %}<i class="{{ feature.icon }}" aria-hidden="true"></i>{% endif %}
+                    <h4>{{ feature.title }}</h4>
+                    <p>{{ feature.description }}</p>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="about-banner">
+            <div>
+                <h3>{% blocktrans with name=store_name %}Questions about {{ name }}?{% endblocktrans %}</h3>
+                <p>{% trans "We are happy to help with orders, delivery, and product advice." %}</p>
+            </div>
+            <a class="btn btn-primary" href="{% url 'contact' %}">{% trans "Get in touch" %}</a>
+        </div>
+    </div>
+</section>
 {% endblock %}

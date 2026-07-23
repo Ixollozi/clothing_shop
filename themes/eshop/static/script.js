@@ -26,21 +26,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const toggle = document.getElementById('mobileMenuToggle');
   const nav = document.getElementById('navMenu');
+  let navBackdrop = document.getElementById('navBackdrop');
+  if (!navBackdrop) {
+    navBackdrop = document.createElement('div');
+    navBackdrop.id = 'navBackdrop';
+    navBackdrop.className = 'ag-nav-backdrop';
+    navBackdrop.hidden = true;
+    document.body.appendChild(navBackdrop);
+  }
+  const closeNav = () => {
+    toggle?.classList.remove('active');
+    nav?.classList.remove('active');
+    toggle?.setAttribute('aria-expanded', 'false');
+    navBackdrop.hidden = true;
+    document.body.classList.remove('nav-open');
+  };
+  const openNav = () => {
+    toggle?.classList.add('active');
+    nav?.classList.add('active');
+    toggle?.setAttribute('aria-expanded', 'true');
+    navBackdrop.hidden = false;
+    document.body.classList.add('nav-open');
+  };
   if (toggle && nav) {
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-controls', 'navMenu');
     toggle.addEventListener('click', () => {
-      const open = toggle.classList.toggle('active');
-      nav.classList.toggle('active', open);
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (nav.classList.contains('active')) closeNav();
+      else openNav();
     });
-    nav.querySelectorAll('a').forEach((a) =>
-      a.addEventListener('click', () => {
-        toggle.classList.remove('active');
-        nav.classList.remove('active');
-        toggle.setAttribute('aria-expanded', 'false');
-      })
-    );
+    navBackdrop.addEventListener('click', closeNav);
+    nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeNav));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('active')) closeNav();
+    });
   }
 
   const header = document.querySelector('.ag-header');

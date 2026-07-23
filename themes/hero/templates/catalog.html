@@ -3,7 +3,7 @@
 {% load humanize %}
 {% load translation_tags %}
 
-{% block title %}{% trans "Catalog" %} - Fashion Store{% endblock %}
+{% block title %}{% trans "Catalog" %} - {{ store_name }}{% endblock %}
 
 {% block content %}
     <!-- Page Header -->
@@ -51,22 +51,10 @@
                     <div class="filter-group">
                         <h4>{% trans "Price" %}</h4>
                         <div class="price-buttons">
-                            <button class="price-btn" data-min="0" data-max="250000">0 сум - 250 000 сум</button>
-                            <button class="price-btn" data-min="250000" data-max="500000">250 000 сум - 500 000 сум</button>
-                            <button class="price-btn" data-min="500000" data-max="1000000">500 000 сум - 1 000 000 сум</button>
-                            <button class="price-btn" data-min="1000000" data-max="2000000">1 000 000 сум - 2 000 000 сум</button>
-                        </div>
-                    </div>
-
-                    <div class="filter-group">
-                        <h4>{% trans "Color" %}</h4>
-                        <div class="color-options">
-                            <span class="color-option" data-color="#000" {% if current_color == '#000' or current_color == '#000000' %}data-active="true"{% endif %} style="background: #000;"></span>
-                            <span class="color-option" data-color="#fff" {% if current_color == '#fff' or current_color == '#ffffff' %}data-active="true"{% endif %} style="background: #fff; border: 1px solid #ddd;"></span>
-                            <span class="color-option" data-color="#e74c3c" {% if current_color == '#e74c3c' %}data-active="true"{% endif %} style="background: #e74c3c;"></span>
-                            <span class="color-option" data-color="#3498db" {% if current_color == '#3498db' %}data-active="true"{% endif %} style="background: #3498db;"></span>
-                            <span class="color-option" data-color="#2ecc71" {% if current_color == '#2ecc71' %}data-active="true"{% endif %} style="background: #2ecc71;"></span>
-                            <span class="color-option" data-color="#f39c12" {% if current_color == '#f39c12' %}data-active="true"{% endif %} style="background: #f39c12;"></span>
+                            <button class="price-btn" data-min="0" data-max="250000">{% blocktrans %}0 sum — 250 000 sum{% endblocktrans %}</button>
+                            <button class="price-btn" data-min="250000" data-max="500000">{% blocktrans %}250 000 sum — 500 000 sum{% endblocktrans %}</button>
+                            <button class="price-btn" data-min="500000" data-max="1000000">{% blocktrans %}500 000 sum — 1 000 000 sum{% endblocktrans %}</button>
+                            <button class="price-btn" data-min="1000000" data-max="2000000">{% blocktrans %}1 000 000 sum — 2 000 000 sum{% endblocktrans %}</button>
                         </div>
                     </div>
 
@@ -78,6 +66,12 @@
                 <div class="products-container">
                     <div class="catalog-toolbar">
                         <p>{% trans "Products found" %}: <strong>{% if products %}{{ products.paginator.count }}{% else %}0{% endif %}</strong></p>
+                        <form class="catalog-search" action="{% url 'catalog' %}" method="get" role="search">
+                            {% if current_category %}<input type="hidden" name="category" value="{{ current_category }}">{% endif %}
+                            {% if current_sort %}<input type="hidden" name="sort" value="{{ current_sort }}">{% endif %}
+                            <input type="search" name="search" value="{{ current_search|default:'' }}" placeholder="{% trans 'Search products…' %}" aria-label="{% trans 'Search' %}">
+                            <button type="submit" class="btn-small" aria-label="{% trans 'Search' %}"><i class="fas fa-search"></i></button>
+                        </form>
                         <div class="sort-options">
                             <label>{% trans "Sort by" %}:</label>
                             <select class="sort-select" id="sortSelect">
@@ -121,9 +115,9 @@
                                         <a href="{% url 'catalog' %}" style="text-decoration: none; color: inherit;"><h3 class="product-name">{{ product.name }}</h3></a>
                                     {% endif %}
                                     <p class="product-price">
-                                        {{ product.price|format_price }} сум
+                                        {{ product.price|format_price }} {% trans "sum" %}
                                         {% if product.old_price and product.old_price > product.price %}
-                                            <span style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-left: 10px;">{{ product.old_price|format_price }} сум</span>
+                                            <span style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-left: 10px;">{{ product.old_price|format_price }} {% trans "sum" %}</span>
                                         {% endif %}
                                     </p>
                                     {% if product.id %}
@@ -257,38 +251,6 @@
     }
 
 
-    // Color filter options
-    const colorOptions = document.querySelectorAll('.color-option');
-    let selectedColor = null;
-    colorOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            // Toggle active state
-            if (this.classList.contains('active')) {
-                this.classList.remove('active');
-                selectedColor = null;
-            } else {
-                // Remove active from all color options
-                colorOptions.forEach(o => o.classList.remove('active'));
-                this.classList.add('active');
-                selectedColor = this.getAttribute('data-color');
-            }
-        });
-    });
-    
-    // Set active color option based on current URL parameters
-    const currentColor = urlParams.get('color');
-    if (currentColor) {
-        colorOptions.forEach(option => {
-            const optionColor = option.getAttribute('data-color');
-            if (optionColor === currentColor || 
-                (currentColor === '#000000' && optionColor === '#000') ||
-                (currentColor === '#ffffff' && optionColor === '#fff')) {
-                option.classList.add('active');
-                selectedColor = optionColor;
-            }
-        });
-    }
-    
     // Category checkboxes
     const categoryCheckboxes = document.querySelectorAll('input[name="category"]');
     let selectedCategories = [];
@@ -344,13 +306,6 @@
             url.searchParams.set('max_price', currentMaxPrice);
         }
         
-        // Применяем фильтр по цвету
-        if (selectedColor) {
-            url.searchParams.set('color', selectedColor);
-        } else {
-            url.searchParams.delete('color');
-        }
-        
         // Сохраняем поисковый запрос
         const currentSearch = urlParams.get('search');
         if (currentSearch) {
@@ -379,11 +334,9 @@
         
         // Убираем активный класс со всех фильтров
         priceButtons.forEach(btn => btn.classList.remove('active'));
-        colorOptions.forEach(option => option.classList.remove('active'));
         categoryCheckboxes.forEach(checkbox => checkbox.checked = false);
         
         // Сбрасываем выбранные значения
-        selectedColor = null;
         selectedCategories = [];
         
         window.location.href = url.toString();
