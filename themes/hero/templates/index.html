@@ -172,34 +172,6 @@
   <p>“{% trans "We believe in the beauty of obvious things done well." %}”</p>
 </section>
 
-<section class="values">
-  {% if features %}
-    {% for feature in features|slice:":3" %}
-    <div class="value">
-      {% if feature.icon %}<i class="{{ feature.icon }}" aria-hidden="true"></i>{% endif %}
-      <h3>{{ feature.title }}</h3>
-      <p>{{ feature.description }}</p>
-    </div>
-    {% endfor %}
-  {% else %}
-  <div class="value">
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18v18h20V18"/><path d="M10 18h28"/><path d="M24 10v8"/><path d="M18 36V26h12v10"/></svg>
-    <h3>{% trans "Crafted to Last" %}</h3>
-    <p>{% trans "Materials and finishes chosen for years of daily use — not a single season." %}</p>
-  </div>
-  <div class="value">
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40c9-7 14-13 14-21a14 14 0 1 0-28 0c0 8 5 14 14 21z"/><path d="M24 25a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>
-    <h3>{% trans "Ethically Sourced" %}</h3>
-    <p>{% trans "Transparent makers, fair supply chains, and quieter consumption." %}</p>
-  </div>
-  <div class="value">
-    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="15"/><path d="M9 24h30M24 9c4.5 5 7 10 7 15s-2.5 10-7 15c-4.5-5-7-10-7-15s2.5-10 7-15z"/></svg>
-    <h3>{% trans "Global Curation" %}</h3>
-    <p>{% trans "A tight edit of home, apparel, and objects from studios we trust." %}</p>
-  </div>
-  {% endif %}
-</section>
-
 {% with featured=featured_products.0 %}
 <section class="featured">
   <div class="featured__media">

@@ -744,6 +744,9 @@ msgstr "The product you are looking for does not exist or has been removed."
 msgid "Back to Catalog"
 msgstr "Back to Catalog"
 
+msgid "Back to top"
+msgstr "Back to top"
+
 #: .\templates\product.html:220
 msgid "Similar Products"
 msgstr "Similar Products"

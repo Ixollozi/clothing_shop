@@ -746,6 +746,9 @@ msgstr "Товар, который вы ищете, не существует и
 msgid "Back to Catalog"
 msgstr "Вернуться в каталог"
 
+msgid "Back to top"
+msgstr "Наверх"
+
 #: .\templates\product.html:220
 msgid "Similar Products"
 msgstr "Похожие товары"

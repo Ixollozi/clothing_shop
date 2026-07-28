@@ -744,6 +744,9 @@ msgstr "Qidirayotgan mahsulotingiz mavjud emas yoki o'chirilgan."
 msgid "Back to Catalog"
 msgstr "Katalogga qaytish"
 
+msgid "Back to top"
+msgstr "Yuqoriga"
+
 #: .\templates\product.html:220
 msgid "Similar Products"
 msgstr "O'xshash mahsulotlar"

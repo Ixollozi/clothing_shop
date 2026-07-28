@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}?v=20260728g">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     {% block extra_css %}{% endblock %}
 </head>
@@ -31,20 +31,19 @@
                 {{ store_name|default:"HERO" }}
               {% endif %}
             </a>
-            <button class="h-menu-toggle" id="mobileMenuToggle" type="button" aria-label="{% trans 'Menu' %}" aria-expanded="false" aria-controls="navMenu">
-                <span></span><span></span>
-            </button>
-            <nav class="h-nav" id="navMenu" aria-label="{% trans 'Main navigation' %}">
+            <nav class="h-nav h-nav--desktop" aria-label="{% trans 'Main navigation' %}">
                 {% with url_name=request.resolver_match.url_name %}
-                <a href="{% url 'index' %}" class="{% if url_name == 'index' %}is-active{% endif %}">{% trans "Home" %}</a>
-                <a href="{% url 'catalog' %}" class="{% if url_name == 'catalog' or url_name == 'product' or url_name == 'product_detail' %}is-active{% endif %}">{% trans "Catalog" %}</a>
-                <a href="{% url 'about' %}" class="{% if url_name == 'about' %}is-active{% endif %}">{% trans "About" %}</a>
-                <a href="{% url 'faq' %}" class="{% if url_name == 'faq' %}is-active{% endif %}">{% trans "FAQ" %}</a>
-                <a href="{% url 'contact' %}" class="{% if url_name == 'contact' %}is-active{% endif %}">{% trans "Contacts" %}</a>
+                <div class="h-nav__links">
+                  <a href="{% url 'index' %}" class="{% if url_name == 'index' %}is-active{% endif %}">{% trans "Home" %}</a>
+                  <a href="{% url 'catalog' %}" class="{% if url_name == 'catalog' or url_name == 'product' or url_name == 'product_detail' %}is-active{% endif %}">{% trans "Catalog" %}</a>
+                  <a href="{% url 'about' %}" class="{% if url_name == 'about' %}is-active{% endif %}">{% trans "About" %}</a>
+                  <a href="{% url 'faq' %}" class="{% if url_name == 'faq' %}is-active{% endif %}">{% trans "FAQ" %}</a>
+                  <a href="{% url 'contact' %}" class="{% if url_name == 'contact' %}is-active{% endif %}">{% trans "Contacts" %}</a>
+                </div>
                 {% endwith %}
             </nav>
             <div class="h-utils">
-                <a href="{% url 'catalog' %}?focus=search" class="h-icon" aria-label="{% trans 'Search' %}"><i class="fas fa-search"></i></a>
+                <a href="{% url 'catalog' %}?focus=search" class="h-icon h-utils__search" aria-label="{% trans 'Search' %}"><i class="fas fa-search"></i></a>
                 <a href="{% url 'cart' %}" class="h-icon h-cart" aria-label="{% trans 'Cart' %}">
                     <i class="fas fa-shopping-bag"></i>
                     <span id="cart-icon-count" class="h-cart-count"{% if not cart_items_count %} style="display:none;"{% endif %}>{{ cart_items_count|default:0 }}</span>
@@ -78,57 +77,154 @@
         </div>
     </header>
 
+    {% with url_name=request.resolver_match.url_name %}
+    <nav class="h-tabbar" aria-label="{% trans 'Main navigation' %}">
+      <a class="h-tab {% if url_name == 'index' %}is-active{% endif %}" href="{% url 'index' %}">
+        <i class="fas fa-home" aria-hidden="true"></i>
+        <span>{% trans "Home" %}</span>
+      </a>
+      <a class="h-tab {% if url_name == 'catalog' or url_name == 'product' or url_name == 'product_detail' %}is-active{% endif %}" href="{% url 'catalog' %}">
+        <i class="fas fa-th-large" aria-hidden="true"></i>
+        <span>{% trans "Catalog" %}</span>
+      </a>
+      <button type="button" class="h-tab" id="mobileSearchToggle" aria-expanded="false" aria-controls="mobileSearchSheet">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <span>{% trans "Search" %}</span>
+      </button>
+      <a class="h-tab h-tab--cart {% if url_name == 'cart' %}is-active{% endif %}" href="{% url 'cart' %}">
+        <i class="fas fa-shopping-bag" aria-hidden="true"></i>
+        <span>{% trans "Cart" %}</span>
+        <span id="tab-cart-count" class="h-tab__badge"{% if not cart_items_count %} hidden{% endif %}>{{ cart_items_count|default:0 }}</span>
+      </a>
+      <button type="button" class="h-tab" id="mobileMenuToggle" aria-expanded="false" aria-controls="navMenu">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+        <span>{% trans "Menu" %}</span>
+      </button>
+    </nav>
+    {% endwith %}
+
+    <div class="h-drawer" id="mobileDrawer">
+      <div class="h-nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
+      <nav class="h-nav h-nav--drawer" id="navMenu" aria-label="{% trans 'Menu' %}">
+        <div class="h-nav__head">
+          <a class="h-nav__brand" href="{% url 'index' %}">{{ store_name|default:"HERO" }}</a>
+          <button type="button" class="h-nav__close" id="mobileMenuClose" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        {% with url_name=request.resolver_match.url_name %}
+        <div class="h-nav__links">
+          <a href="{% url 'index' %}" class="{% if url_name == 'index' %}is-active{% endif %}">{% trans "Home" %}</a>
+          <a href="{% url 'catalog' %}" class="{% if url_name == 'catalog' or url_name == 'product' or url_name == 'product_detail' %}is-active{% endif %}">{% trans "Catalog" %}</a>
+          <a href="{% url 'about' %}" class="{% if url_name == 'about' %}is-active{% endif %}">{% trans "About" %}</a>
+          <a href="{% url 'faq' %}" class="{% if url_name == 'faq' %}is-active{% endif %}">{% trans "FAQ" %}</a>
+          <a href="{% url 'contact' %}" class="{% if url_name == 'contact' %}is-active{% endif %}">{% trans "Contacts" %}</a>
+          <a href="{% url 'delivery' %}" class="{% if url_name == 'delivery' %}is-active{% endif %}">{% trans "Delivery and Payment" %}</a>
+          <a href="{% url 'cart' %}" class="{% if url_name == 'cart' %}is-active{% endif %}">{% trans "Shopping Cart" %}</a>
+        </div>
+        {% endwith %}
+        <div class="h-nav__foot">
+          <div class="h-nav__langs" role="group" aria-label="Language">
+            <form action="{% url 'set_language' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="language" value="ru">
+              <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+              <button type="submit" class="h-nav__lang {% if CURRENT_LANGUAGE == 'ru' %}is-active{% endif %}">RU</button>
+            </form>
+            <form action="{% url 'set_language' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="language" value="en">
+              <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+              <button type="submit" class="h-nav__lang {% if CURRENT_LANGUAGE == 'en' %}is-active{% endif %}">EN</button>
+            </form>
+            <form action="{% url 'set_language' %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="language" value="uz">
+              <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+              <button type="submit" class="h-nav__lang {% if CURRENT_LANGUAGE == 'uz' %}is-active{% endif %}">UZ</button>
+            </form>
+          </div>
+          {% if contact_info.phone %}
+            <a class="h-nav__phone" href="tel:{{ contact_info.phone }}">{{ contact_info.phone }}</a>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+
+    <div class="h-search-sheet" id="mobileSearchSheet" hidden>
+      <div class="h-search-sheet__backdrop" id="searchBackdrop"></div>
+      <div class="h-search-sheet__panel" role="dialog" aria-modal="true" aria-label="{% trans 'Search' %}">
+        <form class="h-search-sheet__form" action="{% url 'catalog' %}" method="get" role="search">
+          <input type="search" name="search" id="mobileSearchInput" placeholder="{% trans 'Search products…' %}" aria-label="{% trans 'Search' %}" autocomplete="off">
+          <button type="submit" class="h-search-sheet__submit" aria-label="{% trans 'Search' %}"><i class="fas fa-search"></i></button>
+          <button type="button" class="h-search-sheet__close" id="mobileSearchClose" aria-label="Close"><i class="fas fa-times"></i></button>
+        </form>
+      </div>
+    </div>
+
     <main id="main">{% block content %}{% endblock %}</main>
 
     <div id="notification-container" class="notification-container"></div>
 
     <footer class="h-footer">
-        <div class="h-footer__grid">
-            <div class="h-footer__col">
-                <h4>{% trans "Shop" %}</h4>
-                <ul>
-                    <li><a href="{% url 'catalog' %}">{% trans "Catalog" %}</a></li>
-                    <li><a href="{% url 'cart' %}">{% trans "Shopping Cart" %}</a></li>
-                    <li><a href="{% url 'delivery' %}">{% trans "Delivery and Payment" %}</a></li>
-                </ul>
+        <div class="h-footer__top">
+            <div class="h-footer__brand">
+                <a class="h-footer__logo" href="{% url 'index' %}">
+                  {% if store_config.store.logo %}
+                    <img src="{{ store_config.store.logo }}" alt="{{ store_name|default:'HERO' }}">
+                  {% else %}
+                    {{ store_name|default:"HERO" }}
+                  {% endif %}
+                </a>
+                {% if store_description %}
+                  <p class="h-footer__blurb">{{ store_description|truncatewords:28 }}</p>
+                {% endif %}
+                {% if social_links.instagram or social_links.telegram or social_links.facebook or social_links.whatsapp %}
+                <div class="h-footer__social">
+                    {% if social_links.instagram %}<a href="{{ social_links.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>{% endif %}
+                    {% if social_links.telegram %}<a href="{{ social_links.telegram }}" target="_blank" rel="noopener" aria-label="Telegram"><i class="fab fa-telegram"></i></a>{% endif %}
+                    {% if social_links.facebook %}<a href="{{ social_links.facebook }}" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>{% endif %}
+                    {% if social_links.whatsapp %}<a href="{{ social_links.whatsapp }}" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>{% endif %}
+                </div>
+                {% endif %}
             </div>
-            <div class="h-footer__col">
-                <h4>{% trans "Company" %}</h4>
-                <ul>
-                    <li><a href="{% url 'about' %}">{% trans "About Us" %}</a></li>
-                    <li><a href="{% url 'contact' %}">{% trans "Contacts" %}</a></li>
-                    <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
-                </ul>
-            </div>
-            <div class="h-footer__col">
-                <h4>{% trans "Contacts" %}</h4>
-                <ul>
-                    {% if contact_info.phone %}<li><a href="tel:{{ contact_info.phone }}">{{ contact_info.phone }}</a></li>{% endif %}
-                    {% if contact_info.email %}<li><a href="mailto:{{ contact_info.email }}">{{ contact_info.email }}</a></li>{% endif %}
-                    {% if contact_info.address.full %}<li>{{ contact_info.address.full }}</li>{% endif %}
-                </ul>
-            </div>
-            <div class="h-footer__news">
-                {% if store_description %}<p class="h-footer__blurb">{{ store_description }}</p>{% endif %}
-                <p class="h-footer__news-title">{% trans "Newsletter" %}</p>
-                <form class="h-news-form" action="{% url 'contact' %}" method="get">
-                    <input type="email" name="email" placeholder="{% trans 'Your email for updates' %}" aria-label="{% trans 'Email' %}" required>
-                    <button type="submit" aria-label="{% trans 'Subscribe' %}"><i class="fas fa-arrow-right"></i></button>
-                </form>
+            <div class="h-footer__nav">
+                <div class="h-footer__col">
+                    <h4>{% trans "Shop" %}</h4>
+                    <ul>
+                        <li><a href="{% url 'catalog' %}">{% trans "Catalog" %}</a></li>
+                        <li><a href="{% url 'cart' %}">{% trans "Shopping Cart" %}</a></li>
+                        <li><a href="{% url 'delivery' %}">{% trans "Delivery and Payment" %}</a></li>
+                    </ul>
+                </div>
+                <div class="h-footer__col">
+                    <h4>{% trans "Company" %}</h4>
+                    <ul>
+                        <li><a href="{% url 'about' %}">{% trans "About Us" %}</a></li>
+                        <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
+                        <li><a href="{% url 'contact' %}">{% trans "Contacts" %}</a></li>
+                    </ul>
+                </div>
+                <div class="h-footer__col">
+                    <h4>{% trans "Contacts" %}</h4>
+                    <ul>
+                        {% if contact_info.phone %}<li><a href="tel:{{ contact_info.phone }}">{{ contact_info.phone }}</a></li>{% endif %}
+                        {% if contact_info.email %}<li><a href="mailto:{{ contact_info.email }}">{{ contact_info.email }}</a></li>{% endif %}
+                        {% if contact_info.address.full %}<li class="h-footer__address">{{ contact_info.address.full }}</li>{% elif contact_info.address.city %}<li class="h-footer__address">{{ contact_info.address.city }}</li>{% endif %}
+                        {% if not contact_info.phone and not contact_info.email and not contact_info.address.full and not contact_info.address.city %}
+                          <li><a href="{% url 'contact' %}">{% trans "Write to Us" %}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="h-footer__bottom">
-            <span>&copy; {% now "Y" %} {{ store_name }}</span>
-            <div class="h-footer__social">
-                {% if social_links.instagram %}<a href="{{ social_links.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>{% endif %}
-                {% if social_links.telegram %}<a href="{{ social_links.telegram }}" target="_blank" rel="noopener" aria-label="Telegram"><i class="fab fa-telegram"></i></a>{% endif %}
-                {% if social_links.facebook %}<a href="{{ social_links.facebook }}" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>{% endif %}
-                {% if social_links.whatsapp %}<a href="{{ social_links.whatsapp }}" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>{% endif %}
-            </div>
+            <span>&copy; {% now "Y" %} {{ store_name|default:"HERO" }}</span>
+            <a class="h-footer__top-link" href="#main">{% trans "Back to top" %}</a>
         </div>
     </footer>
 
-    <script src="{% static 'script.js' %}"></script>
+    <script src="{% static 'script.js' %}?v=20260728g"></script>
     <script>
         function getCookie(name) {
             let cookieValue = null;
@@ -156,11 +252,17 @@
             fetch('/api/cart/current/')
                 .then(r => r.json())
                 .then(data => {
-                    const el = document.getElementById('cart-icon-count');
-                    if (!el) return;
                     const count = data.items_count || 0;
-                    el.textContent = count;
-                    el.style.display = count > 0 ? 'flex' : 'none';
+                    const el = document.getElementById('cart-icon-count');
+                    if (el) {
+                      el.textContent = count;
+                      el.style.display = count > 0 ? 'flex' : 'none';
+                    }
+                    const tab = document.getElementById('tab-cart-count');
+                    if (tab) {
+                      tab.textContent = count;
+                      tab.hidden = count <= 0;
+                    }
                 })
                 .catch(() => {});
         }

@@ -5,17 +5,16 @@
 {% load translation_tags %}
 
 {% block title %}{% if product %}{{ product.name }}{% else %}{% trans "Product" %}{% endif %} - {{ store_name }}{% endblock %}
+{% block body_class %}page-inner page-product{% endblock %}
 
 {% block content %}
     <!-- Page Header -->
-    <section class="page-header">
+    <section class="page-header page-header--compact">
         <div class="container">
-            <h1>{% if product %}{{ product.name }}{% else %}{% trans "Product" %}{% endif %}</h1>
             <nav class="breadcrumbs">
                 <a href="{% url 'index' %}">{% trans "Home" %}</a> / 
-                <a href="{% url 'catalog' %}">{% trans "Catalog" %}</a> / 
-                {% if product.category %}<a href="{% url 'catalog' %}">{{ product.category.name }}</a> / {% endif %}
-                <span>{% if product %}{{ product.name }}{% else %}{% trans "Product" %}{% endif %}</span>
+                <a href="{% url 'catalog' %}">{% trans "Catalog" %}</a>
+                {% if product.category %} / <a href="{% url 'catalog' %}?category={{ product.category.slug }}">{{ product.category.name }}</a>{% endif %}
             </nav>
         </div>
     </section>

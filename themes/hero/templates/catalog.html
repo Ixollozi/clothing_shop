@@ -4,6 +4,7 @@
 {% load translation_tags %}
 
 {% block title %}{% trans "Catalog" %} - {{ store_name }}{% endblock %}
+{% block body_class %}page-inner page-catalog{% endblock %}
 
 {% block content %}
     <!-- Page Header -->
@@ -21,11 +22,17 @@
         <div class="container">
             <div class="catalog-layout">
                 <!-- Sidebar Filters -->
-                <aside class="filters-sidebar">
-                    <h3>{% trans "Filters" %}</h3>
+                <aside class="filters-sidebar" id="filtersSidebar">
+                    <button type="button" class="filters-toggle" id="filtersToggle" aria-expanded="false" aria-controls="filtersBody">
+                        <span>{% trans "Filters" %}</span>
+                        <i class="fas fa-sliders-h" aria-hidden="true"></i>
+                    </button>
+                    <div class="filters-body" id="filtersBody">
+                    <h3 class="filters-title">{% trans "Filters" %}</h3>
                     
                     <div class="filter-group">
                         <h4>{% trans "Category" %}</h4>
+                        <div class="filter-chips">
                         {% if categories %}
                             {% for category in categories %}
                             <label class="filter-checkbox">
@@ -46,6 +53,7 @@
                                 <input type="checkbox"> {% trans "Accessories" %}
                             </label>
                         {% endif %}
+                        </div>
                     </div>
 
                     <div class="filter-group">
@@ -58,15 +66,18 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="applyFilters()">{% trans "Apply Filters" %}</button>
-                    <button class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;" onclick="resetFilters()">{% trans "Reset" %}</button>
+                    <div class="filters-actions">
+                    <button class="btn btn-primary" type="button" onclick="applyFilters()">{% trans "Apply Filters" %}</button>
+                    <button class="btn btn-secondary" type="button" onclick="resetFilters()">{% trans "Reset" %}</button>
+                    </div>
+                    </div>
                 </aside>
 
                 <!-- Products Grid -->
                 <div class="products-container">
                     <div class="catalog-toolbar">
                         <p>{% trans "Products found" %}: <strong>{% if products %}{{ products.paginator.count }}{% else %}0{% endif %}</strong></p>
-                        <form class="catalog-search" action="{% url 'catalog' %}" method="get" role="search">
+                        <form class="catalog-search catalog-search--toolbar" action="{% url 'catalog' %}" method="get" role="search">
                             {% if current_category %}<input type="hidden" name="category" value="{{ current_category }}">{% endif %}
                             {% if current_sort %}<input type="hidden" name="sort" value="{{ current_sort }}">{% endif %}
                             <input type="search" name="search" value="{{ current_search|default:'' }}" placeholder="{% trans 'Search products…' %}" aria-label="{% trans 'Search' %}">

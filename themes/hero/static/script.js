@@ -22,25 +22,61 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  const toggle = document.getElementById('mobileMenuToggle');
+  const menuToggle = document.getElementById('mobileMenuToggle');
+  const menuClose = document.getElementById('mobileMenuClose');
   const nav = document.getElementById('navMenu');
-  const closeMenu = () => {
-    if (!toggle || !nav) return;
-    toggle.classList.remove('active');
-    nav.classList.remove('active');
-    toggle.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
+  const backdrop = document.getElementById('navBackdrop');
+  const searchToggle = document.getElementById('mobileSearchToggle');
+  const searchSheet = document.getElementById('mobileSearchSheet');
+  const searchClose = document.getElementById('mobileSearchClose');
+  const searchBackdrop = document.getElementById('searchBackdrop');
+  const searchInput = document.getElementById('mobileSearchInput');
+
+  const setMenuOpen = (open) => {
+    document.body.classList.toggle('is-menu-open', open);
+    menuToggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+    backdrop?.setAttribute('aria-hidden', open ? 'false' : 'true');
+    if (open) setSearchOpen(false);
+    document.body.style.overflow = open || document.body.classList.contains('is-search-open') ? 'hidden' : '';
   };
-  if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('active');
-      toggle.classList.toggle('active', open);
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-    nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeMenu();
+
+  const setSearchOpen = (open) => {
+    document.body.classList.toggle('is-search-open', open);
+    if (searchSheet) searchSheet.hidden = !open;
+    searchToggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setMenuOpen(false);
+      setTimeout(() => searchInput?.focus(), 50);
+    }
+    document.body.style.overflow = open || document.body.classList.contains('is-menu-open') ? 'hidden' : '';
+  };
+
+  menuToggle?.addEventListener('click', () => {
+    setMenuOpen(!document.body.classList.contains('is-menu-open'));
+  });
+  menuClose?.addEventListener('click', () => setMenuOpen(false));
+  backdrop?.addEventListener('click', () => setMenuOpen(false));
+  nav?.querySelectorAll('.h-nav__links a').forEach((a) => a.addEventListener('click', () => setMenuOpen(false)));
+
+  searchToggle?.addEventListener('click', () => {
+    setSearchOpen(Boolean(searchSheet?.hidden));
+  });
+  searchClose?.addEventListener('click', () => setSearchOpen(false));
+  searchBackdrop?.addEventListener('click', () => setSearchOpen(false));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      setMenuOpen(false);
+      setSearchOpen(false);
+    }
+  });
+
+  const filtersToggle = document.getElementById('filtersToggle');
+  const filtersSidebar = document.getElementById('filtersSidebar');
+  if (filtersToggle && filtersSidebar) {
+    filtersToggle.addEventListener('click', () => {
+      const open = filtersSidebar.classList.toggle('is-open');
+      filtersToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   }
 
@@ -57,14 +93,17 @@ document.addEventListener('DOMContentLoaded', function () {
     scrollRow(document.getElementById('igTrack'), 1)
   );
 
-  // Focus catalog search when arriving from header search icon
   const params = new URLSearchParams(window.location.search);
   if (params.get('focus') === 'search') {
-    const searchInput =
-      document.querySelector('.catalog-search input[type="search"], .catalog-search input[name="search"], input[name="search"]');
-    if (searchInput) {
-      searchInput.focus();
-      searchInput.select?.();
+    if (window.matchMedia('(max-width: 920px)').matches) {
+      setSearchOpen(true);
+    } else {
+      const searchInputDesktop =
+        document.querySelector('.catalog-search input[type="search"], .catalog-search input[name="search"], input[name="search"]');
+      if (searchInputDesktop) {
+        searchInputDesktop.focus();
+        searchInputDesktop.select?.();
+      }
     }
   }
 });

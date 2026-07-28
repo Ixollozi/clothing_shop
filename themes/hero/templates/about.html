@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block title %}{% if about_config and about_config.title %}{{ about_config.title }}{% else %}{% trans "About Us" %}{% endif %} - {{ store_name }}{% endblock %}
+{% block body_class %}page-inner page-about{% endblock %}
 
 {% block content %}
 <section class="page-header about-page-header">
