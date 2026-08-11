@@ -116,12 +116,12 @@
                     <a class="ag-logo ag-logo--footer" href="{% url 'index' %}">
                         <span class="ag-logo__text">{{ store_name|default:"Apex Goods" }}</span>
                     </a>
-                    <p>{{ store_description|default:"Curated finds for modern living." }}</p>
+                    <p>{% if store_description %}{{ store_description }}{% else %}{% trans "Curated finds for modern living." %}{% endif %}</p>
                     <div class="ag-social">
-                        {% if social_links.instagram %}<a href="{{ social_links.instagram }}" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>{% endif %}
-                        {% if social_links.facebook %}<a href="{{ social_links.facebook }}" aria-label="Facebook" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>{% endif %}
-                        {% if social_links.twitter %}<a href="{{ social_links.twitter }}" aria-label="X" target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i></a>{% endif %}
-                        {% if social_links.telegram %}<a href="{{ social_links.telegram }}" aria-label="Telegram" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>{% endif %}
+                        {% if social_links.instagram %}<a href="{{ social_links.instagram }}" aria-label="{% trans 'Instagram' %}" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>{% endif %}
+                        {% if social_links.facebook %}<a href="{{ social_links.facebook }}" aria-label="{% trans 'Facebook' %}" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>{% endif %}
+                        {% if social_links.twitter %}<a href="{{ social_links.twitter }}" aria-label="{% trans 'X' %}" target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i></a>{% endif %}
+                        {% if social_links.telegram %}<a href="{{ social_links.telegram }}" aria-label="{% trans 'Telegram' %}" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>{% endif %}
                     </div>
                 </div>
                 <div class="ag-footer__col">
@@ -214,7 +214,7 @@
                     body: JSON.stringify({ product_id: parseInt(productId, 10), quantity: 1, size: '', color: '' }),
                 });
                 if (!response.ok) throw new Error('fail');
-                button.textContent = 'Added';
+                button.textContent = '{% trans "Added" %}';
                 updateCartIcon();
                 if (typeof showNotification === 'function') {
                     showNotification('{% trans "Product added to cart" %}', 'success', '', 2000);
@@ -226,7 +226,7 @@
                     button.removeAttribute('aria-busy');
                 }, 1600);
             } catch (e) {
-                button.textContent = 'Error';
+                button.textContent = '{% trans "Error" %}';
                 if (typeof showNotification === 'function') {
                     showNotification('{% trans "Failed to add product to cart" %}', 'error', '', 3000);
                 }

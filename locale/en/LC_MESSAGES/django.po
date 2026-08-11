@@ -2581,6 +2581,61 @@ msgstr ""
 msgid "About us"
 msgstr "About us"
 
+msgid "Curated Finds"
+msgstr ""
+
+msgid "Objects with<br>quiet intent."
+msgstr ""
+
+msgid "A calm edit of electronics, home, and everyday pieces."
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
+
+msgid "Failed to get cart"
+msgstr ""
+
+msgid "Empty cart data received"
+msgstr ""
+
+msgid "Invalid cart item data"
+msgstr ""
+
+msgid "Invalid order response from server"
+msgstr ""
+
+msgid "Failed to send message"
+msgstr ""
+
+msgid ""
+"Cash payment to the courier upon delivery or at the pickup point. Available "
+"for orders up to 5 000 000 %(currency)s."
+msgstr ""
+
+msgid "Minimum order amount — 50 000 %(currency)s"
+msgstr ""
+
+msgid ""
+"Free delivery for orders over 300 000 %(currency)s (in Tashkent) and over "
+"500 000 %(currency)s (throughout Uzbekistan)"
+msgstr ""
+
+msgid "Instagram"
+msgstr ""
+
+msgid "Facebook"
+msgstr ""
+
+msgid "X"
+msgstr ""
+
+msgid "VK"
+msgstr ""
+
+msgid "Tashkent"
+msgstr ""
+
 #, fuzzy
 #~ msgid "Return within 14 days"
 #~ msgstr "Product return within 14 days"

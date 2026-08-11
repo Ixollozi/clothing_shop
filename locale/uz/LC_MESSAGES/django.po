@@ -1028,7 +1028,7 @@ msgid "Company"
 msgstr ""
 
 msgid "Curated finds for modern living."
-msgstr ""
+msgstr "Zamonaviy hayot uchun tanlangan to‘plam."
 
 msgid "Delivery Address"
 msgstr "Yetkazib berish manzili"
@@ -2664,6 +2664,62 @@ msgstr ""
 
 msgid "About us"
 msgstr "Biz haqimizda"
+
+msgid "Curated Finds"
+msgstr "Tanlangan to‘plam"
+
+msgid "Objects with<br>quiet intent."
+msgstr "Sokin ma’noli<br>buyumlar."
+
+msgid "A calm edit of electronics, home, and everyday pieces."
+msgstr "Elektronika, uy va kundalik buyumlarning sokin to‘plami."
+
+msgid "Unknown error"
+msgstr "Noma’lum xato"
+
+msgid "Failed to get cart"
+msgstr "Savatchani olish mumkin emas"
+
+msgid "Empty cart data received"
+msgstr "Bo‘sh savatcha ma’lumotlari olindi"
+
+msgid "Invalid cart item data"
+msgstr "Savatchadagi mahsulot ma’lumotlari noto‘g‘ri"
+
+msgid "Invalid order response from server"
+msgstr "Buyurtma uchun serverdan noto‘g‘ri javob"
+
+msgid "Failed to send message"
+msgstr "Xabarni yuborib bo‘lmadi"
+
+msgid ""
+"Cash payment to the courier upon delivery or at the pickup point. Available "
+"for orders up to 5 000 000 %(currency)s."
+msgstr ""
+"Yetkazib berganda yoki olish punktida kuryerga naqd to‘lov. 5 000 000 "
+"%(currency)s gacha buyurtmalar uchun mavjud."
+
+msgid "Minimum order amount — 50 000 %(currency)s"
+msgstr "Minimal buyurtma summasi — 50 000 %(currency)s"
+
+msgid ""
+"Free delivery for orders over 300 000 %(currency)s (in Tashkent) and over "
+"500 000 %(currency)s (throughout Uzbekistan)"
+msgstr ""
+"300 000 %(currency)s dan (Toshkent) va 500 000 %(currency)s dan (O‘zbekiston"
+" bo‘ylab) buyurtmalarda bepul yetkazib berish"
+
+msgid "Instagram"
+msgstr "Instagram"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "X"
+msgstr "X"
+
+msgid "VK"
+msgstr "VK"
 
 #, fuzzy
 #~ msgid "Return within 14 days"

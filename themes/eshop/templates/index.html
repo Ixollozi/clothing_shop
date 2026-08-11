@@ -2,7 +2,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}{{ store_title }} — Curated Finds{% endblock %}
+{% block title %}{{ store_title }} — {% trans "Curated Finds" %}{% endblock %}
 {% block body_class %}page-home{% endblock %}
 
 {% block content %}
@@ -27,7 +27,7 @@
           {% elif hero_config.title %}
             {{ hero_config.title|linebreaksbr }}
           {% else %}
-            Objects with<br>quiet intent.
+            {% blocktrans %}Objects with<br>quiet intent.{% endblocktrans %}
           {% endif %}
         </h1>
         <p class="ag-hero__lede">
@@ -36,11 +36,11 @@
           {% elif hero_config.subtitle %}
             {{ hero_config.subtitle }}
           {% else %}
-            {{ store_description|default:"A calm edit of electronics, home, and everyday pieces." }}
+            {% if store_description %}{{ store_description }}{% else %}{% trans "A calm edit of electronics, home, and everyday pieces." %}{% endif %}
           {% endif %}
         </p>
         <a class="ag-hero__cta" href="{% url 'catalog' %}">
-          {% if hero_config_obj and hero_config_obj.button_text %}{{ hero_config_obj.button_text }}{% elif hero_config.button_text %}{{ hero_config.button_text }}{% else %}Shop the edit{% endif %}
+          {% if hero_config_obj and hero_config_obj.button_text %}{{ hero_config_obj.button_text }}{% elif hero_config.button_text %}{{ hero_config.button_text }}{% else %}{% trans "Shop the edit" %}{% endif %}
           <span aria-hidden="true">→</span>
         </a>
       </div>
@@ -49,7 +49,7 @@
 </section>
 
 {% if organic_boards %}
-<section class="ag-organic-row" aria-label="Categories">
+<section class="ag-organic-row" aria-label="{% trans 'Categories' %}">
   <div class="ag-wrap">
     <div class="ag-organic-row__grid ag-organic-row__grid--{{ organic_boards|length }}">
       {% for board in organic_boards %}

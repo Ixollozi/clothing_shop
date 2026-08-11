@@ -75,7 +75,7 @@
                             <i class="fas fa-wallet"></i>
                         </div>
                         <h3>{% trans "Cash on delivery" %}</h3>
-                        <p>{% trans "Cash payment to the courier upon delivery or at the pickup point. Available for orders up to 5 000 000 {{ currency }}." %}</p>
+                        <p>{% blocktrans with currency=currency %}Cash payment to the courier upon delivery or at the pickup point. Available for orders up to 5 000 000 {{ currency }}.{% endblocktrans %}</p>
                     </div>
 
                     <div class="payment-method">
@@ -99,11 +99,11 @@
                 <div class="delivery-terms">
                     <div class="term-item">
                         <i class="fas fa-check"></i>
-                        <p>{% trans "Minimum order amount — 50 000 {{ currency }}" %}</p>
+                        <p>{% blocktrans with currency=currency %}Minimum order amount — 50 000 {{ currency }}{% endblocktrans %}</p>
                     </div>
                     <div class="term-item">
                         <i class="fas fa-check"></i>
-                        <p>{% trans "Free delivery for orders over 300 000 {{ currency }} (in Tashkent) and over 500 000 {{ currency }} (throughout Uzbekistan)" %}</p>
+                        <p>{% blocktrans with currency=currency %}Free delivery for orders over 300 000 {{ currency }} (in Tashkent) and over 500 000 {{ currency }} (throughout Uzbekistan){% endblocktrans %}</p>
                     </div>
                     <div class="term-item">
                         <i class="fas fa-check"></i>

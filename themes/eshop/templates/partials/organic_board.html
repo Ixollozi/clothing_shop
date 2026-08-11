@@ -1,6 +1,7 @@
 {% load static %}
+{% load i18n %}
 {% if board.slots %}
-<div class="ag-organic ag-organic--{{ board.kind }}" aria-label="Categories">
+<div class="ag-organic ag-organic--{{ board.kind }}" aria-label="{% trans 'Categories' %}">
   <div class="ag-organic__frame">
     <svg class="ag-organic__svg" viewBox="{{ board.viewBox|default:'0 0 1000 1000' }}" role="img" aria-hidden="true">
       <defs>

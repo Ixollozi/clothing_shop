@@ -1034,7 +1034,7 @@ msgid "Company"
 msgstr "Компания"
 
 msgid "Curated finds for modern living."
-msgstr ""
+msgstr "Подборка для современной жизни."
 
 msgid "Delivery Address"
 msgstr "Адрес доставки"
@@ -2593,6 +2593,63 @@ msgstr ""
 
 msgid "About us"
 msgstr "О нас"
+
+msgid "Curated Finds"
+msgstr "Подборка"
+
+msgid "Objects with<br>quiet intent."
+msgstr "Предметы с<br>тихим смыслом."
+
+msgid "A calm edit of electronics, home, and everyday pieces."
+msgstr ""
+"Спокойная подборка электроники, товаров для дома и повседневных вещей."
+
+msgid "Unknown error"
+msgstr "Неизвестная ошибка"
+
+msgid "Failed to get cart"
+msgstr "Не удалось получить корзину"
+
+msgid "Empty cart data received"
+msgstr "Получены пустые данные корзины"
+
+msgid "Invalid cart item data"
+msgstr "Некорректные данные товара в корзине"
+
+msgid "Invalid order response from server"
+msgstr "Некорректный ответ сервера при оформлении заказа"
+
+msgid "Failed to send message"
+msgstr "Не удалось отправить сообщение"
+
+msgid ""
+"Cash payment to the courier upon delivery or at the pickup point. Available "
+"for orders up to 5 000 000 %(currency)s."
+msgstr ""
+"Оплата наличными курьеру при доставке или в пункте выдачи. Доступно для "
+"заказов до 5 000 000 %(currency)s."
+
+msgid "Minimum order amount — 50 000 %(currency)s"
+msgstr "Минимальная сумма заказа — 50 000 %(currency)s"
+
+msgid ""
+"Free delivery for orders over 300 000 %(currency)s (in Tashkent) and over "
+"500 000 %(currency)s (throughout Uzbekistan)"
+msgstr ""
+"Бесплатная доставка при заказе от 300 000 %(currency)s (по Ташкенту) и от "
+"500 000 %(currency)s (по Узбекистану)"
+
+msgid "Instagram"
+msgstr "Instagram"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "X"
+msgstr "X"
+
+msgid "VK"
+msgstr "VK"
 
 #, fuzzy
 #~ msgid "Return within 14 days"
