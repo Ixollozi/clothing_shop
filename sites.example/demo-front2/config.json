@@ -7,10 +7,24 @@
   "contact": {
     "phone": "+998(90) 222-22-22",
     "email": "info@demo-front2.localhost",
-    "address": { "city": "Tashkent", "street": "", "full": "Tashkent" }
+    "address": {
+      "city": "Tashkent",
+      "street": "",
+      "full": "Tashkent"
+    }
   },
   "django": {
     "debug": true,
-    "allowed_hosts": ["demo-front2.localhost", "demo-beta.localhost"]
+    "allowed_hosts": [
+      "demo-front2.localhost",
+      "demo-beta.localhost"
+    ],
+    "languages": [
+      "ru",
+      "en",
+      "uz"
+    ],
+    "language_code": "ru",
+    "default_language": "ru"
   }
 }

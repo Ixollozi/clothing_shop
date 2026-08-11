@@ -51,6 +51,7 @@ def load_config_from_models():
                 'name': store.name or '',  # Используем значение из БД, даже если пустое
                 'title': store.title or '',
                 'description': store.description or '',
+                'currency': getattr(store, 'currency', None) or 'сум',
                 'logo': store.logo.url if store.logo else '',
                 'favicon': store.favicon.url if store.favicon else '',
             }

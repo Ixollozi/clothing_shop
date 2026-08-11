@@ -1,5 +1,6 @@
 from django.db.models import Count, Q, Sum
 
+from .currency import get_store_currency
 from .models import Category, ContactMessage, Order, Partner, Product
 
 
@@ -38,4 +39,5 @@ def get_admin_index_context():
         'unread_messages': ContactMessage.objects.filter(is_read=False).count(),
         'total_revenue': f'{revenue:.0f}',
         'orders_denom': max(total_orders, 1),
+        'currency': get_store_currency(),
     }

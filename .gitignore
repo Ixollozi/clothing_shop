@@ -110,7 +110,7 @@ Desktop.ini
 .playwright-mcp/
 playwright-report/
 test-results/
-.cursor/plans/
+.cursor/
 .cursor/*.log
 
 # ----- Misc temp -----

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% load humanize i18n translation_tags %}
+{% load humanize i18n translation_tags  product_media %}
 
 {% block title %}Корзина • {{ store_title|default:store_name }}{% endblock %}
 {% block meta_description %}Корзина покупок {{ store_name }}.{% endblock %}
@@ -22,7 +22,7 @@
                 data-color="{{ item.color|default:'' }}"
                 data-unit-price="{{ item.product.price }}"
               >
-                <div class="cart-item-media{% if not item.product.image and not item.product.image_url %} wood-swatch-{% cycle '1' '2' '3' '4' '5' '6' %}{% endif %}"{% if item.product.image %} style="background-image:url('{{ item.product.image.url }}');background-size:cover;background-position:center;"{% elif item.product.image_url %} style="background-image:url('{{ item.product.image_url }}');background-size:cover;background-position:center;"{% endif %} aria-hidden="true"></div>
+                <div class="cart-item-media{% if not item.product|display_image %} wood-swatch-{% cycle '1' '2' '3' '4' '5' '6' %}{% endif %}"{% if item.product|display_image %} style="background-image:url('{{ item.product|display_image }}');background-size:cover;background-position:center;"{% endif %} aria-hidden="true"></div>
                 <div class="cart-item-body">
                   <div class="cart-item-top">
                     <div>
@@ -44,8 +44,8 @@
                       <button class="qty-btn js-qty-plus" type="button" aria-label="{% trans 'Увеличить' %}">+</button>
                     </div>
                     <div class="cart-item-price">
-                      <div class="price-now">{{ item.total|format_price }} {% trans "сум" %}</div>
-                      <div class="price-old" style="opacity:.75;font-size:13px;">{{ item.product.price|format_price }} {% trans "сум" %} / {% trans "шт." %}</div>
+                      <div class="price-now">{{ item.total|format_price }} {{ currency }}</div>
+                      <div class="price-old" style="opacity:.75;font-size:13px;">{{ item.product.price|format_price }} {{ currency }} / {% trans "шт." %}</div>
                     </div>
                   </div>
                 </div>
@@ -63,14 +63,14 @@
 
               <div class="cart-row">
                 <span>{% trans "Товары" %} ({{ cart.items_count }} {% trans "шт." %})</span>
-                <span>{{ cart.total|format_price }} {% trans "сум" %}</span>
+                <span>{{ cart.total|format_price }} {{ currency }}</span>
               </div>
 
               <div class="cart-divider" aria-hidden="true"></div>
 
               <div class="cart-total">
                 <span>{% trans "Итого" %}</span>
-                <span id="cart-grand-total">{{ cart.total|format_price }} {% trans "сум" %}</span>
+                <span id="cart-grand-total">{{ cart.total|format_price }} {{ currency }}</span>
               </div>
 
               <details class="tab" style="margin-top:12px;" {% if cart.items_count %}open{% endif %}>
@@ -136,7 +136,7 @@
           const line = row.querySelector('.price-now');
           if (line && priceUnit) {
           const total = Math.round(priceUnit * q);
-          line.textContent = total.toLocaleString('ru-RU') + ' ' + '{% trans "сум" %}';
+          line.textContent = total.toLocaleString('ru-RU') + ' ' + '{{ currency|escapejs }}';
           }
         }
 

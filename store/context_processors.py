@@ -33,6 +33,7 @@ def store_config(request):
         'store_name': config.get('store', {}).get('name', 'Fashion Store'),
         'store_title': config.get('store', {}).get('title', 'Fashion Store'),
         'store_description': config.get('store', {}).get('description', ''),
+        'currency': config.get('store', {}).get('currency', 'сум') or 'сум',
         'contact_info': config.get('contact', {}),
         'social_links': config.get('social', {}),
         'partners': partners,  # Теперь из БД

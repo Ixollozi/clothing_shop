@@ -1,0 +1,34 @@
+{# Inline gallery swap script for classic product pages. #}
+<script>
+(function () {
+    const mainImage = document.getElementById('mainImage');
+    const thumbnails = document.querySelectorAll('.thumbnail[data-gallery-src], .thumbnail');
+    if (!mainImage || !thumbnails.length) return;
+
+    function activate(thumb) {
+        const src = thumb.getAttribute('data-gallery-src') || thumb.getAttribute('src') || thumb.src;
+        if (!src) return;
+        thumbnails.forEach(function (t) {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+        });
+        thumb.classList.add('active');
+        thumb.setAttribute('aria-selected', 'true');
+        mainImage.src = src;
+    }
+
+    thumbnails.forEach(function (thumb) {
+        thumb.style.cursor = 'pointer';
+        thumb.addEventListener('click', function (e) {
+            e.preventDefault();
+            activate(thumb);
+        });
+        thumb.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                activate(thumb);
+            }
+        });
+    });
+})();
+</script>

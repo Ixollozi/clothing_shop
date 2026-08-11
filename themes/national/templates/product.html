@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load translation_tags %}
+{% load product_media %}
 
 {% block meta_description %}{% trans "Карточка товара: чапан, платья, костюмы и аксессуары." %}{% endblock %}
 
@@ -21,29 +22,19 @@
             <div class="product-main">
               <div class="product-gallery">
                 <div class="product-media-large" aria-hidden="true">
-                  {% if product.image %}
-                    <img class="product-img" src="{{ product.image.url }}" alt="{{ product.name|default:str_product }}" loading="lazy" />
-                  {% elif product.image_url %}
-                    <img class="product-img" src="{{ product.image_url }}" alt="{{ product.name|default:str_product }}" loading="lazy" />
-                  {% elif product.images.all %}
-                    {% with first_img=product.images.all.0 %}
-                      {% if first_img %}
-                        <img class="product-img" src="{{ first_img.image.url }}" alt="{{ product.name|default:str_product }}" loading="lazy" />
-                      {% else %}
-                        <div class="product-bg product-bg-4"></div>
-                      {% endif %}
-                    {% endwith %}
+                  {% if gallery_images %}
+                    <img class="product-img" id="mainImage" src="{{ gallery_images.0 }}" alt="{{ product.name|default:str_product }}" loading="lazy" />
                   {% else %}
                     <div class="product-bg product-bg-4"></div>
                   {% endif %}
                 </div>
 
-                {% if product.images.all and product.images.all|length > 1 %}
+                {% if gallery_images|length > 1 %}
                   <div class="product-thumbs" aria-label="{% trans 'Миниатюры' %}">
-                    {% for img in product.images.all %}
-                      <a class="thumb" href="#" aria-label="{% blocktrans with n=forloop.counter %}Фото {{ n }}{% endblocktrans %}">
-                        <img class="product-img" src="{{ img.image.url }}" alt="{% blocktrans with n=forloop.counter %}Фото {{ n }}{% endblocktrans %}" loading="lazy" />
-                      </a>
+                    {% for url in gallery_images %}
+                      <button type="button" class="thumb{% if forloop.first %} is-active{% endif %}" data-gallery-src="{{ url }}" aria-label="{% blocktrans with n=forloop.counter %}Фото {{ n }}{% endblocktrans %}">
+                        <img class="product-img" src="{{ url }}" alt="{% blocktrans with n=forloop.counter %}Фото {{ n }}{% endblocktrans %}" loading="lazy" />
+                      </button>
                     {% endfor %}
                   </div>
                 {% endif %}
@@ -102,7 +93,7 @@
               <div class="buy-card">
                 <div class="buy-price">
                   <span class="price">{{ product.price|default:"—"|format_price }}</span>
-                  <span class="currency">{% trans "сум" %}</span>
+                  <span class="currency">{{ currency }}</span>
                 </div>
 
                 <div class="buy-row">
@@ -170,11 +161,9 @@
                 <article class="product">
                   <a href="{% url 'product_detail' slug=p.slug %}" style="text-decoration: none; color: inherit;">
                     <div class="product-media" aria-hidden="true">
-                      {% if p.image %}
-                        <img class="product-img" src="{{ p.image.url }}" alt="{{ p.name }}" loading="lazy" />
-                      {% elif p.image_url %}
-                        <img class="product-img" src="{{ p.image_url }}" alt="{{ p.name }}" loading="lazy" />
-                      {% else %}
+                      {% if p|display_image %}
+<img class="product-img" src="{{ p|display_image }}" alt="{{ p.name }}" loading="lazy" />
+{% else %}
                         <div class="product-bg product-bg-{{ rbg }}"></div>
                       {% endif %}
                       <span class="product-tag">{% trans "Товар" %}</span>
@@ -187,7 +176,7 @@
                     <div class="product-bottom">
                       <div class="product-price">
                         <span class="price">{{ p.price|format_price }}</span>
-                        <span class="currency">{% trans "сум" %}</span>
+                        <span class="currency">{{ currency }}</span>
                       </div>
                       {% if p.id %}
                         <a class="btn btn-cart js-add-to-cart" href="{% url 'cart' %}" data-product-id="{{ p.id }}" data-quantity="1">{% trans "В корзину" %}</a>
@@ -209,6 +198,21 @@
 {% block extra_js %}
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      const mainImage = document.getElementById('mainImage');
+      const thumbs = document.querySelectorAll('.product-thumbs .thumb[data-gallery-src]');
+      if (mainImage && thumbs.length) {
+        thumbs.forEach(function (thumb) {
+          thumb.addEventListener('click', function (e) {
+            e.preventDefault();
+            const src = thumb.getAttribute('data-gallery-src');
+            if (!src) return;
+            mainImage.src = src;
+            thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+            thumb.classList.add('is-active');
+          });
+        });
+      }
+
       // qty controls
       document.querySelectorAll('.qty').forEach(function (root) {
         const input = root.querySelector('.qty-input');

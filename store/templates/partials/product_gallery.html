@@ -1,0 +1,24 @@
+{# Shared classic product gallery: primary + spare photos, click to swap main. #}
+{% load i18n %}
+<div class="product-images">
+    <div class="main-image">
+        {% if gallery_images %}
+            <img src="{{ gallery_images.0 }}" alt="{{ product.name }}" id="mainImage">
+        {% else %}
+            <div class="product-image-placeholder product-image-placeholder-lg" aria-hidden="true"></div>
+        {% endif %}
+    </div>
+    {% if gallery_images|length > 1 %}
+    <div class="thumbnail-images" role="listbox" aria-label="{% trans 'Product photos' %}">
+        {% for url in gallery_images %}
+            <img src="{{ url }}"
+                 alt="{{ product.name }} - {% trans 'View' %} {{ forloop.counter }}"
+                 class="thumbnail{% if forloop.first %} active{% endif %}"
+                 tabindex="0"
+                 role="option"
+                 aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                 data-gallery-src="{{ url }}">
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>

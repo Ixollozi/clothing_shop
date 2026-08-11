@@ -7,10 +7,23 @@
   "contact": {
     "phone": "+998(90) 444-44-44",
     "email": "info@demo-national.localhost",
-    "address": { "city": "Samarkand", "street": "", "full": "Samarkand" }
+    "address": {
+      "city": "Samarkand",
+      "street": "",
+      "full": "Samarkand"
+    }
   },
   "django": {
     "debug": true,
-    "allowed_hosts": ["demo-national.localhost"]
+    "allowed_hosts": [
+      "demo-national.localhost"
+    ],
+    "languages": [
+      "ru",
+      "en",
+      "uz"
+    ],
+    "language_code": "ru",
+    "default_language": "ru"
   }
 }

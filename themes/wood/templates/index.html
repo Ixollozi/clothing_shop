@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% load humanize i18n translation_tags %}
+{% load humanize i18n translation_tags  product_media %}
 
 {% block title %}{{ store_title|default:store_name }} • {{ store_name }}{% endblock %}
 
@@ -35,7 +35,7 @@
 
           <div class="hero-art" aria-hidden="true">
             {% with hero_product=products|first %}
-            <div class="hero-wood"{% if hero_product and hero_product.image %} style="background-image:url('{{ hero_product.image.url }}');background-size:cover;background-position:center;"{% elif hero_product and hero_product.image_url %} style="background-image:url('{{ hero_product.image_url }}');background-size:cover;background-position:center;"{% elif hero_config_obj and hero_config_obj.background_image %} style="background-image:url('{{ hero_config_obj.background_image.url }}');background-size:cover;background-position:center;"{% elif hero_config_obj and hero_config_obj.background_image_url %} style="background-image:url('{{ hero_config_obj.background_image_url }}');background-size:cover;background-position:center;"{% elif hero_config.background_image %} style="background-image:url('{{ hero_config.background_image }}');background-size:cover;background-position:center;"{% endif %}></div>
+            <div class="hero-wood"{% if hero_product|display_image %} style="background-image:url('{{ hero_product|display_image }}');background-size:cover;background-position:center;"{% elif hero_config_obj and hero_config_obj.background_image %} style="background-image:url('{{ hero_config_obj.background_image.url }}');background-size:cover;background-position:center;"{% elif hero_config_obj and hero_config_obj.background_image_url %} style="background-image:url('{{ hero_config_obj.background_image_url }}');background-size:cover;background-position:center;"{% elif hero_config.background_image %} style="background-image:url('{{ hero_config.background_image }}');background-size:cover;background-position:center;"{% endif %}></div>
             {% endwith %}
             <div class="hero-overlay">
               <div class="mini-card">
@@ -47,7 +47,7 @@
                 {% if p %}
                 <div class="mini-card-row">
                   <span class="mini-name">{{ p.name }}</span>
-                  <span class="mini-price">{% trans "от" %} {{ p.price|format_price }} {% trans "сум" %}</span>
+                  <span class="mini-price">{% trans "от" %} {{ p.price|format_price }} {{ currency }}</span>
                 </div>
                 <a class="mini-link" href="{% url 'product' slug=p.slug %}">{% trans "Смотреть" %}</a>
                 {% else %}
@@ -109,7 +109,7 @@
           <div class="grid grid-4">
             {% for product in products %}
             <article class="card product-card">
-              <div class="product-media{% if not product.image and not product.image_url %} wood-swatch wood-swatch-{% if forloop.counter > 8 %}8{% else %}{{ forloop.counter }}{% endif %}{% endif %}"{% if product.image %} style="background-image:url('{{ product.image.url }}');background-size:cover;background-position:center;"{% elif product.image_url %} style="background-image:url('{{ product.image_url }}');background-size:cover;background-position:center;"{% endif %} aria-hidden="true"></div>
+              <div class="product-media{% if not product|display_image %} wood-swatch wood-swatch-{% if forloop.counter > 8 %}8{% else %}{{ forloop.counter }}{% endif %}{% endif %}"{% if product|display_image %} style="background-image:url('{{ product|display_image }}');background-size:cover;background-position:center;"{% endif %} aria-hidden="true"></div>
               <div class="product-body">
                 <div class="product-top">
                   {% if product.old_price %}<span class="tag tag-sale">Акция</span>{% endif %}
@@ -119,8 +119,8 @@
                 <p class="card-text">{{ product.description|truncatewords:14|striptags }}</p>
                 <div class="product-bottom">
                   <div class="price">
-                    <span class="price-now">{{ product.price|format_price }} {% trans "сум" %}</span>
-                    {% if product.old_price %}<span class="price-old">{{ product.old_price|format_price }} {% trans "сум" %}</span>{% endif %}
+                    <span class="price-now">{{ product.price|format_price }} {{ currency }}</span>
+                    {% if product.old_price %}<span class="price-old">{{ product.old_price|format_price }} {{ currency }}</span>{% endif %}
                   </div>
                   <a class="btn btn-sm btn-primary" href="{% url 'product' slug=product.slug %}">{% trans "Подробнее" %}</a>
                 </div>

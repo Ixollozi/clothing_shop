@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% load translation_tags %}
+{% load product_media %}
 
 {% block title %}{% if product %}{{ product.name }}{% else %}{% trans "Product" %}{% endif %} - {{ store_name }}{% endblock %}
 
@@ -26,32 +27,7 @@
             {% if product %}
             <div class="product-detail-layout">
                 <!-- Product Images -->
-                <div class="product-images">
-                    <div class="main-image">
-                        {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}" id="mainImage">
-                        {% elif product.image_url %}
-                            <img src="{{ product.image_url }}" alt="{{ product.name }}" id="mainImage">
-                        {% else %}
-                            <div class="product-image-placeholder product-image-placeholder-lg" aria-hidden="true"></div>
-                        {% endif %}
-                    </div>
-                    <div class="thumbnail-images">
-                        {% if product_images %}
-                            {% for img in product_images %}
-                                <img src="{{ img.image.url }}" alt="{{ product.name }} - {% trans 'View' %} {{ forloop.counter }}" class="thumbnail {% if forloop.first %}active{% endif %}" tabindex="0" role="button" aria-label="Thumbnail {{ forloop.counter }}">
-                            {% endfor %}
-                        {% else %}
-                            {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="thumbnail active" tabindex="0" role="button" aria-label="Thumbnail">
-                            {% elif product.image_url %}
-                                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="thumbnail active" tabindex="0" role="button" aria-label="Thumbnail">
-                            {% else %}
-                                <div class="product-image-placeholder" aria-hidden="true"></div>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                </div>
+                {% include "partials/product_gallery.html" %}
 
                 <!-- Product Info -->
                 <div class="product-info-detail">
@@ -72,9 +48,9 @@
                     </div>
                     
                     <div class="product-price-large">
-                        <span class="current-price">{{ product.price|format_price }} сум</span>
+                        <span class="current-price">{{ product.price|format_price }} {{ currency }}</span>
                         {% if product.old_price %}
-                            <span class="old-price">{{ product.old_price|format_price }} сум</span>
+                            <span class="old-price">{{ product.old_price|format_price }} {{ currency }}</span>
                             {% if discount %}
                                 <span class="discount">-{{ discount }}%</span>
                             {% endif %}
@@ -204,11 +180,9 @@
                 <div class="product-card">
                     <div class="product-image">
                         <a href="{% url 'product' related_product.slug %}">
-                            {% if related_product.image %}
-                                <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}">
-                            {% elif related_product.image_url %}
-                                <img src="{{ related_product.image_url }}" alt="{{ related_product.name }}">
-                            {% else %}
+                            {% if related_product|display_image %}
+<img src="{{ related_product|display_image }}" alt="{{ related_product.name }}">
+{% else %}
                                 <div class="product-image-placeholder" aria-hidden="true"></div>
                             {% endif %}
                         </a>
@@ -221,9 +195,9 @@
                             <h3 class="product-name">{{ related_product.name }}</h3>
                         </a>
                         <p class="product-price">
-                            {{ related_product.price|format_price }} сум
+                            {{ related_product.price|format_price }} {{ currency }}
                             {% if related_product.old_price %}
-                                <span style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-left: 0.5rem;">{{ related_product.old_price|format_price }} сум</span>
+                                <span style="text-decoration: line-through; color: #999; font-size: 0.9em; margin-left: 0.5rem;">{{ related_product.old_price|format_price }} {{ currency }}</span>
                             {% endif %}
                         </p>
                         {% if related_product.id %}
@@ -241,30 +215,8 @@
 {% endblock %}
 
 {% block extra_js %}
+{% include "partials/product_gallery_js.html" %}
 <script>
-    // Thumbnail images
-    const thumbnails = document.querySelectorAll('.thumbnail');
-    const mainImage = document.getElementById('mainImage');
-    
-    if (thumbnails.length > 0 && mainImage) {
-        const setActive = (thumbEl) => {
-            thumbnails.forEach(t => t.classList.remove('active'));
-            thumbEl.classList.add('active');
-            mainImage.src = thumbEl.src;
-        };
-        thumbnails.forEach((thumb) => {
-            thumb.addEventListener('click', function() {
-                setActive(this);
-            });
-            thumb.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setActive(this);
-                }
-            });
-        });
-    }
-
     // Quantity selector
     const decreaseBtn = document.getElementById('decreaseQty');
     const increaseBtn = document.getElementById('increaseQty');

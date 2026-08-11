@@ -164,6 +164,7 @@ def index(request):
         Product.objects.filter(is_active=True)
         .exclude(category__slug='demo')
         .select_related('category')
+        .prefetch_related('images')
         .order_by('-rating', '-created_at')[:8]
     )
 
@@ -202,6 +203,8 @@ def index(request):
         'organic_boards': organic_boards,
         'hero_config_obj': hero_config_obj,
         'featured_products': featured_products,
+        # Alias: several themes loop `{% for product in products %}` on the homepage
+        'products': featured_products,
     }
     return render(request, 'index.html', context)
 
@@ -209,7 +212,12 @@ def index(request):
 def catalog(request):
     """Страница каталога"""
     # Получаем товары из БД
-    products_queryset = Product.objects.filter(is_active=True).exclude(category__slug='demo')
+    products_queryset = (
+        Product.objects.filter(is_active=True)
+        .exclude(category__slug='demo')
+        .select_related('category')
+        .prefetch_related('images')
+    )
     has_real_products = Product.objects.filter(is_active=True).exclude(category__slug='demo').exists()
     
     # Фильтрация по категории
@@ -322,13 +330,21 @@ def product_detail(request, slug=None):
             
             # Получаем связанные товары из той же категории
             if product.category:
-                related_products = Product.objects.filter(
-                    category=product.category,
-                    is_active=True
-                ).exclude(id=product.id)[:4]
+                related_products = list(
+                    Product.objects.filter(
+                        category=product.category,
+                        is_active=True,
+                    )
+                    .exclude(id=product.id)
+                    .prefetch_related('images')[:4]
+                )
             else:
                 # Если нет категории, берем любые активные товары
-                related_products = Product.objects.filter(is_active=True).exclude(id=product.id)[:4]
+                related_products = list(
+                    Product.objects.filter(is_active=True)
+                    .exclude(id=product.id)
+                    .prefetch_related('images')[:4]
+                )
         except Product.DoesNotExist:
             pass
     
@@ -409,6 +425,11 @@ def product_detail(request, slug=None):
                 product_images = list(images_attr)
             except Exception:
                 product_images = []
+
+    # Unified gallery URLs: primary + spare ProductImage photos (deduped).
+    from .media_urls import product_gallery_urls
+
+    gallery_images = product_gallery_urls(product) if product is not None else []
     
     context = {
         'product': product,
@@ -416,6 +437,7 @@ def product_detail(request, slug=None):
         'discount': discount,
         'colors': colors,
         'product_images': product_images,
+        'gallery_images': gallery_images,
         'product_features': product_features,
     }
     return render(request, 'product.html', context)
@@ -430,7 +452,7 @@ def cart(request):
         session_key = request.session.session_key
     
     cart, created = Cart.objects.get_or_create(session_key=session_key)
-    cart_items = CartItem.objects.filter(cart=cart).select_related('product')
+    cart_items = CartItem.objects.filter(cart=cart).select_related('product').prefetch_related('product__images')
     
     context = {
         'cart': cart,

@@ -433,6 +433,13 @@
                     </div>
                     <div class="config-item">
                         <div class="config-item-content">
+                            <label>Валюта</label>
+                            <div class="value">{{ store_config.currency }}</div>
+                        </div>
+                        <a href="{% url 'admin:store_storeconfig_change' store_config.id %}" class="config-edit-btn">Редактировать</a>
+                    </div>
+                    <div class="config-item">
+                        <div class="config-item-content">
                             <label>Статус</label>
                             <div class="value">
                                 {% if store_config.is_active %}

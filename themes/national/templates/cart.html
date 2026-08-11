@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load translation_tags %}
+{% load product_media %}
 
 {% block meta_description %}{% trans "Корзина: товары национальной одежды Узбекистана." %}{% endblock %}
 
@@ -34,11 +35,9 @@
                     data-color="{{ item.color|default:'' }}"
                   >
                     <div class="cart-item-media" aria-hidden="true">
-                      {% if item.product.image %}
-                        <img class="product-img" src="{{ item.product.image.url }}" alt="" loading="lazy" />
-                      {% elif item.product.image_url %}
-                        <img class="product-img" src="{{ item.product.image_url }}" alt="" loading="lazy" />
-                      {% else %}
+                      {% if item.product|display_image %}
+<img class="product-img" src="{{ item.product|display_image }}" alt="" loading="lazy" />
+{% else %}
                         <div class="product-bg product-bg-{{ cbg }}"></div>
                       {% endif %}
                     </div>
@@ -65,7 +64,7 @@
 
                         <div class="cart-item-price">
                           <span class="price">{{ item.product.price|format_price }}</span>
-                          <span class="currency">сум</span>
+                          <span class="currency">{{ currency }}</span>
                         </div>
                       </div>
                     </div>
@@ -85,7 +84,7 @@
               <div class="summary-card">
                 <div class="summary-row">
                   <span class="summary-label">{% trans "Подытог" %}</span>
-                  <span class="summary-value"><span id="cart-subtotal">—</span> сум</span>
+                  <span class="summary-value"><span id="cart-subtotal">—</span> {{ currency }}</span>
                 </div>
                 <div class="summary-row">
                   <span class="summary-label">{% trans "Доставка" %}</span>
@@ -94,7 +93,7 @@
                 <div class="summary-divider" role="separator" aria-hidden="true"></div>
                 <div class="summary-row summary-total">
                   <span class="summary-label">{% trans "Итого" %}</span>
-                  <span class="summary-value"><span id="cart-total">—</span> сум</span>
+                  <span class="summary-value"><span id="cart-total">—</span> {{ currency }}</span>
                 </div>
                 <button class="btn btn-primary btn-full js-checkout" type="button">{% trans "Оформить заказ" %}</button>
                 <form id="checkout-form" class="checkout-form" style="margin-top: 12px; display: none;" aria-label="{% trans 'Оформление заказа' %}">

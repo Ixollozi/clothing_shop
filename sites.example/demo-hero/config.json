@@ -7,10 +7,25 @@
   "contact": {
     "phone": "+998(90) 222-22-22",
     "email": "info@demo-hero.localhost",
-    "address": { "city": "Tashkent", "street": "", "full": "Tashkent" }
+    "address": {
+      "city": "Tashkent",
+      "street": "",
+      "full": "Tashkent"
+    }
   },
   "django": {
     "debug": true,
-    "allowed_hosts": ["demo-hero.localhost", "demo-delta.localhost", "demo-front4.localhost"]
+    "allowed_hosts": [
+      "demo-hero.localhost",
+      "demo-delta.localhost",
+      "demo-front4.localhost"
+    ],
+    "languages": [
+      "ru",
+      "en",
+      "uz"
+    ],
+    "language_code": "ru",
+    "default_language": "ru"
   }
 }

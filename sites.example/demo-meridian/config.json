@@ -18,6 +18,13 @@
     "allowed_hosts": [
       "demo-meridian.localhost",
       "demo-epsilon.localhost"
-    ]
+    ],
+    "languages": [
+      "ru",
+      "en",
+      "uz"
+    ],
+    "language_code": "ru",
+    "default_language": "ru"
   }
 }

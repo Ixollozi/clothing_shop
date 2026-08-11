@@ -7,10 +7,24 @@
   "contact": {
     "phone": "+998(90) 111-11-11",
     "email": "info@demo-main.localhost",
-    "address": { "city": "Tashkent", "street": "", "full": "Tashkent" }
+    "address": {
+      "city": "Tashkent",
+      "street": "",
+      "full": "Tashkent"
+    }
   },
   "django": {
     "debug": true,
-    "allowed_hosts": ["demo-main.localhost", "demo-alpha.localhost"]
+    "allowed_hosts": [
+      "demo-main.localhost",
+      "demo-alpha.localhost"
+    ],
+    "languages": [
+      "ru",
+      "en",
+      "uz"
+    ],
+    "language_code": "ru",
+    "default_language": "ru"
   }
 }

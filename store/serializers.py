@@ -41,15 +41,16 @@ class ProductSerializer(serializers.ModelSerializer):
         return 0
 
     def get_image_display(self, obj):
-        """Возвращает URL изображения (приоритет у image_url для внешних ссылок)"""
-        if obj.image_url:
-            return obj.image_url
-        if obj.image:
-            request = self.context.get('request')
-            if request:
-                return request.build_absolute_uri(obj.image.url)
-            return obj.image.url
-        return None
+        """Uploaded primary → external URL → first gallery image."""
+        from .media_urls import product_display_image_url
+
+        url = product_display_image_url(obj)
+        if not url:
+            return None
+        request = self.context.get('request')
+        if request and url.startswith('/'):
+            return request.build_absolute_uri(url)
+        return url
 
 
 class CartItemSerializer(serializers.ModelSerializer):

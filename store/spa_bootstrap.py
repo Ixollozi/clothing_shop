@@ -55,6 +55,7 @@ def _site_payload(request) -> dict:
         "name": store.name if store else _("Магазин"),
         "title": store.title if store else "",
         "description": store.description if store else "",
+        "currency": (store.currency if store else None) or "сум",
         "logoUrl": _media_url(request, store.logo) if store else "",
         "faviconUrl": _media_url(request, store.favicon) if store else "",
     }
@@ -167,7 +168,10 @@ def _site_payload(request) -> dict:
 def _bootstrap_product_row(d: dict) -> dict:
     cat = d.get("category") or {}
     cat_name = cat.get("name", "") if isinstance(cat, dict) else ""
-    img = d.get("image_display") or d.get("image_url") or ""
+    # Prefer serializer image_display (file > URL > gallery), then raw fields.
+    img = d.get("image_display") or d.get("image") or d.get("image_url") or ""
+    if isinstance(img, dict):
+        img = img.get("url") or ""
     price = d.get("price")
     try:
         price_f = float(price) if price is not None else 0.0
@@ -180,12 +184,31 @@ def _bootstrap_product_row(d: dict) -> dict:
         stock_i = 0
     rating_f = float(d.get("rating") or 0)
     reviews_i = int(d.get("reviews_count") or 0)
+
+    # Extra photos for product detail gallery (SPA may use if supported).
+    gallery = []
+    seen = set()
+    if img:
+        gallery.append(img)
+        seen.add(img)
+    for item in d.get("images") or []:
+        if not isinstance(item, dict):
+            continue
+        url = item.get("image") or ""
+        if url and url not in seen:
+            seen.add(url)
+            gallery.append(url)
+    # If primary empty but gallery has files — use first gallery as card image.
+    if not img and gallery:
+        img = gallery[0]
+
     return {
         "id": d["id"],
         "slug": d.get("slug") or "",
         "name": d.get("name") or "",
         "price": price_f,
         "image": img or "",
+        "images": gallery,
         "description": d.get("description") or "",
         "category": cat_name,
         "material": "",
@@ -217,6 +240,7 @@ def build_spa_bootstrap(request) -> dict:
         Product.objects.filter(is_active=True)
         .exclude(slug__in=LEGACY_PLACEHOLDER_PRODUCT_SLUGS)
         .select_related("category")
+        .prefetch_related("images")
         .order_by("-created_at")[:limit]
     )
     ser = ProductSerializer(qs, many=True, context={"request": request})
@@ -238,6 +262,8 @@ def build_spa_bootstrap(request) -> dict:
     ui_strings = get_spa_ui_strings()
     store_payload = site.get("store") or {}
     store_name = (store_payload.get("name") or "").strip()
+    store_currency = (store_payload.get("currency") or "").strip() or "сум"
+    ui_strings["currencySuffix"] = store_currency
     if store_name:
         ui_strings["aboutHeroTitleFallback"] = _("О %(name)s") % {"name": store_name}
     else:

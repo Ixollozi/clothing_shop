@@ -7,10 +7,24 @@
   "contact": {
     "phone": "+998(90) 333-33-33",
     "email": "info@demo-wood.localhost",
-    "address": { "city": "Tashkent", "street": "", "full": "Tashkent" }
+    "address": {
+      "city": "Tashkent",
+      "street": "",
+      "full": "Tashkent"
+    }
   },
   "django": {
     "debug": true,
-    "allowed_hosts": ["demo-wood.localhost", "demo-gamma.localhost"]
+    "allowed_hosts": [
+      "demo-wood.localhost",
+      "demo-gamma.localhost"
+    ],
+    "languages": [
+      "ru",
+      "en",
+      "uz"
+    ],
+    "language_code": "ru",
+    "default_language": "ru"
   }
 }

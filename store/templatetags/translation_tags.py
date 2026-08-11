@@ -37,6 +37,14 @@ def format_price(value):
         return str(value)
 
 
+@register.simple_tag(takes_context=True)
+def price_with_currency(context, value):
+    """Цена с валютой из StoreConfig текущего сайта."""
+    amount = format_price(value)
+    currency = context.get('currency') or 'сум'
+    return f"{amount} {currency}"
+
+
 @register.filter
 def yandex_map_url(value):
     """

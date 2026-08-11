@@ -1,24 +1,31 @@
 {
-    "django":  {
-                   "debug":  true,
-                   "allowed_hosts":  [
-                                         "demo-eshop.localhost",
-                                         "demo-gamma2.localhost",
-                                         "demo-front3.localhost"
-                                     ]
-               },
-    "contact":  {
-                    "email":  "info@demo-eshop.localhost",
-                    "phone":  "+998(90) 333-33-33",
-                    "address":  {
-                                    "street":  "",
-                                    "full":  "Tashkent",
-                                    "city":  "Tashkent"
-                                }
-                },
-    "store":  {
-                  "title":  "Apex Goods",
-                  "description":  "Curated finds for modern living — electronics, home decor, and fashion.",
-                  "name":  "Apex Goods"
-              }
+  "django": {
+    "debug": true,
+    "allowed_hosts": [
+      "demo-eshop.localhost",
+      "demo-gamma2.localhost",
+      "demo-front3.localhost"
+    ],
+    "languages": [
+      "ru",
+      "en",
+      "uz"
+    ],
+    "language_code": "ru",
+    "default_language": "ru"
+  },
+  "contact": {
+    "email": "info@demo-eshop.localhost",
+    "phone": "+998(90) 333-33-33",
+    "address": {
+      "street": "",
+      "full": "Tashkent",
+      "city": "Tashkent"
+    }
+  },
+  "store": {
+    "title": "Apex Goods",
+    "description": "Curated finds for modern living — electronics, home decor, and fashion.",
+    "name": "Apex Goods"
+  }
 }

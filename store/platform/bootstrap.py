@@ -74,15 +74,15 @@ def apply_platform_settings(settings_dict: dict) -> None:
         }
     ]
 
-    locale_dirs = []
+    locale_dirs = [str(base_dir / 'locale')]
     for theme in themes.values():
         locale_dirs.extend(str(path) for path in theme.locale_dirs if path.exists())
+    settings_dict['LOCALE_PATHS'] = list(dict.fromkeys(locale_dirs))
 
     # Do NOT dump all theme static dirs into STATICFILES_DIRS — that mixes themes.
     # Theme assets: SiteThemeStaticFinder. Admin chrome: store/static via AppDirectories.
     shared_static = base_dir / 'static'
     settings_dict['STATICFILES_DIRS'] = [str(shared_static)] if shared_static.exists() else []
-    settings_dict['LOCALE_PATHS'] = list(dict.fromkeys(locale_dirs))
     settings_dict['STATICFILES_FINDERS'] = [
         'django.contrib.staticfiles.finders.AppDirectoriesFinder',
         'store.platform.finders.SiteThemeStaticFinder',

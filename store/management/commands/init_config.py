@@ -26,12 +26,15 @@ class Command(BaseCommand):
                     'name': store_data.get('name', 'Fashion Store'),
                     'title': store_data.get('title', 'Fashion Store - Online Clothing Store'),
                     'description': store_data.get('description', ''),
+                    'currency': store_data.get('currency', 'сум'),
                 }
             )
             if not created:
                 store.name = store_data.get('name', store.name)
                 store.title = store_data.get('title', store.title)
                 store.description = store_data.get('description', store.description)
+                if 'currency' in store_data:
+                    store.currency = store_data.get('currency') or store.currency
                 store.save()
             self.stdout.write(self.style.SUCCESS(f'[OK] Настройки магазина: {"созданы" if created else "обновлены"}'))
         

@@ -17,8 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\templates\about.html:4 .\templates\about.html:10 .\templates\about.html:12
-#: .\templates\about.html:27 .\templates\base.html:102
+#: .\templates\about.html:4 .\templates\about.html:10
+#: .\templates\about.html:12 .\templates\about.html:27
+#: .\templates\base.html:102
 msgid "About Us"
 msgstr "About Us"
 
@@ -38,7 +39,11 @@ msgid ""
 "quality and stylish clothing for the whole family. We have been in the "
 "market for over 10 years and during this time we have gained the trust of "
 "thousands of customers throughout Uzbekistan."
-msgstr "Fashion Store is a modern online clothing store that offers a wide range of quality and stylish clothing for the whole family. We have been in the market for over 10 years and during this time we have gained the trust of thousands of customers throughout Uzbekistan."
+msgstr ""
+"Fashion Store is a modern online clothing store that offers a wide range of "
+"quality and stylish clothing for the whole family. We have been in the "
+"market for over 10 years and during this time we have gained the trust of "
+"thousands of customers throughout Uzbekistan."
 
 #: .\templates\about.html:31
 msgid "Our Mission"
@@ -47,9 +52,12 @@ msgstr "Our Mission"
 #: .\templates\about.html:32
 msgid ""
 "We strive to make quality and fashionable clothing accessible to everyone. "
-"Our goal is to help you look stylish and feel confident by offering the best "
-"products at fair prices."
-msgstr "We strive to make quality and fashionable clothing accessible to everyone. Our goal is to help you look stylish and feel confident by offering the best products at fair prices."
+"Our goal is to help you look stylish and feel confident by offering the best"
+" products at fair prices."
+msgstr ""
+"We strive to make quality and fashionable clothing accessible to everyone. "
+"Our goal is to help you look stylish and feel confident by offering the best"
+" products at fair prices."
 
 #: .\templates\about.html:35
 msgid "Our Vision"
@@ -60,7 +68,10 @@ msgid ""
 "Fashion Store was founded in 2014 with a simple idea - to make quality "
 "clothing accessible to everyone. Starting with a small store, we have grown "
 "into a large online store serving customers throughout the country."
-msgstr "Fashion Store was founded in 2014 with a simple idea - to make quality clothing accessible to everyone. Starting with a small store, we have grown into a large online store serving customers throughout the country."
+msgstr ""
+"Fashion Store was founded in 2014 with a simple idea - to make quality "
+"clothing accessible to everyone. Starting with a small store, we have grown "
+"into a large online store serving customers throughout the country."
 
 #: .\templates\about.html:38
 msgid "Our Values"
@@ -127,9 +138,9 @@ msgstr "Catalog"
 msgid "About"
 msgstr "About"
 
-#: .\templates\base.html:32 .\templates\base.html:104 .\templates\base.html:109
-#: .\templates\contact.html:5 .\templates\contact.html:11
-#: .\templates\contact.html:13
+#: .\templates\base.html:32 .\templates\base.html:104
+#: .\templates\base.html:109 .\templates\contact.html:5
+#: .\templates\contact.html:11 .\templates\contact.html:13
 msgid "Contacts"
 msgstr "Contacts"
 
@@ -324,7 +335,9 @@ msgstr "Contact Us"
 msgid ""
 "We are always happy to answer your questions and help you choose products. "
 "Contact us in any convenient way."
-msgstr "We are always happy to answer your questions and help you choose products. Contact us in any convenient way."
+msgstr ""
+"We are always happy to answer your questions and help you choose products. "
+"Contact us in any convenient way."
 
 #: .\templates\contact.html:32 .\templates\contact.html:96
 msgid "Phone"
@@ -533,6 +546,8 @@ msgid ""
 "Cash payment to the courier upon delivery or at the pickup point. Available "
 "for orders up to 5 000 000 сум."
 msgstr ""
+"Cash payment to the courier upon delivery or at the pickup point. Available "
+"for orders up to 5,000,000 UZS."
 
 #: .\templates\delivery.html:85
 msgid "Electronic wallets"
@@ -560,13 +575,15 @@ msgstr ""
 
 #: .\templates\delivery.html:102
 msgid "Minimum order amount — 50 000 сум"
-msgstr ""
+msgstr "Minimum order amount - 50,000 soum"
 
 #: .\templates\delivery.html:106
 msgid ""
-"Free delivery for orders over 300 000 сум (in Tashkent) and over 500 000 сум "
-"(throughout Uzbekistan)"
+"Free delivery for orders over 300 000 сум (in Tashkent) and over 500 000 сум"
+" (throughout Uzbekistan)"
 msgstr ""
+"Free delivery for orders over 300,000 sum (in Tashkent) and over 500,000 sum"
+" (throughout Uzbekistan)"
 
 #: .\templates\delivery.html:110
 msgid "Possibility of trying on before payment (with courier delivery)"
@@ -581,7 +598,8 @@ msgid "Order status notifications via SMS and email"
 msgstr ""
 
 #: .\templates\delivery.html:124
-msgid "You can return the product within 14 days from the date of receipt, if:"
+msgid ""
+"You can return the product within 14 days from the date of receipt, if:"
 msgstr ""
 
 #: .\templates\delivery.html:126
@@ -785,13 +803,1789 @@ msgstr "Failed to add product to cart"
 msgid "Failed to add product to cart. Please refresh the page and try again."
 msgstr "Failed to add product to cart. Please refresh the page and try again."
 
+msgid "#000000 или Черный"
+msgstr "#000000 or Black"
+
+msgid "0"
+msgstr ""
+
+msgid "0 sum — 250 000 sum"
+msgstr ""
+
+msgid "1 000 000 sum — 2 000 000 sum"
+msgstr ""
+
+msgid "250 000 sum — 500 000 sum"
+msgstr ""
+
+msgid "500 000 sum — 1 000 000 sum"
+msgstr ""
+
+msgid ""
+"A calm storefront for home, apparel, and accessories — fewer things, better "
+"made, thoughtfully sourced."
+msgstr ""
+
+msgid "Add to cart"
+msgstr ""
+
+msgid "Added"
+msgstr ""
+
+msgid "Added to cart"
+msgstr ""
+
+msgid "Address will appear here when set in store settings."
+msgstr ""
+
+msgid "An error occurred while placing the order. Please try again."
+msgstr ""
+
+msgid "An error occurred while sending the message. Please try again later."
+msgstr ""
+
+msgid "Apparel"
+msgstr ""
+
+msgid "Bag"
+msgstr ""
+
+msgid "Best Sellers"
+msgstr ""
+
+msgid "Browse the catalog"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Care — real help with orders and advice"
+msgstr ""
+
+msgid "Cart"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Clear search"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Close filters"
+msgstr ""
+
+msgid "Collection"
+msgstr ""
+
+msgid "Company"
+msgstr ""
+
+msgid "Curated finds for modern living."
+msgstr ""
+
+msgid "Curation — a tight edit, not endless noise"
+msgstr ""
+
+msgid "Delivery Address"
+msgstr ""
+
+msgid "Elevated"
+msgstr ""
+
+msgid "Elevated Everyday"
+msgstr ""
+
+msgid "Elevated everyday — curated goods for modern living."
+msgstr ""
+
+msgid "Email (необязательно)"
+msgstr "Email (optional)"
+
+msgid "Email *"
+msgstr ""
+
+msgid "Error: cart function not loaded. Please refresh the page."
+msgstr ""
+
+msgid "Everyday."
+msgstr ""
+
+msgid "Explore Curated Goods"
+msgstr ""
+
+msgid "Explore catalog"
+msgstr ""
+
+msgid "FAQ: ответы на частые вопросы о товарах и доставке."
+msgstr ""
+"FAQ: answers to frequently asked questions about products and delivery."
+
+msgid "Failed to place order"
+msgstr ""
+
+msgid ""
+"Fashion Store is a modern online clothing store that offers a wide range of "
+"quality and stylish clothing for the whole family."
+msgstr ""
+
+msgid "Featured piece"
+msgstr ""
+
+msgid "First Name"
+msgstr ""
+
+msgid "Free shipping from 500 000 sum"
+msgstr ""
+
+msgid "Gallery"
+msgstr ""
+
+msgid "Get in touch"
+msgstr ""
+
+msgid "Home Goods"
+msgstr ""
+
+msgid "Honesty — clear pricing and conditions"
+msgstr ""
+
+msgid "Information"
+msgstr ""
+
+msgid "Item removed from cart"
+msgstr ""
+
+msgid "Last Name"
+msgstr ""
+
+msgid "Main navigation"
+msgstr ""
+
+msgid "Map"
+msgstr ""
+
+msgid "Menu"
+msgstr ""
+
+msgid "Message Sent!"
+msgstr ""
+
+msgid "Mobile navigation"
+msgstr ""
+
+msgid "NEW · M24 ·"
+msgstr ""
+
+msgid "New arrivals weekly"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "No categories yet"
+msgstr ""
+
+msgid "No questions yet. Check back soon!"
+msgstr ""
+
+msgid "Notes"
+msgstr ""
+
+msgid "Nothing found"
+msgstr ""
+
+msgid "Order Error"
+msgstr ""
+
+msgid "Order Placed!"
+msgstr ""
+
+msgid "Please fill in all required fields"
+msgstr ""
+
+msgid "Please fill in all required fields."
+msgstr ""
+
+msgid ""
+"Possibility of checking the product before payment (with courier delivery)"
+msgstr ""
+
+msgid "Processing..."
+msgstr ""
+
+msgid "Product added to cart"
+msgstr ""
+
+msgid "Product photos"
+msgstr ""
+
+msgid "Quality — pieces that earn their place"
+msgstr ""
+
+msgid "Quantity updated"
+msgstr ""
+
+msgid "Removed"
+msgstr ""
+
+msgid "SCROLL"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Search products"
+msgstr ""
+
+msgid "Search products..."
+msgstr ""
+
+msgid "Search products…"
+msgstr ""
+
+msgid "Sending..."
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Shop the edit"
+msgstr ""
+
+msgid "Skip to content"
+msgstr ""
+
+msgid "Stats"
+msgstr ""
+
+msgid "Success"
+msgstr ""
+
+msgid "Sustainable sourcing"
+msgstr ""
+
+msgid "Terms & FAQ"
+msgstr ""
+
+msgid "View all"
+msgstr ""
+
+msgid "View all products"
+msgstr ""
+
+msgid "View product"
+msgstr ""
+
+msgid "Warning"
+msgstr ""
+
+msgid "We are happy to help with orders, delivery, and product advice."
+msgstr ""
+
+msgid "We believe in the beauty of obvious things done well."
+msgstr ""
+
+msgid ""
+"We curate lasting objects — materials, makers, and finishes chosen for years"
+" of quiet daily use."
+msgstr ""
+
+msgid "Why shop with us"
+msgstr ""
+
+msgid "Your cart has been cleared."
+msgstr ""
+
+msgid "Your order has been placed successfully! Order number:"
+msgstr ""
+
+msgid ""
+"Абсолютно все. Мы принципиально не используем промышленное тиражирование. \""
+" \"Каждое изделие создаётся мастером от начала до конца — от замеса глины до"
+" финального обжига."
+msgstr ""
+"Absolutely everything. As a matter of principle, we do not use industrial "
+"replication. \" \"Each product is created by a master from start to finish -"
+" from mixing clay to final firing."
+
+msgid "Адрес"
+msgstr "Address"
+
+msgid "Адрес *"
+msgstr "Address *"
+
+msgid "Адрес доставки"
+msgstr "Delivery address"
+
+msgid "Адрес самовывоза"
+msgstr "Pickup address"
+
+msgid "Аккуратная сборка и приятная ткань"
+msgstr "Neat assembly and nice fabric"
+
+msgid "Акция"
+msgstr "Sale"
+
+msgid "Банковская карта"
+msgstr "Bank card"
+
+msgid "Банковский перевод"
+msgstr "Bank transfer"
+
+msgid ""
+"Безопасная оплата · Возврат 14 дней · Бережная упаковка каждого изделия"
+msgstr "Secure payment · 14-day return · Careful packaging of each product"
+
+msgid "Безопасны ли изделия для использования с пищей?"
+msgstr "Are the products safe for use with food?"
+
+msgid "Бережная упаковка каждого изделия."
+msgstr "Careful packaging of each product."
+
+msgid "Быстрая доставка"
+msgstr "Fast delivery"
+
+msgid "Быстрые действия"
+msgstr "Quick Actions"
+
+msgid "Быстрые факты"
+msgstr "Fast Facts"
+
+msgid "Быстрые фильтры"
+msgstr "Quick filters"
+
+msgid "Быстрые фильтры по категории"
+msgstr "Quick filters by category"
+
+msgid "Быстрый путь к уверенной первой работе."
+msgstr "The fast path to a confident first job."
+
+msgid "В каталог"
+msgstr "To catalog"
+
+msgid ""
+"В каталоге легко фильтровать, а карточки помогают выбрать подходящую модель."
+msgstr ""
+"The catalog is easy to filter, and the cards help you choose the right "
+"model."
+
+msgid "В корзине"
+msgstr "In cart"
+
+msgid "В корзину"
+msgstr "Add to cart"
+
+msgid "В наличии"
+msgstr "In stock"
+
+msgid "Ваш выбор"
+msgstr "Your choice"
+
+msgid "Ваша корзина"
+msgstr "Your cart"
+
+msgid "Ваше имя"
+msgstr "your name"
+
+msgid "Ваше имя *"
+msgstr "Your name *"
+
+msgid "Вернуться в каталог"
+msgstr "Return to catalog"
+
+msgid "Вернуться в корзину"
+msgstr "Return to cart"
+
+msgid "Весь каталог"
+msgstr "Entire catalog"
+
+msgid "Видение"
+msgstr "Vision"
+
+msgid "Витрина товаров"
+msgstr "Product showcase"
+
+msgid "Возврат"
+msgstr "Return"
+
+msgid "Возврат 14 дней"
+msgstr "Return 14 days"
+
+msgid ""
+"Возможно, вы перешли по устаревшей ссылке или допустили опечатку в адресе."
+msgstr "You may have followed an outdated link or made a typo in the address."
+
+msgid "Вопрос по заказу"
+msgstr "Question about ordering"
+
+msgid "Вопрос по товару"
+msgstr "Question about the product"
+
+msgid "Вопросы и ответы"
+msgstr "Questions and answers"
+
+msgid "Вопросы по ассортименту, опту и сотрудничеству."
+msgstr "Questions about assortment, wholesale and cooperation."
+
+msgid "Время"
+msgstr "Time"
+
+msgid "Все"
+msgstr "All"
+
+msgid "Все категории"
+msgstr "All categories"
+
+msgid "Все ли изделия сделаны вручную?"
+msgstr "Are all products made by hand?"
+
+msgid "Все права защищены."
+msgstr "All rights reserved."
+
+msgid "Выберите миниатюру для смены фото."
+msgstr "Select a thumbnail to change the photo."
+
+msgid "Выберите направление — мы подскажем набор под вашу задачу."
+msgstr "Choose a direction - we will suggest a set for your task."
+
+msgid "Выбор языка"
+msgstr "Language selection"
+
+msgid "Выбрать образ"
+msgstr "Select image"
+
+msgid "Гарантия качества"
+msgstr "Quality assurance"
+
+msgid "Главная"
+msgstr "Home"
+
+msgid "Глина"
+msgstr "Clay"
+
+msgid "Глина вымешивается вручную."
+msgstr "The clay is kneaded by hand."
+
+msgid "Город"
+msgstr "City"
+
+msgid "Город *"
+msgstr "City *"
+
+msgid "Готовы выбрать своё изделие?"
+msgstr "Ready to choose your product?"
+
+msgid "Готовые подборки"
+msgstr "Ready selections"
+
+msgid ""
+"Да, в течение 14 дней с момента получения, если изделие не использовалось и "
+"сохранена оригинальная упаковка. \" \"Товары с браком принимаем в течение 30"
+" дней без каких-либо условий."
+msgstr ""
+"Yes, within 14 days of receipt if the product has not been used and the "
+"original packaging is intact. \" \"We accept defective goods within 30 days "
+"without any conditions."
+
+msgid ""
+"Да, мы принимаем индивидуальные заказы. Напишите нам на info@argillia.ru с "
+"описанием идеи и предпочтительными размерами. \" \"Мы обсудим детали и "
+"стоимость в течение 1–2 рабочих дней."
+msgstr ""
+"Yes, we accept custom orders. Write to us at info@argillia.ru with a "
+"description of the idea and preferred sizes. \" \"We will discuss details "
+"and costs within 1-2 business days."
+
+msgid ""
+"Да, наша мастерская и шоу-рум находятся в Москве (ул. Мастеров, 12). \" "
+"\"Самовывоз возможен по предварительной записи в будни с 10:00 до 18:00."
+msgstr ""
+"Yes, our workshop and showroom are located in Moscow (Masterov St., 12). "
+"\"Pickup is possible by appointment on weekdays from 10:00 to 18:00."
+
+msgid ""
+"Да. Мы используем только сертифицированные пищевые глазури, не содержащие "
+"свинца и кадмия. \" \"Все изделия соответствуют российским санитарным нормам"
+" для пищевой посуды."
+msgstr ""
+"Yes. We only use certified food grade glazes that are lead and cadmium free."
+" \" \"All products comply with Russian sanitary standards for food utensils."
+
+msgid "Далее"
+msgstr "Next"
+
+msgid ""
+"Делаем сервис понятным: помогаем с выбором, отвечаем и бережно доставляем."
+msgstr ""
+"We make the service clear: we help with the choice, answer and deliver "
+"carefully."
+
+msgid "Демо: оформление заказа можно подключить следующим шагом."
+msgstr "Demo: placing an order can be connected in the next step."
+
+msgid "Диапазон цены"
+msgstr "Price range"
+
+msgid ""
+"Для оплаты и доставки свяжитесь с нами или уточните детали в сообщении."
+msgstr "For payment and delivery, contact us or specify details in a message."
+
+msgid "Добавить в корзину"
+msgstr "Add to cart"
+
+msgid "Добавлено"
+msgstr "Added"
+
+msgid ""
+"Добавьте понравившиеся товары в корзину, перейдите в корзину и нажмите "
+"«Оформить заказ». \" \"Заполните данные для доставки и выберите способ "
+"оплаты. Мы свяжемся с вами для подтверждения."
+msgstr ""
+"Add the items you like to your cart, go to cart and click “Place an order”. "
+"\" \"Fill in the delivery information and select a payment method. We will "
+"contact you to confirm."
+
+msgid "Добавьте товар в корзину и оформите заказ."
+msgstr "Add the item to your cart and place your order."
+
+msgid "Добавьте финиш"
+msgstr "Add a finish"
+
+msgid "Добро пожаловать в наш магазин."
+msgstr "Welcome to our store."
+
+msgid "Дополнительные характеристики можно уточнить у поддержки."
+msgstr "Additional specifications can be obtained from support."
+
+msgid "Доставка"
+msgstr "Delivery"
+
+msgid "Доставка 3–7 дней"
+msgstr "Delivery 3–7 days"
+
+msgid "Доставка без потерь"
+msgstr "Delivery without loss"
+
+msgid "Доставка и оплата"
+msgstr "Delivery and payment"
+
+msgid "Доставка и оплата: сроки, стоимость, условия."
+msgstr "Delivery and payment: terms, cost, conditions."
+
+msgid "Доставка и поддержка"
+msgstr "Delivery and support"
+
+msgid "Доставка по Узбекистану"
+msgstr "Delivery across Uzbekistan"
+
+msgid "Доставка уточняется при оформлении."
+msgstr "Delivery details are confirmed at checkout."
+
+msgid "Доставляем по Узбекистану"
+msgstr "We deliver throughout Uzbekistan"
+
+msgid "Другое"
+msgstr "Other"
+
+msgid "Если нужна консультация по модели — напишите нам, мы поможем."
+msgstr "If you need advice on the model, write to us, we will help."
+
+msgid "Ещё варианты в том же стиле"
+msgstr "More options in the same style"
+
+msgid "Живые материалы"
+msgstr "Living materials"
+
+msgid ""
+"Загляните в каталог — ассортимент формируется из актуальных позиций в базе "
+"магазина."
+msgstr ""
+"Take a look at the catalog - the assortment is formed from current items in "
+"the store database."
+
+msgid "Загляните в каталог — там есть что-то для вас"
+msgstr "Take a look at the catalog - there is something for you"
+
+msgid "Заголовок результатов"
+msgstr "Results header"
+
+msgid "Заготовки"
+msgstr "Blanks"
+
+msgid "Задать вопрос"
+msgstr "Ask a question"
+
+msgid "Заказ и оплата"
+msgstr "Order and payment"
+
+msgid "Заказ отправлен. Спасибо!"
+msgstr "The order has been sent. Thank you!"
+
+msgid "Заказ оформлен. Мы свяжемся с вами."
+msgstr "The order has been completed. We will contact you."
+
+msgid "Заказ принят. Мы свяжемся с вами для подтверждения."
+msgstr "The order has been accepted. We will contact you to confirm."
+
+msgid ""
+"Заказы упаковываем так, чтобы товары доехали без повреждений. Крупногабарит "
+"— по согласованию."
+msgstr ""
+"We pack orders so that the goods arrive without damage. Large size - by "
+"agreement."
+
+msgid "Замысел"
+msgstr "Concept"
+
+msgid "Заполните все обязательные поля."
+msgstr "Fill in all required fields."
+
+msgid "Заполните все поля со звёздочкой."
+msgstr "Fill in all fields with an asterisk."
+
+msgid "Заполните обязательные поля (имя, фамилия, телефон, адрес)."
+msgstr ""
+"Fill in the required fields (first name, last name, phone number, address)."
+
+msgid "Здесь отображаются реальные товары из вашей сессии."
+msgstr "The actual products from your session are displayed here."
+
+msgid "Из той же категории и популярное рядом."
+msgstr "From the same category and popular nearby."
+
+msgid "Из той же коллекции"
+msgstr "From the same collection"
+
+msgid "Имя"
+msgstr "Name"
+
+msgid "Имя *"
+msgstr "Name *"
+
+msgid "Индекс"
+msgstr "Index"
+
+msgid "Индивидуальный заказ"
+msgstr "Individual order"
+
+msgid ""
+"Интернет-магазин национальной одежды Узбекистана: современный стиль, "
+"традиционные ткани, понятный выбор моделей."
+msgstr ""
+"Online store of national clothing of Uzbekistan: modern style, traditional "
+"fabrics, clear selection of models."
+
+msgid "Итог"
+msgstr "Bottom line"
+
+msgid "Итоги заказа"
+msgstr "Order results"
+
+msgid "Итого"
+msgstr "Total"
+
+msgid "К оплате"
+msgstr "To pay"
+
+msgid "Каждое изделие начинается с идеи."
+msgstr "Every product starts with an idea."
+
+msgid ""
+"Каждое изделие обёртывается в несколько слоёв пузырчатой плёнки, затем "
+"помещается в коробку с наполнителем из переработанного картона. \" \"Сверху "
+"— фирменная крафт-бумага и открытка от мастера."
+msgstr ""
+
+msgid "Каждое изделие создаётся вручную опытными мастерами."
+msgstr ""
+
+msgid "Каждое изделие уникально."
+msgstr "Each product is unique."
+
+msgid "Как мы работаем каждый день."
+msgstr ""
+
+msgid "Как мы развиваемся"
+msgstr "How we develop"
+
+msgid "Как оформить заказ?"
+msgstr "How to place an order?"
+
+msgid "Как создаётся изделие"
+msgstr "How the product is created"
+
+msgid "Как упаковываются изделия?"
+msgstr "How are the products packaged?"
+
+msgid "Как ухаживать за керамикой и фарфором?"
+msgstr "How to care for ceramics and porcelain?"
+
+msgid "Какие способы оплаты доступны?"
+msgstr "What payment methods are available?"
+
+msgid "Карта"
+msgstr "Map"
+
+msgid "Картой"
+msgstr "By card"
+
+msgid "Карточка товара: чапан, платья, костюмы и аксессуары."
+msgstr "Product card: chapan, dresses, suits and accessories."
+
+msgid "Карточки и фильтры, чтобы не запутаться."
+msgstr "Cards and filters so you don't get confused."
+
+msgid "Каталог"
+msgstr "Catalog"
+
+msgid "Каталог национальной одежды"
+msgstr "Catalog of national clothes"
+
+msgid ""
+"Каталог национальной одежды Узбекистана: чапаны, платья, костюмы и "
+"аксессуары."
+msgstr ""
+"Catalog of national clothing of Uzbekistan: chapans, dresses, suits and "
+"accessories."
+
+msgid "Каталог товаров"
+msgstr "Product catalog"
+
+msgid "Категории товаров"
+msgstr "Product categories"
+
+msgid "Категории:"
+msgstr "Categories:"
+
+msgid "Категория"
+msgstr "Category"
+
+msgid "Качество"
+msgstr "Quality"
+
+msgid "Качество в каждой детали"
+msgstr "Quality in every detail"
+
+msgid "Количество"
+msgstr "Quantity"
+
+msgid "Количество товара"
+msgstr "Product quantity"
+
+msgid "Комментарий к заказу"
+msgstr "Comments on the order"
+
+msgid "Комментарий к заказу (необязательно)"
+msgstr "Comments on the order (optional)"
+
+msgid "Компания"
+msgstr "Company"
+
+msgid "Контактная информация"
+msgstr "Contact information"
+
+msgid "Контакты"
+msgstr "Contacts"
+
+msgid "Контакты доставки"
+msgstr "Delivery contacts"
+
+msgid "Контакты: вопросы по заказам, товарам и доставке."
+msgstr "Contacts: questions about orders, products and delivery."
+
+msgid "Корзина"
+msgstr "Cart"
+
+msgid "Корзина пуста"
+msgstr "Cart is empty"
+
+msgid "Корзина пуста."
+msgstr "The cart is empty."
+
+msgid "Корзина пуста. Добавьте товары, чтобы оформить заказ."
+msgstr "The cart is empty. Add products to place your order."
+
+msgid "Корзина: товары национальной одежды Узбекистана."
+msgstr "Cart: goods of national clothing of Uzbekistan."
+
+msgid "Короткие ответы на частые вопросы."
+msgstr "Short answers to frequently asked questions."
+
+msgid "Коротко о сроках, стоимости и способах оплаты."
+msgstr "Briefly about the terms, costs and payment methods."
+
+msgid "Курьер по Ташкенту: 1–2 дня"
+msgstr "Courier in Tashkent: 1–2 days"
+
+msgid "Магазин"
+msgstr "Store"
+
+msgid "Мастерство"
+msgstr "Mastery"
+
+msgid "Материал"
+msgstr "Material"
+
+msgid ""
+"Материалы подбираем так, чтобы ткань была приятной к телу и служила долго."
+msgstr ""
+"We select materials so that the fabric is pleasant to the body and lasts a "
+"long time."
+
+msgid "Миниатюры"
+msgstr "Thumbnails"
+
+msgid "Миссия"
+msgstr "Mission"
+
+msgid "Миссия и видение"
+msgstr "Mission and Vision"
+
+msgid "Можно ли вернуть товар?"
+msgstr "Is it possible to return an item?"
+
+msgid "Можно ли заказать изделие по индивидуальному дизайну?"
+msgstr "Is it possible to order a product with an individual design?"
+
+msgid "Можно ли самовывоз?"
+msgstr "Is it possible to pick up?"
+
+msgid "Мы всегда на связи"
+msgstr "We are always in touch"
+
+msgid ""
+"Мы гарантируем качество каждого изделия. Если вы обнаружили скрытый брак "
+"(трещина, отслоение глазури, дефект обжига) — \" \"свяжитесь с нами в "
+"течение 30 дней. Мы заменим товар или вернём деньги."
+msgstr ""
+"We guarantee the quality of each product. If you find a hidden defect "
+"(crack, glaze peeling, firing defect) - \" \"contact us within 30 days. We "
+"will replace the product or refund the money."
+
+msgid ""
+"Мы принимаем оплату банковскими картами (Visa, MasterCard, МИР), через "
+"систему быстрых платежей (СБП), \" \"а также электронными кошельками ЮMoney "
+"и QIWI."
+msgstr ""
+"We accept payment by bank cards (Visa, MasterCard, MIR), through the fast "
+"payment system (SBP), \" \"as well as electronic wallets YuMoney and QIWI."
+
+msgid ""
+"Мы создаём изделия по индивидуальным эскизам. Ваш размер, ваши цвета, ваша "
+"история."
+msgstr ""
+"We create products according to individual sketches. Your size, your colors,"
+" your story."
+
+msgid "На главную"
+msgstr "Home"
+
+msgid "Наборы"
+msgstr "Sets"
+
+msgid "Навигация"
+msgstr "Navigation"
+
+msgid "Назад"
+msgstr "Back"
+
+msgid "Название или описание"
+msgstr "Title or description"
+
+msgid "Найдено:"
+msgstr "Found:"
+
+msgid "Наличие"
+msgstr "Availability"
+
+msgid "Наличными"
+msgstr "Cash"
+
+msgid "Наличными при получении"
+msgstr "Cash upon receipt"
+
+msgid "Наличными при получении (если доступно)"
+msgstr "Cash on delivery (if available)"
+
+msgid "Написать"
+msgstr "Write"
+
+msgid "Написать нам"
+msgstr "Write to us"
+
+msgid "Напишите адрес и состав заказа — подскажем варианты и стоимость."
+msgstr ""
+
+msgid "Напишите нам"
+msgstr "Write to us"
+
+msgid ""
+"Напишите нам или позвоните — ответим в течение нескольких часов в рабочее "
+"время."
+msgstr ""
+
+msgid "Напишите нам — мы ответим и поможем подобрать модель."
+msgstr "Write to us - we will answer and help you choose a model."
+
+msgid "Напишите — подберём"
+msgstr "Write and we’ll pick you up"
+
+msgid "Настройте подбор"
+msgstr "Set up selection"
+
+msgid "Настройте ширину реза"
+msgstr "Adjust the cutting width"
+
+msgid "Национальная одежда Узбекистана - современно и красиво"
+msgstr "National clothes of Uzbekistan - modern and beautiful"
+
+msgid "Наша история"
+msgstr "Our story"
+
+msgid "Наша коллекция"
+msgstr "Our collection"
+
+msgid "Наша миссия"
+msgstr "Our mission"
+
+msgid "Наши принципы."
+msgstr "Our principles."
+
+msgid "Наши ценности"
+msgstr "Our values"
+
+msgid "Не нашли ответ?"
+msgstr "Didn't find the answer?"
+
+msgid "Не уверены?"
+msgstr "Not sure?"
+
+msgid "Не удалось добавить в корзину"
+msgstr "Failed to add to cart"
+
+msgid "Не удалось отправить"
+msgstr "Failed to send"
+
+msgid "Не удалось отправить заказ. Попробуйте ещё раз."
+msgstr "Failed to submit order. Try again."
+
+msgid "Не удалось отправить сообщение"
+msgstr "Failed to send message"
+
+msgid "Не удалось оформить заказ"
+msgstr "Failed to place an order"
+
+msgid "Не удалось оформить заказ. Проверьте данные и попробуйте снова."
+msgstr "Failed to place your order. Please check your details and try again."
+
+msgid "Нет в наличии"
+msgstr "Out of stock"
+
+msgid "Нижний колонтитул"
+msgstr "Footer"
+
+msgid "Новинка"
+msgstr "New"
+
+msgid "Новинки"
+msgstr "New arrivals"
+
+msgid "Нужна помощь с выбором?"
+msgstr "Need help choosing?"
+
+msgid "Нужна помощь с подбором?"
+msgstr "Need help with selection?"
+
+msgid "Нужны точные условия?"
+msgstr "Need exact terms?"
+
+msgid "О %(name)s"
+msgstr "About %(name)s"
+
+msgid "О магазине"
+msgstr "About the store"
+
+msgid ""
+"О магазине: национальная одежда Узбекистана, ручная работа, забота о "
+"качестве и удобный сервис."
+msgstr ""
+"About the store: national clothes of Uzbekistan, handmade, care for quality "
+"and convenient service."
+
+msgid "О мастерской"
+msgstr "About the workshop"
+
+msgid "О нас"
+msgstr "About us"
+
+msgid "О товаре"
+msgstr "About the product"
+
+msgid "Образы под повод и сезон"
+msgstr "Looks for the occasion and season"
+
+msgid ""
+"Общие условия. Точные сроки и стоимость уточняйте при оформлении заказа."
+msgstr ""
+
+msgid "Онлайн оплата картой"
+msgstr "Online payment by card"
+
+msgid "Оперативно и бережно упаковываем."
+msgstr "We pack quickly and carefully."
+
+msgid ""
+"Оперативно упаковываем и отвечаем на вопросы, чтобы вы покупали спокойно."
+msgstr ""
+"We pack quickly and answer questions so you can buy with peace of mind."
+
+msgid "Описание"
+msgstr "Description"
+
+msgid "Описание и характеристики"
+msgstr "Description and characteristics"
+
+msgid "Опишите задачу — подскажем комплектацию."
+msgstr "Describe the task - we will suggest the equipment."
+
+msgid "Оплата"
+msgstr "Payment"
+
+msgid "Определите технику"
+msgstr "Define technique"
+
+msgid "Основная навигация"
+msgstr "Main navigation"
+
+msgid "Особенности"
+msgstr "Peculiarities"
+
+msgid "Оставьте сообщение — мы предложим наборы под задачу и уровень навыков."
+msgstr "Leave a message - we will offer sets for the task and skill level."
+
+msgid "Остались вопросы?"
+msgstr "Still have questions?"
+
+msgid "От замысла до вашего дома"
+msgstr "From concept to your home"
+
+msgid ""
+"От чапанов до аксессуаров: выберите стиль, чтобы быстро оформить заказ."
+msgstr "From chapans to accessories, choose a style for quick ordering."
+
+msgid "Отбор товаров и понятные карточки."
+msgstr "Selection of products and clear cards."
+
+msgid ""
+"Ответим по выбору инструмента, наличию и доставке. Можно просто написать "
+"«что хочу сделать»."
+msgstr ""
+
+msgid "Отзывы:"
+msgstr "Reviews:"
+
+msgid "Открыть меню"
+msgstr "Open menu"
+
+msgid "Отмена"
+msgstr "Cancel"
+
+msgid "Отправить"
+msgstr "Send"
+
+msgid "Отправить заказ"
+msgstr "Submit an order"
+
+msgid ""
+"Отправка после подтверждения заказа. По городу и регионам — курьером или "
+"службой доставки. Сроки зависят от выбранного способа."
+msgstr ""
+"Dispatch after order confirmation. Within the city and regions - by courier "
+"or delivery service. The timing depends on the chosen method."
+
+msgid "Отправка..."
+msgstr "Sending..."
+
+msgid "Отправка…"
+msgstr "Dispatch..."
+
+msgid "Оформить заказ"
+msgstr "Checkout"
+
+msgid "Оформление заказа"
+msgstr "Placing an order"
+
+msgid "Очистить корзину"
+msgstr "Empty Trash"
+
+msgid "Ошибка отправки"
+msgstr "Send error"
+
+msgid "Ошибка при отправке."
+msgstr "Error sending."
+
+msgid "Ошибка при оформлении."
+msgstr "Error during registration."
+
+msgid "Пагинация"
+msgstr "Pagination"
+
+msgid "Панель управления каталогом"
+msgstr "Catalog control panel"
+
+msgid "Перейти в каталог"
+msgstr "Go to catalog"
+
+msgid "Перейти в корзину"
+msgstr "Go to cart"
+
+msgid "Перейти к содержимому"
+msgstr "Skip to content"
+
+msgid "Переключение языка"
+msgstr "Language switcher"
+
+msgid "Плоская резьба, контуры, объем или орнаменты — подбираем форму резца."
+msgstr ""
+"Flat carving, contours, volume or ornaments - we select the shape of the "
+"cutter."
+
+msgid "Пн–Пт: 10:00–19:00"
+msgstr "Mon–Fri: 10:00–19:00"
+
+msgid ""
+"По Москве и МО — 1–2 рабочих дня. По России — 3–7 рабочих дней в зависимости"
+" от региона. \" \"Мы используем СДЭК, Почту России и курьерские службы. Все "
+"хрупкие изделия упакованы с тройной защитой."
+msgstr ""
+
+msgid "По Узбекистану: 3–7 дней"
+msgstr "Within Uzbekistan: 3–7 days"
+
+msgid "По популярности"
+msgstr "By popularity"
+
+msgid "По умолчанию"
+msgstr "Default"
+
+msgid "Повседневный стиль"
+msgstr "Casual style"
+
+msgid "Под заказ"
+msgstr "To order"
+
+msgid ""
+"Подберите образ для праздника или повседневной жизни. Акцент на ткани, "
+"аккуратный крой и понятный выбор моделей."
+msgstr ""
+"Choose an image for a holiday or everyday life. Emphasis on fabric, neat cut"
+" and clear choice of models."
+
+msgid ""
+"Подбираем ткани и фурнитуру так, чтобы вещам было комфортно каждый день."
+msgstr ""
+
+msgid "Подбираем ткани, приятные к телу."
+msgstr "We select fabrics that are pleasant to the body."
+
+msgid "Подборка моделей по популярности и отзывам"
+msgstr "Selection of models by popularity and reviews"
+
+msgid "Подборка популярных моделей с красивыми фактурами."
+msgstr "A selection of popular models with beautiful textures."
+
+msgid "Поддержка"
+msgstr "Support"
+
+msgid "Подобрали то, что чаще всего покупают для работы и обучения."
+msgstr ""
+
+msgid "Подробнее"
+msgstr "More details"
+
+msgid "Подтвердить"
+msgstr "Confirm"
+
+msgid "Подтвердить заказ"
+msgstr "Confirm order"
+
+msgid "Подытог"
+msgstr "Subtotal"
+
+msgid "Поиск"
+msgstr "Search"
+
+msgid "Пока нет вопросов — загляните позже."
+msgstr "No questions yet - check back later."
+
+msgid ""
+"Пока нет опубликованных вопросов. Загляните позже или свяжитесь с "
+"поддержкой."
+msgstr ""
+"There are no published questions yet. Check back later or contact support."
+
+msgid "Пока нет похожих товаров."
+msgstr "There are no similar products yet."
+
+msgid "Показатели"
+msgstr "Metrics"
+
+msgid "Покупателям"
+msgstr "For customers"
+
+msgid "Покупка"
+msgstr "Purchase"
+
+msgid "Полная форма обратной связи и карта — на странице контактов."
+msgstr "The full feedback form and map are on the contact page."
+
+msgid "Помогаем с выбором и доставкой."
+msgstr "We help with selection and delivery."
+
+msgid "Помощь"
+msgstr "Help"
+
+msgid "Помощь с подбором"
+msgstr "Help with selection"
+
+msgid "Понятный каталог и удобный заказ"
+msgstr ""
+
+msgid "Понятный сервис"
+msgstr "Clear service"
+
+msgid "Популярно сегодня"
+msgstr "Popular today"
+
+msgid "Популярное"
+msgstr "Popular"
+
+msgid "Популярные"
+msgstr "Popular"
+
+msgid "Популярные товары"
+msgstr "Popular Products"
+
+msgid "После отправки мы получим заказ в Telegram и свяжемся с вами."
+msgstr "After sending, we will receive the order in Telegram and contact you."
+
+msgid "Похожие изделия"
+msgstr "Similar products"
+
+msgid "Похожие товары"
+msgstr "Related products"
+
+msgid "Похожие товары появятся позже."
+msgstr "Related products will appear later."
+
+msgid "Похожие товары скоро появятся."
+msgstr "Similar products will be available soon."
+
+msgid "Почему именно мы"
+msgstr "Why us"
+
+msgid "Почему покупают у нас"
+msgstr "Why buy from us"
+
+msgid "Почта"
+msgstr "Mail"
+
+msgid "Праздник и торжество"
+msgstr "Holiday and celebration"
+
+msgid "Предоставляете ли вы гарантию?"
+msgstr "Do you provide a guarantee?"
+
+msgid "Предыдущая страница"
+msgstr "Previous page"
+
+msgid "Преимущества"
+msgstr "Advantages"
+
+msgid "При оформлении"
+msgstr "Upon registration"
+
+msgid "Применить"
+msgstr "Apply"
+
+msgid "Природные материалы."
+msgstr "Natural materials."
+
+msgid "Проверенные материалы"
+msgstr "Proven materials"
+
+msgid "Проверьте состав и количество. Изменения сохраняются автоматически."
+msgstr ""
+
+msgid "Продолжить покупки"
+msgstr "Continue shopping"
+
+msgid "Пусто"
+msgstr "Empty"
+
+msgid "Разделы"
+msgstr "Sections"
+
+msgid "Размеры"
+msgstr "Sizes"
+
+msgid "Режим работы"
+msgstr "Operating mode"
+
+msgid "Результаты"
+msgstr "Results"
+
+msgid "Рейтинг"
+msgstr "Rating"
+
+msgid ""
+"Рекомендуем мыть вручную тёплой водой с мягким средством. Большинство "
+"изделий можно мыть в посудомоечной машине, \" \"но ручная мойка продлит "
+"жизнь росписи. Избегайте резких перепадов температур."
+msgstr ""
+
+msgid ""
+"Рекомендуется бережная стирка. Не перегревать при сушке и гладить по ткани."
+msgstr ""
+"Gentle washing recommended. Do not overheat when drying and iron on fabric."
+
+msgid "Ручная работа"
+msgstr "Handmade"
+
+msgid "Ручной труд без преувеличений."
+msgstr ""
+
+msgid "С этим покупают"
+msgstr "They buy with this"
+
+msgid "Самовывоз: бесплатно"
+msgstr "Pickup: free"
+
+msgid "Сбросить"
+msgstr "Reset"
+
+msgid "Свяжитесь с нами"
+msgstr "Contact us"
+
+msgid "Связаться"
+msgstr "Contact"
+
+msgid "Сделано с любовью к ремеслу"
+msgstr "Made with love for the craft"
+
+msgid "Сейчас в тренде"
+msgstr "Now trending"
+
+msgid "Сервис"
+msgstr "Service"
+
+msgid "Сервис и качество."
+msgstr "Service and quality."
+
+msgid "Сколько времени занимает доставка?"
+msgstr "How long does delivery take?"
+
+msgid "Следующая страница"
+msgstr "Next page"
+
+msgid "Смотреть"
+msgstr "View"
+
+msgid "Смотреть витрину"
+msgstr "View showcase"
+
+msgid "Смотреть всё"
+msgstr "See all"
+
+msgid "Смотреть каталог"
+msgstr "View catalog"
+
+msgid "Смотреть каталог →"
+msgstr "View catalog →"
+
+msgid "Смотреть товары в категории"
+msgstr "View products in category"
+
+msgid "Сначала дешевле"
+msgstr "Cheaper first"
+
+msgid "Сначала дороже"
+msgstr "Price: high to low"
+
+msgid "Сначала новинки"
+msgstr "Newest first"
+
+msgid "Сначала новые"
+msgstr "New ones first"
+
+msgid "Создаём современную национальную одежду с уважением к традициям."
+msgstr ""
+
+msgid "Сообщение"
+msgstr "Message"
+
+msgid "Сообщение *"
+msgstr "Message *"
+
+msgid "Сообщение отправлено. Спасибо!"
+msgstr "Message sent. Thank you!"
+
+msgid "Сортировать"
+msgstr "Sort"
+
+msgid "Сортировка"
+msgstr "Sort"
+
+msgid "Спасибо!"
+msgstr "Thank you!"
+
+msgid "Список вопросов"
+msgstr "Question list"
+
+msgid "Список товаров"
+msgstr "Product list"
+
+msgid "Список товаров в корзине"
+msgstr "Cart items"
+
+msgid "Список ценностей"
+msgstr "List of values"
+
+msgid "Способ оплаты"
+msgstr "Payment method"
+
+msgid "Способы доставки"
+msgstr "Delivery methods"
+
+msgid ""
+"Способы оплаты согласовываются с менеджером: предоплата или оплата при "
+"получении — в зависимости от региона и состава заказа."
+msgstr ""
+
+msgid "Стамески"
+msgstr ""
+
+msgid "Страница не найдена"
+msgstr "Page not found"
+
+msgid "Сумма"
+msgstr "Amount"
+
+msgid ""
+"Сфотографируйте повреждение, не выбрасывая упаковку, и напишите нам на "
+"info@argillia.ru в течение 48 часов. \" \"Мы немедленно вышлем замену или "
+"вернём деньги — полностью."
+msgstr ""
+
+msgid "Такой страницы не существует"
+msgstr "This page does not exist"
+
+msgid "Ташкент"
+msgstr ""
+
+msgid "Телефон"
+msgstr "Phone"
+
+msgid "Телефон (необязательно)"
+msgstr ""
+
+msgid "Телефон *"
+msgstr ""
+
+msgid "Телефон, почта и форма обратной связи."
+msgstr ""
+
+msgid "Тема"
+msgstr ""
+
+msgid "Тема *"
+msgstr ""
+
+msgid "Тема сообщения"
+msgstr ""
+
+msgid "Теплый сезон"
+msgstr ""
+
+msgid "Товар"
+msgstr "Product"
+
+msgid "Товар дня"
+msgstr ""
+
+msgid "Товар добавлен в корзину."
+msgstr ""
+
+msgid "Товар не найден"
+msgstr ""
+
+msgid "Товар скоро появится."
+msgstr ""
+
+msgid "Товары"
+msgstr "Products"
+
+msgid "Товары (%(count)s шт.)"
+msgstr ""
+
+msgid "Товары в корзине"
+msgstr ""
+
+msgid "Товары и качество"
+msgstr ""
+
+msgid "Товары не найдены"
+msgstr ""
+
+msgid "Товары скоро появятся в каталоге."
+msgstr ""
+
+msgid "Товары скоро появятся."
+msgstr ""
+
+msgid "Только опытные мастера."
+msgstr ""
+
+msgid "Только появились"
+msgstr ""
+
+msgid "Только природная глина и проверенные глазури."
+msgstr ""
+
+msgid "Увеличить"
+msgstr ""
+
+msgid "Удалить"
+msgstr "Remove"
+
+msgid "Удалить товар"
+msgstr ""
+
+msgid "Удобная покупка"
+msgstr ""
+
+msgid "Удобно"
+msgstr ""
+
+msgid "Узнать больше"
+msgstr ""
+
+msgid "Уменьшить"
+msgstr ""
+
+msgid "Уникальность"
+msgstr ""
+
+msgid "Упаковка"
+msgstr ""
+
+msgid ""
+"Упор на ткань, аккуратный крой и понятный сервис, чтобы выбрать модель было "
+"легко."
+msgstr ""
+
+msgid "Условия доставки"
+msgstr ""
+
+msgid ""
+"Условия доставки и оплаты — на странице «Доставка». Обычно отправка в "
+"течение 1–2 рабочих дней после подтверждения заказа."
+msgstr ""
+
+msgid "Уход"
+msgstr ""
+
+msgid "Фамилия *"
+msgstr ""
+
+msgid "Фильтры"
+msgstr "Filters"
+
+msgid "Фильтры (визуальные)"
+msgstr ""
+
+msgid "Фильтры и сортировка — данные из каталога магазина."
+msgstr ""
+
+msgid "Фильтры каталога"
+msgstr ""
+
+msgid "Форма контактов"
+msgstr ""
+
+msgid "Форма на круге или вручную."
+msgstr ""
+
+msgid "Форма обратной связи"
+msgstr ""
+
+msgid "Форма оформления заказа"
+msgstr ""
+
+msgid "Формование"
+msgstr ""
+
+msgid "Характеристики"
+msgstr "Specifications"
+
+msgid "Характеристики скоро появятся."
+msgstr ""
+
+msgid "Хит"
+msgstr "Hit"
+
+msgid "Хиты коллекции"
+msgstr ""
+
+msgid "Хлебные крошки"
+msgstr "Breadcrumbs"
+
+msgid "Хлопок"
+msgstr ""
+
+msgid "Хлопок и шелк"
+msgstr ""
+
+msgid "Хотите подбор под ваш проект?"
+msgstr ""
+
+msgid "Хотите что-то"
+msgstr ""
+
+msgid "Цвет"
+msgstr ""
+
+msgid "Цвет (код или название)"
+msgstr ""
+
+msgid "Цвет можно выбрать при добавлении в корзину."
+msgstr ""
+
+msgid "Цвет:"
+msgstr ""
+
+msgid "Цена"
+msgstr "Price"
+
+msgid "Цена: дешевле"
+msgstr ""
+
+msgid "Цена: дороже"
+msgstr ""
+
+msgid "Ценности"
+msgstr ""
+
+msgid "Ценности скоро появятся."
+msgstr ""
+
+msgid "Часто задаваемые"
+msgstr ""
+
+msgid "Частые вопросы"
+msgstr "FAQ"
+
+msgid "Часть философии"
+msgstr ""
+
+msgid "Честность"
+msgstr ""
+
+msgid "Что делать, если изделие повредилось при доставке?"
+msgstr ""
+
+msgid "Что нас определяет"
+msgstr ""
+
+msgid ""
+"Ширина и радиус режущей кромки влияют на чистоту линии — начните с "
+"универсальных настроек."
+msgstr ""
+
+msgid ""
+"Шлифовка и масло/лак дают красивый рисунок волокон и защиту поверхности."
+msgstr ""
+
+msgid "Экология"
+msgstr ""
+
+msgid "Электронный кошелёк"
+msgstr ""
+
+msgid "Язык"
+msgstr "Language"
+
+msgid "Язык сайта"
+msgstr ""
+
+msgid "внимание к деталям"
+msgstr ""
+
+msgid "вопросы"
+msgstr ""
+
+msgid "готовых идей"
+msgstr ""
+
+msgid "до"
+msgstr ""
+
+msgid "доставка по городу"
+msgstr ""
+
+msgid "изделие"
+msgstr ""
+
+msgid "изделий"
+msgstr ""
+
+msgid "изделия"
+msgstr ""
+
+msgid "интернет-магазин"
+msgstr ""
+
+msgid "качество сервиса"
+msgstr ""
+
+msgid "онлайн-каталог"
+msgstr ""
+
+msgid "от"
+msgstr ""
+
+msgid "оценка покупателей"
+msgstr ""
+
+msgid "по городу"
+msgstr ""
+
+msgid "по-настоящему уникальное?"
+msgstr ""
+
+msgid "ручной работы"
+msgstr ""
+
+msgid "сўм"
+msgstr "sum"
+
+msgid "товаров"
+msgstr ""
+
+msgid "шт."
+msgstr ""
+
+msgid "About us"
+msgstr "About us"
+
 #, fuzzy
-#~| msgid "Product return within 14 days"
 #~ msgid "Return within 14 days"
 #~ msgstr "Product return within 14 days"
 
 #, fuzzy
-#~| msgid "Quality Guarantee"
 #~ msgid "Quality guarantee"
 #~ msgstr "Quality Guarantee"
 

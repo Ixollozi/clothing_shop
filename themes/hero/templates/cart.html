@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load humanize %}
 {% load translation_tags %}
+{% load product_media %}
 
 {% block title %}{% trans "Shopping Cart" %} - {{ store_name }}{% endblock %}
 {% block body_class %}page-inner page-cart{% endblock %}
@@ -27,11 +28,9 @@
                         {% for item in cart_items %}
                         <div class="cart-item" data-item-id="{{ item.id }}">
                             <div class="cart-item-image">
-                                {% if item.product.image %}
-                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                                {% elif item.product.image_url %}
-                                    <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
-                                {% else %}
+                                {% if item.product|display_image %}
+<img src="{{ item.product|display_image }}" alt="{{ item.product.name }}">
+{% else %}
                                     <div class="product-image-placeholder" aria-hidden="true"></div>
                                 {% endif %}
                             </div>
@@ -40,7 +39,7 @@
                                 <p class="cart-item-details">
                                     {% if item.color %}{% trans "Color" %}: {{ item.color }}{% endif %}
                                 </p>
-                <p class="cart-item-price" data-price="{{ item.product.price }}">{{ item.product.price|format_price }} {% trans "sum" %}</p>
+                <p class="cart-item-price" data-price="{{ item.product.price }}">{{ item.product.price|format_price }} {{ currency }}</p>
                             </div>
                             <div class="cart-item-quantity">
                                 <button class="qty-btn" onclick="updateQuantity(this, -1, {{ item.id }})">-</button>
@@ -48,7 +47,7 @@
                                 <button class="qty-btn" onclick="updateQuantity(this, 1, {{ item.id }})">+</button>
                             </div>
                             <div class="cart-item-total">
-                                <span class="item-total-price" data-item-id="{{ item.id }}">{{ item.total|format_price }} {% trans "sum" %}</span>
+                                <span class="item-total-price" data-item-id="{{ item.id }}">{{ item.total|format_price }} {{ currency }}</span>
                             </div>
                             <button class="cart-item-remove" onclick="removeItem({{ item.id }})">
                                 <i class="fas fa-times"></i>
@@ -68,7 +67,7 @@
                     <h2>{% trans "Total" %}</h2>
                     <div class="summary-row">
                         <span>{% trans "Products" %} (<span id="items-count">{{ cart.items_count|default:0 }}</span> {% trans "pcs" %}.)</span>
-                        <span id="subtotal">{{ cart.total|default:0|format_price }} {% trans "sum" %}</span>
+                        <span id="subtotal">{{ cart.total|default:0|format_price }} {{ currency }}</span>
                     </div>
                     <div class="summary-row">
                         <span>{% trans "Delivery" %}</span>
@@ -76,7 +75,7 @@
                     </div>
                     <div class="summary-row total-row">
                         <span>{% trans "To pay" %}</span>
-                        <span id="total">{{ cart.total|default:0|format_price }} {% trans "sum" %}</span>
+                        <span id="total">{{ cart.total|default:0|format_price }} {{ currency }}</span>
                     </div>
                     {% if cart_items %}
                     <button class="btn btn-primary btn-large" style="width: 100%; margin-top: 1rem;" onclick="showOrderForm()">
@@ -160,7 +159,7 @@
 <script>
     const API_BASE_URL = '/api/cart/';
     const CSRF_TOKEN = '{{ csrf_token }}';
-    const CURRENCY_LABEL = '{% filter force_escape %}{% trans "sum" %}{% endfilter %}';
+    const CURRENCY_LABEL = '{{ currency|escapejs }}';
 
     function getCookie(name) {
         let cookieValue = null;

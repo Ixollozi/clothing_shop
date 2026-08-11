@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% load humanize i18n translation_tags %}
+{% load humanize i18n translation_tags  product_media %}
 
 {% block title %}{{ product.name }} • {{ store_title|default:store_name }}{% endblock %}
 {% block meta_description %}{{ product.description|default:''|striptags|truncatechars:160 }}{% endblock %}
@@ -21,28 +21,19 @@
 
           <div class="product-hero">
             <div class="product-gallery card">
-              {% if product.image %}
-              <div class="gallery-main" id="gallery-main" style="background-image:url('{{ product.image.url }}');background-size:cover;background-position:center;" aria-hidden="true"></div>
-              {% elif product.image_url %}
-              <div class="gallery-main" id="gallery-main" style="background-image:url('{{ product.image_url }}');background-size:cover;background-position:center;" aria-hidden="true"></div>
+              {% if gallery_images %}
+              <div class="gallery-main" id="gallery-main" style="background-image:url('{{ gallery_images.0 }}');background-size:cover;background-position:center;" role="img" aria-label="{{ product.name }}"></div>
               {% else %}
-                {% for img in product_images %}
-                  {% if forloop.first %}
-              <div class="gallery-main" id="gallery-main" style="background-image:url('{{ img.image.url }}');background-size:cover;background-position:center;" aria-hidden="true"></div>
-                  {% endif %}
-                {% empty %}
               <div class="gallery-main wood-swatch-1" id="gallery-main" aria-hidden="true"></div>
-                {% endfor %}
               {% endif %}
+              {% if gallery_images|length > 1 %}
               <div class="gallery-thumbs" aria-label="{% trans 'Миниатюры' %}">
-                {% if product.image %}
-                <button class="thumb is-active" type="button" data-bg="{{ product.image.url }}" aria-label="{% trans 'Основное фото' %}"></button>
-                {% endif %}
-                {% for img in product_images %}
-                <button class="thumb{% if forloop.first and not product.image %} is-active{% endif %}" type="button" data-bg="{{ img.image.url }}" aria-label="{% blocktrans %}Фото {{ forloop.counter }}{% endblocktrans %}"></button>
+                {% for url in gallery_images %}
+                <button class="thumb{% if forloop.first %} is-active{% endif %}" type="button" data-bg="{{ url }}" style="background-image:url('{{ url }}');background-size:cover;background-position:center;" aria-label="{% blocktrans with n=forloop.counter %}Фото {{ n }}{% endblocktrans %}"></button>
                 {% endfor %}
               </div>
               <div class="gallery-hint">{% trans "Выберите миниатюру для смены фото." %}</div>
+              {% endif %}
             </div>
 
             <div class="product-panel card">
@@ -55,8 +46,8 @@
               <p class="product-lead">{{ product.description|striptags|truncatewords:32 }}</p>
 
               <div class="product-price">
-                <div class="price-now">{{ product.price|format_price }} {% trans "сум" %}</div>
-                {% if product.old_price %}<div class="price-old">{{ product.old_price|format_price }} {% trans "сум" %}</div>{% endif %}
+                <div class="price-now">{{ product.price|format_price }} {{ currency }}</div>
+                {% if product.old_price %}<div class="price-old">{{ product.old_price|format_price }} {{ currency }}</div>{% endif %}
               </div>
 
               <div class="product-availability">
@@ -192,7 +183,7 @@
             <div class="grid grid-4">
               {% for rp in related_products %}
               <article class="card product-card">
-                <div class="product-media{% if not rp.image and not rp.image_url %} wood-swatch-{% cycle '1' '2' '3' '4' %}{% endif %}"{% if rp.image %} style="background-image:url('{{ rp.image.url }}');background-size:cover;background-position:center;"{% elif rp.image_url %} style="background-image:url('{{ rp.image_url }}');background-size:cover;background-position:center;"{% endif %} aria-hidden="true"></div>
+                <div class="product-media{% if not rp|display_image %} wood-swatch-{% cycle '1' '2' '3' '4' %}{% endif %}"{% if rp|display_image %} style="background-image:url('{{ rp|display_image }}');background-size:cover;background-position:center;"{% endif %} aria-hidden="true"></div>
                 <div class="product-body">
                   <div class="product-top">
                     {% if rp.old_price %}<span class="tag tag-sale">{% trans "Акция" %}</span>{% endif %}
@@ -201,8 +192,8 @@
                   <p class="card-text">{{ rp.description|striptags|truncatewords:12 }}</p>
                   <div class="product-bottom">
                     <div class="price">
-                      <span class="price-now">{{ rp.price|format_price }} {% trans "сум" %}</span>
-                      {% if rp.old_price %}<span class="price-old">{{ rp.old_price|format_price }} {% trans "сум" %}</span>{% endif %}
+                      <span class="price-now">{{ rp.price|format_price }} {{ currency }}</span>
+                      {% if rp.old_price %}<span class="price-old">{{ rp.old_price|format_price }} {{ currency }}</span>{% endif %}
                     </div>
                   <a class="btn btn-sm btn-primary" href="{% url 'product' slug=rp.slug %}">{% trans "Подробнее" %}</a>
                   </div>

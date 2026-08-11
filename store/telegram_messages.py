@@ -4,10 +4,12 @@ Pure HTML message builders for Telegram (no I/O).
 
 from django.utils.html import escape
 
+from .currency import get_store_currency
 from .models import ContactMessage, Order
 
 
 def format_new_order_message(order: Order) -> str:
+    currency = get_store_currency()
     first_name = escape(str(order.first_name))
     last_name = escape(str(order.last_name))
     phone = escape(str(order.phone))
@@ -33,12 +35,14 @@ def format_new_order_message(order: Order) -> str:
     for item in order.items.all():
         product_name = escape(str(item.product.name))
         color = escape(str(item.color)) if item.color else ''
+        price = f'{item.price:,.0f}'.replace(',', ' ')
         message += f'• {product_name} x{item.quantity}\n'
         if color:
             message += f'  Цвет: {color}\n'
-        message += f'  Цена: {item.price:,.0f} сум\n\n'
+        message += f'  Цена: {price} {currency}\n\n'
 
-    message += f'\n💰 <b>Итого: {order.total:,.0f} сум</b>'
+    total = f'{order.total:,.0f}'.replace(',', ' ')
+    message += f'\n💰 <b>Итого: {total} {currency}</b>'
 
     if notes:
         message += f'\n\n📝 <b>Примечания:</b>\n{notes}'
@@ -48,6 +52,7 @@ def format_new_order_message(order: Order) -> str:
 
 
 def format_status_change_message(order: Order, old_status: str | None) -> str:
+    currency = get_store_currency()
     status_emojis = {
         'pending': '⏳',
         'processing': '🔄',
@@ -73,7 +78,8 @@ def format_status_change_message(order: Order, old_status: str | None) -> str:
         old_status_display = escape(str(dict(Order.STATUS_CHOICES).get(old_status, old_status)))
         message += f'<b>Предыдущий статус:</b> {old_status_display}\n'
 
-    message += f'\n💰 <b>Сумма:</b> {order.total:,.0f} сум'
+    total = f'{order.total:,.0f}'.replace(',', ' ')
+    message += f'\n💰 <b>Сумма:</b> {total} {currency}'
     message += f"\n⏰ {order.updated_at.strftime('%d.%m.%Y %H:%M')}"
     return message
 

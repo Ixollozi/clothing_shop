@@ -10,6 +10,7 @@ from .models import (
     ProductFeatureConfig, AboutStat, TelegramConfig, ContactMessage, FAQ,
     TelegramNotificationSettings, TelegramSubscriber, NotificationOutbox,
 )
+from .currency import format_money, get_store_currency
 
 
 # Импортируем переводы перед регистрацией админки
@@ -85,7 +86,12 @@ class ProductAdmin(TabbedTranslationAdmin):
             'fields': ('price', 'old_price', 'discount_percent')
         }),
         ('Изображения', {
-            'fields': ('image', 'image_preview', 'image_url', 'image_url_preview')
+            'fields': ('image', 'image_preview', 'image_url', 'image_url_preview'),
+            'description': (
+                'Основное изображение показывается в каталоге и на карточке. '
+                'Если загружен файл — он важнее поля URL. '
+                'Дополнительные фото добавляйте ниже (инлайн «Изображения товара»).'
+            ),
         }),
         ('Характеристики', {
             'fields': ('available_colors', 'colors_help', 'stock', 'is_active'),
@@ -129,20 +135,25 @@ class ProductAdmin(TabbedTranslationAdmin):
     colors_help.short_description = 'Подсказка по цветам'
 
     def price_display(self, obj):
-        return f"{obj.price:,.0f} сум".replace(',', ' ')
+        return format_money(obj.price)
     price_display.short_description = 'Цена'
 
     def old_price_display(self, obj):
         if obj.old_price:
-            return format_html('<span style="text-decoration: line-through; color: #999;">{} сум</span>', f"{obj.old_price:,.0f}".replace(',', ' '))
+            amount = f"{obj.old_price:,.0f}".replace(',', ' ')
+            return format_html(
+                '<span style="text-decoration: line-through; color: #999;">{} {}</span>',
+                amount,
+                get_store_currency(),
+            )
         return "-"
     old_price_display.short_description = 'Старая цена'
 
     def image_preview(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" style="max-width: 150px; max-height: 150px;" />', obj.image.url)
-        elif obj.image_url:
-            return format_html('<img src="{}" style="max-width: 150px; max-height: 150px;" />', obj.image_url)
+        from .media_urls import product_display_image_url
+        url = product_display_image_url(obj) if obj and obj.pk else ''
+        if url:
+            return format_html('<img src="{}" style="max-width: 150px; max-height: 150px;" />', url)
         return "Нет изображения"
     image_preview.short_description = 'Превью'
 
@@ -151,6 +162,27 @@ class ProductAdmin(TabbedTranslationAdmin):
             return format_html('<img src="{}" style="max-width: 150px; max-height: 150px;" />', obj.image_url)
         return "Нет URL изображения"
     image_url_preview.short_description = 'Превью URL'
+
+    def save_model(self, request, obj, form, change):
+        # Uploaded file wins over stale demos / external URLs.
+        if 'image' in form.changed_data and form.cleaned_data.get('image'):
+            obj.image_url = ''
+        super().save_model(request, obj, form, change)
+
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        obj = form.instance
+        # If primary empty but gallery has files — promote first extra to primary.
+        if obj.pk and not obj.image:
+            first = obj.images.order_by('id').first()
+            if first and first.image:
+                obj.image = first.image.name
+                # Drop stale external demo URL so the upload is what customers see.
+                update = ['image']
+                if obj.image_url:
+                    obj.image_url = ''
+                    update.append('image_url')
+                obj.save(update_fields=update)
 
     def discount_percent(self, obj):
         if obj.old_price and obj.old_price > obj.price:
@@ -197,7 +229,7 @@ class CartAdmin(admin.ModelAdmin):
     items_count_display.short_description = 'Товаров в корзине'
 
     def total_display(self, obj):
-        return f"{obj.total:,.0f} сум".replace(',', ' ')
+        return format_money(obj.total)
     total_display.short_description = 'Итого'
 
 
@@ -210,7 +242,7 @@ class CartItemAdmin(admin.ModelAdmin):
     readonly_fields = ['total_display', 'created_at', 'updated_at']
 
     def total_display(self, obj):
-        return f"{obj.total:,.0f} сум".replace(',', ' ')
+        return format_money(obj.total)
     total_display.short_description = 'Итого'
 
 
@@ -223,7 +255,7 @@ class OrderItemInline(admin.TabularInline):
 
     def total_display(self, obj):
         if obj and obj.pk:
-            return f"{obj.total:,.0f} сум".replace(',', ' ')
+            return format_money(obj.total)
         return "-"
     total_display.short_description = 'Итого'
 
@@ -261,7 +293,11 @@ class OrderAdmin(admin.ModelAdmin):
 
     def total_display(self, obj):
         total_formatted = f"{obj.total:,.0f}".replace(',', ' ')
-        return format_html('<strong style="font-size: 16px; color: #1976d2;">{} сум</strong>', total_formatted)
+        return format_html(
+            '<strong style="font-size: 16px; color: #1976d2;">{} {}</strong>',
+            total_formatted,
+            get_store_currency(),
+        )
     total_display.short_description = 'Итого'
 
     def status_badge(self, obj):
@@ -294,7 +330,7 @@ class OrderItemAdmin(admin.ModelAdmin):
 
     def total_display(self, obj):
         if obj and obj.pk:
-            return f"{obj.total:,.0f} сум".replace(',', ' ')
+            return format_money(obj.total)
         return "-"
     total_display.short_description = 'Итого'
 
@@ -475,11 +511,11 @@ class StoreConfigAdmin(TabbedTranslationAdmin):
     def has_module_permission(self, request):
         """Скрываем из списка админки, но оставляем доступ к редактированию"""
         return False
-    list_display = ['name', 'is_active', 'updated_at']
+    list_display = ['name', 'currency', 'is_active', 'updated_at']
     readonly_fields = ['updated_at']
     fieldsets = (
         ('Основная информация', {
-            'fields': ('name', 'title', 'description', 'is_active')
+            'fields': ('name', 'title', 'description', 'currency', 'is_active')
         }),
         ('Изображения', {
             'fields': ('logo', 'favicon')

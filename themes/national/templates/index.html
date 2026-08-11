@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load translation_tags %}
+{% load product_media %}
 
 {% block meta_description %}{% trans "Интернет-магазин национальной одежды Узбекистана: современный стиль, традиционные ткани, понятный выбор моделей." %}{% endblock %}
 
@@ -43,11 +44,9 @@
                   {% if hero_product %}
                     <a class="hero-product" href="{% url 'product_detail' slug=hero_product.slug %}">
                       <div class="hero-product-media" aria-hidden="true">
-                        {% if hero_product.image %}
-                          <img class="hero-product-img" src="{{ hero_product.image.url }}" alt="" loading="lazy" />
-                        {% elif hero_product.image_url %}
-                          <img class="hero-product-img" src="{{ hero_product.image_url }}" alt="" loading="lazy" />
-                        {% else %}
+                        {% if hero_product|display_image %}
+<img class="hero-product-img" src="{{ hero_product|display_image }}" alt="" loading="lazy" />
+{% else %}
                           <div class="hero-product-fallback"></div>
                         {% endif %}
                       </div>
@@ -55,7 +54,7 @@
                         <div class="hero-product-title">{% trans "Товар дня" %}</div>
                         <div class="hero-product-price">
                           <span class="price">{{ hero_product.price|format_price }}</span>
-                          <span class="currency">сум</span>
+                          <span class="currency">{{ currency }}</span>
                         </div>
                       </div>
                     </a>
@@ -93,11 +92,9 @@
               <article class="product">
                 <a href="{% url 'product_detail' slug=product.slug %}" style="text-decoration: none; color: inherit;">
                   <div class="product-media" aria-hidden="true">
-                    {% if product.image %}
-                      <img class="product-img" src="{{ product.image.url }}" alt="" loading="lazy" />
-                    {% elif product.image_url %}
-                      <img class="product-img" src="{{ product.image_url }}" alt="" loading="lazy" />
-                    {% else %}
+                    {% if product|display_image %}
+<img class="product-img" src="{{ product|display_image }}" alt="" loading="lazy" />
+{% else %}
                       <div class="product-bg product-bg-{{ bg }}"></div>
                     {% endif %}
                     <span class="product-tag">{% trans "Хит" %}</span>
@@ -118,7 +115,7 @@
                   <div class="product-bottom">
                     <div class="product-price">
                       <span class="price">{{ product.price|format_price }}</span>
-                      <span class="currency">сум</span>
+                      <span class="currency">{{ currency }}</span>
                     </div>
                     {% if product.id %}
                       <a

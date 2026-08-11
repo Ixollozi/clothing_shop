@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load humanize %}
 {% load translation_tags %}
+{% load product_media %}
 
 {% block title %}{% trans "Shopping Cart" %} - {{ store_name }}{% endblock %}
 
@@ -26,11 +27,9 @@
                         {% for item in cart_items %}
                         <div class="cart-item" data-item-id="{{ item.id }}">
                             <div class="cart-item-image">
-                                {% if item.product.image %}
-                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                                {% elif item.product.image_url %}
-                                    <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
-                                {% else %}
+                                {% if item.product|display_image %}
+<img src="{{ item.product|display_image }}" alt="{{ item.product.name }}">
+{% else %}
                                     <div class="product-image-placeholder" aria-hidden="true"></div>
                                 {% endif %}
                             </div>
@@ -39,7 +38,7 @@
                                 {% if item.color %}
                                 <p class="cart-item-details">{% trans "Color" %}: {{ item.color }}</p>
                                 {% endif %}
-                                <p class="cart-item-price" data-price="{{ item.product.price }}">{{ item.product.price|format_price }} сум</p>
+                                <p class="cart-item-price" data-price="{{ item.product.price }}">{{ item.product.price|format_price }} {{ currency }}</p>
                             </div>
                             <div class="cart-item-quantity">
                                 <button class="qty-btn" onclick="updateQuantity(this, -1, {{ item.id }})">-</button>
@@ -47,7 +46,7 @@
                                 <button class="qty-btn" onclick="updateQuantity(this, 1, {{ item.id }})">+</button>
                             </div>
                             <div class="cart-item-total">
-                                <span class="item-total-price" data-item-id="{{ item.id }}">{{ item.total|format_price }} сум</span>
+                                <span class="item-total-price" data-item-id="{{ item.id }}">{{ item.total|format_price }} {{ currency }}</span>
                             </div>
                             <button class="cart-item-remove" onclick="removeItem({{ item.id }})">
                                 <i class="fas fa-times"></i>
@@ -67,7 +66,7 @@
                     <h2>{% trans "Total" %}</h2>
                     <div class="summary-row">
                         <span>{% trans "Products" %} (<span id="items-count">{{ cart.items_count|default:0 }}</span> {% trans "pcs" %}.)</span>
-                        <span id="subtotal">{{ cart.total|default:0|format_price }} сум</span>
+                        <span id="subtotal">{{ cart.total|default:0|format_price }} {{ currency }}</span>
                     </div>
                     <div class="summary-row">
                         <span>{% trans "Delivery" %}</span>
@@ -75,7 +74,7 @@
                     </div>
                     <div class="summary-row total-row">
                         <span>{% trans "To pay" %}</span>
-                        <span id="total">{{ cart.total|default:0|format_price }} сум</span>
+                        <span id="total">{{ cart.total|default:0|format_price }} {{ currency }}</span>
                     </div>
                     {% if cart_items %}
                     <button class="btn btn-primary btn-large" style="width: 100%; margin-top: 1rem;" onclick="showOrderForm()">
@@ -236,7 +235,7 @@
         if (itemElement) {
             const totalElement = itemElement.querySelector('.item-total-price[data-item-id="' + itemId + '"]');
             if (totalElement) {
-                totalElement.textContent = formatPrice(total) + ' сум';
+                totalElement.textContent = formatPrice(total) + ' ' + '{{ currency|escapejs }}';
             }
         }
     }
@@ -293,8 +292,8 @@
             if (response.ok) {
                 const data = await response.json();
                 const totalFormatted = formatPrice(data.total);
-                document.getElementById('subtotal').textContent = totalFormatted + ' сум';
-                document.getElementById('total').textContent = totalFormatted + ' сум';
+                document.getElementById('subtotal').textContent = totalFormatted + ' ' + '{{ currency|escapejs }}';
+                document.getElementById('total').textContent = totalFormatted + ' ' + '{{ currency|escapejs }}';
                 document.getElementById('items-count').textContent = data.items_count || 0;
             }
         } catch (error) {

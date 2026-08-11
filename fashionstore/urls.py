@@ -51,18 +51,19 @@ urlpatterns = [
 ]
 
 
+if getattr(settings, 'PLATFORM_MODE', False):
+    from django.urls import re_path
+    from store.platform.media_views import site_media_serve
+
+    urlpatterns += [
+        re_path(r'^media/(?P<path>.*)$', site_media_serve),
+    ]
+elif settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 if settings.DEBUG:
     from django.urls import re_path
     from django.contrib.staticfiles.views import serve as staticfiles_serve
-
-    if getattr(settings, 'PLATFORM_MODE', False):
-        from store.platform.media_views import site_media_serve
-
-        urlpatterns += [
-            re_path(r'^media/(?P<path>.*)$', site_media_serve),
-        ]
-    else:
-        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
     # Serve via finders (store/static + theme) — not empty STATIC_ROOT.
     # runserver also uses SiteAwareStaticFilesHandler; this covers Test Client / WSGI DEBUG.

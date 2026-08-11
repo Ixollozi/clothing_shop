@@ -57,19 +57,19 @@
                             <form action="{% url 'set_language' %}" method="post" style="display: block; margin: 0;">
                                 {% csrf_token %}
                                 <input type="hidden" name="language" value="ru">
-                                <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
                                 <button type="submit" class="lang-option {% if CURRENT_LANGUAGE == 'ru' %}active{% endif %}" style="background: none; border: none; width: 100%; text-align: left; padding: 10px; cursor: pointer; color: inherit;">Русский</button>
                             </form>
                             <form action="{% url 'set_language' %}" method="post" style="display: block; margin: 0;">
                                 {% csrf_token %}
                                 <input type="hidden" name="language" value="en">
-                                <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
                                 <button type="submit" class="lang-option {% if CURRENT_LANGUAGE == 'en' %}active{% endif %}" style="background: none; border: none; width: 100%; text-align: left; padding: 10px; cursor: pointer; color: inherit;">English</button>
                             </form>
                             <form action="{% url 'set_language' %}" method="post" style="display: block; margin: 0;">
                                 {% csrf_token %}
                                 <input type="hidden" name="language" value="uz">
-                                <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
                                 <button type="submit" class="lang-option {% if CURRENT_LANGUAGE == 'uz' %}active{% endif %}" style="background: none; border: none; width: 100%; text-align: left; padding: 10px; cursor: pointer; color: inherit;">O'zbek</button>
                             </form>
                         </div>

@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 {% load i18n %}
 {% get_current_language as CURRENT_LANGUAGE %}
 <!DOCTYPE html>
@@ -34,9 +34,6 @@
             <a class="ag-logo" href="{% url 'index' %}">
                 <span class="ag-logo__text">{{ store_name|default:"Apex Goods" }}</span>
             </a>
-            <button class="ag-menu-toggle" id="mobileMenuToggle" type="button" aria-label="{% trans 'Menu' %}" aria-expanded="false" aria-controls="navMenu">
-                <span></span><span></span>
-            </button>
             <nav class="ag-nav" id="navMenu" aria-label="{% trans 'Main navigation' %}">
                 {% with url_name=request.resolver_match.url_name %}
                 <a href="{% url 'index' %}" class="{% if url_name == 'index' %}is-active{% endif %}">{% trans "Home" %}</a>
@@ -59,19 +56,19 @@
                         <form action="{% url 'set_language' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="language" value="ru">
-                            <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
                             <button type="submit" class="lang-option {% if CURRENT_LANGUAGE == 'ru' %}active{% endif %}">Русский</button>
                         </form>
                         <form action="{% url 'set_language' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="language" value="en">
-                            <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
                             <button type="submit" class="lang-option {% if CURRENT_LANGUAGE == 'en' %}active{% endif %}">English</button>
                         </form>
                         <form action="{% url 'set_language' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="language" value="uz">
-                            <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
                             <button type="submit" class="lang-option {% if CURRENT_LANGUAGE == 'uz' %}active{% endif %}">O'zbek</button>
                         </form>
                     </div>
@@ -81,6 +78,34 @@
     </header>
 
     <main>{% block content %}{% endblock %}</main>
+
+    {% with url_name=request.resolver_match.url_name %}
+    <nav class="ag-tabbar" aria-label="{% trans 'Mobile navigation' %}">
+        <a href="{% url 'index' %}" class="ag-tabbar__item{% if url_name == 'index' %} is-active{% endif %}">
+            <i class="fas fa-home" aria-hidden="true"></i>
+            <span>{% trans "Home" %}</span>
+        </a>
+        <a href="{% url 'catalog' %}" class="ag-tabbar__item{% if url_name == 'catalog' or url_name == 'product' or url_name == 'product_detail' %} is-active{% endif %}">
+            <i class="fas fa-th-large" aria-hidden="true"></i>
+            <span>{% trans "Catalog" %}</span>
+        </a>
+        <a href="{% url 'cart' %}" class="ag-tabbar__item ag-tabbar__item--cart{% if url_name == 'cart' %} is-active{% endif %}">
+            <span class="ag-tabbar__icon-wrap">
+                <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                <span id="tabbar-cart-count" class="ag-tabbar__badge"{% if not cart_items_count %} hidden{% endif %}>{{ cart_items_count|default:0 }}</span>
+            </span>
+            <span>{% trans "Cart" %}</span>
+        </a>
+        <a href="{% url 'about' %}" class="ag-tabbar__item{% if url_name == 'about' %} is-active{% endif %}">
+            <i class="fas fa-info-circle" aria-hidden="true"></i>
+            <span>{% trans "About" %}</span>
+        </a>
+        <a href="{% url 'contact' %}" class="ag-tabbar__item{% if url_name == 'contact' or url_name == 'faq' %} is-active{% endif %}">
+            <i class="fas fa-headset" aria-hidden="true"></i>
+            <span>{% trans "Contacts" %}</span>
+        </a>
+    </nav>
+    {% endwith %}
 
     <div id="notification-container" class="notification-container"></div>
 
@@ -156,11 +181,18 @@
             fetch('/api/cart/current/')
                 .then((r) => r.json())
                 .then((data) => {
-                    const el = document.getElementById('cart-icon-count');
-                    if (!el) return;
                     const count = data.items_count || 0;
-                    el.textContent = count;
-                    el.style.display = count > 0 ? 'flex' : 'none';
+                    const el = document.getElementById('cart-icon-count');
+                    if (el) {
+                        el.textContent = count;
+                        el.style.display = count > 0 ? 'flex' : 'none';
+                    }
+                    const tab = document.getElementById('tabbar-cart-count');
+                    if (tab) {
+                        tab.textContent = count;
+                        if (count > 0) tab.removeAttribute('hidden');
+                        else tab.setAttribute('hidden', '');
+                    }
                 })
                 .catch(() => {});
         }

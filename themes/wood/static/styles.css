@@ -1454,8 +1454,13 @@ textarea.checkout-input{
   background:
     radial-gradient(70px 50px at 20% 30%, rgba(255,255,255,.7), transparent 60%),
     linear-gradient(90deg, rgba(122,74,42,.25), rgba(196,154,99,.18));
+  background-size: cover;
+  background-position: center;
   cursor:pointer;
   transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.thumb[style*="background-image"]::after{
+  opacity: 0;
 }
 .thumb::after{
   content:"";

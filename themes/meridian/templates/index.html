@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load product_media %}
 {% load i18n static humanize translation_tags %}
 
 {% block title %}{{ store_name }} — {% trans "Fashion Store - Online Clothing Store" %}{% endblock %}
@@ -55,10 +56,8 @@
         {% for category in categories %}
         <a class="lb-look reveal" href="{% url 'catalog' %}{% if category.slug %}?category={{ category.slug }}{% endif %}">
             <div class="lb-look-img">
-                {% if category.image %}
-                    <img src="{{ category.image.url }}" alt="{{ category.name }}" loading="lazy">
-                {% elif category.image_url %}
-                    <img src="{{ category.image_url }}" alt="{{ category.name }}" loading="lazy">
+                {% if category|display_image %}
+                    <img src="{{ category|display_image }}" alt="{{ category.name }}" loading="lazy">
                 {% elif forloop.counter0|divisibleby:4 %}
                     <img src="{% static 'img/look1.jpg' %}" alt="{{ category.name }}" loading="lazy">
                 {% elif forloop.counter0|add:1|divisibleby:4 %}
@@ -90,11 +89,9 @@
         <article class="product-card reveal">
             <div class="product-media">
                 <a class="product-image" href="{% if product.slug %}{% url 'product' product.slug %}{% else %}{% url 'catalog' %}{% endif %}">
-                    {% if product.image %}
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
-                    {% elif product.image_url %}
-                        <img src="{{ product.image_url }}" alt="{{ product.name }}" loading="lazy">
-                    {% else %}
+                    {% if product|display_image %}
+<img src="{{ product|display_image }}" alt="{{ product.name }}" loading="lazy">
+{% else %}
                         <div class="product-image-placeholder" aria-hidden="true"></div>
                     {% endif %}
                 </a>
@@ -108,9 +105,9 @@
                         <a href="{% if product.slug %}{% url 'product' product.slug %}{% else %}{% url 'catalog' %}{% endif %}">{{ product.name }}</a>
                     </h3>
                     <p class="product-price">
-                        {{ product.price|format_price }} сум
+                        {{ product.price|format_price }} {{ currency }}
                         {% if product.old_price and product.old_price > product.price %}
-                            <span class="old-price">{{ product.old_price|format_price }} сум</span>
+                            <span class="old-price">{{ product.old_price|format_price }} {{ currency }}</span>
                         {% endif %}
                     </p>
                 </div>

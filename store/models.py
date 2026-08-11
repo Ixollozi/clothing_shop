@@ -20,6 +20,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_display_image_url(self):
+        from .media_urls import category_display_image_url
+        return category_display_image_url(self)
+
 
 class Product(models.Model):
     SIZE_CHOICES = [
@@ -75,6 +79,14 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_display_image_url(self):
+        from .media_urls import product_display_image_url
+        return product_display_image_url(self)
+
+    def get_gallery_urls(self):
+        from .media_urls import product_gallery_urls
+        return product_gallery_urls(self)
 
 
 class ProductImage(models.Model):
@@ -277,9 +289,29 @@ class Config(models.Model):
 
 class StoreConfig(models.Model):
     """Конфигурация магазина"""
+    CURRENCY_SUM = 'сум'
+    CURRENCY_UZS = 'UZS'
+    CURRENCY_USD = 'USD'
+    CURRENCY_EUR = 'EUR'
+    CURRENCY_RUB = 'RUB'
+    CURRENCY_CHOICES = [
+        (CURRENCY_SUM, 'сум'),
+        (CURRENCY_UZS, 'UZS'),
+        (CURRENCY_USD, 'USD'),
+        (CURRENCY_EUR, 'EUR'),
+        (CURRENCY_RUB, 'RUB'),
+    ]
+
     name = models.CharField(max_length=200, default='Fashion Store', verbose_name='Название магазина')
     title = models.CharField(max_length=200, default='Fashion Store - Online Clothing Store', verbose_name='Заголовок')
     description = models.TextField(default='Your reliable partner in the world of fashion. Quality clothing at affordable prices.', verbose_name='Описание')
+    currency = models.CharField(
+        max_length=8,
+        choices=CURRENCY_CHOICES,
+        default=CURRENCY_SUM,
+        verbose_name='Валюта',
+        help_text='Отображается рядом с ценами товаров на сайте и в админке',
+    )
     logo = models.ImageField(upload_to='config/', blank=True, null=True, verbose_name='Логотип')
     favicon = models.ImageField(upload_to='config/', blank=True, null=True, verbose_name='Иконка сайта (favicon)')
     is_active = models.BooleanField(default=True, verbose_name='Активна')

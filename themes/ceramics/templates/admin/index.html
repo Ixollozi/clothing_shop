@@ -96,7 +96,7 @@
       </a>
       <a class="kpi-card kpi-accent" href="{% url 'admin:store_order_changelist' %}">
         <span class="kpi-label">Выручка</span>
-        <span class="kpi-value kpi-value-sm">{{ total_revenue|default:0|format_price }} <small>сум</small></span>
+        <span class="kpi-value kpi-value-sm">{{ total_revenue|default:0|format_price }} <small>{{ currency }}</small></span>
         <span class="kpi-meta">доставлено / в пути / в работе</span>
       </a>
       <a class="kpi-card" href="{% url 'admin:store_partner_changelist' %}">
@@ -120,7 +120,7 @@
             <span class="panel-list-main">#{{ order.id }} · {{ order.first_name }} {{ order.last_name }}</span>
             <span class="panel-list-side">
               <span class="status-pill status-{{ order.status }}">{{ order.get_status_display }}</span>
-              <span class="panel-list-meta">{{ order.total|format_price }} сум</span>
+              <span class="panel-list-meta">{{ order.total|format_price }} {{ currency }}</span>
             </span>
           </a>
         </li>
@@ -170,7 +170,7 @@
         <li>
           <a href="{% url 'admin:store_product_change' product.id %}">
             <span class="panel-list-main">{{ product.name }}</span>
-            <span class="panel-list-meta">{{ product.price|format_price }} сум</span>
+            <span class="panel-list-meta">{{ product.price|format_price }} {{ currency }}</span>
           </a>
         </li>
         {% empty %}

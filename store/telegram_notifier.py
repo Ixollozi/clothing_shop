@@ -4,6 +4,7 @@
 import telebot
 from django.conf import settings
 from django.utils.html import escape
+from .currency import get_store_currency
 from .models import TelegramConfig, Order
 import logging
 
@@ -136,9 +137,11 @@ class TelegramNotifier:
                 message += f"• {product_name} x{item.quantity}\n"
                 if color:
                     message += f"  Цвет: {color}\n"
-                message += f"  Цена: {item.price:,.0f} сум\n\n"
+                price = f"{item.price:,.0f}".replace(",", " ")
+                message += f"  Цена: {price} {get_store_currency()}\n\n"
             
-            message += f"\n💰 <b>Итого: {order.total:,.0f} сум</b>"
+            total = f"{order.total:,.0f}".replace(",", " ")
+            message += f"\n💰 <b>Итого: {total} {get_store_currency()}</b>"
             
             if notes:
                 message += f"\n\n📝 <b>Примечания:</b>\n{notes}"
@@ -192,7 +195,8 @@ class TelegramNotifier:
                 old_status_display = escape(str(dict(Order.STATUS_CHOICES).get(old_status, old_status)))
                 message += f"<b>Предыдущий статус:</b> {old_status_display}\n"
             
-            message += f"\n💰 <b>Сумма:</b> {order.total:,.0f} сум"
+            total = f"{order.total:,.0f}".replace(",", " ")
+            message += f"\n💰 <b>Сумма:</b> {total} {get_store_currency()}"
             message += f"\n⏰ {order.updated_at.strftime('%d.%m.%Y %H:%M')}"
             
             return self._send_message(message)

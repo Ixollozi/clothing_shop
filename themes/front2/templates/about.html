@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load product_media %}
 
 {% block title %}{% trans "About Us" %} - {{ store_name }}{% endblock %}
 
@@ -27,11 +28,9 @@
 
                 {% if about_config.image or about_config.image_url %}
                 <div class="about-image">
-                    {% if about_config.image %}
-                        <img src="{{ about_config.image.url }}" alt="{% trans 'About Us' %}">
-                    {% elif about_config.image_url %}
-                        <img src="{{ about_config.image_url }}" alt="{% trans 'About Us' %}">
-                    {% endif %}
+                    {% if about_config|display_image %}
+<img src="{{ about_config|display_image }}" alt="{% trans 'About Us' %}">
+{% endif %}
                 </div>
                 {% endif %}
 

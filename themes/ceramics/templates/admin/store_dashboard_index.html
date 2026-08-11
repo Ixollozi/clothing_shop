@@ -100,7 +100,7 @@
             {% for product in latest_products %}
             <li class="fs-recent-item">
               <a href="{% url 'admin:store_product_change' product.id %}">
-                <span class="fs-recent-item-meta">{{ product.price|format_price }} сум</span>
+                <span class="fs-recent-item-meta">{{ product.price|format_price }} {{ currency }}</span>
                 {{ product.name }}
               </a>
             </li>
@@ -180,7 +180,7 @@
         </div>
         <div class="fs-info-body fs-revenue">
           <div class="fs-revenue-amount">
-            {{ total_revenue|default:0|format_price }}<span class="fs-revenue-currency">сум</span>
+            {{ total_revenue|default:0|format_price }}<span class="fs-revenue-currency">{{ currency }}</span>
           </div>
           <p class="fs-revenue-note">По заказам со статусами: в обработке, отправлен, доставлен.</p>
         </div>
