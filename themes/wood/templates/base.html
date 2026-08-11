@@ -217,7 +217,7 @@
                 console.log('CSRF Token:', csrftoken ? 'Found' : 'Not found');
                 
                 if (!csrftoken) {
-                    throw new Error('CSRF token not found. Please refresh the page.');
+                    throw new Error('{% trans "CSRF token not found. Please refresh the page." %}');
                 }
 
                 const requestData = {

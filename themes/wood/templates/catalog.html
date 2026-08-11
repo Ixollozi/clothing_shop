@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="filter-block">
-                  <h3 class="filter-title">{% trans "Цена, {{ currency }}" %}</h3>
+                  <h3 class="filter-title">{% blocktrans with currency=currency %}Цена, {{ currency }}{% endblocktrans %}</h3>
                   <div class="price-range" aria-label="{% trans 'Диапазон цены' %}">
                     <div class="range-top">
                       <span class="range-label">{% trans "от" %}</span>

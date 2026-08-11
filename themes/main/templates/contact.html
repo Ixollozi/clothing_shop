@@ -178,7 +178,7 @@
                              document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
             
             if (!csrftoken) {
-                throw new Error('CSRF token not found');
+                throw new Error('{% trans "CSRF token not found. Please refresh the page." %}');
             }
             
             // Отправляем данные на сервер
@@ -203,7 +203,7 @@
                 );
                 form.reset();
             } else {
-                throw new Error(data.error || 'Failed to send message');
+                throw new Error(data.error || '{% trans "Failed to send message" %}');
             }
         } catch (error) {
             console.error('Error:', error);

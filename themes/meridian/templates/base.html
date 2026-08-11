@@ -141,7 +141,7 @@
             button.textContent = '…';
             try {
                 const token = getCsrfToken();
-                if (!token) throw new Error('CSRF');
+                if (!token) throw new Error('{% trans "CSRF token not found. Please refresh the page." %}');
                 const res = await fetch('/api/cart/add_item/', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-CSRFToken': token },
@@ -150,7 +150,7 @@
                 });
                 if (!res.ok) {
                     const err = await res.json().catch(() => ({}));
-                    throw new Error(err.detail || err.error || 'Error');
+                    throw new Error(err.detail || err.error || '{% trans "Error" %}');
                 }
                 button.textContent = '✓';
                 updateCartIcon();

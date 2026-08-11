@@ -220,7 +220,7 @@
                 showNotification('{% trans "Quantity updated" %}', 'success', '', 2000);
             } else {
                 const errorData = await response.json().catch(() => ({}));
-                showNotification('{% trans "Error updating quantity" %}: ' + (errorData.error || errorData.detail || 'Unknown error'), 'error');
+                showNotification('{% trans "Error updating quantity" %}: ' + (errorData.error || errorData.detail || '{% trans "Unknown error" %}'), 'error');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -368,14 +368,14 @@
             if (!cartResponse.ok) {
                 const errorText = await cartResponse.text();
                 console.error('Cart response error:', cartResponse.status, errorText);
-                throw new Error(`Failed to get cart: ${cartResponse.status} ${cartResponse.statusText}`);
+                throw new Error('{% trans "Failed to get cart" %}: ' + cartResponse.status + ' ' + cartResponse.statusText);
             }
             
             const cartData = await cartResponse.json();
             console.log('Cart data:', cartData);
             
             if (!cartData) {
-                throw new Error('Empty cart data received');
+                throw new Error('{% trans "Empty cart data received" %}');
             }
             
             if (!cartData || !cartData.items || cartData.items.length === 0) {
@@ -391,7 +391,7 @@
                 const item = cartData.items[i];
                 if (!item || !item.product || !item.product.id) {
                     console.error('Invalid cart item:', item);
-                    throw new Error('Invalid cart item data');
+                    throw new Error('{% trans "Invalid cart item data" %}');
                 }
                 items.push({
                     product_id: item.product.id,
@@ -505,7 +505,7 @@
             console.log('Order result:', orderResult);
             
             if (!orderResult || !orderResult.id) {
-                throw new Error('Invalid order response from server');
+                throw new Error('{% trans "Invalid order response from server" %}');
             }
             
             // Закрываем модальное окно

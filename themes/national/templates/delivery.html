@@ -62,7 +62,7 @@
             <div class="filter-summary" style="cursor: default;">{% trans "Адрес самовывоза" %}</div>
             <div class="filter-body" style="margin-top: 12px;">
               <div class="catalog-check" style="cursor: default;">
-                <span>{{ contact_info.address.full|default:"Ташкент, Узбекистан" }}</span>
+                <span>{% if contact_info.address.full %}{{ contact_info.address.full }}{% else %}{% trans "Ташкент, Узбекистан" %}{% endif %}</span>
               </div>
               <a class="btn btn-soft btn-full" href="{% url 'contact' %}">{% trans "Задать вопрос" %}</a>
             </div>

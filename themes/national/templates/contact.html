@@ -75,7 +75,7 @@
               </div>
               <div class="catalog-check" style="cursor: default;">
                 <span>{% trans "Адрес" %}</span>
-                <span style="margin-left: auto;">{{ contact_info.address.full|default:"Ташкент, Узбекистан" }}</span>
+                <span style="margin-left: auto;">{% if contact_info.address.full %}{{ contact_info.address.full }}{% else %}{% trans "Ташкент, Узбекистан" %}{% endif %}</span>
               </div>
             </div>
           </div>

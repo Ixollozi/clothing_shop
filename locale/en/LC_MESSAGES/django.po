@@ -2636,6 +2636,12 @@ msgstr ""
 msgid "Tashkent"
 msgstr ""
 
+msgid "Ташкент, Узбекистан"
+msgstr "Tashkent, Uzbekistan"
+
+msgid "Цена, %(currency)s"
+msgstr "Price, %(currency)s"
+
 #, fuzzy
 #~ msgid "Return within 14 days"
 #~ msgstr "Product return within 14 days"

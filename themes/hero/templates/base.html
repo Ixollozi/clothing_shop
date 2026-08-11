@@ -108,7 +108,7 @@
       <nav class="h-nav h-nav--drawer" id="navMenu" aria-label="{% trans 'Menu' %}">
         <div class="h-nav__head">
           <a class="h-nav__brand" href="{% url 'index' %}">{{ store_name|default:"HERO" }}</a>
-          <button type="button" class="h-nav__close" id="mobileMenuClose" aria-label="Close">
+          <button type="button" class="h-nav__close" id="mobileMenuClose" aria-label="{% trans 'Close' %}">
             <i class="fas fa-times"></i>
           </button>
         </div>
@@ -157,7 +157,7 @@
         <form class="h-search-sheet__form" action="{% url 'catalog' %}" method="get" role="search">
           <input type="search" name="search" id="mobileSearchInput" placeholder="{% trans 'Search products…' %}" aria-label="{% trans 'Search' %}" autocomplete="off">
           <button type="submit" class="h-search-sheet__submit" aria-label="{% trans 'Search' %}"><i class="fas fa-search"></i></button>
-          <button type="button" class="h-search-sheet__close" id="mobileSearchClose" aria-label="Close"><i class="fas fa-times"></i></button>
+          <button type="button" class="h-search-sheet__close" id="mobileSearchClose" aria-label="{% trans 'Close' %}"><i class="fas fa-times"></i></button>
         </form>
       </div>
     </div>

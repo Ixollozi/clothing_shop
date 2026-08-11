@@ -2721,6 +2721,12 @@ msgstr "X"
 msgid "VK"
 msgstr "VK"
 
+msgid "Ташкент, Узбекистан"
+msgstr "Toshkent, O‘zbekiston"
+
+msgid "Цена, %(currency)s"
+msgstr "Narx, %(currency)s"
+
 #, fuzzy
 #~ msgid "Return within 14 days"
 #~ msgstr "14 kun ichida mahsulotni qaytarish"
